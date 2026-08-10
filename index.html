@@ -398,24 +398,23 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
     </div>
     <hr class="nav-divider"/>
     <div class="nav-section-label">Companies</div>
-    <div class="nav-company-item active" onclick="showCompany('microsoft',this)" data-co="fiserv">
-      <span class="co-dot" style="background:#3b82f6"></span> Fiserv
+    <div class="nav-company-item active" onclick="showCompany('microsoft',this)" data-co="microsoft">
+      <span class="co-dot" style="background:#0078d4"></span> Microsoft
     </div>
     <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="fis">
-      <span class="co-dot" style="background:#8b5cf6"></span> FIS
+      <span class="co-dot" style="background:#00a1e0"></span> Salesforce
     </div>
-    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="jackhenry">
-      <span class="co-dot" style="background:#10b981"></span> Jack Henry
+    <div class="nav-company-item" onclick="showCompany('servicenow',this)" data-co="servicenow">
+      <span class="co-dot" style="background:#81b5a1"></span> ServiceNow
     </div>
-    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="temenos">
-      <span class="co-dot" style="background:#f59e0b"></span> Temenos
+    <div class="nav-company-item" onclick="showCompany('oracle',this)" data-co="oracle">
+      <span class="co-dot" style="background:#f80000"></span> Oracle
     </div>
-    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="finastra">
-      <span class="co-dot" style="background:#ef4444"></span> Finastra
+    <div class="nav-company-item" onclick="showCompany('sap',this)" data-co="sap">
+      <span class="co-dot" style="background:#0070f2"></span> SAP
     </div>
-    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="ncr">
-      <span class="co-dot" style="background:#06b6d4"></span> NCR Atleos
-    </div>
+    <div class="nav-company-item" onclick="showCompany('workday',this)" data-co="workday">
+      <span class="co-dot" style="background:#f36f21"></span> Workday
     <hr class="nav-divider"/>
     <div class="nav-section-label">Quick Access</div>
     <div class="nav-link" onclick="showPage('benchmark',this)" data-page="benchmark">
@@ -563,7 +562,7 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
         <div class="flex items-center gap-16">
           <div class="company-logo" id="coLogoHeader" style="background:#3b82f6;width:48px;height:48px;font-size:18px">F</div>
           <div>
-            <div class="page-title" id="coNameHeader">Fiserv</div>
+            <div class="page-title" id="coNameHeader">Microsoft</div>
             <div class="page-subtitle" id="coSubHeader">Payments & Banking Technology · NASDAQ: FISV · Milwaukee, 🇺🇸</div>
           </div>
         </div>
@@ -932,7 +931,7 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
           <div id="peersList"><!-- populated --></div>
           <div class="add-peer-row">
             <input class="add-peer-input" type="text" id="addPeerInput" placeholder="Add company…" list="companyOptions"/>
-            <datalist id="companyOptions"><option value="Fiserv"/><option value="FIS"/><option value="Jack Henry"/><option value="Temenos"/><option value="Finastra"/><option value="NCR Atleos"/><option value="Stripe"/><option value="Adyen"/></datalist>
+            <datalist id="companyOptions"><option value="Microsoft"/><option value="Salesforce"/><option value="ServiceNow"/><option value="Oracle"/><option value="SAP"/><option value="Workday"/></datalist>
             <button class="add-peer-btn" onclick="addPeer()">+</button>
           </div>
           <hr class="nav-divider" style="margin:16px 0"/>
@@ -1543,7 +1542,7 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 /* ==================== STATE ==================== */
-let currentCompany = 'fiserv';
+let currentCompany = 'microsoft';
 let currentCoTab = 'overview';
 let currentInsightYear = 'All';
 let currentInsightCat = 'All';
@@ -1551,7 +1550,7 @@ let currentFinTab = 'revenue';
 let currentFinPeriod = 'annual';
 let currentBenchTab = 'overview';
 let currentBenchFinTab = 'revenue';
-let currentBenchPeers = ['Fiserv','FIS','Jack Henry'];
+let currentBenchPeers = [...BENCH_PEERS];
 let currentBenchFeatures = BENCH_FEATURES.map(f=>({...f}));
 let currentProfileAttrs = BENCH_PROFILE_ATTRS.map(a=>a.attr);
 let currentProductTab = 'strategy';
@@ -2543,8 +2542,8 @@ function renderBenchCapabilities() {
   });
   const dims = ['Scale','Merchant','Banking','Core','Global','Cloud','Recurring','Breadth'];
   const SCORES_MAP = {
-    Fiserv:[5,5,4,5,4,4,5,5],FIS:[4,3,4,4,4,3,4,4],'Jack Henry':[2,2,4,4,1,4,4,3],
-    Temenos:[2,1,5,5,4,4,3,3],Finastra:[3,2,4,4,3,3,3,4],'NCR Atleos':[2,2,2,2,3,2,3,2]
+    Microsoft:[5,5,5,5,5,5,5,5],Salesforce:[4,5,5,4,4,4,4,5],ServiceNow:[4,4,5,4,4,4,4,4],
+    Oracle:[4,4,4,5,3,5,4,4],SAP:[4,3,4,5,3,5,4,4],Workday:[3,4,4,4,4,3,3,4]
   };
   const traces = currentBenchPeers.map(p=>({
     type:'scatterpolar',name:p,fill:'toself',
