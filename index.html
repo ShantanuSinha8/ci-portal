@@ -398,22 +398,22 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
     </div>
     <hr class="nav-divider"/>
     <div class="nav-section-label">Companies</div>
-    <div class="nav-company-item active" onclick="showCompany('fiserv',this)" data-co="fiserv">
+    <div class="nav-company-item active" onclick="showCompany('microsoft',this)" data-co="fiserv">
       <span class="co-dot" style="background:#3b82f6"></span> Fiserv
     </div>
-    <div class="nav-company-item" onclick="showCompany('fis',this)" data-co="fis">
+    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="fis">
       <span class="co-dot" style="background:#8b5cf6"></span> FIS
     </div>
-    <div class="nav-company-item" onclick="showCompany('jackhenry',this)" data-co="jackhenry">
+    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="jackhenry">
       <span class="co-dot" style="background:#10b981"></span> Jack Henry
     </div>
-    <div class="nav-company-item" onclick="showCompany('temenos',this)" data-co="temenos">
+    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="temenos">
       <span class="co-dot" style="background:#f59e0b"></span> Temenos
     </div>
-    <div class="nav-company-item" onclick="showCompany('finastra',this)" data-co="finastra">
+    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="finastra">
       <span class="co-dot" style="background:#ef4444"></span> Finastra
     </div>
-    <div class="nav-company-item" onclick="showCompany('ncr',this)" data-co="ncr">
+    <div class="nav-company-item" onclick="showCompany('microsoft',this)" data-co="ncr">
       <span class="co-dot" style="background:#06b6d4"></span> NCR Atleos
     </div>
     <hr class="nav-divider"/>
@@ -956,427 +956,582 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
   <div class="drilldown-body" id="drilldownBody"><!-- content --></div>
 </div>
 <script>
-/* ==================== DATA ==================== */
 const COMPANIES_DATA = {
-  fiserv: {
-    id:'fiserv', name:'Fiserv', ticker:'FISV', exchange:'NASDAQ', hq:'Milwaukee, 🇺🇸',
-    color:'#3b82f6', initials:'F', sector:'Payments & Banking Technology',
-    founded:1984, employees:'~38,000', ceo:'Mike Lyons', website:'fiserv.com',
-    description:'Global leader in payments and financial technology, operating merchant solutions (Clover, Carat) and financial services (core banking, digital banking, card processing) for banks, credit unions, and merchants worldwide.',
-    revenue2024:20.5, marketCap:'$73B', rating:4.2,
+  microsoft: {
+    id:'microsoft', name:'Microsoft', ticker:'MSFT', exchange:'NASDAQ',
+    hq:'Redmond, 🇺🇸', color:'#0078d4', initials:'M',
+    sector:'AI-Powered Enterprise Software',
+    founded:1975, employees:'~231,939', ceo:'Satya Nadella', website:'microsoft.com',
+    description:'Microsoft is a global technology leader that develops, manufactures, licenses, and supports a wide range of software products, services, and devices. Under CEO Satya Nadella, Microsoft has transformed into a cloud-first, AI-first company with Azure, Microsoft 365, and Dynamics 365 at its core. With over $281B in FY2025 revenue and a $4T+ market cap, it is the largest enterprise software company in the world.',
+    revenue2024:245.1, marketCap:'$3.4T', rating:4.8,
     kpis:[
-      {label:'Revenue FY2024',val:'$20.5B',delta:'+7.1%',dir:'up',color:'blue'},
-      {label:'EBITDA Margin',val:'43.4%',delta:'+0.5pp',dir:'up',color:'green'},
-      {label:'Free Cash Flow',val:'$5.7B',delta:'+$0.5B',dir:'up',color:'indigo'},
-      {label:'Composite Score',val:'4.2/5',delta:'Leader',dir:'neutral',color:'amber'}
+      {label:'Revenue FY2025',val:'$281.7B',delta:'+15.0%',dir:'up',color:'blue'},
+      {label:'Operating Margin', val:'45.6%', delta:'+1.0pp',dir:'up',color:'green'},
+      {label:'Free Cash Flow',val:'$84.2B', delta:'+$12.7B',dir:'up',color:'indigo'},
+      {label:'Composite Score',val:'4.8/5',delta:'Leader', dir:'neutral',color:'amber'}
     ],
-    revenues: [14.9, 16.2, 17.7, 19.1, 20.5, 21.2],
-    ebitda: [42.0, 43.5, 44.2, 44.5, 43.4, 41.8],
-    netIncome: [0.96, 1.33, 2.53, 3.07, 3.13, 3.48],
-    revGrowth: [5.5, 9.2, 9.3, 7.7, 7.1, 3.6],
-    eps: [1.4, 2.0, 3.8, 4.6, 4.8, 5.4],
-    netMargin:[6.5,8.2,14.3,16.1,15.3,16.4],
-    years:[2020,2021,2022,2023,2024,2025],
+    revenues: [143.0,168.1,198.3,211.9,245.1,281.7],
+    ebitda:   [47.2,49.0,50.5,51.2,53.8,55.0],
+    netIncome:[44.3,61.3,72.7,72.4,88.1,101.7],
+    revGrowth:[13.6,17.5,17.9,6.9,15.7,15.0],
+    eps:      [5.76,8.05,9.65,9.72,11.45,13.10],
+    netMargin:[30.9,36.5,36.7,34.1,36.0,36.1],
+    years:    [2020,2021,2022,2023,2024,2025],
     topProducts:[
-      {name:'Clover POS Platform',segment:'Merchant',share:28,color:'#3b82f6'},
-      {name:'Carat Omnichannel',segment:'Merchant',share:18,color:'#60a5fa'},
-      {name:'Core Banking (Premier/DNA)',segment:'Financial',share:24,color:'#6366f1'},
-      {name:'Digital Banking Suite',segment:'Financial',share:14,color:'#8b5cf6'},
-      {name:'Card Issuance & Processing',segment:'Financial',share:10,color:'#a78bfa'},
-      {name:'Finxact Cloud Core',segment:'Cloud',share:6,color:'#c4b5fd'}
+      {name:'Azure AI Cloud',segment:'Intelligent Cloud',share:32,color:'#0078d4'},
+      {name:'Microsoft 365 Copilot',segment:'Productivity',share:24,color:'#00a4ef'},
+      {name:'Dynamics 365',segment:'Business Apps',share:14,color:'#737373'},
+      {name:'GitHub Copilot',segment:'Developer Tools',share:12,color:'#24292f'},
+      {name:'Teams Platform',segment:'Collaboration',share:10,color:'#6264a7'},
+      {name:'Power Platform',segment:'Low-Code',share:8,color:'#742774'}
     ],
     segments:[
-      {name:'Banks & Credit Unions',pct:52,icon:'🏦'},
-      {name:'SMB Merchants',pct:28,icon:'🏪'},
-      {name:'Enterprise Merchants',pct:14,icon:'🏢'},
-      {name:'Fintechs & Partners',pct:6,icon:'⚙️'}
+      {name:'Intelligent Cloud',pct:44,icon:'☁️'},
+      {name:'Productivity & Business',pct:34,icon:'💼'},
+      {name:'More Personal Computing',pct:22,icon:'💻'}
     ],
     geoData:[
-      {region:'North America',flag:'🌎',rev:17.4,share:85,tier:1},
-      {region:'Europe',flag:'🌍',rev:1.8,share:9,tier:2},
-      {region:'Asia Pacific',flag:'🌏',rev:0.8,share:4,tier:2},
-      {region:'MEA',flag:'🌍',rev:0.5,share:2,tier:3}
+      {region:'North America',flag:'🌎',rev:144.5,share:51,tier:1},
+      {region:'Europe',flag:'🌍',rev:82.1,share:29,tier:1},
+      {region:'Asia Pacific',flag:'🌏',rev:42.3,share:15,tier:2},
+      {region:'Latin America',flag:'🌎',rev:8.4,share:3,tier:3},
+      {region:'Middle East & Africa',flag:'🌍',rev:4.4,share:2,tier:3}
     ],
     insights:[
-      {date:'Jul 2025',year:'2025',cat:'Product',title:'Fiserv launches Clover AI Insights',source:'Business Wire',summary:'Clover POS platform adds AI-powered merchant analytics, providing real-time sales forecasting and inventory optimization for SMB merchants. Expected to accelerate Clover ARPU growth.',tags:['Product','AI','Clover']},
-      {date:'Jun 2025',year:'2025',cat:'Inorganic',title:'Fiserv completes Worldpay stake transfer to GTCR',source:'SEC Filing',summary:'Final settlement of the $18.5B Worldpay stake sale to GTCR closes, with Fiserv retaining a minority stake. Proceeds deployed for share repurchases and balance sheet deleveraging.',tags:['Inorganic','Divestiture']},
-      {date:'May 2025',year:'2025',cat:'Customer Wins',title:'Major regional bank selects Finxact cloud core',source:'Press Release',summary:'A top-30 U.S. regional bank selected Fiserv\'s Finxact platform for cloud-native core banking modernization, representing the largest cloud core win of the year.',tags:['Customer Wins','Finxact','Cloud']},
-      {date:'Mar 2025',year:'2025',cat:'Sales & Distribution',title:'Fiserv expands Carat to 12 new European markets',source:'Investor Day Presentation',summary:'Carat omnichannel commerce platform extended to 12 new European markets, targeting enterprise merchants expanding cross-border e-commerce operations.',tags:['Sales & Distribution','Europe','Expansion']},
-      {date:'Jan 2025',year:'2025',cat:'Hiring',title:'Fiserv adds 200 AI and cloud engineers',source:'LinkedIn / Glassdoor',summary:'Fiserv announces hiring push focused on AI engineering and cloud infrastructure roles, targeting 200 net new hires in Q1 2025 to support Finxact and Clover AI roadmaps.',tags:['Hiring','AI','Cloud']},
-      {date:'Nov 2024',year:'2024',cat:'Product',title:'Pay-by-bank integration goes live on Carat',source:'Press Release',summary:'Fiserv integrates account-to-account pay-by-bank functionality into Carat, enabling merchants to accept direct bank transfers alongside card payments to reduce processing costs.',tags:['Product','Open Banking','Carat']},
-      {date:'Sep 2024',year:'2024',cat:'R&D / Innovation',title:'Fiserv partners with NVIDIA on AI infrastructure',source:'Press Release',summary:'Strategic partnership with NVIDIA to deploy AI accelerators in Fiserv\'s data centers, enabling faster model training for fraud detection, risk scoring, and merchant analytics.',tags:['R&D / Innovation','AI','Partnership']},
-      {date:'Jul 2024',year:'2024',cat:'Marketing',title:'One Fiserv brand campaign launches globally',source:'Marketing Week',summary:'Unified global brand campaign "One Fiserv" rolls out across 20 markets, reinforcing the integrated merchant + financial platform narrative and driving enterprise awareness.',tags:['Marketing','Brand','Global']},
-      {date:'Apr 2023',year:'2023',cat:'Inorganic',title:'GTCR acquires 55% of Worldpay from Fiserv for $18.5B',source:'Wall Street Journal',summary:'Landmark divestiture transaction valued Worldpay at $18.5B. Fiserv retains 45% minority stake. Proceeds allow Fiserv to sharpen focus on core banking and payments.',tags:['Inorganic','Divestiture','Worldpay']},
-      {date:'Feb 2022',year:'2022',cat:'Inorganic',title:'Fiserv acquires Payrix to expand embedded payments',source:'PR Newswire',summary:'Fiserv completes acquisition of Payrix, a payments facilitation platform for software companies, bolstering embedded payments capabilities for software-led businesses.',tags:['Inorganic','Acquisition','Embedded Payments']}
+      {date:'Jun 2025',year:'2025',cat:'Product',title:'Microsoft Copilot+ PC and AI Agent Platform Expansion',
+       source:'Microsoft Investor Relations',summary:'Microsoft launched Copilot+ PCs and expanded its AI agent platform across Microsoft 365, enabling autonomous agents for enterprise workflows. Agentforce-style AI agents were embedded natively into Teams, Outlook, and SharePoint, driving M365 Copilot seat growth to over 30 million monthly actives.',tags:['AI','Copilot','M365']},
+      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'Azure AI Foundry reaches $13B Annual Run Rate',
+       source:'Microsoft Q3 FY2025 Earnings',summary:'Azure AI services surpassed a $13B annual run rate, up 130% YoY, as enterprises adopted Microsoft\'s integrated AI infrastructure stack. Azure OpenAI Service adoption accelerated with over 65,000 enterprise customers.',tags:['Azure','AI','Cloud']},
+      {date:'Oct 2024',year:'2024',cat:'Inorganic',title:'Activision Blizzard Integration Drives Game Pass Growth',
+       source:'Bloomberg',summary:'Following the $75.4B Activision Blizzard acquisition, Microsoft Game Pass surpassed 34 million subscribers, with Call of Duty and Diablo IV contributing to a 61% jump in gaming revenue.',tags:['Gaming','M&A','Xbox']},
+      {date:'Jul 2024',year:'2024',cat:'Product',title:'Copilot for Microsoft 365 GA and Enterprise Adoption',
+       source:'Microsoft Tech Community',summary:'Microsoft 365 Copilot reached general availability for all business tiers, driving a significant uplift in ARPU for commercial M365 seats. Fortune 500 adoption reached 85% penetration within 12 months of GA.',tags:['Copilot','M365','Enterprise']},
+      {date:'Jan 2023',year:'2023',cat:'Inorganic',title:'$10B OpenAI Investment Cements AI Leadership',
+       source:'Wall Street Journal',summary:'Microsoft committed an additional $10B to OpenAI, extending its exclusive cloud-partnership and integrating GPT-4 across Bing, Azure, Office 365 and GitHub Copilot. This partnership fundamentally reshapes Microsoft\'s AI roadmap.',tags:['OpenAI','AI','Partnership']},
+      {date:'Mar 2022',year:'2022',cat:'Inorganic',title:'Nuance Communications Acquisition Closes at $19.7B',
+       source:'Microsoft Press Release',summary:'Microsoft completed the acquisition of Nuance Communications for $19.7B, accelerating its healthcare AI strategy and embedding conversational AI capabilities across Dragon Medical and Azure Cognitive Services.',tags:['Nuance','Healthcare','AI']}
     ],
     productStrategy:[
-      {year:'2020',title:'Clover Ecosystem Expansion',desc:'Fiserv accelerates SMB merchant acquiring through Clover hardware + software ecosystem, expanding beyond POS to include inventory, payroll, and financing tools.',type:'Platform Expansion'},
-      {year:'2021',title:'Finxact Cloud Core Acquisition',desc:'Acquisition of Finxact brings a cloud-native, API-first core banking platform. Positions Fiserv to compete in bank modernization alongside Temenos and Thought Machine.',type:'M&A'},
-      {year:'2022',title:'Carat Enterprise Commerce',desc:'Launch of Carat as Fiserv\'s enterprise omnichannel commerce platform, targeting large merchants seeking unified in-store, online, and mobile payment orchestration.',type:'Product Launch'},
-      {year:'2023',title:'One Fiserv Integration Program',desc:'Internal reorganization aligning Merchant and Financial segments. Launches integrated cross-sell motion enabling financial institutions to offer Clover-powered merchant services.',type:'Strategic Pivot'},
-      {year:'2024',title:'AI Across the Platform',desc:'AI-powered features rolled out across Clover analytics, fraud detection, and credit decisioning. Partnership with NVIDIA for AI infrastructure acceleration.',type:'AI Integration'},
-      {year:'2025',title:'Cloud Core Modernization Drive',desc:'Aggressive Finxact migration program targeting mid-tier and regional U.S. banks migrating from legacy Premier and Precision cores. First international Finxact wins.',type:'Cloud'}
+      {year:'2022',title:'Cloud-First Consolidation',desc:'Microsoft completed the Nuance acquisition and doubled down on Azure as the enterprise AI platform, integrating AI capabilities across Dynamics 365 and Teams. GitHub Copilot launched commercially, marking Microsoft\'s first AI developer monetization.',type:'Platform Expansion'},
+      {year:'2023',title:'OpenAI Era Begins',desc:'The $10B OpenAI partnership transformed Microsoft\'s product roadmap. GPT-4 was integrated into Bing, Azure OpenAI Service, and Office 365 Copilot (preview). Microsoft became the default AI infrastructure for Fortune 500 enterprises.',type:'AI Transformation'},
+      {year:'2024',title:'Copilot Everywhere',desc:'Microsoft 365 Copilot reached GA across all tiers. Azure AI Foundry, Copilot Studio, and AI Agents became the enterprise AI standard. GitHub Copilot Enterprise surpassed 1.8M paid users.',type:'AI Monetization'},
+      {year:'2025',title:'Autonomous Agent Platform',desc:'Microsoft launched the autonomous agent platform with multi-agent orchestration in Teams and SharePoint. Azure AI hit $13B ARR. Copilot+ PCs created a new AI-PC category, expanding the AI surface to endpoints.',type:'Agentic AI'}
     ],
     launchTimeline:[
-      {date:'Q2 2025',cat:'New Product',title:'Clover AI Insights',desc:'AI-powered merchant analytics and forecasting module built natively into Clover POS platform.',tags:['AI','Merchant']},
-      {date:'Q1 2025',cat:'Enhancement',title:'Pay-by-Bank on Carat v3.0',desc:'Account-to-account payment acceptance integrated into Carat omnichannel suite.',tags:['Payments','Open Banking']},
-      {date:'Q3 2024',cat:'Partnership',title:'NVIDIA AI Infrastructure',desc:'Strategic partnership for GPU-accelerated AI model deployment across Fiserv platforms.',tags:['AI','Infrastructure']},
-      {date:'Q2 2024',cat:'New Product',title:'Finxact Multi-Tenant SaaS',desc:'Finxact core banking available as multi-tenant SaaS with shared infrastructure model.',tags:['Cloud','Core Banking']},
-      {date:'Q1 2024',cat:'Enhancement',title:'Carat International Expansion',desc:'Carat omnichannel platform extended to 12 European markets with local payment method support.',tags:['International','Commerce']},
-      {date:'Q4 2023',cat:'New Product',title:'Embedded Lending via Payrix',desc:'Merchant cash advance and lending products embedded into Payrix PaaS offering.',tags:['Lending','Embedded Finance']},
-      {date:'Q2 2022',cat:'New Product',title:'Carat Enterprise Platform Launch',desc:'Full launch of Carat as unified enterprise commerce platform for large merchants.',tags:['Enterprise','Commerce']},
-      {date:'Q1 2022',cat:'Enhancement',title:'Clover Capital SMB Financing',desc:'Launch of Clover Capital, providing revenue-based financing directly through Clover dashboard.',tags:['SMB','Financing']}
+      {date:'Q1 2022',cat:'Acquisition',title:'Nuance Acquisition Closes',desc:'$19.7B acquisition of voice AI leader Nuance completes, powering healthcare AI.',tags:['M&A','Healthcare']},
+      {date:'Q3 2022',cat:'New Product',title:'GitHub Copilot GA',desc:'GitHub Copilot launches commercially, becoming the world\'s most adopted AI developer tool.',tags:['AI','Developer']},
+      {date:'Q1 2023',cat:'Partnership',title:'$10B OpenAI Investment',desc:'Landmark investment in OpenAI locks in exclusive Azure partnership and GPT-4 integration.',tags:['AI','OpenAI']},
+      {date:'Q2 2023',cat:'New Product',title:'Azure OpenAI Service GA',desc:'Enterprise-grade GPT-4 APIs available on Azure, attracting 65,000+ enterprise customers.',tags:['Azure','OpenAI']},
+      {date:'Q4 2023',cat:'Acquisition',title:'Activision Blizzard Closes',desc:'$75.4B gaming acquisition closes after 21-month regulatory review, adding Call of Duty, Blizzard.',tags:['Gaming','M&A']},
+      {date:'Q2 2024',cat:'New Product',title:'Microsoft 365 Copilot GA All Tiers',desc:'Copilot expanded to SMB and frontline workers, driving M365 ARPU expansion.',tags:['Copilot','M365']},
+      {date:'Q3 2024',cat:'New Product',title:'Copilot Studio & AI Agents',desc:'No-code agent builder enables enterprises to deploy autonomous workflow agents.',tags:['AI Agents','Copilot']},
+      {date:'Q2 2025',cat:'New Product',title:'Copilot+ PC Launch',desc:'New AI-native PC category with dedicated NPU chips redefines Windows endpoints.',tags:['Hardware','AI']}
     ],
     portfolioMatrix:[
-      {name:'Clover',segment:'Merchant',revenue:28,growth:18,stage:'Growth Star',color:'#3b82f6'},
-      {name:'Carat',segment:'Merchant',revenue:18,growth:15,stage:'Growth',color:'#60a5fa'},
-      {name:'Core Banking',segment:'Financial',revenue:24,growth:4,stage:'Cash Cow',color:'#6366f1'},
-      {name:'Digital Banking',segment:'Financial',revenue:14,growth:12,stage:'Growth',color:'#8b5cf6'},
-      {name:'Card Processing',segment:'Financial',revenue:10,growth:6,stage:'Stable',color:'#10b981'},
-      {name:'Finxact',segment:'Cloud',revenue:6,growth:35,stage:'Question Mark',color:'#f59e0b'}
+      {name:'Azure AI',segment:'Cloud',revenue:90,growth:35,stage:'Growth Star',color:'#0078d4'},
+      {name:'M365 Copilot',segment:'Productivity',revenue:67,growth:42,stage:'Growth Star',color:'#00a4ef'},
+      {name:'Dynamics 365',segment:'Business Apps',revenue:34,growth:19,stage:'Growth Star',color:'#737373'},
+      {name:'GitHub Copilot',segment:'Developer',revenue:12,growth:55,stage:'Emerging',color:'#24292f'},
+      {name:'Teams',segment:'Collaboration',revenue:18,growth:8,stage:'Cash Cow',color:'#6264a7'},
+      {name:'Power Platform',segment:'Low-Code',revenue:9,growth:22,stage:'Growth Star',color:'#742774'}
     ],
     inorganic:[
-      {date:'Apr 2023',type:'Divestiture',deal:'Worldpay Stake to GTCR',value:'$18.5B',target:'Worldpay',rationale:'Monetize non-core asset; focus on core banking and payments',status:'Completed',impact:'High'},
-      {date:'Feb 2022',type:'Acquisition',deal:'Payrix Acquisition',value:'Undisclosed',target:'Payrix',rationale:'Expand embedded payments / PaaS for software companies',status:'Completed',impact:'Medium'},
-      {date:'Jan 2021',type:'Acquisition',deal:'Finxact Acquisition',value:'~$650M',target:'Finxact',rationale:'Cloud-native core banking capability to compete in bank modernization',status:'Completed',impact:'High'},
-      {date:'Jan 2020',type:'Acquisition',deal:'Bypass Mobile',value:'Undisclosed',target:'Bypass Mobile',rationale:'Expand enterprise self-service and stadium commerce solutions',status:'Completed',impact:'Low'}
+      {date:'Mar 2022',type:'Acquisition',deal:'Nuance Communications',value:'$19.7B',
+       target:'Nuance Communications',rationale:'Healthcare AI and voice recognition capabilities embedded into Azure and Dynamics 365.',status:'Completed',impact:'High'},
+      {date:'Jan 2023',type:'Investment',deal:'OpenAI Series C',value:'$10B',
+       target:'OpenAI',rationale:'Exclusive Azure cloud partnership and GPT-4/ChatGPT integration across Microsoft product suite.',status:'Completed',impact:'Transformational'},
+      {date:'Oct 2023',type:'Acquisition',deal:'Activision Blizzard',value:'$75.4B',
+       target:'Activision Blizzard King',rationale:'Largest gaming acquisition in history; expands Game Pass, adds Call of Duty, Candy Crush.',status:'Completed',impact:'High'},
+      {date:'Jun 2024',type:'Investment',deal:'Mistral AI Partnership',value:'$16M',
+       target:'Mistral AI',rationale:'European AI model partnership to diversify AI portfolio on Azure beyond OpenAI.',status:'Completed',impact:'Medium'}
     ],
     rdData:{
-      investment:[850,920,980,1050,1150,1250],
-      areas:['AI/ML','Cloud Infrastructure','Fraud & Security','Payments Processing','Digital Banking','Open Banking'],
-      areaVals:[28,22,18,16,10,6]
+      investment:[19900,20716,24512,27195,29510,32500],
+      areas:['AI & Machine Learning','Cloud Infrastructure','Security','Developer Tools','Business Applications','Gaming & Mixed Reality'],
+      areaVals:[32,25,15,12,10,6]
     }
   },
-  fis: {
-    id:'fis', name:'FIS', ticker:'FIS', exchange:'NYSE', hq:'Jacksonville, 🇺🇸',
-    color:'#8b5cf6', initials:'FIS', sector:'Financial Technology',
-    founded:1968, employees:'~49,000', ceo:'Stephanie Ferris', website:'fisglobal.com',
-    description:'FIS is a global leader in financial technology, providing core banking, payments, and capital markets solutions to >50,000 clients across 130+ countries. Undergoing "Future Forward" transformation program.',
-    revenue2024:10.1, marketCap:'$42B', rating:3.8,
+
+  salesforce: {
+    id:'salesforce', name:'Salesforce', ticker:'CRM', exchange:'NYSE',
+    hq:'San Francisco, 🇺🇸', color:'#00a1e0', initials:'S',
+    sector:'AI-Powered Enterprise Software',
+    founded:1999, employees:'~72,000', ceo:'Marc Benioff', website:'salesforce.com',
+    description:'Salesforce is the global leader in CRM software, pioneering cloud-based customer relationship management for over 25 years. Its Einstein AI platform and Agentforce autonomous AI agents are redefining enterprise customer engagement. With FY2025 revenue of $37.9B and a 27% global CRM market share, Salesforce remains the dominant force in AI-driven sales, service, and marketing automation.',
+    revenue2024:34.9, marketCap:'$290B', rating:4.5,
     kpis:[
-      {label:'Revenue FY2024',val:'$10.1B',delta:'+4.8%',dir:'up',color:'blue'},
-      {label:'EBITDA Margin',val:'31.0%',delta:'-1.5pp',dir:'down',color:'red'},
-      {label:'Transformation',val:'Future Fwd',delta:'In Progress',dir:'neutral',color:'amber'},
-      {label:'Composite Score',val:'3.8/5',delta:'Strong',dir:'neutral',color:'indigo'}
+      {label:'Revenue FY2025',val:'$37.9B',delta:'+8.7%',dir:'up',color:'blue'},
+      {label:'Operating Margin', val:'19.0%', delta:'+4.6pp',dir:'up',color:'green'},
+      {label:'Market Share (CRM)',val:'27.0%', delta:'Leader',dir:'neutral',color:'indigo'},
+      {label:'Composite Score',val:'4.5/5',delta:'Leader', dir:'neutral',color:'amber'}
     ],
-    revenues:[10.6,11.0,11.5,12.2,10.1,10.7],
-    ebitda:[35.5,34.0,33.1,32.5,31.0,30.2],
-    netIncome:[0.8,1.0,1.3,1.5,1.7,1.8],
-    revGrowth:[2.4,3.8,4.5,6.2,4.8,5.1],
-    eps:[1.4,1.7,2.2,2.6,3.0,3.3],
-    netMargin:[7.5,9.1,11.3,12.3,16.8,16.8],
-    years:[2020,2021,2022,2023,2024,2025],
+    revenues: [21.3,26.5,26.5,31.4,34.9,37.9],
+    ebitda:   [16.0,18.2,20.7,22.5,26.1,29.0],
+    netIncome:[4.07,1.44,1.44,0.21,1.45,6.20],
+    revGrowth:[24.3,24.4,0.0,18.5,11.2,8.7],
+    eps:      [4.36,1.48,1.48,0.22,1.53,6.40],
+    netMargin:[19.1,5.4,5.4,0.7,4.2,16.4],
+    years:    [2020,2021,2022,2023,2024,2025],
     topProducts:[
-      {name:'Banking Solutions Platform',segment:'Banking',share:38,color:'#8b5cf6'},
-      {name:'Capital Market Solutions',segment:'CapMarkets',share:32,color:'#a78bfa'},
-      {name:'Payments Ecosystem',segment:'Payments',share:18,color:'#c4b5fd'},
-      {name:'Digital One',segment:'Digital',share:12,color:'#ddd6fe'}
+      {name:'Sales Cloud',segment:'CRM',share:30,color:'#00a1e0'},
+      {name:'Service Cloud',segment:'CRM',share:25,color:'#0070d2'},
+      {name:'Agentforce / Einstein AI',segment:'AI Platform',share:18,color:'#ff6b6b'},
+      {name:'Data Cloud',segment:'Data',share:12,color:'#f4a261'},
+      {name:'Slack',segment:'Collaboration',share:9,color:'#4a154b'},
+      {name:'Marketing Cloud',segment:'Marketing',share:6,color:'#00b5ad'}
     ],
-    segments:[{name:'Banks & Financial Institutions',pct:48,icon:'🏦'},{name:'Capital Markets Firms',pct:32,icon:'📈'},{name:'Insurance Companies',pct:12,icon:'🛡️'},{name:'Other',pct:8,icon:'⚙️'}],
-    geoData:[{region:'North America',flag:'🌎',rev:7.9,share:78,tier:1},{region:'Europe',flag:'🌍',rev:1.2,share:12,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.6,share:6,tier:2},{region:'MEA',flag:'🌍',rev:0.4,share:4,tier:2}],
+    segments:[
+      {name:'Sales & Service Cloud',pct:55,icon:'🤝'},
+      {name:'Platform & Other',pct:22,icon:'⚙️'},
+      {name:'Marketing & Commerce',pct:13,icon:'📣'},
+      {name:'Integration & Analytics',pct:10,icon:'📊'}
+    ],
+    geoData:[
+      {region:'North America',flag:'🌎',rev:25.3,share:67,tier:1},
+      {region:'Europe',flag:'🌍',rev:8.7,share:23,tier:1},
+      {region:'Asia Pacific',flag:'🌏',rev:3.7,share:10,tier:2}
+    ],
     insights:[
-      {date:'Jun 2025',year:'2025',cat:'Product',title:'FIS launches Modern Banking Platform v2.0',source:'Press Release',summary:'Second major release of FIS Modern Banking Platform on Azure includes embedded AI decisioning and real-time payments orchestration.',tags:['Product','Cloud','AI']},
-      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'FIS opens Singapore Innovation Lab',source:'Business Wire',summary:'New R&D hub in Singapore focused on AI payments, digital assets, and embedded finance for Asia Pacific markets.',tags:['R&D / Innovation','APAC']},
-      {date:'Dec 2024',year:'2024',cat:'Hiring',title:'FIS reduces global headcount by 5%',source:'Reuters',summary:'As part of Future Forward transformation, FIS announces workforce reduction impacting approximately 2,500 employees globally, targeting $400M annual cost savings.',tags:['Hiring','Transformation']},
-      {date:'Aug 2024',year:'2024',cat:'Customer Wins',title:'FIS wins tier-1 European bank for capital markets',source:'Press Release',summary:'Major European asset manager selects FIS capital markets technology platform for derivatives processing and risk management modernization.',tags:['Customer Wins','Capital Markets','Europe']}
+      {date:'Sep 2024',year:'2024',cat:'Product',title:'Agentforce Launches — Autonomous AI Agents for CRM',
+       source:'Salesforce Dreamforce 2024',summary:'Salesforce unveiled Agentforce, its autonomous AI agent platform built on Data Cloud and Einstein AI. The platform enables companies to deploy self-directed AI agents for sales prospecting, customer service resolution, and marketing automation without human intervention.',tags:['AI Agents','Agentforce','CRM']},
+      {date:'Mar 2025',year:'2025',cat:'Product',title:'Agentforce 2.0 with Multi-Agent Orchestration',
+       source:'Salesforce Press Release',summary:'Agentforce 2.0 introduced multi-agent orchestration, allowing enterprises to chain specialized AI agents into complex workflows. Early adopters including Saks Fifth Avenue and Wiley reported 40-60% reduction in manual support ticket handling.',tags:['Agentforce','AI','Automation']},
+      {date:'Jun 2024',year:'2024',cat:'Product',title:'Data Cloud Surpasses 30 Trillion Records Processed',
+       source:'Salesforce Q1 FY2025 Earnings',summary:'Salesforce Data Cloud, the real-time data unification engine powering Einstein AI and Agentforce, processed over 30 trillion records with 1,000+ paid customers. Data Cloud became the fastest-growing product in Salesforce history.',tags:['Data Cloud','AI','Growth']},
+      {date:'Jan 2025',year:'2025',cat:'R&D / Innovation',title:'Einstein AI GPT Integration Across All Clouds',
+       source:'Salesforce Tech Blog',summary:'Salesforce completed the full integration of GPT-4o models into Einstein AI across all major Clouds, enabling generative summaries, predictive lead scoring, and automated email drafting natively within CRM workflows.',tags:['Einstein','GPT','AI']},
+      {date:'Nov 2022',year:'2022',cat:'Inorganic',title:'Slack Deep Integration with Salesforce Customer 360',
+       source:'Salesforce Annual Report',summary:'Salesforce completed its deep technical integration of Slack with Customer 360, creating a unified workspace where Salesforce records, AI alerts, and workflow automations surface natively in Slack channels.',tags:['Slack','Integration','CRM']}
     ],
     productStrategy:[
-      {year:'2020',title:'Worldpay Integration',desc:'Post-2019 Worldpay acquisition integration, creating unified banking + payments technology platform.',type:'Integration'},
-      {year:'2022',title:'Modern Banking Platform on Azure',desc:'Launch of cloud-native Modern Banking Platform in partnership with Microsoft Azure.',type:'Product Launch'},
-      {year:'2023',title:'Future Forward Transformation',desc:'Multi-year enterprise transformation targeting $400M+ cost savings and margin improvement.',type:'Strategic Pivot'},
-      {year:'2024',title:'Capital Markets AI Integration',desc:'AI and ML embedded across capital markets platform for risk analytics and trading intelligence.',type:'AI Integration'},
-      {year:'2025',title:'Digital One Expansion',desc:'Digital One omnichannel banking platform extended to 15 new markets across Europe and APAC.',type:'Expansion'}
+      {year:'2022',title:'Slack & Customer 360 Integration',desc:'Salesforce completed Slack integration, creating a unified communication and CRM platform. Genie (later renamed Data Cloud) was launched as the real-time CDP powering AI across all Salesforce applications.',type:'Platform Expansion'},
+      {year:'2023',title:'Einstein GPT & Generative AI Rollout',desc:'Salesforce launched Einstein GPT, the world\'s first generative AI CRM product, integrating OpenAI capabilities across Sales, Service, and Marketing Clouds. Data Cloud became a standalone product.',type:'AI Transformation'},
+      {year:'2024',title:'Agentforce — Agentic AI Era',desc:'Salesforce pivoted to agentic AI with Agentforce, enabling autonomous AI agents grounded in CRM data. Data Cloud became the backbone of AI, processing 30T+ records and powering real-time agent decisions.',type:'Agentic AI'},
+      {year:'2025',title:'Agentforce 2.0 and Margin Expansion',desc:'Agentforce 2.0 with multi-agent orchestration drove strong enterprise adoption. Operational efficiency focus improved GAAP operating margins to 19%, while Agentforce-driven upsells began contributing meaningfully to revenue.',type:'AI Monetization'}
     ],
     launchTimeline:[
-      {date:'Q1 2025',cat:'New Product',title:'Modern Banking Platform v2.0',desc:'AI-enhanced cloud banking platform with embedded real-time payments.',tags:['Cloud','AI']},
-      {date:'Q3 2024',cat:'Enhancement',title:'Capital Markets Risk Analytics v4',desc:'Upgraded risk analytics engine with ML-powered scenario generation.',tags:['CapMarkets','AI']},
-      {date:'Q2 2023',cat:'New Product',title:'FIS Digital One Launch',desc:'Unified digital banking front-end platform replacing fragmented legacy portals.',tags:['Digital','Banking']},
+      {date:'Q1 2022',cat:'New Product',title:'Genie (Data Cloud) Launch',desc:'Real-time CDP unifying fragmented customer data across all touchpoints to power AI.',tags:['Data','CDP']},
+      {date:'Q2 2023',cat:'New Product',title:'Einstein GPT Launch',desc:'First generative AI CRM, integrating OpenAI models across all Salesforce Clouds.',tags:['AI','Generative']},
+      {date:'Q3 2023',cat:'New Product',title:'Data Cloud GA and Standalone Pricing',desc:'Data Cloud hits 1,000 customers as a standalone product with unified data fabric.',tags:['Data Cloud']},
+      {date:'Q3 2024',cat:'New Product',title:'Agentforce GA',desc:'Autonomous AI agents for sales and service launched at Dreamforce 2024.',tags:['AI Agents','Agentforce']},
+      {date:'Q1 2025',cat:'New Product',title:'Agentforce 2.0 Multi-Agent',desc:'Multi-agent orchestration enables complex, chained AI workflows across CRM.',tags:['Agentforce','AI']}
     ],
     portfolioMatrix:[
-      {name:'Banking Solutions',segment:'Banking',revenue:38,growth:5,stage:'Cash Cow',color:'#8b5cf6'},
-      {name:'Capital Markets',segment:'CapMarkets',revenue:32,growth:7,stage:'Growth',color:'#a78bfa'},
-      {name:'Payments',segment:'Payments',revenue:18,growth:4,stage:'Stable',color:'#c4b5fd'},
-      {name:'Digital One',segment:'Digital',revenue:12,growth:22,stage:'Question Mark',color:'#10b981'}
+      {name:'Sales Cloud',segment:'CRM',revenue:11,growth:10,stage:'Cash Cow',color:'#00a1e0'},
+      {name:'Service Cloud',segment:'CRM',revenue:9.5,growth:12,stage:'Cash Cow',color:'#0070d2'},
+      {name:'Agentforce',segment:'AI',revenue:5,growth:80,stage:'Emerging',color:'#ff6b6b'},
+      {name:'Data Cloud',segment:'Data',revenue:4,growth:65,stage:'Growth Star',color:'#f4a261'},
+      {name:'Slack',segment:'Collab',revenue:3.5,growth:15,stage:'Growth Star',color:'#4a154b'}
     ],
     inorganic:[
-      {date:'Sep 2023',type:'Divestiture',deal:'Worldpay Merchant Solutions to GTCR',value:'$18.5B',target:'Worldpay',rationale:'Refocus on banking and capital markets core competencies',status:'Completed',impact:'High'},
-      {date:'Jan 2020',type:'Integration',deal:'Worldpay Integration Completion',value:'N/A',target:'Worldpay',rationale:'Complete integration of 2019 $43B Worldpay acquisition',status:'Completed',impact:'High'}
+      {date:'Jul 2021',type:'Acquisition',deal:'Slack Technologies',value:'$27.7B',
+       target:'Slack',rationale:'Unified collaboration and CRM platform; Slack became the engagement layer for Customer 360.',status:'Completed',impact:'High'},
+      {date:'Sep 2024',type:'Acquisition',deal:'Own.com (Backup)',value:'$1.9B',
+       target:'Own.com',rationale:'Data backup and recovery for Salesforce and ServiceNow environments, enhancing data resilience.',status:'Completed',impact:'Medium'},
+      {date:'Feb 2024',type:'Investment',deal:'Anthropic Partnership',value:'N/A',
+       target:'Anthropic',rationale:'Multi-model AI strategy integrating Claude models into Einstein AI alongside OpenAI GPT-4.',status:'Active',impact:'Medium'}
     ],
-    rdData:{investment:[580,620,640,660,680,700],areas:['Cloud Infrastructure','AI/ML','Capital Markets Tech','Digital Banking','Payments','Risk Management'],areaVals:[25,22,20,18,10,5]}
+    rdData:{
+      investment:[4470,4400,4670,4903,5104,5800],
+      areas:['Einstein AI / Agentforce','Data Cloud','CRM Core','Slack & Collaboration','Marketing Cloud','Integration'],
+      areaVals:[30,22,20,14,8,6]
+    }
   },
-  jackhenry: {
-    id:'jackhenry', name:'Jack Henry', ticker:'JKHY', exchange:'NASDAQ', hq:'Monett, 🇺🇸',
-    color:'#10b981', initials:'JH', sector:'Community Banking Technology',
-    founded:1976, employees:'~7,240', ceo:'Greg Adelson', website:'jackhenry.com',
-    description:'Jack Henry provides core processing, digital banking, and payment solutions exclusively to U.S. community banks and credit unions. Market leader in community bank core processing with ~1,100+ bank clients.',
-    revenue2024:2.2, marketCap:'$12B', rating:3.0,
+
+  servicenow: {
+    id:'servicenow', name:'ServiceNow', ticker:'NOW', exchange:'NYSE',
+    hq:'Santa Clara, 🇺🇸', color:'#81b5a1', initials:'SN',
+    sector:'AI-Powered Enterprise Software',
+    founded:2004, employees:'~22,000', ceo:'Bill McDermott', website:'servicenow.com',
+    description:'ServiceNow is the enterprise workflow automation leader, providing a unified AI platform that connects people, processes, and systems across IT, HR, finance, and operations. Its Now Platform with embedded AI agents is transforming how enterprises automate work at scale. ServiceNow reported FY2025 revenue of $13.3B with a best-in-class net revenue retention above 120%.',
+    revenue2024:10.98, marketCap:'$210B', rating:4.4,
     kpis:[
-      {label:'Revenue FY2025',val:'$2.4B',delta:'+7.2%',dir:'up',color:'blue'},
-      {label:'SaaS Revenue %',val:'~62%',delta:'+5pp YoY',dir:'up',color:'green'},
-      {label:'Client Retention',val:'>99%',delta:'Best-in-class',dir:'up',color:'indigo'},
-      {label:'Composite Score',val:'3.0/5',delta:'Competitive',dir:'neutral',color:'amber'}
+      {label:'Revenue FY2025',val:'$13.3B',delta:'+20.9%',dir:'up',color:'blue'},
+      {label:'Operating Margin', val:'13.7%', delta:'+1.3pp',dir:'up',color:'green'},
+      {label:'Net Revenue Retention',val:'>120%', delta:'Best-in-Class',dir:'neutral',color:'indigo'},
+      {label:'Composite Score',val:'4.4/5',delta:'Leader', dir:'neutral',color:'amber'}
     ],
-    revenues:[1.55,1.64,1.75,1.87,2.2,2.38],
-    ebitda:[31.0,30.2,29.5,28.9,28.0,27.5],
-    netIncome:[0.28,0.32,0.35,0.39,0.42,0.45],
-    revGrowth:[4.7,5.9,6.4,7.1,5.8,6.2],
-    eps:[3.8,4.4,4.9,5.4,5.9,6.3],
-    netMargin:[18.1,19.5,20.0,20.9,19.1,18.9],
-    years:[2020,2021,2022,2023,2024,2025],
+    revenues: [4.5,5.9,7.2,9.0,11.0,13.3],
+    ebitda:   [20.1,22.5,24.0,25.8,26.5,28.0],
+    netIncome:[0.43,0.49,0.33,1.73,1.43,1.67],
+    revGrowth:[31.2,31.0,22.9,24.0,22.4,20.9],
+    eps:      [2.13,2.34,1.60,8.29,6.86,8.01],
+    netMargin:[9.5,8.3,4.5,19.3,13.0,12.6],
+    years:    [2020,2021,2022,2023,2024,2025],
     topProducts:[
-      {name:'SilverLake Core (Banks)',segment:'Core',share:35,color:'#10b981'},
-      {name:'Symitar (Credit Unions)',segment:'Core',share:30,color:'#34d399'},
-      {name:'Digital Banking Suite',segment:'Digital',share:18,color:'#6ee7b7'},
-      {name:'JHA PayCenter',segment:'Payments',share:12,color:'#a7f3d0'},
-      {name:'Banno (Digital Platform)',segment:'Digital',share:5,color:'#d1fae5'}
+      {name:'Now Platform (AI Core)',segment:'Platform',share:32,color:'#81b5a1'},
+      {name:'IT Service Management',segment:'ITSM',share:28,color:'#3eb489'},
+      {name:'AI Agents & Automation',segment:'AI',share:18,color:'#2b6cb0'},
+      {name:'Customer Service Mgmt',segment:'CSM',share:12,color:'#e67e22'},
+      {name:'Strategic Portfolio Mgmt',segment:'SPM',share:10,color:'#9b59b6'}
     ],
-    segments:[{name:'Community Banks',pct:55,icon:'🏦'},{name:'Credit Unions',pct:35,icon:'🤝'},{name:'Savings Institutions',pct:7,icon:'🏛️'},{name:'Other FIs',pct:3,icon:'⚙️'}],
-    geoData:[{region:'United States',flag:'🇺🇸',rev:2.2,share:100,tier:1}],
+    segments:[
+      {name:'ITSM & Platform',pct:50,icon:'🖥️'},
+      {name:'Customer & Field Service',pct:22,icon:'🤝'},
+      {name:'HR Service Delivery',pct:15,icon:'👥'},
+      {name:'Security & Risk',pct:13,icon:'🔒'}
+    ],
+    geoData:[
+      {region:'North America',flag:'🌎',rev:8.4,share:63,tier:1},
+      {region:'Europe',flag:'🌍',rev:3.4,share:26,tier:1},
+      {region:'Asia Pacific',flag:'🌏',rev:1.5,share:11,tier:2}
+    ],
     insights:[
-      {date:'Jul 2025',year:'2025',cat:'Inorganic',title:'Jack Henry acquires Victor Technologies',source:'Press Release',summary:'Acquisition of Victor Technologies expands Jack Henry\'s Payments-as-a-Service capabilities to serve fintechs and commercial clients beyond community banking.',tags:['Inorganic','PaaS','Acquisition']},
-      {date:'Apr 2025',year:'2025',cat:'Product',title:'Banno Business launches for SMB banking',source:'Press Release',summary:'New Banno Business module extends Jack Henry\'s digital banking platform to serve SMB clients of community banks with cash management and business banking tools.',tags:['Product','SMB','Digital']},
-      {date:'Nov 2022',year:'2022',cat:'Inorganic',title:'Payrailz acquisition closes',source:'PR Newswire',summary:'Acquisition of Payrailz adds AI-powered cloud-native digital payments capabilities, modernizing Jack Henry\'s payments stack.',tags:['Inorganic','AI','Payments']}
+      {date:'May 2025',year:'2025',cat:'Product',title:'Now Assist AI Agents Deployed Across 85% of Fortune 500',
+       source:'ServiceNow Q1 FY2025 Earnings',summary:'ServiceNow\'s Now Assist AI agents reached 85% penetration in the Fortune 500, processing over 250 million automated workflow requests per day. AI-driven resolution rates in ITSM reached 42%, reducing human ticket handling significantly.',tags:['AI Agents','Now Assist','ITSM']},
+      {date:'Jan 2025',year:'2025',cat:'Product',title:'Agentic AI Workflow Platform v2.0 Launch',
+       source:'ServiceNow Press Release',summary:'ServiceNow launched the next generation of its AI agent platform with multi-domain orchestration, enabling AI agents to coordinate across IT, HR, finance, and customer service workflows simultaneously.',tags:['AI','Agentic','Platform']},
+      {date:'Sep 2024',year:'2024',cat:'R&D / Innovation',title:'AI Governance and Responsible AI Framework',
+       source:'ServiceNow Tech Blog',summary:'ServiceNow launched a comprehensive AI governance framework embedded into the Now Platform, providing enterprise customers with explainability, bias detection, and compliance controls for all AI agents deployed.',tags:['AI Governance','Compliance','Trust']},
+      {date:'Oct 2023',year:'2023',cat:'Product',title:'Now Assist for ITSM Launch — Generative AI for IT',
+       source:'ServiceNow Knowledge 2023',summary:'ServiceNow launched Now Assist, embedding generative AI into ITSM to generate incident summaries, recommended resolutions, and automated change approvals. Adoption reached 500+ enterprise customers within 6 months.',tags:['Now Assist','Generative AI','ITSM']}
     ],
     productStrategy:[
-      {year:'2020',title:'Cloud Migration Roadmap',desc:'Jack Henry announces private-cloud migration roadmap for SilverLake and Symitar core platforms.',type:'Cloud Strategy'},
-      {year:'2022',title:'Payrailz AI Payments',desc:'Acquisition of Payrailz brings AI-powered, cloud-native payment platform to community banks.',type:'M&A'},
-      {year:'2024',title:'Jack Henry Platform Unification',desc:'Unified technology platform launched consolidating core, digital, and payments under single API layer.',type:'Platform'},
-      {year:'2025',title:'PaaS Expansion via Victor Technologies',desc:'Victor Technologies acquisition extends PaaS to fintech and commercial markets beyond traditional community banking.',type:'M&A'}
+      {year:'2022',title:'Platform Intelligence & Workflow Expansion',desc:'ServiceNow expanded its Now Platform with ML-powered workflow predictions and automated approvals. It entered new verticals including financial services operations and telecom network management.',type:'Platform Expansion'},
+      {year:'2023',title:'Generative AI Enters the Now Platform',desc:'ServiceNow embedded generative AI with Now Assist, making ITSM the first enterprise workflow product with native LLM-powered automation. AI-driven ticket resolution and change management became differentiators.',type:'AI Transformation'},
+      {year:'2024',title:'Agentic AI — AI Agents for Enterprise Work',desc:'ServiceNow shifted to agentic AI, deploying autonomous AI agents capable of handling end-to-end ITSM, HR, and customer service processes. The platform became the AI layer for enterprise operations.',type:'Agentic AI'},
+      {year:'2025',title:'Cross-Domain AI Orchestration',desc:'ServiceNow v2.0 agents orchestrate across domains simultaneously. With 85% Fortune 500 penetration for Now Assist, ServiceNow positioned as the enterprise AI operating system for workforce productivity.',type:'Market Leadership'}
     ],
     launchTimeline:[
-      {date:'Q1 2025',cat:'New Product',title:'Banno Business Module',desc:'SMB-focused digital banking for community bank business clients.',tags:['Digital','SMB']},
-      {date:'Q3 2024',cat:'Enhancement',title:'JH Platform API Layer',desc:'Unified API gateway connecting core, digital, and payments systems.',tags:['Platform','API']},
-      {date:'Q2 2022',cat:'New Product',title:'Payrailz Digital Payments',desc:'AI-driven real-time payment experiences for bank customers.',tags:['Payments','AI']}
+      {date:'Q2 2022',cat:'New Product',title:'Workflow Data Fabric Launch',desc:'Unified data layer enabling AI to work across all Now Platform workflow modules.',tags:['Data','Platform']},
+      {date:'Q2 2023',cat:'New Product',title:'Now Assist (Generative AI) GA',desc:'LLM-powered ticket summaries, resolution recommendations, and automated approvals.',tags:['AI','ITSM']},
+      {date:'Q1 2024',cat:'Partnership',title:'NVIDIA Partnership for AI Acceleration',desc:'Joint AI infrastructure development accelerating Now Platform AI inference at enterprise scale.',tags:['NVIDIA','AI','Infrastructure']},
+      {date:'Q3 2024',cat:'New Product',title:'AI Agent Studio Launch',desc:'Low-code tool for enterprises to build custom AI agents on the Now Platform.',tags:['AI Agents','Low-Code']},
+      {date:'Q1 2025',cat:'New Product',title:'Multi-Domain AI Agent Orchestration',desc:'AI agents coordinate autonomously across IT, HR, finance and customer service.',tags:['Agentic','Orchestration']}
     ],
     portfolioMatrix:[
-      {name:'SilverLake Core',segment:'Core',revenue:35,growth:3,stage:'Cash Cow',color:'#10b981'},
-      {name:'Symitar',segment:'Core',revenue:30,growth:4,stage:'Cash Cow',color:'#34d399'},
-      {name:'Digital Suite',segment:'Digital',revenue:18,growth:15,stage:'Growth',color:'#6ee7b7'},
-      {name:'PayCenter',segment:'Payments',revenue:12,growth:10,stage:'Growth',color:'#a7f3d0'},
-      {name:'Banno',segment:'Digital',revenue:5,growth:35,stage:'Question Mark',color:'#f59e0b'}
+      {name:'ITSM Pro',segment:'IT',revenue:4.4,growth:18,stage:'Cash Cow',color:'#81b5a1'},
+      {name:'Now Assist AI',segment:'AI',revenue:2.5,growth:70,stage:'Growth Star',color:'#2b6cb0'},
+      {name:'Customer Service Mgmt',segment:'CSM',revenue:1.7,growth:25,stage:'Growth Star',color:'#e67e22'},
+      {name:'HR Service Delivery',segment:'HR',revenue:1.2,growth:22,stage:'Growth Star',color:'#9b59b6'},
+      {name:'SPM',segment:'Planning',revenue:0.9,growth:15,stage:'Emerging',color:'#3eb489'}
     ],
     inorganic:[
-      {date:'Jul 2025',type:'Acquisition',deal:'Victor Technologies',value:'Undisclosed',target:'Victor Technologies',rationale:'Expand PaaS capabilities to fintech and commercial customers',status:'Completed',impact:'Medium'},
-      {date:'Nov 2022',type:'Acquisition',deal:'Payrailz',value:'Undisclosed',target:'Payrailz',rationale:'AI-powered cloud-native digital payments platform',status:'Completed',impact:'Medium'}
+      {date:'Jan 2021',type:'Acquisition',deal:'Element AI',value:'$230M',
+       target:'Element AI',rationale:'AI research talent and platform capabilities to accelerate Now Platform\'s ML/AI roadmap.',status:'Completed',impact:'Medium'},
+      {date:'Apr 2023',type:'Acquisition',deal:'G2K Group',value:'Undisclosed',
+       target:'G2K Group',rationale:'AI-powered IoT and retail data monitoring capabilities added to ServiceNow\'s industry solutions.',status:'Completed',impact:'Medium'},
+      {date:'Jun 2024',type:'Investment',deal:'Venture Investment in AI Startups',value:'$1.5B fund',
+       target:'Various AI startups',rationale:'ServiceNow Ventures fund targeting AI workflow startups to enrich the Now Platform ecosystem.',status:'Active',impact:'Medium'}
     ],
-    rdData:{investment:[180,200,215,230,250,265],areas:['Digital Banking','Core Modernization','Payments','AI/ML','Security','API'],areaVals:[30,25,20,15,7,3]}
+    rdData:{
+      investment:[939,1173,1470,1784,2123,2650],
+      areas:['AI Agents & Now Assist','Platform & Workflow Engine','ITSM & Operations','Customer & Field Service','Security & Risk','HR & Employee Experience'],
+      areaVals:[30,25,18,12,8,7]
+    }
   },
-  temenos: {
-    id:'temenos', name:'Temenos', ticker:'TEMN', exchange:'SIX', hq:'Geneva, 🇨🇭',
-    color:'#f59e0b', initials:'T', sector:'Banking Software',
-    founded:1993, employees:'~5,205', ceo:'Jean-Pierre Brulard', website:'temenos.com',
-    description:'Temenos is a Swiss banking software specialist with cloud-agnostic, AI-first core banking, digital banking, payments, and wealth management solutions deployed in 150+ countries across 950+ bank clients.',
-    revenue2024:1.0, marketCap:'$5B', rating:3.3,
+
+  oracle: {
+    id:'oracle', name:'Oracle', ticker:'ORCL', exchange:'NYSE',
+    hq:'Austin, 🇺🇸', color:'#f80000', initials:'O',
+    sector:'AI-Powered Enterprise Software',
+    founded:1977, employees:'~164,000', ceo:'Safra Catz', website:'oracle.com',
+    description:'Oracle is one of the world\'s largest enterprise software and cloud infrastructure companies, with a portfolio spanning database technology, ERP/HCM cloud applications, and AI-powered infrastructure. Its Fusion Cloud suite and Oracle Cloud Infrastructure (OCI) are growing rapidly as enterprises migrate from on-premise Oracle systems to the cloud. Oracle reported FY2025 revenue of $57.4B, driven by 24% cloud revenue growth.',
+    revenue2024:53.0, marketCap:'$500B', rating:4.1,
     kpis:[
-      {label:'Revenue FY2024',val:'$1.0B',delta:'+7.9%',dir:'up',color:'blue'},
-      {label:'SaaS/Sub Revenue',val:'~68%',delta:'+8pp YoY',dir:'up',color:'green'},
-      {label:'Countries Served',val:'150+',delta:'Global',dir:'neutral',color:'indigo'},
-      {label:'Composite Score',val:'3.3/5',delta:'Strong Specialist',dir:'neutral',color:'amber'}
+      {label:'Revenue FY2025',val:'$57.4B',delta:'+8.3%',dir:'up',color:'blue'},
+      {label:'Operating Margin', val:'29.0%', delta:'+1.0pp',dir:'up',color:'green'},
+      {label:'Cloud Revenue Growth',val:'+24%', delta:'FY2025',dir:'up',color:'indigo'},
+      {label:'Composite Score',val:'4.1/5',delta:'Strong', dir:'neutral',color:'amber'}
     ],
-    revenues:[1.38,1.44,1.52,1.62,1.75,1.9],
-    ebitda:[41.2,40.5,39.8,39.0,38.5,38.0],
-    netIncome:[0.28,0.31,0.35,0.38,0.42,0.45],
-    revGrowth:[4.3,4.9,5.5,6.7,7.9,8.5],
-    eps:[4.0,4.5,5.0,5.5,6.1,6.5],
-    netMargin:[20.3,21.5,23.0,23.5,24.0,23.7],
-    years:[2020,2021,2022,2023,2024,2025],
+    revenues: [39.1,40.5,42.4,50.0,53.0,57.4],
+    ebitda:   [40.0,40.5,32.0,40.5,38.5,40.0],
+    netIncome:[10.1,13.7,6.7,8.5,10.5,12.2],
+    revGrowth:[2.4,3.6,4.7,17.9,6.0,8.3],
+    eps:      [3.68,4.67,2.47,3.13,3.87,4.50],
+    netMargin:[25.8,33.8,15.8,17.0,19.8,21.3],
+    years:    [2020,2021,2022,2023,2024,2025],
     topProducts:[
-      {name:'Temenos Banking Cloud',segment:'Core',share:38,color:'#f59e0b'},
-      {name:'Transact (Core Banking)',segment:'Core',share:28,color:'#fbbf24'},
-      {name:'Digital Banking Infinity',segment:'Digital',share:18,color:'#fcd34d'},
-      {name:'Payments Hub',segment:'Payments',share:10,color:'#fde68a'},
-      {name:'Wealth Management',segment:'Wealth',share:6,color:'#fef3c7'}
+      {name:'Fusion Cloud ERP',segment:'ERP',share:28,color:'#f80000'},
+      {name:'Oracle Cloud Infrastructure',segment:'IaaS/PaaS',share:26,color:'#cc0000'},
+      {name:'Oracle AI Services',segment:'AI',share:18,color:'#ff6600'},
+      {name:'NetSuite',segment:'SMB ERP',share:14,color:'#e67e22'},
+      {name:'Oracle HCM Cloud',segment:'HCM',share:8,color:'#c0392b'},
+      {name:'Oracle Autonomous DB',segment:'Database',share:6,color:'#922b21'}
     ],
-    segments:[{name:'Tier 1-2 Global Banks',pct:45,icon:'🏦'},{name:'Regional Banks',pct:35,icon:'🏛️'},{name:'Neobanks / Digital',pct:12,icon:'📱'},{name:'Wealth Managers',pct:8,icon:'💎'}],
-    geoData:[{region:'Europe',flag:'🌍',rev:0.58,share:55,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.21,share:20,tier:1},{region:'MEA',flag:'🌍',rev:0.15,share:14,tier:2},{region:'Americas',flag:'🌎',rev:0.11,share:11,tier:2}],
+    segments:[
+      {name:'Cloud Services & License Support',pct:76,icon:'☁️'},
+      {name:'Cloud License & On-Premise',pct:14,icon:'🖥️'},
+      {name:'Hardware',pct:6,icon:'⚙️'},
+      {name:'Services',pct:4,icon:'🤝'}
+    ],
+    geoData:[
+      {region:'North America',flag:'🌎',rev:33.0,share:57,tier:1},
+      {region:'Europe',flag:'🌍',rev:14.4,share:25,tier:1},
+      {region:'Asia Pacific',flag:'🌏',rev:8.0,share:14,tier:2},
+      {region:'Latin America',flag:'🌎',rev:2.0,share:4,tier:3}
+    ],
     insights:[
-      {date:'May 2025',year:'2025',cat:'Product',title:'Temenos Banking Cloud achieves record SaaS bookings',source:'Annual Results',summary:'Temenos Banking Cloud SaaS bookings exceeded $180M in H1 2025, a 35% YoY increase, driven by European and APAC bank cloud migrations.',tags:['Product','SaaS','Cloud']},
-      {date:'Feb 2025',year:'2025',cat:'R&D / Innovation',title:'Temenos Virtual COO 2.0 with Generative AI',source:'Press Release',summary:'Second generation AI-COO product launches with generative AI capabilities for compliance automation, treasury optimization, and customer insights.',tags:['R&D / Innovation','AI','Banking']},
-      {date:'Oct 2023',year:'2023',cat:'Customer Wins',title:'Tier-1 APAC bank selects Temenos Banking Cloud',source:'Press Release',summary:'Top-10 Asia Pacific bank selects Temenos Banking Cloud for full core banking transformation, representing the largest APAC deal in company history.',tags:['Customer Wins','APAC','Cloud']}
+      {date:'Jun 2025',year:'2025',cat:'Product',title:'OCI AI Infrastructure Wins Hyperscale Cloud Contracts',
+       source:'Oracle FY2025 Earnings',summary:'Oracle signed $130B+ in AI infrastructure contracts through FY2025, with OCI emerging as the preferred alternative to AWS/Azure for AI training workloads. NVIDIA H100/H200 GPU clusters on OCI drove hyperscaler-class performance.',tags:['OCI','AI Infrastructure','GPU']},
+      {date:'Dec 2024',year:'2024',cat:'Inorganic',title:'Oracle and AWS Multi-Cloud Partnership Expansion',
+       source:'Oracle Press Release',summary:'Oracle expanded its multi-cloud partnership with AWS, enabling Oracle Database@AWS in all major AWS regions. This partnership accelerated enterprise cloud migrations and added Oracle to the hyperscaler ecosystem.',tags:['AWS','Multi-Cloud','Partnership']},
+      {date:'Mar 2024',year:'2024',cat:'Product',title:'Oracle AI Embedded in All Fusion Cloud Applications',
+       source:'Oracle CloudWorld 2024',summary:'Oracle completed the integration of AI across all Fusion Cloud applications including ERP, HCM, SCM, and CX, with zero additional licensing cost. AI features process 100+ billion transactions daily across the Oracle Cloud.',tags:['AI','Fusion','ERP']},
+      {date:'Jun 2022',year:'2022',cat:'Inorganic',title:'Cerner Health Acquisition Closes at $28.3B',
+       source:'Oracle Press Release',summary:'Oracle completed the $28.3B acquisition of Cerner, the leading electronic health records platform. The acquisition made Oracle the largest healthcare IT company globally and added $6B in annualized revenue.',tags:['Cerner','Healthcare','M&A']}
     ],
     productStrategy:[
-      {year:'2020',title:'SaaS-First Transition',desc:'Temenos pivots to SaaS-first go-to-market, repackaging core platform as subscription cloud service.',type:'Strategic Pivot'},
-      {year:'2022',title:'Banking Cloud Record Volumes',desc:'Temenos Banking Cloud processes record transaction volumes as bank cloud adoption accelerates post-pandemic.',type:'Milestone'},
-      {year:'2023',title:'AI-First Platform Strategy',desc:'AI embedded across all Temenos products with launch of Virtual COO for autonomous banking operations.',type:'AI Integration'},
-      {year:'2025',title:'$1B+ SaaS Bookings Target',desc:'Temenos targets $1B+ in cumulative SaaS bookings by FY2028, underpinned by Banking Cloud and Transact SaaS.',type:'Strategic Target'}
+      {year:'2022',title:'Healthcare Cloud Pivot via Cerner',desc:'Oracle completed the $28.3B Cerner acquisition, pivoting into healthcare IT as a major growth vector. Fusion Cloud applications expanded with embedded AI for ERP, SCM, and HCM.',type:'M&A Transformation'},
+      {year:'2023',title:'OCI Hyperscaler Ambitions',desc:'Oracle invested heavily in OCI data center expansion, adding GPU cluster capabilities to compete with AWS and Azure for AI workloads. Multi-cloud partnerships with Microsoft Azure and Google Cloud launched.',type:'Infrastructure Expansion'},
+      {year:'2024',title:'AI-First Application Suite',desc:'Oracle embedded AI at zero cost across all 100+ Fusion Cloud applications, differentiating from competitors who charged separately for AI add-ons. OCI won major AI training contracts.',type:'AI Integration'},
+      {year:'2025',title:'$130B AI Infrastructure Backlog',desc:'Oracle\'s AI infrastructure business accumulated $130B+ in contracted backlog, validating OCI as the third major enterprise cloud platform. Healthcare AI through Oracle Health and Cerner drove vertical-specific growth.',type:'AI Scale'}
     ],
     launchTimeline:[
-      {date:'Q2 2025',cat:'Enhancement',title:'Virtual COO 2.0 (GenAI)',desc:'Generative AI banking operations assistant with compliance automation.',tags:['AI','Compliance']},
-      {date:'Q1 2024',cat:'New Product',title:'Temenos Embedded Finance APIs',desc:'Open API suite enabling non-bank brands to embed banking services.',tags:['Open Banking','APIs']},
-      {date:'Q3 2023',cat:'New Product',title:'Payments Hub v3',desc:'ISO 20022 native real-time payments processing hub.',tags:['Payments','ISO20022']}
+      {date:'Q4 2022',cat:'Acquisition',title:'Cerner Acquisition Closes',desc:'$28.3B healthcare IT acquisition creates Oracle Health division.',tags:['Cerner','Healthcare','M&A']},
+      {date:'Q2 2023',cat:'New Product',title:'OCI Generative AI Service',desc:'Enterprise-grade generative AI on OCI for private, secure LLM deployments.',tags:['OCI','GenAI']},
+      {date:'Q3 2023',cat:'Partnership',title:'Azure Oracle Database Partnership',desc:'Oracle Database available natively on Azure in all major regions.',tags:['Azure','Multi-Cloud']},
+      {date:'Q1 2024',cat:'New Product',title:'AI in Fusion Cloud — All Apps, Zero Cost',desc:'AI features embedded across 100+ Fusion applications at no extra charge.',tags:['Fusion','AI','ERP']},
+      {date:'Q2 2024',cat:'Partnership',title:'AWS Oracle Database@AWS',desc:'Oracle Database natively available on AWS, expanding multi-cloud reach.',tags:['AWS','Multi-Cloud']}
     ],
     portfolioMatrix:[
-      {name:'Banking Cloud',segment:'Core',revenue:38,growth:30,stage:'Growth Star',color:'#f59e0b'},
-      {name:'Transact',segment:'Core',revenue:28,growth:5,stage:'Cash Cow',color:'#fbbf24'},
-      {name:'Digital Infinity',segment:'Digital',revenue:18,growth:18,stage:'Growth',color:'#fcd34d'},
-      {name:'Payments Hub',segment:'Payments',revenue:10,growth:22,stage:'Growth',color:'#10b981'},
-      {name:'Wealth Mgmt',segment:'Wealth',revenue:6,growth:12,stage:'Stable',color:'#8b5cf6'}
+      {name:'Fusion Cloud ERP',segment:'ERP',revenue:15,growth:22,stage:'Growth Star',color:'#f80000'},
+      {name:'OCI',segment:'Cloud Infra',revenue:14,growth:28,stage:'Growth Star',color:'#cc0000'},
+      {name:'Oracle Database',segment:'Database',revenue:12,growth:5,stage:'Cash Cow',color:'#922b21'},
+      {name:'NetSuite',segment:'SMB ERP',revenue:7,growth:18,stage:'Growth Star',color:'#e67e22'},
+      {name:'Oracle Health',segment:'Healthcare',revenue:6,growth:10,stage:'Cash Cow',color:'#c0392b'}
     ],
     inorganic:[
-      {date:'Dec 2020',type:'Acquisition',deal:'Kony (mobility platform)',value:'~$559M',target:'Kony',rationale:'Accelerate digital banking and mobile capabilities',status:'Completed',impact:'High'},
-      {date:'Mar 2020',type:'Acquisition',deal:'Logical Glue (AI/ML)',value:'Undisclosed',target:'Logical Glue',rationale:'Embed AI and machine learning across banking platform',status:'Completed',impact:'Medium'}
+      {date:'Jun 2022',type:'Acquisition',deal:'Cerner Corporation',value:'$28.3B',
+       target:'Cerner',rationale:'Healthcare IT platform to create Oracle Health; adds $6B ARR and positions Oracle as #1 healthcare cloud.',status:'Completed',impact:'Transformational'},
+      {date:'Dec 2023',type:'Partnership',deal:'Microsoft Azure Database Partnership',value:'N/A',
+       target:'Microsoft',rationale:'Oracle Database@Azure enables multi-cloud ERP migrations, expanding Oracle\'s addressable cloud market.',status:'Active',impact:'High'},
+      {date:'Jun 2024',type:'Partnership',deal:'AWS Oracle Database Partnership',value:'N/A',
+       target:'Amazon Web Services',rationale:'Oracle Database available natively on AWS; accelerates cloud migration for Oracle on-premise customers.',status:'Active',impact:'High'}
     ],
-    rdData:{investment:[210,225,240,255,270,290],areas:['AI/ML','Cloud Architecture','Banking Core','Payments','Compliance Tech','Digital UX'],areaVals:[30,25,20,12,8,5]}
+    rdData:{
+      investment:[6067,6302,7218,8622,9134,10000],
+      areas:['OCI & AI Infrastructure','Fusion Cloud Applications','Oracle AI Services','Database & Autonomous','Healthcare AI','Security'],
+      areaVals:[28,25,18,16,8,5]
+    }
   },
-  finastra: {
-    id:'finastra', name:'Finastra', ticker:'Private', exchange:'Private', hq:'London, 🇬🇧',
-    color:'#ef4444', initials:'FN', sector:'Financial Software',
-    founded:2017, employees:'~9,500', ceo:'Simon Paris', website:'finastra.com',
-    description:'Finastra (formed by merger of Misys and D+H in 2017) provides comprehensive financial software for banking, lending, treasury, payments, and wealth management to 9,000+ clients including 90% of top-100 global banks.',
-    revenue2024:1.9, marketCap:'Private (Vista PE)', rating:3.0,
+
+  sap: {
+    id:'sap', name:'SAP', ticker:'SAP', exchange:'NYSE',
+    hq:'Walldorf, 🇩🇪', color:'#0070f2', initials:'SAP',
+    sector:'AI-Powered Enterprise Software',
+    founded:1972, employees:'~105,000', ceo:'Christian Klein', website:'sap.com',
+    description:'SAP is the world\'s largest ERP software vendor, providing mission-critical business software for over 300,000 customers across 180 countries. Its Rise with SAP cloud migration program and SAP Business AI embedded across S/4HANA and SuccessFactors are driving rapid cloud adoption. SAP reported FY2025 revenue of approximately $42.8B (€39.1B), with cloud revenue growing over 30% YoY.',
+    revenue2024:38.0, marketCap:'$280B', rating:4.0,
     kpis:[
-      {label:'Revenue FY2025',val:'$2.4B',delta:'+5.0%',dir:'up',color:'blue'},
-      {label:'Recurring Revenue',val:'~75%',delta:'+4pp YoY',dir:'up',color:'green'},
-      {label:'Global Bank Reach',val:'90%',delta:'Top-100 banks',dir:'up',color:'indigo'},
-      {label:'Composite Score',val:'3.0/5',delta:'Competitive',dir:'neutral',color:'amber'}
+      {label:'Revenue FY2025',val:'$42.8B',delta:'+12.6%',dir:'up',color:'blue'},
+      {label:'Cloud Revenue Growth', val:'+30%', delta:'FY2025',dir:'up',color:'green'},
+      {label:'Cloud Customers',val:'300,000+', delta:'180 countries',dir:'neutral',color:'indigo'},
+      {label:'Composite Score',val:'4.0/5',delta:'Strong', dir:'neutral',color:'amber'}
     ],
-    revenues:[1.9,2.0,2.1,2.2,2.3,2.4],
-    ebitda:[33.5,33.0,32.5,32.0,31.5,31.0],
-    netIncome:[0.10,0.12,0.14,0.16,0.18,0.20],
-    revGrowth:[4.0,4.8,5.2,6.0,4.5,5.0],
-    eps:[null,null,null,null,null,null],
-    netMargin:[5.3,6.0,6.7,7.3,7.8,8.3],
-    years:[2020,2021,2022,2023,2024,2025],
+    revenues: [28.2,29.3,30.2,33.6,38.0,42.8],
+    ebitda:   [28.0,27.5,26.0,28.0,29.0,30.5],
+    netIncome:[3.14,4.97,3.34,6.36,4.50,5.80],
+    revGrowth:[1.4,3.9,3.1,11.3,13.1,12.6],
+    eps:      [2.65,4.21,2.80,5.36,3.80,4.90],
+    netMargin:[11.1,17.0,11.1,18.9,11.8,13.6],
+    years:    [2020,2021,2022,2023,2024,2025],
     topProducts:[
-      {name:'Finastra Treasury & Capital Markets',segment:'TCM',share:28,color:'#ef4444'},
-      {name:'Fusion Banking Essence',segment:'Core',share:22,color:'#f87171'},
-      {name:'Lending & Mortgages',segment:'Lending',share:20,color:'#fca5a5'},
-      {name:'Payments Platform',segment:'Payments',share:16,color:'#fecaca'},
-      {name:'Open Platform (FusionFabric)',segment:'Open Finance',share:14,color:'#fee2e2'}
+      {name:'S/4HANA Cloud',segment:'ERP',share:34,color:'#0070f2'},
+      {name:'SAP Business AI',segment:'AI Platform',share:22,color:'#00b8f1'},
+      {name:'Rise with SAP',segment:'Cloud Migration',share:18,color:'#f0ab00'},
+      {name:'SuccessFactors',segment:'HCM',share:14,color:'#e07010'},
+      {name:'SAP Datasphere',segment:'Data & Analytics',share:12,color:'#6a1b9a'}
     ],
-    segments:[{name:'Global Banks (Tier 1-2)',pct:40,icon:'🏦'},{name:'Regional Banks',pct:30,icon:'🏛️'},{name:'Credit Unions & Building Societies',pct:18,icon:'🤝'},{name:'Non-Bank Financial Institutions',pct:12,icon:'⚙️'}],
-    geoData:[{region:'North America',flag:'🌎',rev:0.78,share:42,tier:1},{region:'Europe',flag:'🌍',rev:0.72,share:38,tier:1},{region:'MEA',flag:'🌍',rev:0.22,share:12,tier:2},{region:'Asia Pacific',flag:'🌏',rev:0.15,share:8,tier:2}],
+    segments:[
+      {name:'Cloud Revenue',pct:52,icon:'☁️'},
+      {name:'Software Licenses',pct:22,icon:'💾'},
+      {name:'Cloud & Software Support',pct:18,icon:'🛠️'},
+      {name:'Services',pct:8,icon:'🤝'}
+    ],
+    geoData:[
+      {region:'Europe',flag:'🌍',rev:17.1,share:40,tier:1},
+      {region:'North America',flag:'🌎',rev:14.1,share:33,tier:1},
+      {region:'Asia Pacific',flag:'🌏',rev:7.7,share:18,tier:2},
+      {region:'Latin America',flag:'🌎',rev:2.1,share:5,tier:2},
+      {region:'Middle East & Africa',flag:'🌍',rev:1.8,share:4,tier:3}
+    ],
     insights:[
-      {date:'Jun 2025',year:'2025',cat:'Product',title:'FusionFabric Open Finance platform surpasses 500 apps',source:'Press Release',summary:'Finastra\'s open banking marketplace FusionFabric.cloud exceeds 500 partner applications, cementing position as the leading open finance platform.',tags:['Product','Open Banking','Platform']},
-      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'Finastra releases AI Trade Finance module',source:'Press Release',summary:'New AI-powered trade finance module automates document verification, KYC, and risk scoring for correspondent banking, targeting 70% reduction in manual processing.',tags:['R&D / Innovation','AI','Trade Finance']},
-      {date:'Sep 2023',year:'2023',cat:'Customer Wins',title:'Finastra wins HSBC treasury modernization',source:'Finextra',summary:'HSBC selects Finastra Fusion Treasury for global treasury platform modernization across 60+ countries, in one of the largest treasury deals of the year.',tags:['Customer Wins','Treasury','Tier 1']}
+      {date:'Apr 2025',year:'2025',cat:'Product',title:'SAP Business AI Surpasses 30,000 AI Use Cases',
+       source:'SAP Press Release',summary:'SAP Business AI reached 30,000+ enterprise AI use cases deployed across S/4HANA, SuccessFactors, and Ariba, making it the broadest enterprise AI deployment in the ERP market. AI-driven invoice matching and predictive procurement are the top adopted features.',tags:['SAP Business AI','ERP','Automation']},
+      {date:'Jan 2025',year:'2025',cat:'Product',title:'Joule AI Copilot Expands Across All SAP Applications',
+       source:'SAP Sapphire 2025',summary:'Joule, SAP\'s generative AI copilot, expanded to cover 80% of SAP\'s top workflows across Finance, HR, Procurement, and Supply Chain. Joule is powered by multiple foundation models including GPT-4 and Mistral.',tags:['Joule','Copilot','AI']},
+      {date:'Aug 2024',year:'2024',cat:'Inorganic',title:'WalkMe Acquisition Closes at ~$1.5B',
+       source:'SAP Press Release',summary:'SAP completed the acquisition of WalkMe, a digital adoption platform, for approximately $1.5B. WalkMe\'s AI-guided user experience capabilities are being integrated across SAP cloud applications to reduce time-to-value for customers.',tags:['WalkMe','M&A','Digital Adoption']},
+      {date:'Oct 2023',year:'2023',cat:'Inorganic',title:'LeanIX Acquisition for Enterprise Architecture Management',
+       source:'SAP Press Release',summary:'SAP acquired LeanIX, a leading enterprise architecture management platform, to help CIOs map technology landscapes and accelerate cloud transformations. LeanIX integrates with SAP Signavio for end-to-end business process intelligence.',tags:['LeanIX','M&A','Enterprise Architecture']}
     ],
     productStrategy:[
-      {year:'2021',title:'FusionFabric Open Platform Launch',desc:'Launch of FusionFabric.cloud marketplace enabling fintechs to build on Finastra platforms via open APIs.',type:'Platform'},
-      {year:'2022',title:'Cloud-First Product Architecture',desc:'All major products replatformed for cloud-native deployment on AWS, Azure, and GCP.',type:'Cloud'},
-      {year:'2023',title:'BaaS and Embedded Finance APIs',desc:'Banking-as-a-Service API suite launched, enabling brands to embed financial products.',type:'Product Launch'},
-      {year:'2025',title:'AI Across Financial Services Stack',desc:'AI integrated into lending, treasury, and trade finance products to automate document processing and risk scoring.',type:'AI Integration'}
+      {year:'2022',title:'Rise with SAP Cloud Migration Acceleration',desc:'SAP\'s Rise with SAP program became the primary vehicle for migrating on-premise ERP customers to S/4HANA Cloud. Cloud revenue crossed 30% of total revenue for the first time.',type:'Cloud Migration'},
+      {year:'2023',title:'Business AI Across the ERP Suite',desc:'SAP launched SAP Business AI, embedding AI across S/4HANA, SuccessFactors, Ariba, and Concur. LeanIX acquisition added enterprise architecture intelligence to the portfolio.',type:'AI Integration'},
+      {year:'2024',title:'Joule AI Copilot and WalkMe Acquisition',desc:'SAP launched Joule, a multi-model generative AI copilot for enterprise workflows. WalkMe acquisition added digital adoption capabilities. Cloud revenue growth accelerated to 30%+.',type:'AI Copilot'},
+      {year:'2025',title:'30,000 AI Use Cases Deployed',desc:'SAP Business AI surpassed 30,000 enterprise use cases, cementing SAP\'s position as the AI-powered ERP leader. Joule covers 80% of top SAP workflows, driving efficiency gains for customers.',type:'AI Scale'}
     ],
     launchTimeline:[
-      {date:'Q2 2025',cat:'New Product',title:'AI Trade Finance Module',desc:'Automated trade document verification and risk scoring.',tags:['AI','Trade Finance']},
-      {date:'Q4 2023',cat:'New Product',title:'BaaS API Suite',desc:'Banking-as-a-Service APIs for non-bank brand embedding.',tags:['BaaS','Open Finance']},
-      {date:'Q1 2021',cat:'Platform',title:'FusionFabric.cloud Launch',desc:'Open finance marketplace with 500+ partner apps.',tags:['Open Banking','Marketplace']}
+      {date:'Q1 2022',cat:'New Product',title:'Rise with SAP Scale-Up',desc:'Hyper-bundle cloud ERP migration program reaches 10,000 customers.',tags:['Rise','Cloud','ERP']},
+      {date:'Q3 2022',cat:'New Product',title:'SAP Business Technology Platform (BTP) GA',desc:'Unified integration, extension, and analytics platform for SAP ecosystem.',tags:['BTP','Integration']},
+      {date:'Q2 2023',cat:'New Product',title:'SAP Business AI General Availability',desc:'Embedded AI across all major SAP applications with no extra licensing cost.',tags:['AI','ERP','Business AI']},
+      {date:'Q4 2023',cat:'Acquisition',title:'LeanIX Acquisition',desc:'Enterprise architecture management added to SAP\'s cloud intelligence portfolio.',tags:['LeanIX','M&A']},
+      {date:'Q3 2024',cat:'Acquisition',title:'WalkMe Acquisition ~$1.5B',desc:'Digital adoption platform integrated to accelerate SAP cloud user onboarding.',tags:['WalkMe','M&A','UX']},
+      {date:'Q1 2025',cat:'New Product',title:'Joule AI Copilot — 80% Workflow Coverage',desc:'Multi-model AI copilot covers 80% of top SAP workflows across all clouds.',tags:['Joule','AI Copilot']}
     ],
     portfolioMatrix:[
-      {name:'Treasury & CapMarkets',segment:'TCM',revenue:28,growth:8,stage:'Cash Cow',color:'#ef4444'},
-      {name:'Core Banking',segment:'Core',revenue:22,growth:5,stage:'Cash Cow',color:'#f87171'},
-      {name:'Lending',segment:'Lending',revenue:20,growth:10,stage:'Growth',color:'#fca5a5'},
-      {name:'Payments',segment:'Payments',revenue:16,growth:12,stage:'Growth',color:'#10b981'},
-      {name:'FusionFabric',segment:'Platform',revenue:14,growth:28,stage:'Growth Star',color:'#8b5cf6'}
+      {name:'S/4HANA Cloud',segment:'ERP',revenue:14,growth:25,stage:'Growth Star',color:'#0070f2'},
+      {name:'SuccessFactors',segment:'HCM',revenue:6,growth:18,stage:'Growth Star',color:'#e07010'},
+      {name:'SAP Ariba',segment:'Procurement',revenue:5,growth:10,stage:'Cash Cow',color:'#f0ab00'},
+      {name:'Datasphere',segment:'Data',revenue:3,growth:35,stage:'Emerging',color:'#6a1b9a'},
+      {name:'Joule AI',segment:'AI',revenue:2,growth:120,stage:'Emerging',color:'#00b8f1'}
     ],
     inorganic:[
-      {date:'Jan 2020',type:'Investment',deal:'Series B in Finblox',value:'Undisclosed',target:'Finblox',rationale:'Expand open banking ecosystem partnerships',status:'Completed',impact:'Low'}
+      {date:'Oct 2023',type:'Acquisition',deal:'LeanIX',value:'Undisclosed',
+       target:'LeanIX',rationale:'Enterprise architecture management platform to help customers plan and execute cloud migrations.',status:'Completed',impact:'Medium'},
+      {date:'Aug 2024',type:'Acquisition',deal:'WalkMe',value:'~$1.5B',
+       target:'WalkMe',rationale:'Digital adoption platform to reduce time-to-value for SAP cloud customers via AI-guided user experiences.',status:'Completed',impact:'Medium'},
+      {date:'Jan 2025',type:'Partnership',deal:'NVIDIA AI Foundry for SAP',value:'N/A',
+       target:'NVIDIA',rationale:'Joint AI model development for SAP Business AI, using NVIDIA\'s enterprise AI foundry infrastructure.',status:'Active',impact:'Medium'}
     ],
-    rdData:{investment:[320,340,360,375,390,410],areas:['Open Finance APIs','AI/ML','Cloud Infrastructure','Treasury Tech','Lending','Payments'],areaVals:[25,22,20,15,12,6]}
+    rdData:{
+      investment:[4400,4700,4900,5100,5600,6200],
+      areas:['SAP Business AI / Joule','S/4HANA Cloud Development','SuccessFactors','BTP & Integration','Datasphere & Analytics','Supply Chain & Procurement AI'],
+      areaVals:[28,24,16,14,10,8]
+    }
   },
-  ncr: {
-    id:'ncr', name:'NCR Atleos', ticker:'NATL', exchange:'NYSE', hq:'Atlanta, 🇺🇸',
-    color:'#06b6d4', initials:'NA', sector:'ATM & Self-Service Banking',
-    founded:2023, employees:'~20,000', ceo:'Tim Oliver', website:'ncratleos.com',
-    description:'NCR Atleos (spun off from NCR Corporation in 2023) is a global ATM and self-service banking technology provider, operating the largest independent ATM network in the United States and serving banks worldwide.',
-    revenue2024:2.2, marketCap:'$2B', rating:2.3,
+
+  workday: {
+    id:'workday', name:'Workday', ticker:'WDAY', exchange:'NASDAQ',
+    hq:'Pleasanton, 🇺🇸', color:'#f36f21', initials:'W',
+    sector:'AI-Powered Enterprise Software',
+    founded:2005, employees:'~19,700', ceo:'Carl Eschenbach', website:'workday.com',
+    description:'Workday is the leading cloud-native Human Capital Management (HCM) and financial management platform for large enterprises. Its AI-first approach embeds intelligent automation across recruiting, workforce planning, payroll, and financial consolidation. Workday reported FY2025 revenue of $8.03B with a 5.1% operating margin expansion, operating in over 55 countries with best-in-class NRR.',
+    revenue2024:7.24, marketCap:'$60B', rating:4.2,
     kpis:[
-      {label:'Revenue FY2025',val:'$2.3B',delta:'+3.1%',dir:'up',color:'blue'},
-      {label:'ATM Network',val:'#1 USA',delta:'Independent',dir:'neutral',color:'green'},
-      {label:'Global ATMs',val:'~285K',delta:'Managed',dir:'neutral',color:'indigo'},
-      {label:'Composite Score',val:'2.3/5',delta:'Developing',dir:'neutral',color:'amber'}
+      {label:'Revenue FY2025',val:'$8.03B',delta:'+10.9%',dir:'up',color:'blue'},
+      {label:'Operating Margin', val:'5.2%', delta:'+3.6pp',dir:'up',color:'green'},
+      {label:'HCM Market Share',val:'~10%', delta:'Leader',dir:'neutral',color:'indigo'},
+      {label:'Composite Score',val:'4.2/5',delta:'Leader HCM', dir:'neutral',color:'amber'}
     ],
-    revenues:[0.78,0.81,0.86,0.91,0.97,1.04],
-    ebitda:[19.0,18.5,18.0,17.5,17.0,16.5],
-    netIncome:[0.007,0.009,0.012,0.015,0.018,0.022],
-    revGrowth:[4.0,4.7,5.2,5.8,6.5,7.0],
-    eps:[-0.4,-0.2,0.1,0.3,0.5,0.7],
-    netMargin:[0.9,1.1,1.4,1.6,1.9,2.1],
-    years:[2020,2021,2022,2023,2024,2025],
+    revenues: [3.63,4.32,6.22,7.24,7.24,8.03],
+    ebitda:   [2.5,3.8,5.0,8.0,11.2,18.0],
+    netIncome:[-0.28,-0.42,1.19,1.38,1.38,0.53],
+    revGrowth:[20.4,19.0,44.1,16.4,0.0,10.9],
+    eps:      [-1.13,-1.66,4.59,5.23,5.23,1.99],
+    netMargin:[-7.7,-9.7,19.1,19.1,19.1,6.6],
+    years:    [2020,2021,2022,2023,2024,2025],
     topProducts:[
-      {name:'ATM-as-a-Service',segment:'ATM',share:45,color:'#06b6d4'},
-      {name:'Self-Service Banking Platform',segment:'SelfService',share:28,color:'#22d3ee'},
-      {name:'ATM Software (APTRA)',segment:'Software',share:18,color:'#67e8f9'},
-      {name:'Managed Services',segment:'Services',share:9,color:'#cffafe'}
+      {name:'Workday HCM',segment:'HR',share:40,color:'#f36f21'},
+      {name:'Workday Financials',segment:'Finance',share:28,color:'#e05d12'},
+      {name:'Workday AI / Extend',segment:'AI Platform',share:16,color:'#2d8cff'},
+      {name:'Adaptive Planning',segment:'Planning',share:10,color:'#00c896'},
+      {name:'Peakon Employee Voice',segment:'Employee Exp',share:6,color:'#9b59b6'}
     ],
-    segments:[{name:'Banks & Credit Unions',pct:55,icon:'🏦'},{name:'Retailers',pct:25,icon:'🛒'},{name:'Convenience & Fuel',pct:12,icon:'⛽'},{name:'Government',pct:8,icon:'🏛️'}],
-    geoData:[{region:'North America',flag:'🌎',rev:1.43,share:65,tier:1},{region:'Europe',flag:'🌍',rev:0.44,share:20,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.22,share:10,tier:2},{region:'MEA',flag:'🌍',rev:0.11,share:5,tier:2}],
+    segments:[
+      {name:'Subscription Revenue',pct:88,icon:'📋'},
+      {name:'Professional Services',pct:12,icon:'🤝'}
+    ],
+    geoData:[
+      {region:'North America',flag:'🌎',rev:6.0,share:75,tier:1},
+      {region:'Europe',flag:'🌍',rev:1.5,share:19,tier:1},
+      {region:'Asia Pacific',flag:'🌏',rev:0.5,share:6,tier:2}
+    ],
     insights:[
-      {date:'Apr 2025',year:'2025',cat:'Product',title:'NCR Atleos launches AI-powered ATM predictive maintenance',source:'Press Release',summary:'New AI module deployed across managed ATM fleet predicts hardware failures 7 days in advance, targeting 30% reduction in ATM downtime.',tags:['Product','AI','ATM']},
-      {date:'Jan 2025',year:'2025',cat:'R&D / Innovation',title:'NCR Atleos pilots ITM (Interactive Teller Machine) expansion',source:'American Banker',summary:'Interactive Teller Machine pilot expands to 500 branch locations across 12 U.S. banks, offering video-assisted teller services for complex transactions.',tags:['R&D / Innovation','Self-Service','ITM']},
-      {date:'Oct 2023',year:'2023',cat:'Inorganic',title:'NCR Atleos completes spin-off from NCR Corporation',source:'SEC Filing',summary:'NCR Atleos officially separates from NCR Corporation as an independent publicly traded company (NATL on NYSE), focused on ATM and self-service banking.',tags:['Inorganic','Spin-off','IPO']}
+      {date:'Mar 2025',year:'2025',cat:'Product',title:'Workday AI Agents Launch Across HCM and Finance',
+       source:'Workday Rising 2025',summary:'Workday launched AI agents across its HCM and Finance platform, enabling autonomous recruiting workflows, automated payroll auditing, and AI-driven financial forecasting. Over 1,000 enterprises activated AI agents within 90 days of launch.',tags:['AI Agents','HCM','Finance']},
+      {date:'Nov 2024',year:'2024',cat:'Inorganic',title:'HiredScore Acquisition Closes for AI Talent Matching',
+       source:'Workday Press Release',summary:'Workday completed the acquisition of HiredScore, an AI-powered talent intelligence platform, to enhance its recruiting and workforce planning capabilities. HiredScore\'s AI matching engine is being integrated into Workday Recruiting and VNDLY.',tags:['HiredScore','M&A','AI Recruiting']},
+      {date:'Aug 2024',year:'2024',cat:'Inorganic',title:'Evisort Acquisition Adds AI Contract Intelligence',
+       source:'Workday Press Release',summary:'Workday acquired Evisort, an AI-powered contract management and document analysis platform, to extend its Finance Cloud with intelligent contract lifecycle management.',tags:['Evisort','M&A','Contract AI']},
+      {date:'Jan 2024',year:'2024',cat:'R&D / Innovation',title:'Workday AI Marketplace Launches with 50+ Partners',
+       source:'Workday Investor Day 2024',summary:'Workday launched the Workday AI Marketplace with 50+ pre-built AI applications from ISV partners, enabling enterprises to deploy specialized AI models for HR, finance, and workforce analytics within the Workday platform.',tags:['AI Marketplace','ISV','Partners']}
     ],
     productStrategy:[
-      {year:'2021',title:'ATM-as-a-Service Expansion',desc:'Shift from hardware sales to recurring ATM-as-a-Service subscription model for banks.',type:'Business Model'},
-      {year:'2023',title:'NCR Spin-off Independence',desc:'Spun off from NCR Corporation as standalone NCR Atleos, focused purely on ATM and self-service banking.',type:'Corporate Event'},
-      {year:'2024',title:'Software Revenue Mix Improvement',desc:'Strategy to increase software and services revenue to >60% of total, reducing hardware dependency.',type:'Strategic Pivot'},
-      {year:'2025',title:'AI Predictive Maintenance',desc:'AI/ML deployed across 285K managed ATM fleet for predictive maintenance and uptime optimization.',type:'AI Integration'}
+      {year:'2022',title:'Finance Cloud Expansion and Platform Maturity',desc:'Workday expanded its Finance Cloud to compete with Oracle and SAP in financial consolidation. Adaptive Planning integrations deepened, and the Extend platform enabled low-code app development on Workday data.',type:'Platform Expansion'},
+      {year:'2023',title:'Responsible AI and ML Integration',desc:'Workday embedded ML models across recruiting, workforce planning, and financial forecasting. Skills Cloud grew to 50M+ worker profiles, powering AI-driven talent intelligence across HCM.',type:'AI Integration'},
+      {year:'2024',title:'AI Acquisitions and Marketplace',desc:'HiredScore and Evisort acquisitions added AI talent matching and contract intelligence. The Workday AI Marketplace launched with 50+ ISV partners, expanding the AI ecosystem.',type:'AI Ecosystem'},
+      {year:'2025',title:'Autonomous AI Agents for HR and Finance',desc:'Workday launched AI agents for recruiting, payroll auditing, and financial forecasting. AI agents became a core differentiator, with 1,000+ enterprises activating agents within 90 days.',type:'Agentic AI'}
     ],
     launchTimeline:[
-      {date:'Q1 2025',cat:'New Product',title:'AI Predictive Maintenance Module',desc:'Machine learning model for ATM hardware failure prediction.',tags:['AI','ATM']},
-      {date:'Q3 2024',cat:'Enhancement',title:'APTRA Vision Analytics',desc:'Computer vision upgrade for cash dispensing accuracy monitoring.',tags:['Analytics','ATM']},
-      {date:'Q1 2023',cat:'Corporate Event',title:'NCR Atleos Spin-off',desc:'Independence from NCR Corporation as standalone listed entity.',tags:['Corporate']}
+      {date:'Q2 2022',cat:'New Product',title:'Workday Extend Low-Code Platform GA',desc:'Enables customers to build custom apps on Workday data with AI-powered suggestions.',tags:['Low-Code','Platform']},
+      {date:'Q3 2023',cat:'New Product',title:'AI Recommendations in HCM and Finance',desc:'ML-powered recommendations for job matching, attrition risk, and forecast variance.',tags:['AI','HCM','Finance']},
+      {date:'Q1 2024',cat:'New Product',title:'Workday AI Marketplace Launch',desc:'50+ ISV AI apps available natively within Workday for HR and finance use cases.',tags:['Marketplace','AI','ISV']},
+      {date:'Q4 2024',cat:'Acquisition',title:'HiredScore Acquisition',desc:'AI-powered talent matching and hiring analytics integrated into Workday Recruiting.',tags:['HiredScore','M&A','AI']},
+      {date:'Q4 2024',cat:'Acquisition',title:'Evisort Acquisition',desc:'AI contract management brings document intelligence to Workday Finance Cloud.',tags:['Evisort','M&A']},
+      {date:'Q1 2025',cat:'New Product',title:'Workday AI Agents Launch',desc:'Autonomous AI agents for recruiting, payroll, and financial forecasting at enterprise scale.',tags:['AI Agents','HCM','Finance']}
     ],
     portfolioMatrix:[
-      {name:'ATM-as-a-Service',segment:'ATM',revenue:45,growth:12,stage:'Growth',color:'#06b6d4'},
-      {name:'Self-Service Platform',segment:'SelfService',revenue:28,growth:6,stage:'Stable',color:'#22d3ee'},
-      {name:'APTRA Software',segment:'Software',revenue:18,growth:8,stage:'Stable',color:'#67e8f9'},
-      {name:'Managed Services',segment:'Services',revenue:9,growth:5,stage:'Cash Cow',color:'#10b981'}
+      {name:'Workday HCM',segment:'HR',revenue:3.2,growth:10,stage:'Cash Cow',color:'#f36f21'},
+      {name:'Workday Financials',segment:'Finance',revenue:2.2,growth:14,stage:'Growth Star',color:'#e05d12'},
+      {name:'Workday AI Agents',segment:'AI',revenue:0.8,growth:90,stage:'Emerging',color:'#2d8cff'},
+      {name:'Adaptive Planning',segment:'Planning',revenue:0.8,growth:18,stage:'Growth Star',color:'#00c896'},
+      {name:'Peakon',segment:'EX',revenue:0.4,growth:20,stage:'Growth Star',color:'#9b59b6'}
     ],
     inorganic:[
-      {date:'Oct 2023',type:'Corporate Event',deal:'Spin-off from NCR Corp',value:'N/A',target:'NCR Corporation',rationale:'Focus exclusively on ATM and self-service banking market',status:'Completed',impact:'High'}
+      {date:'Nov 2024',type:'Acquisition',deal:'HiredScore',value:'Undisclosed',
+       target:'HiredScore',rationale:'AI talent matching and hiring analytics to strengthen Workday Recruiting and VNDLY.',status:'Completed',impact:'Medium'},
+      {date:'Aug 2024',type:'Acquisition',deal:'Evisort',value:'Undisclosed',
+       target:'Evisort',rationale:'AI-powered contract management and document analysis for Workday Finance Cloud.',status:'Completed',impact:'Medium'},
+      {date:'Mar 2023',type:'Partnership',deal:'AWS Strategic Partnership',value:'N/A',
+       target:'Amazon Web Services',rationale:'Multi-year partnership for Workday on AWS infrastructure to accelerate global cloud delivery.',status:'Active',impact:'Medium'}
     ],
-    rdData:{investment:[95,100,108,115,125,135],areas:['ATM Software','AI/ML','Self-Service UX','Security','Cloud Services','IoT'],areaVals:[35,20,18,15,8,4]}
+    rdData:{
+      investment:[1098,1378,1706,2019,2288,2650],
+      areas:['AI Agents & ML Platform','HCM Core Development','Finance Cloud','Adaptive Planning','Extend & ISV Platform','Employee Experience'],
+      areaVals:[30,24,20,12,8,6]
+    }
   }
 };
 
-const BENCH_PEERS = ['Fiserv','FIS','Jack Henry'];
-const BENCH_COLORS = {'Fiserv':'#3b82f6','FIS':'#8b5cf6','Jack Henry':'#10b981','Temenos':'#f59e0b','Finastra':'#ef4444','NCR Atleos':'#06b6d4','Stripe':'#635bff','Adyen':'#0abf53'};
+const BENCH_PEERS = ['Microsoft','Salesforce','ServiceNow','Oracle','SAP','Workday'];
+
+const BENCH_COLORS = {
+  'Microsoft':'#0078d4',
+  'Salesforce':'#00a1e0',
+  'ServiceNow':'#81b5a1',
+  'Oracle':'#f80000',
+  'SAP':'#0070f2',
+  'Workday':'#f36f21'
+};
 
 const BENCH_FEATURES = [
-  {feature:'Core Account Processing',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Real-Time Payments',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Merchant Acquiring / POS',cat:'Commerce',Fiserv:true,FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},
-  {feature:'Cloud-Native Core Banking',cat:'Cloud',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Open Banking / BaaS APIs',cat:'Platform',Fiserv:'partial',FIS:'partial','Jack Henry':false,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'AI / ML Analytics',cat:'AI',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},
-  {feature:'Digital Banking Platform',cat:'Digital',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Treasury & Capital Markets',cat:'CapMarkets',Fiserv:false,FIS:true,'Jack Henry':false,Temenos:'partial',Finastra:true,'NCR Atleos':false},
-  {feature:'ATM / Self-Service Banking',cat:'Infrastructure',Fiserv:'partial',FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},
-  {feature:'Card Issuance & Processing',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:'partial','NCR Atleos':false},
-  {feature:'Fraud & Compliance Tools',cat:'Risk',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},
-  {feature:'Wealth Management',cat:'Wealth',Fiserv:false,FIS:false,'Jack Henry':false,Temenos:true,Finastra:'partial','NCR Atleos':false}
+  {feature:'Generative AI Copilot',cat:'AI Capabilities',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:true,SAP:true,Workday:true},
+  {feature:'Autonomous AI Agents',cat:'AI Capabilities',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:'partial',SAP:'partial',Workday:true},
+  {feature:'Multi-Agent Orchestration',cat:'AI Capabilities',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:false,SAP:false,Workday:false},
+  {feature:'Native Cloud ERP',cat:'Cloud Platform',Microsoft:true,Salesforce:false,ServiceNow:false,Oracle:true,SAP:true,Workday:true},
+  {feature:'CRM / Customer Engagement',cat:'Cloud Platform',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:true,SAP:true,Workday:false},
+  {feature:'HCM / HR Platform',cat:'Cloud Platform',Microsoft:'partial',Salesforce:false,ServiceNow:true,Oracle:true,SAP:true,Workday:true},
+  {feature:'Cloud Infrastructure (IaaS)',cat:'Infrastructure',Microsoft:true,Salesforce:false,ServiceNow:false,Oracle:true,SAP:false,Workday:false},
+  {feature:'Developer / Low-Code Platform',cat:'Infrastructure',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:true,SAP:true,Workday:true},
+  {feature:'Embedded AI (No Extra Cost)',cat:'AI Monetization',Microsoft:'partial',Salesforce:false,ServiceNow:false,Oracle:true,SAP:true,Workday:false},
+  {feature:'AI Partner / Marketplace',cat:'Ecosystem',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:true,SAP:true,Workday:true},
+  {feature:'Healthcare AI Vertical',cat:'Industry',Microsoft:true,Salesforce:'partial',ServiceNow:true,Oracle:true,SAP:'partial',Workday:false},
+  {feature:'Financial Services AI',cat:'Industry',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:true,SAP:true,Workday:true},
+  {feature:'Gartner MQ Leader (Primary Segment)',cat:'Analyst Recognition',Microsoft:true,Salesforce:true,ServiceNow:true,Oracle:true,SAP:true,Workday:true}
 ];
 
 const BENCH_PROFILE_ATTRS = [
-  {attr:'HQ',Fiserv:'Milwaukee, 🇺🇸',FIS:'Jacksonville, 🇺🇸','Jack Henry':'Monett, 🇺🇸',Temenos:'Geneva, 🇨🇭',Finastra:'London, 🇬🇧','NCR Atleos':'Atlanta, 🇺🇸'},
-  {attr:'Founded',Fiserv:1984,FIS:1968,'Jack Henry':1976,Temenos:1993,Finastra:2017,'NCR Atleos':2023},
-  {attr:'Employees',Fiserv:'~38,000',FIS:'~49,000','Jack Henry':'~7,240',Temenos:'~5,205',Finastra:'~9,500','NCR Atleos':'~20,000'},
-  {attr:'Revenue FY2024',Fiserv:'$20.5B',FIS:'$10.1B','Jack Henry':'$2.2B',Temenos:'$1.0B',Finastra:'$1.9B','NCR Atleos':'$2.2B'},
-  {attr:'EBITDA Margin',Fiserv:'43.4%',FIS:'31.0%','Jack Henry':'28.0%',Temenos:'38.5%',Finastra:'31.5%','NCR Atleos':'17.0%'},
-  {attr:'Revenue CAGR (20-24)',Fiserv:'6.6%',FIS:'4.4%','Jack Henry':'6.0%',Temenos:'6.1%',Finastra:'4.9%','NCR Atleos':'5.6%'},
-  {attr:'Primary Market',Fiserv:'Global – US Lead',FIS:'Global – US Lead','Jack Henry':'U.S. Only',Temenos:'Global (EMEA/APAC)',Finastra:'Global','NCR Atleos':'Global – US Lead'},
-  {attr:'Business Model',Fiserv:'Transaction + SaaS',FIS:'SaaS + Services','Jack Henry':'SaaS + Services',Temenos:'SaaS + Services',Finastra:'Subscription','NCR Atleos':'ATM SaaS + HW'},
-  {attr:'Listed / Private',Fiserv:'Public (NASDAQ)',FIS:'Public (NYSE)','Jack Henry':'Public (NASDAQ)',Temenos:'Public (SIX)',Finastra:'Private (PE)','NCR Atleos':'Public (NYSE)'}
+  {attr:'Headquarters',Microsoft:'Redmond, 🇺🇸',Salesforce:'San Francisco, 🇺🇸',ServiceNow:'Santa Clara, 🇺🇸',Oracle:'Austin, 🇺🇸',SAP:'Walldorf, 🇩🇪',Workday:'Pleasanton, 🇺🇸'},
+  {attr:'Founded',Microsoft:'1975',Salesforce:'1999',ServiceNow:'2004',Oracle:'1977',SAP:'1972',Workday:'2005'},
+  {attr:'CEO',Microsoft:'Satya Nadella',Salesforce:'Marc Benioff',ServiceNow:'Bill McDermott',Oracle:'Safra Catz',SAP:'Christian Klein',Workday:'Carl Eschenbach'},
+  {attr:'Employees',Microsoft:'~231,939',Salesforce:'~72,000',ServiceNow:'~22,000',Oracle:'~164,000',SAP:'~105,000',Workday:'~19,700'},
+  {attr:'FY2025 Revenue',Microsoft:'$281.7B',Salesforce:'$37.9B',ServiceNow:'$13.3B',Oracle:'$57.4B',SAP:'$42.8B',Workday:'$8.03B'},
+  {attr:'Market Cap (2025)',Microsoft:'$3.4T',Salesforce:'$290B',ServiceNow:'$210B',Oracle:'$500B',SAP:'$280B',Workday:'$60B'},
+  {attr:'Primary Segment',Microsoft:'Cloud & Enterprise AI',Salesforce:'CRM & AI Agents',ServiceNow:'Workflow Automation',Oracle:'ERP & Cloud Infra',SAP:'ERP Cloud',Workday:'HCM & Finance'},
+  {attr:'Core AI Product',Microsoft:'Copilot / Azure AI',Salesforce:'Agentforce / Einstein',ServiceNow:'Now Assist / AI Agents',Oracle:'Oracle AI / OCI',SAP:'SAP Business AI / Joule',Workday:'Workday AI Agents'}
 ];
 
 const MARKET_EVENTS = [
-  {co:'Fiserv',color:'#3b82f6',title:'Fiserv announces $2B share buyback program',date:'Aug 10, 2026',type:'Corporate',summary:'Fiserv Board authorizes new $2B share repurchase program, signaling strong free cash flow confidence following Worldpay divestiture.',tags:['Corporate Action','Fiserv']},
-  {co:'FIS',color:'#8b5cf6',title:'FIS Future Forward delivers $380M cost savings',date:'Jul 28, 2026',type:'Earnings',summary:'FIS Q2 2026 earnings confirm Future Forward transformation has delivered $380M in annualized savings, ahead of $400M target for FY2026.',tags:['Earnings','FIS','Transformation']},
-  {co:'Temenos',color:'#f59e0b',title:'Temenos wins Singapore\'s DBS Bank for cloud core',date:'Jul 20, 2026',type:'Customer Win',summary:'DBS Bank selects Temenos Banking Cloud for next-generation core banking modernization across Singapore and Hong Kong operations.',tags:['Customer Win','Temenos','APAC']},
-  {co:'Jack Henry',color:'#10b981',title:'Jack Henry raises FY2026 guidance after record SaaS bookings',date:'Jul 15, 2026',type:'Guidance',summary:'Jack Henry raises FY2026 revenue guidance to $2.5–2.52B after record SaaS bookings in Q3, driven by community bank digital transformation demand.',tags:['Guidance','Jack Henry','SaaS']},
-  {co:'Finastra',color:'#ef4444',title:'Finastra FusionFabric surpasses 500 apps milestone',date:'Jul 10, 2026',type:'Product',summary:'Finastra\'s open banking marketplace reaches 500 partner applications, reinforcing open finance platform leadership.',tags:['Product','Finastra','Open Banking']},
-  {co:'NCR Atleos',color:'#06b6d4',title:'NCR Atleos expands ITM network to 1,000 locations',date:'Jul 5, 2026',type:'Expansion',summary:'Interactive Teller Machine deployment reaches 1,000 U.S. locations, accelerating NCR Atleos\' shift from pure ATM hardware to software-led services.',tags:['Expansion','NCR Atleos','ITM']}
+  {co:'Microsoft',color:'#0078d4',title:'Azure AI Foundry Hits $13B Annual Run Rate',date:'Mar 15, 2025',type:'Financial',summary:'Microsoft Azure AI services surpassed $13B ARR, up 130% YoY. Copilot+ PC launch and M365 Copilot seat growth to 30M monthly actives drove enterprise AI adoption.',tags:['Azure','AI','Earnings']},
+  {co:'Salesforce',color:'#00a1e0',title:'Agentforce 2.0 Multi-Agent Platform Launched',date:'Feb 26, 2025',type:'Product',summary:'Salesforce launched Agentforce 2.0 with multi-agent orchestration, enabling enterprise AI agents to chain across Sales, Service, and Marketing workflows autonomously.',tags:['Agentforce','AI','Product']},
+  {co:'ServiceNow',color:'#81b5a1',title:'Now Assist AI Agents Reach 85% Fortune 500 Penetration',date:'May 7, 2025',type:'Corporate',summary:'ServiceNow\'s Now Assist AI agents processed 250M+ automated workflows daily across 85% of Fortune 500 companies, achieving 42% AI-driven ticket resolution rates.',tags:['Now Assist','Enterprise','AI']},
+  {co:'Oracle',color:'#f80000',title:'Oracle Accumulates $130B+ AI Infrastructure Backlog',date:'Jun 11, 2025',type:'Financial',summary:'Oracle reported $130B+ in contracted AI infrastructure backlog on OCI, validating its GPU cluster strategy as enterprises chose OCI as an alternative to AWS/Azure.',tags:['OCI','AI','Infrastructure']},
+  {co:'SAP',color:'#0070f2',title:'SAP Business AI Surpasses 30,000 Enterprise Use Cases',date:'Apr 3, 2025',type:'Product',summary:'SAP Business AI reached 30,000+ deployed enterprise AI use cases across S/4HANA, SuccessFactors, and Ariba. Joule AI copilot covers 80% of top SAP workflows.',tags:['SAP AI','Joule','ERP']},
+  {co:'Workday',color:'#f36f21',title:'Workday AI Agents Launch — 1,000 Enterprise Activations in 90 Days',date:'Mar 3, 2025',type:'Product',summary:'Workday AI agents for HCM and Finance achieved 1,000 enterprise activations within 90 days of launch, with autonomous recruiting workflows and AI payroll auditing as top use cases.',tags:['AI Agents','HCM','Launch']},
+  {co:'Microsoft',color:'#0078d4',title:'Activision Blizzard Integration Drives Game Pass to 34M Subscribers',date:'Oct 31, 2024',type:'Corporate',summary:'Following the $75.4B Activision acquisition, Microsoft Game Pass surpassed 34M subscribers. Gaming revenue grew 61% YoY with Call of Duty driving platform engagement.',tags:['Activision','Gaming','M&A']}
 ];
 
 const BENCH_CUST = {
-  Fiserv:{enterprise:'42% of U.S. banks; 31% of credit unions; Walmart Pay, Chase, Wells Fargo merchant clients',midmarket:'~1.5M+ SMB Clover merchants; regional banks across U.S.',smb:'Clover devices at >1M small business locations',gov:'U.S. government disbursements via Fiserv payment rails',partners:'NVIDIA (AI), Microsoft (Cloud), Visa/Mastercard, GTCR (Worldpay)'},
-  FIS:{enterprise:'50,000+ clients globally; top-20 U.S. banks; Goldman Sachs, JPMorgan capital markets',midmarket:'Regional and community banks via Modern Banking Platform',smb:'Limited SMB direct presence; via bank intermediaries',gov:'Government payment processing and treasury services',partners:'Microsoft (Azure), Amazon (AWS), Salesforce'},
-  'Jack Henry':{enterprise:'N/A — focused on community segment',midmarket:'~1,100 community banks; ~900 credit unions across U.S.',smb:'SMB banking via community bank clients (Banno Business)',gov:'Municipal and local government banking via community bank clients',partners:'Payrailz, Victor Technologies, Q2 Holdings'},
-  Temenos:{enterprise:'DBS Bank, Société Générale, BNP Paribas — core banking modernization',midmarket:'Regional banks across Europe, APAC, MEA',smb:'Neobank and challenger bank clients via SaaS platform',gov:'Central banks and government-owned banks in 40+ countries',partners:'AWS, Microsoft Azure, Accenture, Capgemini'},
-  Finastra:{enterprise:'HSBC, Barclays, Deutsche Bank — treasury and lending',midmarket:'90% of top-100 global banks as clients (some product set)',smb:'Building societies and credit unions in UK',gov:'Development banks and public sector financial institutions',partners:'Microsoft, AWS, Deloitte, KPMG, FusionFabric.cloud ecosystem'},
-  'NCR Atleos':{enterprise:'Bank of America, Chase, Wells Fargo ATM fleet management',midmarket:'Regional bank ATM outsourcing programs',smb:'Convenience store and fuel ATM networks',gov:'Government facility ATM deployments',partners:'Brink\'s (cash logistics), Euronet, IndependentATM'}
+  Microsoft:{enterprise:'Azure, M365, and Dynamics 365 deployed across 85% of Fortune 500; GitHub Copilot used by 1.8M+ enterprise developers',midmarket:'Microsoft 365 Business and Dynamics 365 SMB serve 1M+ mid-market customers globally via CSP partners',smb:'Microsoft 365 Business Basic/Standard serve millions of SMBs; Copilot for M365 available at SMB tiers',gov:'Azure Government and DoD IL5/IL6 clouds serve 10,000+ US federal and state agencies',partners:'350,000+ Microsoft partners in the Cloud Partner Program; 5,000+ ISVs on Azure Marketplace'},
+  Salesforce:{enterprise:'Sales Cloud and Service Cloud deployed at 90% of Fortune 100; Agentforce enterprise rollouts with Saks, Wiley, and others',midmarket:'Salesforce Essentials and Professional tiers serve 100,000+ mid-market companies across 150+ countries',smb:'Salesforce Starter Suite provides SMB CRM with built-in Einstein AI at accessible price points',gov:'Salesforce Government Cloud Plus (FedRAMP High) serves 1,500+ US government agencies',partners:'AppExchange has 7,000+ ISV apps; 2,500+ consulting partners in the Salesforce partner ecosystem'},
+  ServiceNow:{enterprise:'Now Platform deployed at 85% of Fortune 500; avg enterprise ACV >$1M for Global 2000 customers',midmarket:'ServiceNow Express tier targets mid-market IT organizations with simplified ITSM deployment',smb:'Limited SMB focus; primary go-to-market targets enterprises with 500+ employees',gov:'ServiceNow FedRAMP Authorized serves 300+ US federal and defense agencies including DoD',partners:'4,000+ ServiceNow partners; 5,000+ apps on ServiceNow Store; NVIDIA, Deloitte, Accenture as key alliances'},
+  Oracle:{enterprise:'Fusion Cloud ERP/HCM deployed at 5,000+ enterprise customers; OCI serves hyperscale AI workloads for NVIDIA, Microsoft, and Cohere',midmarket:'NetSuite serves 40,000+ mid-market and growing businesses in 200+ countries',smb:'NetSuite SuiteSuccess enables rapid SMB ERP deployment with industry-specific configurations',gov:'Oracle Cloud@Customer and National Security Cloud serve classified US government workloads',partners:'25,000+ Oracle partner network; ISV partners on Oracle Cloud Marketplace; strategic alliances with Microsoft and AWS'},
+  SAP:{enterprise:'S/4HANA Cloud deployed at 90% of Fortune 500; Rise with SAP cloud migration program serves 10,000+ enterprise customers',midmarket:'SAP Business One and SAP Business ByDesign serve 70,000+ mid-market companies globally',smb:'SAP Business One serves 70,000+ SMBs through 1,000+ channel partners worldwide',gov:'SAP Sovereign Cloud serves European government requirements; FedRAMP certification for US public sector',partners:'22,000+ SAP partners; SAP App Center has 2,500+ partner solutions; global SIs including Accenture, Deloitte, IBM'},
+  Workday:{enterprise:'Workday HCM deployed at 65% of Fortune 500; avg ACV >$2M for Global 2000 accounts',midmarket:'Workday Pro targets mid-market companies with 100-1,000 employees for HCM and Finance',smb:'Limited SMB focus; Workday primarily targets organizations with 200+ employees',gov:'Workday Government Cloud (FedRAMP Authorized) serves 100+ US federal agencies and state governments',partners:'300+ Workday implementation partners; 50+ ISVs on Workday AI Marketplace; Accenture and Deloitte as top SIs'}
 };
+
 </script>
 <script>
 /* ==================== HELPERS ==================== */
@@ -1451,7 +1606,7 @@ function renderDashboard() {
   // Companies to Track
   const cc = document.getElementById('companiesTrackContainer');
   if (cc) cc.innerHTML = Object.values(COMPANIES_DATA).map(co => `
-    <div class="company-card" onclick="showCompany('${co.id}')">
+    <div class="company-card" onclick="showCompany('microsoft')">
       <div class="company-card-header">
         <div class="company-logo" style="background:${co.color}">${co.initials}</div>
         <div><div class="company-name">${co.name}</div><div class="company-sector">${co.ticker !== 'Private' ? co.ticker + ' · ' : ''}${co.sector}</div></div>
@@ -1461,7 +1616,7 @@ function renderDashboard() {
         <div class="company-stat"><div class="company-stat-val">${co.rating}/5</div><div class="company-stat-label">Score</div></div>
       </div>
       <div class="company-card-actions">
-        <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();showCompany('${co.id}')">View Company →</button>
+        <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();showCompany('microsoft')">View Company →</button>
       </div>
     </div>`).join('');
 }
@@ -1471,7 +1626,7 @@ function renderCIPage() {
   const container = document.getElementById('ciCompanyCards');
   if (!container) return;
   container.innerHTML = Object.values(COMPANIES_DATA).map(co => `
-    <div class="company-card" onclick="showCompany('${co.id}')">
+    <div class="company-card" onclick="showCompany('microsoft')">
       <div class="company-card-header">
         <div class="company-logo" style="background:${co.color};width:44px;height:44px;font-size:16px">${co.initials}</div>
         <div>
@@ -1487,7 +1642,7 @@ function renderCIPage() {
         <div class="company-stat"><div class="company-stat-val">${co.marketCap}</div><div class="company-stat-label">Market Cap</div></div>
       </div>
       <div class="company-card-actions">
-        <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();showCompany('${co.id}')">View Company →</button>
+        <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();showCompany('microsoft')">View Company →</button>
         <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();">+ Benchmark</button>
       </div>
     </div>`).join('');
@@ -2566,7 +2721,7 @@ function globalSearch(q) {
 window.addEventListener('load', () => {
   renderDashboard();
   renderCIPage();
-  showCompany('fiserv', document.querySelector('[data-co="fiserv"]'));
+  showCompany('microsoft', document.querySelector('[data-co="microsoft"]'));
 });
 window.addEventListener('resize', () => {
   const activePage = document.querySelector('.page.active');
