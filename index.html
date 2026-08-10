@@ -964,6 +964,29 @@ const BENCH_PROFILE_ATTRS = [{"attr":"HQ","Salesforce":"San Francisco, 🇺🇸"
 const MARKET_EVENTS = [{"co":"Google","color":"#06b6d4","title":"FY2025 revenue exceeded $400B","date":"Feb 2026","type":"Financial Results","summary":"Alphabet reported annual revenue above $400 billion, with Cloud growth and AI infrastructure demand highlighted.","tags":["Results","AI"]},{"co":"Salesforce","color":"#3b82f6","title":"Agentforce and Data Cloud remain strategic","date":"Feb 2026","type":"Product","summary":"Salesforce continued to position AI agents and trusted data as central to its growth agenda.","tags":["AI","CRM"]},{"co":"Microsoft","color":"#8b5cf6","title":"Azure and Copilot support AI monetization","date":"Jan 2026","type":"Product","summary":"Microsoft continued to invest in cloud and AI platform capacity and product distribution.","tags":["Cloud","AI"]},{"co":"ServiceNow","color":"#10b981","title":"Workflow AI expansion","date":"Jan 2026","type":"Product","summary":"ServiceNow reported strong subscription growth and emphasized AI-enabled workflow execution.","tags":["Workflow"]},{"co":"Oracle","color":"#f59e0b","title":"Cloud infrastructure demand accelerates","date":"Dec 2025","type":"Corporate","summary":"Oracle cited infrastructure demand and cloud backlog as key drivers of investment.","tags":["OCI"]},{"co":"SAP","color":"#ef4444","title":"Cloud ERP transition continues","date":"Jan 2026","type":"Corporate","summary":"SAP continued its cloud transition centered on S/4HANA and Business Technology Platform.","tags":["ERP"]}];
 const BENCH_CUST = {"Salesforce":{"enterprise":"Large global enterprises using integrated cloud, data and AI capabilities.","midmarket":"Growth companies adopting modular cloud applications and automation.","smb":"SMBs served principally through partners and scalable SaaS offerings.","gov":"Public-sector organizations with security, compliance and modernization needs.","partners":"Global SIs, ISVs, cloud partners and a broad developer ecosystem."},"Microsoft":{"enterprise":"Large global enterprises using integrated cloud, data and AI capabilities.","midmarket":"Growth companies adopting modular cloud applications and automation.","smb":"SMBs served principally through partners and scalable SaaS offerings.","gov":"Public-sector organizations with security, compliance and modernization needs.","partners":"Global SIs, ISVs, cloud partners and a broad developer ecosystem."},"ServiceNow":{"enterprise":"Large global enterprises using integrated cloud, data and AI capabilities.","midmarket":"Growth companies adopting modular cloud applications and automation.","smb":"SMBs served principally through partners and scalable SaaS offerings.","gov":"Public-sector organizations with security, compliance and modernization needs.","partners":"Global SIs, ISVs, cloud partners and a broad developer ecosystem."},"Oracle":{"enterprise":"Large global enterprises using integrated cloud, data and AI capabilities.","midmarket":"Growth companies adopting modular cloud applications and automation.","smb":"SMBs served principally through partners and scalable SaaS offerings.","gov":"Public-sector organizations with security, compliance and modernization needs.","partners":"Global SIs, ISVs, cloud partners and a broad developer ecosystem."},"SAP":{"enterprise":"Large global enterprises using integrated cloud, data and AI capabilities.","midmarket":"Growth companies adopting modular cloud applications and automation.","smb":"SMBs served principally through partners and scalable SaaS offerings.","gov":"Public-sector organizations with security, compliance and modernization needs.","partners":"Global SIs, ISVs, cloud partners and a broad developer ecosystem."},"Google":{"enterprise":"Large global enterprises using integrated cloud, data and AI capabilities.","midmarket":"Growth companies adopting modular cloud applications and automation.","smb":"SMBs served principally through partners and scalable SaaS offerings.","gov":"Public-sector organizations with security, compliance and modernization needs.","partners":"Global SIs, ISVs, cloud partners and a broad developer ecosystem."}};
 
+/* Active portal configuration overlay: replaces frozen example navigation and defaults. */
+window.addEventListener('load', function(){ setTimeout(function(){
+  var base = COMPANIES_DATA.salesforce;
+  var nav = document.getElementById('leftNav');
+  var divider = nav ? nav.querySelectorAll('.nav-divider')[0] : null;
+  if (nav && divider) {
+    var old = Array.prototype.slice.call(nav.querySelectorAll('.nav-company-item'));
+    old.forEach(function(n){ n.remove(); });
+    Object.values(COMPANIES_DATA).forEach(function(co, idx){
+      var item = document.createElement('div'); item.className='nav-company-item'+(idx===0?' active':'');
+      item.dataset.co=co.id; item.innerHTML='<span class=\"co-dot\" style=\"background:'+co.color+'\"></span> '+co.name;
+      item.onclick=function(){showCompany(co.id,item);}; divider.parentNode.insertBefore(item,divider);
+    });
+  }
+  var list=document.getElementById('companyOptions'); if(list) list.innerHTML=Object.values(COMPANIES_DATA).map(function(co){return '<option value=\"'+co.name+'\"/>';}).join('');
+  document.querySelectorAll('.page-subtitle').forEach(function(el){
+    if(el.textContent.indexOf('Full coverage of')>=0) el.textContent='Full coverage of '+BENCH_PEERS.length+' companies across '+base.sector;
+  });
+  currentBenchPeers=BENCH_PEERS.slice(); currentCompany='salesforce';
+  showCompany('salesforce',document.querySelector('[data-co=\"salesforce\"]'));
+  renderDashboard(); renderCIPage();
+},0); });
+
 </script>
 <script>
 /* ==================== HELPERS ==================== */
