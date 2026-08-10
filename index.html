@@ -973,21 +973,6 @@ const BENCH_CUST = {"Salesforce":{"enterprise":"Global enterprises","midmarket":
 
 </script>
 <script>
-
-(function bindRunCompanies(){
-  const marker=document.querySelector('.nav-section-label');
-  if(!marker) return;
-  document.querySelectorAll('.nav-company-item').forEach(el=>el.remove());
-  Object.values(COMPANIES_DATA).forEach((co,index)=>{
-    const el=document.createElement('div');
-    el.className='nav-company-item'+(index===0?' active':'');
-    el.dataset.co=co.id;
-    el.innerHTML=`<span class="co-dot" style="background:${co.color}"></span> ${co.name}`;
-    el.onclick=()=>showCompany(co.id,el);
-    marker.insertAdjacentElement('afterend',el);
-  });
-})();
-
 /* ==================== HELPERS ==================== */
 function hexToRgba(hex, alpha) {
   if (!hex) return 'rgba(59,130,246,'+alpha+')';
@@ -997,7 +982,7 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 /* ==================== STATE ==================== */
-let currentCompany = Object.keys(COMPANIES_DATA)[0];
+let currentCompany = 'fiserv';
 let currentCoTab = 'overview';
 let currentInsightYear = 'All';
 let currentInsightCat = 'All';
@@ -1005,7 +990,7 @@ let currentFinTab = 'revenue';
 let currentFinPeriod = 'annual';
 let currentBenchTab = 'overview';
 let currentBenchFinTab = 'revenue';
-let currentBenchPeers = [...BENCH_PEERS];
+let currentBenchPeers = ['Fiserv','FIS','Jack Henry'];
 let currentBenchFeatures = BENCH_FEATURES.map(f=>({...f}));
 let currentProfileAttrs = BENCH_PROFILE_ATTRS.map(a=>a.attr);
 let currentProductTab = 'strategy';
@@ -2175,7 +2160,7 @@ function globalSearch(q) {
 window.addEventListener('load', () => {
   renderDashboard();
   renderCIPage();
-  showCompany(Object.keys(COMPANIES_DATA)[0], document.querySelector(`[data-co="${Object.keys(COMPANIES_DATA)[0]}"]`));
+  showCompany('fiserv', document.querySelector('[data-co="fiserv"]'));
 });
 window.addEventListener('resize', () => {
   const activePage = document.querySelector('.page.active');
