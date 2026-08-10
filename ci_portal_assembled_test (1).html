@@ -1,0 +1,2578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Competitive Intelligence Portal</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+/* ===================== DESIGN TOKENS ===================== */
+:root {
+  --blue-50:#eff6ff; --blue-100:#dbeafe; --blue-200:#bfdbfe; --blue-400:#60a5fa;
+  --blue-500:#3b82f6; --blue-600:#2563eb; --blue-700:#1d4ed8; --blue-900:#1e3a8a;
+  --indigo-50:#eef2ff; --indigo-100:#e0e7ff; --indigo-500:#6366f1; --indigo-600:#4f46e5; --indigo-700:#4338ca;
+  --green-50:#f0fdf4; --green-100:#dcfce7; --green-400:#4ade80; --green-500:#22c55e; --green-600:#16a34a; --green-700:#15803d;
+  --amber-50:#fffbeb; --amber-100:#fef3c7; --amber-400:#fbbf24; --amber-500:#f59e0b; --amber-600:#d97706;
+  --red-50:#fef2f2; --red-100:#fee2e2; --red-400:#f87171; --red-500:#ef4444; --red-600:#dc2626;
+  --purple-50:#faf5ff; --purple-100:#f3e8ff; --purple-500:#a855f7; --purple-600:#9333ea; --purple-700:#7e22ce;
+  --teal-50:#f0fdfa; --teal-500:#14b8a6; --teal-600:#0d9488;
+  --n-0:#ffffff; --n-50:#f8fafc; --n-100:#f1f5f9; --n-200:#e2e8f0;
+  --n-300:#cbd5e1; --n-400:#94a3b8; --n-500:#64748b; --n-600:#475569;
+  --n-700:#334155; --n-800:#1e293b; --n-900:#0f172a;
+  /* Component tokens */
+  --radius-card:12px; --radius-panel:16px; --radius-modal:20px; --radius-input:8px; --radius-btn:10px;
+  --shadow-card:0 2px 8px rgba(0,0,0,.08); --shadow-elevated:0 8px 24px rgba(0,0,0,.12);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.06); --shadow-lg:0 16px 48px rgba(0,0,0,.16);
+  --sidebar-w:220px;
+  --top-h:60px;
+  --font:'Inter',sans-serif;
+  /* chart palette */
+  --c1:#3b82f6; --c2:#8b5cf6; --c3:#10b981; --c4:#f59e0b; --c5:#ef4444; --c6:#06b6d4;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--n-50);color:var(--n-800);font-size:14px}
+/* scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--n-300);border-radius:3px}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--font);cursor:pointer}
+input,select{font-family:var(--font)}
+
+/* ============ LAYOUT SHELL ============ */
+#app{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+
+/* ============ TOP NAV ============ */
+.top-nav{height:var(--top-h);background:var(--n-0);border-bottom:1px solid var(--n-200);display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100;flex-shrink:0;box-shadow:var(--shadow-sm)}
+.top-nav .logo{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:800;color:var(--n-900);flex-shrink:0}
+.logo-mark{width:32px;height:32px;background:linear-gradient(135deg,#3b82f6,#6366f1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff}
+.top-nav .search-wrap{flex:1;max-width:480px;margin:0 auto;position:relative}
+.top-nav .search-wrap input{width:100%;height:36px;border:1px solid var(--n-200);border-radius:var(--radius-input);padding:0 12px 0 36px;font-size:13px;outline:none;background:var(--n-50);transition:all .2s}
+.top-nav .search-wrap input:focus{border-color:var(--blue-400);background:#fff;box-shadow:0 0 0 3px var(--blue-50)}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--n-400);font-size:14px}
+.top-nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.nav-btn{height:32px;padding:0 14px;border-radius:var(--radius-btn);border:none;font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;transition:all .2s}
+.nav-btn-ghost{background:transparent;color:var(--n-600)}
+.nav-btn-ghost:hover{background:var(--n-100);color:var(--n-800)}
+.nav-btn-primary{background:var(--blue-600);color:#fff}
+.nav-btn-primary:hover{background:var(--blue-700);transform:translateY(-1px)}
+.nav-btn-outline{background:#fff;color:var(--n-700);border:1px solid var(--n-200)}
+.nav-btn-outline:hover{border-color:var(--blue-400);color:var(--blue-600)}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;cursor:pointer}
+.notif-dot{position:relative}
+.notif-dot::after{content:'';position:absolute;top:6px;right:6px;width:8px;height:8px;background:var(--red-500);border-radius:50%;border:2px solid var(--n-0)}
+
+/* ============ BODY AREA ============ */
+.body-area{display:flex;flex:1;overflow:hidden}
+
+/* ============ LEFT NAV ============ */
+.left-nav{width:var(--sidebar-w);background:var(--n-0);border-right:1px solid var(--n-200);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0;padding:16px 0}
+.nav-section-label{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--n-400);padding:8px 20px 4px}
+.nav-link{display:flex;align-items:center;gap:10px;padding:8px 20px;font-size:13px;font-weight:500;color:var(--n-600);cursor:pointer;border-radius:0;transition:all .2s;border-left:3px solid transparent;position:relative}
+.nav-link:hover{background:var(--n-50);color:var(--n-800)}
+.nav-link.active{background:var(--blue-50);color:var(--blue-700);border-left-color:var(--blue-600);font-weight:600}
+.nav-link .nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
+.nav-link .nav-badge{margin-left:auto;background:var(--blue-100);color:var(--blue-700);font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px}
+.nav-divider{border:none;border-top:1px solid var(--n-100);margin:8px 0}
+.nav-company-item{display:flex;align-items:center;gap:8px;padding:7px 20px;font-size:12px;color:var(--n-600);cursor:pointer;transition:all .2s}
+.nav-company-item:hover{background:var(--n-50);color:var(--n-800)}
+.nav-company-item .co-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.nav-company-item.active{background:var(--blue-50);color:var(--blue-700);font-weight:600}
+
+/* ============ MAIN CONTENT ============ */
+.main-content{flex:1;overflow-y:auto;overflow-x:hidden}
+.page{display:none;padding:24px;min-height:100%}
+.page.active{display:block}
+
+/* ============ PAGE HEADERS ============ */
+.breadcrumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--n-400);margin-bottom:16px}
+.breadcrumb .sep{color:var(--n-300)}
+.breadcrumb .current{color:var(--n-700);font-weight:600}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;gap:16px}
+.page-title{font-size:24px;font-weight:800;color:var(--n-900);letter-spacing:-.4px;line-height:1.2}
+.page-subtitle{font-size:13px;color:var(--n-500);margin-top:4px}
+.page-actions{display:flex;gap:8px;flex-shrink:0;align-items:center}
+
+/* ============ TABS ============ */
+.tabs{display:flex;border-bottom:2px solid var(--n-200);margin-bottom:24px;gap:0}
+.tab-item{padding:10px 16px;font-size:13px;font-weight:500;color:var(--n-500);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .2s;white-space:nowrap}
+.tab-item:hover{color:var(--n-700)}
+.tab-item.active{color:var(--blue-600);border-bottom-color:var(--blue-600);font-weight:700}
+.tab-content{display:none}
+.tab-content.active{display:block}
+
+/* ============ CARDS ============ */
+.card{background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);box-shadow:var(--shadow-card);overflow:hidden}
+.card-header{padding:16px 20px 12px;border-bottom:1px solid var(--n-100)}
+.card-title{font-size:14px;font-weight:700;color:var(--n-800)}
+.card-sub{font-size:11px;color:var(--n-500);margin-top:2px}
+.card-body{padding:16px 20px;overflow:visible}
+.card-footer{padding:12px 20px;border-top:1px solid var(--n-100);background:var(--n-50)}
+
+/* ============ KPI TILES ============ */
+.kpi-grid{display:grid;gap:16px;margin-bottom:24px}
+.kpi-grid-4{grid-template-columns:repeat(4,1fr)}
+.kpi-grid-3{grid-template-columns:repeat(3,1fr)}
+.kpi-grid-6{grid-template-columns:repeat(6,1fr)}
+.kpi-tile{background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);box-shadow:var(--shadow-card);padding:16px 20px;position:relative;overflow:hidden}
+.kpi-tile::after{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-tile.blue::after{background:linear-gradient(90deg,var(--blue-500),var(--blue-400))}
+.kpi-tile.indigo::after{background:linear-gradient(90deg,var(--indigo-600),var(--indigo-500))}
+.kpi-tile.green::after{background:linear-gradient(90deg,var(--green-600),var(--green-500))}
+.kpi-tile.amber::after{background:linear-gradient(90deg,var(--amber-600),var(--amber-400))}
+.kpi-tile.red::after{background:linear-gradient(90deg,var(--red-600),var(--red-400))}
+.kpi-tile.purple::after{background:linear-gradient(90deg,var(--purple-600),var(--purple-500))}
+.kpi-tile.teal::after{background:linear-gradient(90deg,var(--teal-600),var(--teal-500))}
+.kpi-label{font-size:11px;font-weight:700;letter-spacing:.3px;color:var(--n-500);text-transform:uppercase;margin-bottom:8px}
+.kpi-value{font-size:28px;font-weight:800;color:var(--n-900);letter-spacing:-1px;line-height:1}
+.kpi-value-sm{font-size:20px}
+.kpi-sub{font-size:11px;color:var(--n-400);margin-top:6px}
+.kpi-delta{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-top:6px}
+.kpi-delta.up{background:var(--green-100);color:var(--green-700)}
+.kpi-delta.down{background:var(--red-100);color:var(--red-600)}
+.kpi-delta.neutral{background:var(--blue-100);color:var(--blue-700)}
+.kpi-icon{position:absolute;right:14px;bottom:12px;font-size:28px;opacity:.1}
+
+/* ============ BADGES & TAGS ============ */
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-blue{background:var(--blue-100);color:var(--blue-700)}
+.badge-green{background:var(--green-100);color:var(--green-700)}
+.badge-amber{background:var(--amber-100);color:var(--amber-600)}
+.badge-red{background:var(--red-100);color:var(--red-600)}
+.badge-purple{background:var(--purple-100);color:var(--purple-700)}
+.badge-indigo{background:var(--indigo-100);color:var(--indigo-700)}
+.badge-gray{background:var(--n-100);color:var(--n-600)}
+.tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;background:var(--n-100);color:var(--n-600);margin:2px}
+.tag-blue{background:var(--blue-50);color:var(--blue-600)}
+.tag-green{background:var(--green-50);color:var(--green-600)}
+.tag-amber{background:var(--amber-50);color:var(--amber-600)}
+.tag-purple{background:var(--purple-50);color:var(--purple-600)}
+
+/* ============ TABLES ============ */
+.table-wrap{overflow-x:auto;border-radius:var(--radius-card);border:1px solid var(--n-200)}
+table.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{background:var(--n-50);padding:10px 14px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--n-500);border-bottom:1px solid var(--n-200);white-space:nowrap}
+.data-table td{padding:11px 14px;border-bottom:1px solid var(--n-100);color:var(--n-700);vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--n-50)}
+.score-cell{font-weight:700;color:var(--n-800)}
+.rating-bar{display:flex;align-items:center;gap:8px}
+.rating-bar-inner{height:6px;border-radius:3px;background:var(--n-200);flex:1;overflow:hidden}
+.rating-bar-fill{height:100%;border-radius:3px;background:var(--blue-500)}
+
+/* ============ TIMELINE ============ */
+.timeline{display:flex;flex-direction:column;gap:0}
+.timeline-item{display:flex;gap:16px;position:relative;padding-bottom:24px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-left{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:48px}
+.timeline-dot{width:12px;height:12px;border-radius:50%;border:2px solid var(--blue-500);background:var(--n-0);flex-shrink:0;margin-top:4px}
+.timeline-dot.filled{background:var(--blue-500)}
+.timeline-line{flex:1;width:2px;background:var(--n-200);margin-top:4px}
+.timeline-date{font-size:10px;font-weight:700;color:var(--n-400);text-align:center;margin-top:2px;line-height:1.2}
+.timeline-card{flex:1;background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);padding:14px 16px;box-shadow:var(--shadow-card)}
+.timeline-card-title{font-size:13px;font-weight:700;color:var(--n-800);margin-bottom:4px}
+.timeline-card-source{font-size:11px;color:var(--n-400);margin-bottom:6px}
+.timeline-card-text{font-size:12px;color:var(--n-600);line-height:1.6}
+.timeline-card-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+
+/* ============ INTELLIGENCE CARDS ============ */
+.intel-card{background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);box-shadow:var(--shadow-card);padding:16px;cursor:pointer;transition:all .2s}
+.intel-card:hover{box-shadow:var(--shadow-elevated);transform:translateY(-2px);border-color:var(--blue-200)}
+.intel-card-type{font-size:10px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;margin-bottom:6px}
+.intel-card-title{font-size:13px;font-weight:700;color:var(--n-800);margin-bottom:6px;line-height:1.4}
+.intel-card-meta{font-size:11px;color:var(--n-400);margin-bottom:8px}
+.intel-card-summary{font-size:12px;color:var(--n-600);line-height:1.6}
+.intel-card-footer{margin-top:10px;display:flex;gap:6px;flex-wrap:wrap}
+
+/* ============ COMPANY CARDS ============ */
+.company-card{background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);box-shadow:var(--shadow-card);padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:all .2s}
+.company-card:hover{box-shadow:var(--shadow-elevated);transform:translateY(-2px)}
+.company-card-header{display:flex;align-items:center;gap:10px}
+.company-logo{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#fff;flex-shrink:0}
+.company-name{font-size:14px;font-weight:700;color:var(--n-800)}
+.company-sector{font-size:11px;color:var(--n-400)}
+.company-stats{display:flex;gap:16px}
+.company-stat{display:flex;flex-direction:column;gap:2px}
+.company-stat-val{font-size:13px;font-weight:700;color:var(--n-800)}
+.company-stat-label{font-size:10px;color:var(--n-400)}
+.company-card-actions{display:flex;gap:6px;margin-top:4px}
+.btn-sm{height:28px;padding:0 12px;border-radius:6px;font-size:11px;font-weight:600;border:none;cursor:pointer;transition:all .2s}
+.btn-sm-ghost{background:var(--n-100);color:var(--n-600)}
+.btn-sm-ghost:hover{background:var(--n-200)}
+.btn-sm-primary{background:var(--blue-600);color:#fff}
+.btn-sm-primary:hover{background:var(--blue-700)}
+.btn-sm-outline{background:#fff;color:var(--n-700);border:1px solid var(--n-200)}
+.btn-sm-outline:hover{border-color:var(--blue-400);color:var(--blue-600)}
+
+/* ============ EVENT CARDS ============ */
+.event-card{background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);padding:14px 16px;display:flex;gap:12px;cursor:pointer;transition:all .2s}
+.event-card:hover{box-shadow:var(--shadow-card);border-color:var(--blue-200)}
+.event-dot{width:10px;height:10px;border-radius:50%;margin-top:4px;flex-shrink:0}
+.event-content{flex:1}
+.event-title{font-size:13px;font-weight:600;color:var(--n-800);margin-bottom:3px}
+.event-meta{font-size:11px;color:var(--n-400);margin-bottom:4px}
+.event-summary{font-size:12px;color:var(--n-500);line-height:1.5}
+.event-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+
+/* ============ SWOT ============ */
+.swot-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;border-radius:var(--radius-card);overflow:hidden}
+.swot-cell{padding:16px;min-height:140px}
+.swot-cell.strengths{background:#f0fdf4}
+.swot-cell.weaknesses{background:#fef2f2}
+.swot-cell.opportunities{background:#eff6ff}
+.swot-cell.threats{background:#fffbeb}
+.swot-label{font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.swot-cell.strengths .swot-label{color:var(--green-700)}
+.swot-cell.weaknesses .swot-label{color:var(--red-600)}
+.swot-cell.opportunities .swot-label{color:var(--blue-700)}
+.swot-cell.threats .swot-label{color:var(--amber-600)}
+.swot-items{display:flex;flex-direction:column;gap:6px}
+.swot-item{font-size:12px;color:var(--n-700);line-height:1.5;display:flex;gap:6px}
+.swot-bullet{flex-shrink:0;margin-top:2px;font-size:10px}
+
+/* ============ DRILLDOWN PANEL ============ */
+.drilldown-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none}
+.drilldown-overlay.open{display:block}
+.drilldown-panel{position:fixed;right:0;top:0;height:100vh;width:520px;background:var(--n-0);z-index:201;transform:translateX(100%);transition:transform .3s ease;overflow-y:auto;box-shadow:var(--shadow-lg)}
+.drilldown-panel.open{transform:translateX(0)}
+.drilldown-header{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--n-200);position:sticky;top:0;background:var(--n-0);z-index:5}
+.drilldown-title{font-size:18px;font-weight:800;color:var(--n-900)}
+.drilldown-close{width:32px;height:32px;border:none;background:var(--n-100);border-radius:8px;cursor:pointer;font-size:16px;color:var(--n-500);display:flex;align-items:center;justify-content:center}
+.drilldown-close:hover{background:var(--n-200);color:var(--n-800)}
+.drilldown-body{padding:24px}
+
+/* ============ SECTION BLOCK ============ */
+.section-block{margin-bottom:28px}
+.section-block-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.section-block-title{font-size:16px;font-weight:700;color:var(--n-800);display:flex;align-items:center;gap:8px}
+.section-block-actions{display:flex;gap:6px;align-items:center}
+
+/* ============ FILTER BAR ============ */
+.filter-bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:16px;padding:12px 16px;background:var(--n-50);border:1px solid var(--n-200);border-radius:var(--radius-card)}
+.filter-label{font-size:12px;font-weight:600;color:var(--n-500)}
+.filter-chip{padding:5px 12px;border-radius:20px;font-size:12px;font-weight:500;border:1.5px solid var(--n-200);background:var(--n-0);color:var(--n-600);cursor:pointer;transition:all .2s}
+.filter-chip:hover{border-color:var(--blue-300);color:var(--blue-600)}
+.filter-chip.active{background:var(--blue-600);color:#fff;border-color:var(--blue-600)}
+.filter-select{height:32px;border:1px solid var(--n-200);border-radius:var(--radius-input);padding:0 10px;font-size:12px;color:var(--n-700);background:var(--n-0);outline:none}
+.filter-select:focus{border-color:var(--blue-400)}
+.view-toggle{display:flex;gap:2px;background:var(--n-100);border-radius:8px;padding:2px}
+.view-btn{height:28px;padding:0 10px;border:none;border-radius:6px;font-size:11px;font-weight:600;color:var(--n-500);cursor:pointer;background:transparent;transition:all .2s}
+.view-btn.active{background:var(--n-0);color:var(--n-800);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+/* ============ CHARTS ============ */
+.chart-wrap{width:100%;border-radius:var(--radius-card);overflow:hidden}
+/* Ensure Plotly charts don't overflow their containers */
+.js-plotly-plot, .plot-container { width:100% !important; }
+.plotly { display:block; }
+/* Prevent card-body overflow */
+.card-body { overflow:hidden; }
+/* Grid equal-height cards */
+.grid-2 .card, .grid-7-5 .card, .grid-2-1 .card { display:flex; flex-direction:column; }
+.grid-2 .card .card-body, .grid-7-5 .card .card-body, .grid-2-1 .card .card-body { flex:1; }
+
+/* ============ GRID HELPERS ============ */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid-7-5{display:grid;grid-template-columns:7fr 5fr;gap:16px}
+.grid-2-1{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.gap-sm{gap:10px}
+.gap-lg{gap:24px}
+.full{grid-column:1/-1}
+.mb-4{margin-bottom:4px}.mb-8{margin-bottom:8px}.mb-12{margin-bottom:12px}.mb-16{margin-bottom:16px}.mb-24{margin-bottom:24px}
+.mt-4{margin-top:4px}.mt-8{margin-top:8px}.mt-12{margin-top:12px}.mt-16{margin-top:16px}
+.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-8{gap:8px}.gap-12{gap:12px}.gap-16{gap:16px}
+.text-xs{font-size:11px}.text-sm{font-size:12px}.text-base{font-size:14px}.text-lg{font-size:16px}
+.font-medium{font-weight:500}.font-semibold{font-weight:600}.font-bold{font-weight:700}.font-extrabold{font-weight:800}
+.text-muted{color:var(--n-400)}.text-secondary{color:var(--n-500)}.text-primary{color:var(--n-800)}
+.text-blue{color:var(--blue-600)}.text-green{color:var(--green-600)}.text-red{color:var(--red-600)}.text-amber{color:var(--amber-600)}
+
+/* ============ BENCHMARK MANAGE PEERS ============ */
+.bench-layout{display:grid;grid-template-columns:1fr 280px;gap:20px;height:100%;min-height:0}
+.bench-main{overflow-y:auto;min-height:0}
+.bench-sidebar{background:var(--n-0);border-radius:var(--radius-panel);border:1px solid var(--n-200);padding:20px;height:fit-content;position:sticky;top:0}
+.peer-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid var(--n-200);margin-bottom:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s}
+.peer-item:hover{border-color:var(--blue-300);background:var(--blue-50)}
+.peer-item .peer-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.peer-remove{margin-left:auto;width:20px;height:20px;border:none;border-radius:4px;background:var(--n-100);color:var(--n-400);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.peer-remove:hover{background:var(--red-100);color:var(--red-500)}
+.add-peer-row{display:flex;gap:6px;margin-top:8px}
+.add-peer-input{flex:1;height:32px;border:1px solid var(--n-200);border-radius:var(--radius-input);padding:0 10px;font-size:12px;outline:none}
+.add-peer-input:focus{border-color:var(--blue-400)}
+.add-peer-btn{height:32px;padding:0 12px;background:var(--blue-600);color:#fff;border:none;border-radius:var(--radius-input);font-size:12px;font-weight:600;cursor:pointer}
+.add-peer-btn:hover{background:var(--blue-700)}
+
+/* ============ FEATURE COMPARISON TABLE ============ */
+.feat-table{width:100%;border-collapse:collapse;font-size:12px}
+.feat-table th{background:var(--n-50);padding:10px 14px;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--n-500);border-bottom:2px solid var(--n-200);border-right:1px solid var(--n-200);text-align:center}
+.feat-table th:first-child{text-align:left;min-width:180px}
+.feat-table td{padding:10px 14px;border-bottom:1px solid var(--n-100);border-right:1px solid var(--n-100);text-align:center;vertical-align:middle}
+.feat-table td:first-child{text-align:left;font-weight:500;color:var(--n-700)}
+.feat-check{font-size:16px}
+.feat-partial{font-size:11px;font-weight:600;color:var(--amber-600)}
+
+/* ============ PORTFOLIO MATRIX ============ */
+.matrix-wrap{position:relative;background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);padding:20px}
+.bubble-svg{width:100%}
+
+/* ============ SEGMENT COVERAGE GRID ============ */
+.seg-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.seg-cell{padding:10px;border-radius:8px;text-align:center;border:1px solid var(--n-200)}
+.seg-cell-label{font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(--n-500);margin-bottom:6px}
+.seg-cell-val{font-size:18px;font-weight:800;color:var(--n-800)}
+.seg-cell-sub{font-size:10px;color:var(--n-400);margin-top:2px}
+
+/* ============ GEO SECTION ============ */
+.region-row{display:flex;gap:12px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--n-100)}
+.region-row:last-child{border-bottom:none}
+.region-flag{font-size:20px;flex-shrink:0;width:28px;text-align:center}
+.region-name{font-size:13px;font-weight:600;color:var(--n-800);flex:1}
+.region-bar{flex:2;height:8px;border-radius:4px;background:var(--n-200);overflow:hidden}
+.region-bar-fill{height:100%;border-radius:4px;background:var(--blue-500)}
+.region-pct{font-size:12px;font-weight:700;color:var(--n-700);width:40px;text-align:right}
+.region-rank{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--n-100);color:var(--n-500)}
+
+/* ============ INNOVATION CARDS ============ */
+.innov-card{background:var(--n-0);border-radius:var(--radius-card);border:1px solid var(--n-200);padding:16px;box-shadow:var(--shadow-card)}
+.innov-icon{font-size:24px;margin-bottom:8px}
+.innov-title{font-size:13px;font-weight:700;color:var(--n-800);margin-bottom:4px}
+.innov-text{font-size:12px;color:var(--n-500);line-height:1.5}
+.innov-footer{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+
+/* ============ RESPONSIVE ============ */
+@media(max-width:1280px){
+  .kpi-grid-6{grid-template-columns:repeat(3,1fr)}
+  .grid-7-5{grid-template-columns:1fr}
+  .bench-layout{grid-template-columns:1fr}
+}
+@media(max-width:1024px){
+  :root{--sidebar-w:0px}
+  .left-nav{display:none}
+  .kpi-grid-4{grid-template-columns:repeat(2,1fr)}
+  .grid-2{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr 1fr}
+  .grid-2-1{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .grid-3{grid-template-columns:1fr}
+  .kpi-grid-4,.kpi-grid-3{grid-template-columns:1fr 1fr}
+  .page{padding:16px}
+  .swot-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<!-- TOP NAV -->
+<div id="app">
+<nav class="top-nav">
+  <div class="logo">
+    <div class="logo-mark">🧭</div>
+    <span>CompeteIQ</span>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search companies, events, insights…" oninput="globalSearch(this.value)"/>
+  </div>
+  <div class="top-nav-right">
+    <button class="nav-btn nav-btn-ghost notif-dot" onclick="showPage('dashboard')">🏠 Home</button>
+    <button class="nav-btn nav-btn-outline" onclick="showPage('benchmark')">⚖️ Benchmark</button>
+    <button class="nav-btn nav-btn-primary" onclick="openDrilldown('competitive')">📊 Intelligence</button>
+    <div class="avatar">AK</div>
+  </div>
+</nav>
+
+<div class="body-area">
+  <!-- LEFT NAV -->
+  <nav class="left-nav" id="leftNav">
+    <div class="nav-section-label">Main</div>
+    <div class="nav-link active" onclick="showPage('dashboard',this)" data-page="dashboard">
+      <span class="nav-icon">🏠</span> Dashboard
+    </div>
+    <div class="nav-link" onclick="showPage('competitive-intelligence',this)" data-page="competitive-intelligence">
+      <span class="nav-icon">🎯</span> Competitive Intel <span class="nav-badge">12</span>
+    </div>
+    <div class="nav-link" onclick="showPage('benchmark',this)" data-page="benchmark">
+      <span class="nav-icon">⚖️</span> Benchmark
+    </div>
+    <hr class="nav-divider"/>
+    <div class="nav-section-label">Companies</div>
+    <div class="nav-company-item active" onclick="showCompany('fiserv',this)" data-co="fiserv">
+      <span class="co-dot" style="background:#3b82f6"></span> Fiserv
+    </div>
+    <div class="nav-company-item" onclick="showCompany('fis',this)" data-co="fis">
+      <span class="co-dot" style="background:#8b5cf6"></span> FIS
+    </div>
+    <div class="nav-company-item" onclick="showCompany('jackhenry',this)" data-co="jackhenry">
+      <span class="co-dot" style="background:#10b981"></span> Jack Henry
+    </div>
+    <div class="nav-company-item" onclick="showCompany('temenos',this)" data-co="temenos">
+      <span class="co-dot" style="background:#f59e0b"></span> Temenos
+    </div>
+    <div class="nav-company-item" onclick="showCompany('finastra',this)" data-co="finastra">
+      <span class="co-dot" style="background:#ef4444"></span> Finastra
+    </div>
+    <div class="nav-company-item" onclick="showCompany('ncr',this)" data-co="ncr">
+      <span class="co-dot" style="background:#06b6d4"></span> NCR Atleos
+    </div>
+    <hr class="nav-divider"/>
+    <div class="nav-section-label">Quick Access</div>
+    <div class="nav-link" onclick="showPage('benchmark',this)" data-page="benchmark">
+      <span class="nav-icon">📊</span> Reports
+    </div>
+    <div class="nav-link">
+      <span class="nav-icon">⚙️</span> Settings
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content" id="mainContent">
+
+    <!-- =================== DASHBOARD PAGE =================== -->
+    <div class="page active" id="page-dashboard">
+      <div class="breadcrumb"><span class="current">Dashboard</span></div>
+      <div class="page-header">
+        <div>
+          <div class="page-title">Good morning, Alex 👋</div>
+          <div class="page-subtitle">Here's your competitive intelligence summary for today — August 7, 2026</div>
+        </div>
+        <div class="page-actions">
+          <button class="nav-btn nav-btn-outline">📤 Export</button>
+          <button class="nav-btn nav-btn-primary" onclick="showPage('benchmark')">⚖️ Open Benchmark</button>
+        </div>
+      </div>
+
+      <!-- KPI strip -->
+      <div class="kpi-grid kpi-grid-4 mb-24">
+        <div class="kpi-tile blue"><div class="kpi-label">Tracked Companies</div><div class="kpi-value">6</div><div class="kpi-sub">Across Payments & Banking Tech</div><div class="kpi-delta neutral">↗ +1 this month</div><div class="kpi-icon">🏢</div></div>
+        <div class="kpi-tile green"><div class="kpi-label">New Insights Today</div><div class="kpi-value">14</div><div class="kpi-sub">Product, Inorganic, Market</div><div class="kpi-delta up">▲ +6 vs yesterday</div><div class="kpi-icon">💡</div></div>
+        <div class="kpi-tile amber"><div class="kpi-label">Market Events</div><div class="kpi-value">8</div><div class="kpi-sub">Earnings, Deals, Launches</div><div class="kpi-delta neutral">This week</div><div class="kpi-icon">📰</div></div>
+        <div class="kpi-tile indigo"><div class="kpi-label">Active Alerts</div><div class="kpi-value">3</div><div class="kpi-sub">Competitor moves detected</div><div class="kpi-delta down">⚠ Action needed</div><div class="kpi-icon">🔔</div></div>
+      </div>
+
+      <!-- Your Intelligence Module -->
+      <div class="section-block">
+        <div class="section-block-header">
+          <div class="section-block-title">📌 Your Intelligence Module</div>
+          <button class="btn-sm btn-sm-outline">Customize</button>
+        </div>
+        <div class="grid-3">
+          <!-- Competitive Intelligence Card -->
+          <div class="card" style="border-top:3px solid var(--blue-500);cursor:pointer" onclick="openDrilldown('competitive')">
+            <div class="card-body">
+              <div style="font-size:24px;margin-bottom:10px">🎯</div>
+              <div class="card-title mb-4">Competitive Intelligence</div>
+              <div class="text-sm text-secondary mb-12">Track product launches, pricing moves, and strategic pivots across your competitor universe in real time.</div>
+              <div class="flex gap-8 flex-wrap mb-12">
+                <span class="badge badge-blue">12 new insights</span>
+                <span class="badge badge-gray">6 companies</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+                <div style="background:var(--n-50);border-radius:8px;padding:10px 12px"><div class="text-xs text-secondary">Coverage</div><div style="font-size:16px;font-weight:800;color:var(--n-800)">6 cos</div></div>
+                <div style="background:var(--n-50);border-radius:8px;padding:10px 12px"><div class="text-xs text-secondary">Insights</div><div style="font-size:16px;font-weight:800;color:var(--n-800)">147</div></div>
+              </div>
+              <button class="nav-btn nav-btn-primary" style="width:100%;margin-top:14px;justify-content:center" onclick="event.stopPropagation();showPage('competitive-intelligence')">Open Competitive Intelligence →</button>
+            </div>
+          </div>
+          <!-- Market Intelligence Card -->
+          <div class="card" style="border-top:3px solid var(--purple-500);cursor:pointer" onclick="openDrilldown('market')">
+            <div class="card-body">
+              <div style="font-size:24px;margin-bottom:10px">📈</div>
+              <div class="card-title mb-4">Market Intelligence</div>
+              <div class="text-sm text-secondary mb-12">Monitor industry trends, analyst reports, regulatory developments, and macro signals shaping your market.</div>
+              <div class="flex gap-8 flex-wrap mb-12">
+                <span class="badge badge-purple">8 new reports</span>
+                <span class="badge badge-gray">3 sectors</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+                <div style="background:var(--n-50);border-radius:8px;padding:10px 12px"><div class="text-xs text-secondary">TAM Est.</div><div style="font-size:16px;font-weight:800;color:var(--n-800)">$180B</div></div>
+                <div style="background:var(--n-50);border-radius:8px;padding:10px 12px"><div class="text-xs text-secondary">CAGR</div><div style="font-size:16px;font-weight:800;color:var(--n-800)">7.8%</div></div>
+              </div>
+              <button class="nav-btn nav-btn-ghost" style="width:100%;margin-top:14px;justify-content:center;border:1px solid var(--n-200)">Open Market Intelligence →</button>
+            </div>
+          </div>
+          <!-- Sales Intelligence Card -->
+          <div class="card" style="border-top:3px solid var(--green-500);cursor:pointer" onclick="openDrilldown('sales')">
+            <div class="card-body">
+              <div style="font-size:24px;margin-bottom:10px">💼</div>
+              <div class="card-title mb-4">Sales Intelligence</div>
+              <div class="text-sm text-secondary mb-12">Identify buyer signals, track deal activity, and surface prospect intelligence to accelerate pipeline growth.</div>
+              <div class="flex gap-8 flex-wrap mb-12">
+                <span class="badge badge-green">5 new signals</span>
+                <span class="badge badge-gray">Active deals</span>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px">
+                <div style="background:var(--n-50);border-radius:8px;padding:10px 12px"><div class="text-xs text-secondary">Prospects</div><div style="font-size:16px;font-weight:800;color:var(--n-800)">24</div></div>
+                <div style="background:var(--n-50);border-radius:8px;padding:10px 12px"><div class="text-xs text-secondary">Win signals</div><div style="font-size:16px;font-weight:800;color:var(--n-800)">7</div></div>
+              </div>
+              <button class="nav-btn nav-btn-ghost" style="width:100%;margin-top:14px;justify-content:center;border:1px solid var(--n-200)">Open Sales Intelligence →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row: Events + Companies to Track -->
+      <div class="grid-2-1 gap-lg">
+        <!-- Recent Market Events -->
+        <div class="section-block">
+          <div class="section-block-header">
+            <div class="section-block-title">📰 Recent Market Events</div>
+            <button class="btn-sm btn-sm-outline">View All</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px" id="marketEventsContainer">
+            <!-- populated by JS -->
+          </div>
+        </div>
+        <!-- Companies to Track -->
+        <div class="section-block">
+          <div class="section-block-header">
+            <div class="section-block-title">🏢 Companies to Track</div>
+            <button class="btn-sm btn-sm-outline" onclick="showPage('competitive-intelligence')">See all →</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px" id="companiesTrackContainer">
+            <!-- populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================== COMPETITIVE INTELLIGENCE PAGE =================== -->
+    <div class="page" id="page-competitive-intelligence">
+      <div class="breadcrumb"><span>Dashboard</span><span class="sep">›</span><span class="current">Competitive Intelligence</span></div>
+      <div class="page-header">
+        <div>
+          <div class="page-title">Competitive Intelligence</div>
+          <div class="page-subtitle">Full coverage of 6 competitors across Payments & Banking Technology</div>
+        </div>
+        <div class="page-actions">
+          <button class="nav-btn nav-btn-outline">🔔 Alerts</button>
+          <button class="nav-btn nav-btn-primary" onclick="showPage('benchmark')">⚖️ Benchmark →</button>
+        </div>
+      </div>
+      <div class="grid-3" id="ciCompanyCards"><!-- populated by JS --></div>
+    </div>
+
+    <!-- =================== COMPANY PAGE =================== -->
+    <div class="page" id="page-company">
+      <div class="breadcrumb" id="companyBreadcrumb">
+        <span onclick="showPage('competitive-intelligence')" style="cursor:pointer;color:var(--n-400)">Competitive Intel</span>
+        <span class="sep">›</span><span class="current" id="companyBreadcrumbName">Company</span>
+      </div>
+      <div class="page-header">
+        <div class="flex items-center gap-16">
+          <div class="company-logo" id="coLogoHeader" style="background:#3b82f6;width:48px;height:48px;font-size:18px">F</div>
+          <div>
+            <div class="page-title" id="coNameHeader">Fiserv</div>
+            <div class="page-subtitle" id="coSubHeader">Payments & Banking Technology · NASDAQ: FISV · Milwaukee, 🇺🇸</div>
+          </div>
+        </div>
+        <div class="page-actions">
+          <button class="btn-sm btn-sm-outline" onclick="addToBenchmark()">+ Add to Benchmark</button>
+          <button class="nav-btn nav-btn-primary">📤 Export</button>
+        </div>
+      </div>
+      <!-- Company Tabs -->
+      <div class="tabs" id="companyTabs">
+        <div class="tab-item active" onclick="switchCoTab('overview',this)">Overview</div>
+        <div class="tab-item" onclick="switchCoTab('insights',this)">Insights</div>
+        <div class="tab-item" onclick="switchCoTab('products',this)">Products</div>
+        <div class="tab-item" onclick="switchCoTab('financials',this)">Financials</div>
+        <div class="tab-item" onclick="switchCoTab('inorganic',this)">Inorganic</div>
+        <div class="tab-item" onclick="switchCoTab('geography',this)">Geography</div>
+        <div class="tab-item" onclick="switchCoTab('innovation',this)">Innovation</div>
+        <div class="tab-item" onclick="switchCoTab('customers',this)">Customers</div>
+      </div>
+
+      <!-- TAB: OVERVIEW -->
+      <div class="tab-content active" id="co-tab-overview">
+        <div class="kpi-grid kpi-grid-4 mb-24" id="coKpis"><!-- populated by JS --></div>
+        <div class="grid-7-5 mb-24">
+          <div class="card"><div class="card-header"><div class="card-title">📈 Revenue Trend</div><div class="card-sub">Annual revenue 2020–2025 ($B)</div></div><div class="card-body" style="padding:8px 10px"><div id="coRevChart" style="height:260px"></div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">🏢 Company Snapshot</div></div><div class="card-body" id="coSnapshot"><!-- populated by JS --></div></div>
+        </div>
+        <div class="grid-2 mb-24">
+          <div class="card">
+            <div class="card-header"><div class="card-title">📦 Top Products</div><div class="card-sub">Revenue contribution</div></div>
+            <div class="card-body" id="coTopProducts"><!-- populated by JS --></div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">👥 Customer Segments</div></div>
+            <div class="card-body" id="coSegments"><!-- populated by JS --></div>
+          </div>
+        </div>
+        <div class="card mb-24">
+          <div class="card-header"><div class="card-title">🌍 Geographic Presence</div><div class="card-sub">Key markets and revenue contribution</div></div>
+          <div class="card-body" id="coGeoOverview"><!-- populated by JS --></div>
+        </div>
+      </div>
+
+      <!-- TAB: INSIGHTS -->
+      <div class="tab-content" id="co-tab-insights">
+        <div class="filter-bar">
+          <span class="filter-label">Year:</span>
+          <div id="yearFilters" style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="filter-chip active" onclick="filterInsights('All',this)">All Years</button>
+            <button class="filter-chip" onclick="filterInsights('2025',this)">2025</button>
+            <button class="filter-chip" onclick="filterInsights('2024',this)">2024</button>
+            <button class="filter-chip" onclick="filterInsights('2023',this)">2023</button>
+            <button class="filter-chip" onclick="filterInsights('2022',this)">2022</button>
+          </div>
+          <span class="filter-label" style="margin-left:8px">Category:</span>
+          <div style="display:flex;gap:6px;flex-wrap:wrap" id="catFilters">
+            <button class="filter-chip active" onclick="filterInsightCat('All',this)">All</button>
+            <button class="filter-chip" onclick="filterInsightCat('Product',this)">Product</button>
+            <button class="filter-chip" onclick="filterInsightCat('Sales & Distribution',this)">Sales</button>
+            <button class="filter-chip" onclick="filterInsightCat('R&D / Innovation',this)">R&D</button>
+            <button class="filter-chip" onclick="filterInsightCat('Inorganic',this)">Inorganic</button>
+            <button class="filter-chip" onclick="filterInsightCat('Marketing',this)">Marketing</button>
+            <button class="filter-chip" onclick="filterInsightCat('Customer Wins',this)">Customer Wins</button>
+            <button class="filter-chip" onclick="filterInsightCat('Hiring',this)">Hiring</button>
+          </div>
+        </div>
+        <div class="timeline" id="insightsTimeline"><!-- populated by JS --></div>
+      </div>
+
+      <!-- TAB: PRODUCTS -->
+      <div class="tab-content" id="co-tab-products">
+        <div class="tabs" style="margin-bottom:20px" id="productSubTabs">
+          <div class="tab-item active" onclick="switchProductTab('strategy',this)">Product Strategy</div>
+          <div class="tab-item" onclick="switchProductTab('launch',this)">Launch Timeline</div>
+          <div class="tab-item" onclick="switchProductTab('portfolio',this)">Product Portfolio</div>
+          <div class="tab-item" onclick="switchProductTab('matrix',this)">Portfolio Matrix</div>
+          <div class="tab-item" onclick="switchProductTab('updates',this)">Updates & Launches</div>
+        </div>
+        <div id="prod-tab-strategy" class="prod-tab-content">
+          <div class="section-block-header mb-16"><div class="section-block-title">🗺️ Product Strategy Evolution</div><div class="section-block-actions"><div class="view-toggle"><button class="view-btn active" onclick="toggleProdView('timeline',this)">Timeline</button><button class="view-btn" onclick="toggleProdView('list',this)">List View</button></div></div></div>
+          <div id="prodStrategyContent"><!-- populated --></div>
+        </div>
+        <div id="prod-tab-launch" class="prod-tab-content" style="display:none">
+          <div class="filter-bar mb-16">
+            <span class="filter-label">Category:</span>
+            <button class="filter-chip active" onclick="filterLaunch('All',this)">All</button>
+            <button class="filter-chip" onclick="filterLaunch('New Product',this)">New Product</button>
+            <button class="filter-chip" onclick="filterLaunch('Enhancement',this)">Enhancement</button>
+            <button class="filter-chip" onclick="filterLaunch('Partnership',this)">Partnership</button>
+          </div>
+          <div class="timeline" id="launchTimeline"><!-- populated --></div>
+        </div>
+        <div id="prod-tab-portfolio" class="prod-tab-content" style="display:none">
+          <div class="filter-bar mb-16">
+            <span class="filter-label">Segment:</span>
+            <button class="filter-chip active" onclick="filterPortfolioSeg('All',this)">All</button>
+            <button class="filter-chip" onclick="filterPortfolioSeg('Merchant',this)">Merchant</button>
+            <button class="filter-chip" onclick="filterPortfolioSeg('Financial',this)">Financial</button>
+            <button class="filter-chip" onclick="filterPortfolioSeg('Cloud',this)">Cloud</button>
+          </div>
+          <div class="grid-3" id="portfolioCards"><!-- populated --></div>
+        </div>
+        <div id="prod-tab-matrix" class="prod-tab-content" style="display:none">
+          <div class="grid-2-1">
+            <div>
+              <div class="card mb-16">
+                <div class="card-header"><div class="card-title">📊 Portfolio Matrix</div><div class="card-sub">Bubble size = revenue share; click bubble to see SWOT</div></div>
+                <div class="card-body" style="padding:12px 14px"><div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap" id="matrixProductSelector"><!-- chips --></div><div id="portfolioMatrix" style="height:360px"></div></div>
+              </div>
+              <div class="card">
+                <div class="card-header"><div class="card-title">📐 Segment Coverage Matrix</div></div>
+                <div class="card-body" id="segCoverageMatrix"><!-- populated --></div>
+              </div>
+            </div>
+            <div class="card" id="swotPanel">
+              <div class="card-header"><div class="card-title" id="swotTitle">SWOT Analysis</div><div class="card-sub">Click a product bubble to view</div></div>
+              <div class="card-body" id="swotContent"><!-- populated --></div>
+            </div>
+          </div>
+        </div>
+        <div id="prod-tab-updates" class="prod-tab-content" style="display:none">
+          <div class="kpi-grid kpi-grid-4 mb-24" id="updatesKpis"><!-- populated --></div>
+          <div class="filter-bar mb-16">
+            <span class="filter-label">Product:</span>
+            <select class="filter-select" onchange="filterUpdates(this)"><option value="all">All Products</option><option>Clover</option><option>Carat</option><option>Finxact</option><option>DNA</option></select>
+            <span class="filter-label">Category:</span>
+            <select class="filter-select" onchange="filterUpdates(this)"><option value="all">All Categories</option><option>New Feature</option><option>Integration</option><option>Security</option><option>Performance</option></select>
+            <span class="filter-label">Impact:</span>
+            <button class="filter-chip active" onclick="filterImpact('all',this)">All</button>
+            <button class="filter-chip" onclick="filterImpact('high',this)">High</button>
+            <button class="filter-chip" onclick="filterImpact('medium',this)">Medium</button>
+            <button class="filter-chip" onclick="filterImpact('low',this)">Low</button>
+          </div>
+          <div id="updatesContainer"><!-- populated --></div>
+        </div>
+      </div>
+
+      <!-- TAB: FINANCIALS -->
+      <div class="tab-content" id="co-tab-financials">
+        <div class="flex items-center gap-12 mb-16">
+          <span class="filter-label">Period:</span>
+          <div class="view-toggle">
+            <button class="view-btn active" onclick="switchFinPeriod('annual',this)">Annual</button>
+            <button class="view-btn" onclick="switchFinPeriod('quarterly',this)">Quarterly</button>
+          </div>
+        </div>
+        <div class="tabs" id="finSubTabs">
+          <div class="tab-item active" onclick="switchFinTab('revenue',this)">Revenue</div>
+          <div class="tab-item" onclick="switchFinTab('ebitda',this)">EBITDA</div>
+          <div class="tab-item" onclick="switchFinTab('netincome',this)">Net Income</div>
+          <div class="tab-item" onclick="switchFinTab('ebitdamargin',this)">EBITDA Margin</div>
+          <div class="tab-item" onclick="switchFinTab('netmargin',this)">Net Margin</div>
+          <div class="tab-item" onclick="switchFinTab('revgrowth',this)">Rev. Growth</div>
+          <div class="tab-item" onclick="switchFinTab('eps',this)">EPS</div>
+        </div>
+        <div class="grid-7-5 mb-24">
+          <div class="card"><div class="card-header"><div class="card-title" id="finChartTitle">Revenue ($B)</div></div><div class="card-body" style="padding:8px 10px"><div id="finMainChart" style="height:300px"></div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">Key Metrics</div></div><div class="card-body" id="finSummaryMetrics"><!-- populated --></div></div>
+        </div>
+        <div class="card mb-24"><div class="card-header"><div class="card-title">Detailed Financial Data</div></div><div class="card-body" style="padding:0"><div class="table-wrap" style="border:none;border-radius:0"><table class="data-table" id="finTable"><thead><tr id="finTableHead"></tr></thead><tbody id="finTableBody"></tbody></table></div></div></div>
+      </div>
+
+      <!-- TAB: INORGANIC -->
+      <div class="tab-content" id="co-tab-inorganic">
+        <div class="kpi-grid kpi-grid-4 mb-24" id="inorgKpis"><!-- populated --></div>
+        <div class="filter-bar mb-16">
+          <span class="filter-label">Type:</span>
+          <button class="filter-chip active" onclick="filterInorg('All',this)">All</button>
+          <button class="filter-chip" onclick="filterInorg('Acquisition',this)">Acquisitions</button>
+          <button class="filter-chip" onclick="filterInorg('Investment',this)">Investments</button>
+          <button class="filter-chip" onclick="filterInorg('Divestiture',this)">Divestments</button>
+          <button class="filter-chip" onclick="filterInorg('Partnership',this)">Partnerships</button>
+        </div>
+        <div class="grid-7-5 mb-24">
+          <div class="timeline" id="inorgTimeline"><!-- populated --></div>
+          <div class="card" id="inorgSummaryCard"><div class="card-header"><div class="card-title">Activity Summary</div></div><div class="card-body" id="inorgSummaryBody"><!-- populated --></div></div>
+        </div>
+      </div>
+
+      <!-- TAB: GEOGRAPHY -->
+      <div class="tab-content" id="co-tab-geography">
+        <div class="tabs" style="margin-bottom:20px" id="geoSubTabs">
+          <div class="tab-item active" onclick="switchGeoTab('presence',this)">Geographic Presence</div>
+          <div class="tab-item" onclick="switchGeoTab('revenue',this)">Revenue by Region</div>
+          <div class="tab-item" onclick="switchGeoTab('marketshare',this)">Market Share by Region</div>
+          <div class="tab-item" onclick="switchGeoTab('breakdown',this)">Regional Breakdown</div>
+        </div>
+        <div id="geo-tab-presence">
+          <div class="grid-2 mb-24">
+            <div class="card"><div class="card-header"><div class="card-title">🌍 Global Footprint</div></div><div class="card-body" style="padding:4px 6px"><div id="geoMapChart" style="height:320px"></div></div></div>
+            <div class="card"><div class="card-header"><div class="card-title">Regional Summary</div></div><div class="card-body" id="geoPresenceSummary"><!-- populated --></div></div>
+          </div>
+        </div>
+        <div id="geo-tab-revenue" style="display:none">
+          <div class="grid-2 mb-24">
+            <div class="card"><div class="card-header"><div class="card-title">Revenue by Region ($B)</div></div><div class="card-body" style="padding:8px 10px"><div id="geoRevChart" style="height:300px"></div></div></div>
+            <div class="card"><div class="card-header"><div class="card-title">Regional Revenue Share</div></div><div class="card-body" style="padding:8px 10px"><div id="geoRevPie" style="height:320px"></div></div></div>
+          </div>
+        </div>
+        <div id="geo-tab-marketshare" style="display:none">
+          <div class="card mb-24"><div class="card-header"><div class="card-title">Market Share by Region</div></div><div class="card-body" style="padding:8px 10px"><div id="geoMktShareChart" style="height:300px"></div></div></div>
+        </div>
+        <div id="geo-tab-breakdown" style="display:none">
+          <div class="card mb-24"><div class="card-header"><div class="card-title">Regional Breakdown</div></div><div class="card-body" id="geoBreakdownTable"><!-- populated --></div></div>
+        </div>
+      </div>
+
+      <!-- TAB: INNOVATION -->
+      <div class="tab-content" id="co-tab-innovation">
+        <div class="grid-2 mb-24">
+          <div class="card"><div class="card-header"><div class="card-title">🔬 R&D Investment Trend ($M)</div></div><div class="card-body" style="padding:8px 10px"><div id="rdInvestChart" style="height:280px"></div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">🎯 R&D Focus Areas</div></div><div class="card-body" style="padding:8px 10px"><div id="rdFocusChart" style="height:320px"></div></div></div>
+        </div>
+        <div class="section-block mb-24">
+          <div class="section-block-header">
+            <div class="section-block-title">🚀 Innovation Initiatives</div>
+            <div class="section-block-actions">
+              <select class="filter-select" id="innovCatFilter" onchange="filterInnovation(this.value)">
+                <option value="all">All Categories</option>
+                <option value="AI/ML">AI / ML</option>
+                <option value="Cloud">Cloud</option>
+                <option value="Payments">Payments</option>
+                <option value="Open Banking">Open Banking</option>
+                <option value="Security">Security</option>
+              </select>
+            </div>
+          </div>
+          <div class="grid-3" id="innovInitiatives"><!-- populated --></div>
+        </div>
+        <div class="grid-2 mb-24">
+          <div class="card"><div class="card-header"><div class="card-title">📋 Patent Activity</div></div><div class="card-body" style="padding:8px 10px"><div id="patentChart" style="height:280px"></div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">🧑‍🔬 R&D Talent & Ecosystem</div></div><div class="card-body" id="rdTalentContent"><!-- populated --></div></div>
+        </div>
+      </div>
+
+      <!-- TAB: CUSTOMERS -->
+      <div class="tab-content" id="co-tab-customers">
+        <div class="grid-2 mb-24">
+          <div class="card"><div class="card-header"><div class="card-title">📡 Customer Segment Radar</div></div><div class="card-body" style="padding:8px 12px"><div id="custRadarChart" style="height:340px"></div></div></div>
+          <div class="card"><div class="card-header"><div class="card-title">Segment Overview</div></div><div class="card-body" id="custSegmentOverview"><!-- populated --></div></div>
+        </div>
+        <div class="tabs" style="margin-bottom:20px" id="custSubTabs">
+          <div class="tab-item active" onclick="switchCustTab('enterprise',this)">Enterprise</div>
+          <div class="tab-item" onclick="switchCustTab('midmarket',this)">Mid Market</div>
+          <div class="tab-item" onclick="switchCustTab('smb',this)">SMB</div>
+          <div class="tab-item" onclick="switchCustTab('gov',this)">Government & Public</div>
+        </div>
+        <div id="custSegmentDetail"><!-- populated --></div>
+      </div>
+    </div>
+
+    <!-- =================== BENCHMARK PAGE =================== -->
+    <div class="page" id="page-benchmark">
+      <div class="breadcrumb"><span>Dashboard</span><span class="sep">›</span><span class="current">Benchmark</span></div>
+      <div class="page-header">
+        <div>
+          <div class="page-title">⚖️ Benchmark Workspace</div>
+          <div class="page-subtitle">Multi-company side-by-side comparison across capabilities, financials, and strategy</div>
+        </div>
+        <div class="page-actions">
+          <button class="nav-btn nav-btn-outline">📤 Export Report</button>
+        </div>
+      </div>
+      <div class="bench-layout">
+        <div class="bench-main">
+          <div class="tabs" id="benchTabs">
+            <div class="tab-item active" onclick="switchBenchTab('overview',this)">Overview</div>
+            <div class="tab-item" onclick="switchBenchTab('capabilities',this)">Capabilities</div>
+            <div class="tab-item" onclick="switchBenchTab('customers',this)">Customers & Partners</div>
+            <div class="tab-item" onclick="switchBenchTab('financials',this)">Financials</div>
+            <div class="tab-item" onclick="switchBenchTab('inorganic',this)">Inorganic</div>
+          </div>
+
+          <!-- BENCH: Overview -->
+          <div class="tab-content active" id="bench-tab-overview">
+            <div class="section-block mb-24">
+              <div class="section-block-header"><div class="section-block-title">⭐ Key Differentiators</div></div>
+              <div class="grid-3" id="benchDifferentiators"><!-- populated --></div>
+            </div>
+            <div class="section-block">
+              <div class="section-block-header">
+                <div class="section-block-title">🏢 Company Profile</div>
+                <button class="btn-sm btn-sm-outline" id="addRemoveAttrBtn" onclick="toggleAttrEdit()">+ Add / Remove Attributes</button>
+              </div>
+              <div id="attrEditPanel" style="display:none;margin-bottom:12px;padding:14px;background:var(--n-50);border:1px solid var(--n-200);border-radius:var(--radius-card)">
+                <div class="text-sm font-semibold mb-8">Edit Company Profile Attributes:</div>
+                <div style="display:flex;flex-wrap:wrap;gap:6px" id="attrCheckboxes"><!-- populated --></div>
+              </div>
+              <div class="card"><div class="card-body" style="padding:0"><div class="table-wrap" style="border:none;border-radius:0"><table class="data-table" id="benchProfileTable"><thead id="benchProfileHead"></thead><tbody id="benchProfileBody"></tbody></table></div></div></div>
+            </div>
+          </div>
+
+          <!-- BENCH: Capabilities -->
+          <div class="tab-content" id="bench-tab-capabilities">
+            <div class="section-block mb-24">
+              <div class="section-block-header">
+                <div class="section-block-title">📋 Feature Comparison</div>
+                <button class="btn-sm btn-sm-outline" onclick="toggleFeatureEdit()">+ Add / Remove Features</button>
+              </div>
+              <div id="featureEditPanel" style="display:none;margin-bottom:12px;padding:14px;background:var(--n-50);border:1px solid var(--n-200);border-radius:var(--radius-card)">
+                <div class="text-sm font-semibold mb-8">Add custom feature:</div>
+                <div class="flex gap-8">
+                  <input type="text" class="add-peer-input" id="newFeatureInput" placeholder="Feature name…"/>
+                  <button class="add-peer-btn" onclick="addFeature()">Add</button>
+                </div>
+              </div>
+              <div class="card"><div class="card-body" style="padding:0"><div class="table-wrap" style="border:none;border-radius:0"><table class="feat-table" id="benchCapTable"><thead id="benchCapHead"></thead><tbody id="benchCapBody"></tbody></table></div></div></div>
+            </div>
+            <div class="section-block">
+              <div class="section-block-header"><div class="section-block-title">📡 Capability Radar</div></div>
+              <div class="card"><div class="card-body" style="padding:8px 10px"><div id="benchRadarChart" style="height:440px"></div></div></div>
+            </div>
+          </div>
+
+          <!-- BENCH: Customers & Partners -->
+          <div class="tab-content" id="bench-tab-customers">
+            <div class="section-block mb-24">
+              <div class="section-block-header"><div class="section-block-title">👥 Customer & Partner Ecosystem</div></div>
+              <div class="filter-bar mb-16">
+                <span class="filter-label">Company:</span>
+                <div id="benchCustCompFilter" style="display:flex;gap:6px;flex-wrap:wrap"><!-- populated --></div>
+              </div>
+              <div id="benchCustContent"><!-- populated --></div>
+            </div>
+          </div>
+
+          <!-- BENCH: Financials -->
+          <div class="tab-content" id="bench-tab-financials">
+            <div class="flex items-center gap-12 mb-16">
+              <span class="filter-label">Period:</span>
+              <div class="view-toggle">
+                <button class="view-btn active" onclick="switchBenchFinPeriod('annual',this)">Annual</button>
+                <button class="view-btn" onclick="switchBenchFinPeriod('quarterly',this)">Quarterly</button>
+              </div>
+            </div>
+            <div class="tabs" id="benchFinTabs">
+              <div class="tab-item active" onclick="switchBenchFinTab('revenue',this)">Revenue</div>
+              <div class="tab-item" onclick="switchBenchFinTab('ebitda',this)">EBITDA</div>
+              <div class="tab-item" onclick="switchBenchFinTab('netincome',this)">Net Income</div>
+              <div class="tab-item" onclick="switchBenchFinTab('ebitdamargin',this)">EBITDA Margin</div>
+              <div class="tab-item" onclick="switchBenchFinTab('netmargin',this)">Net Margin</div>
+              <div class="tab-item" onclick="switchBenchFinTab('revgrowth',this)">Rev. Growth</div>
+              <div class="tab-item" onclick="switchBenchFinTab('eps',this)">EPS</div>
+            </div>
+            <div class="card mb-24"><div class="card-header"><div class="card-title" id="benchFinChartTitle">Revenue ($B)</div></div><div class="card-body" style="padding:8px 10px"><div id="benchFinChart" style="height:340px"></div></div></div>
+            <div class="card"><div class="card-body" style="padding:0"><div class="table-wrap" style="border:none;border-radius:0"><table class="data-table" id="benchFinTable"><thead id="benchFinHead"></thead><tbody id="benchFinBody"></tbody></table></div></div></div>
+          </div>
+
+          <!-- BENCH: Inorganic -->
+          <div class="tab-content" id="bench-tab-inorganic">
+            <div class="filter-bar mb-16">
+              <span class="filter-label">Type:</span>
+              <button class="filter-chip active" onclick="filterBenchInorg('All',this)">All</button>
+              <button class="filter-chip" onclick="filterBenchInorg('Acquisition',this)">Acquisitions</button>
+              <button class="filter-chip" onclick="filterBenchInorg('Investment',this)">Investments</button>
+              <button class="filter-chip" onclick="filterBenchInorg('Divestiture',this)">Divestments</button>
+            </div>
+            <div id="benchInorgContent"><!-- populated --></div>
+          </div>
+        </div>
+
+        <!-- MANAGE PEERS SIDEBAR -->
+        <div class="bench-sidebar">
+          <div style="font-size:14px;font-weight:700;color:var(--n-800);margin-bottom:4px">⚙️ Manage Peers</div>
+          <div class="text-xs text-secondary mb-16">Add or remove companies to compare</div>
+          <div id="peersList"><!-- populated --></div>
+          <div class="add-peer-row">
+            <input class="add-peer-input" type="text" id="addPeerInput" placeholder="Add company…" list="companyOptions"/>
+            <datalist id="companyOptions"><option value="Fiserv"/><option value="FIS"/><option value="Jack Henry"/><option value="Temenos"/><option value="Finastra"/><option value="NCR Atleos"/><option value="Stripe"/><option value="Adyen"/></datalist>
+            <button class="add-peer-btn" onclick="addPeer()">+</button>
+          </div>
+          <hr class="nav-divider" style="margin:16px 0"/>
+          <div class="text-xs font-bold text-secondary mb-8" style="text-transform:uppercase;letter-spacing:.5px">Benchmark Snapshot</div>
+          <div id="benchSnapshotMini"><!-- populated --></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</div>
+
+<!-- DRILLDOWN OVERLAY -->
+<div class="drilldown-overlay" id="drilldownOverlay" onclick="closeDrilldown()"></div>
+<div class="drilldown-panel" id="drilldownPanel">
+  <div class="drilldown-header">
+    <div class="drilldown-title" id="drilldownTitle">Intelligence Module</div>
+    <button class="drilldown-close" onclick="closeDrilldown()">✕</button>
+  </div>
+  <div class="drilldown-body" id="drilldownBody"><!-- content --></div>
+</div>
+<script>
+/* ==================== DATA ==================== */
+const COMPANIES_DATA = {
+  fiserv: {
+    id:'fiserv', name:'Fiserv', ticker:'FISV', exchange:'NASDAQ', hq:'Milwaukee, 🇺🇸',
+    color:'#3b82f6', initials:'F', sector:'Payments & Banking Technology',
+    founded:1984, employees:'~38,000', ceo:'Mike Lyons', website:'fiserv.com',
+    description:'Global leader in payments and financial technology, operating merchant solutions (Clover, Carat) and financial services (core banking, digital banking, card processing) for banks, credit unions, and merchants worldwide.',
+    revenue2024:20.5, marketCap:'$73B', rating:4.2,
+    kpis:[
+      {label:'Revenue FY2024',val:'$20.5B',delta:'+7.1%',dir:'up',color:'blue'},
+      {label:'EBITDA Margin',val:'43.4%',delta:'+0.5pp',dir:'up',color:'green'},
+      {label:'Free Cash Flow',val:'$5.7B',delta:'+$0.5B',dir:'up',color:'indigo'},
+      {label:'Composite Score',val:'4.2/5',delta:'Leader',dir:'neutral',color:'amber'}
+    ],
+    revenues: [14.9, 16.2, 17.7, 19.1, 20.5, 21.2],
+    ebitda: [42.0, 43.5, 44.2, 44.5, 43.4, 41.8],
+    netIncome: [0.96, 1.33, 2.53, 3.07, 3.13, 3.48],
+    revGrowth: [5.5, 9.2, 9.3, 7.7, 7.1, 3.6],
+    eps: [1.4, 2.0, 3.8, 4.6, 4.8, 5.4],
+    netMargin:[6.5,8.2,14.3,16.1,15.3,16.4],
+    years:[2020,2021,2022,2023,2024,2025],
+    topProducts:[
+      {name:'Clover POS Platform',segment:'Merchant',share:28,color:'#3b82f6'},
+      {name:'Carat Omnichannel',segment:'Merchant',share:18,color:'#60a5fa'},
+      {name:'Core Banking (Premier/DNA)',segment:'Financial',share:24,color:'#6366f1'},
+      {name:'Digital Banking Suite',segment:'Financial',share:14,color:'#8b5cf6'},
+      {name:'Card Issuance & Processing',segment:'Financial',share:10,color:'#a78bfa'},
+      {name:'Finxact Cloud Core',segment:'Cloud',share:6,color:'#c4b5fd'}
+    ],
+    segments:[
+      {name:'Banks & Credit Unions',pct:52,icon:'🏦'},
+      {name:'SMB Merchants',pct:28,icon:'🏪'},
+      {name:'Enterprise Merchants',pct:14,icon:'🏢'},
+      {name:'Fintechs & Partners',pct:6,icon:'⚙️'}
+    ],
+    geoData:[
+      {region:'North America',flag:'🌎',rev:17.4,share:85,tier:1},
+      {region:'Europe',flag:'🌍',rev:1.8,share:9,tier:2},
+      {region:'Asia Pacific',flag:'🌏',rev:0.8,share:4,tier:2},
+      {region:'MEA',flag:'🌍',rev:0.5,share:2,tier:3}
+    ],
+    insights:[
+      {date:'Jul 2025',year:'2025',cat:'Product',title:'Fiserv launches Clover AI Insights',source:'Business Wire',summary:'Clover POS platform adds AI-powered merchant analytics, providing real-time sales forecasting and inventory optimization for SMB merchants. Expected to accelerate Clover ARPU growth.',tags:['Product','AI','Clover']},
+      {date:'Jun 2025',year:'2025',cat:'Inorganic',title:'Fiserv completes Worldpay stake transfer to GTCR',source:'SEC Filing',summary:'Final settlement of the $18.5B Worldpay stake sale to GTCR closes, with Fiserv retaining a minority stake. Proceeds deployed for share repurchases and balance sheet deleveraging.',tags:['Inorganic','Divestiture']},
+      {date:'May 2025',year:'2025',cat:'Customer Wins',title:'Major regional bank selects Finxact cloud core',source:'Press Release',summary:'A top-30 U.S. regional bank selected Fiserv\'s Finxact platform for cloud-native core banking modernization, representing the largest cloud core win of the year.',tags:['Customer Wins','Finxact','Cloud']},
+      {date:'Mar 2025',year:'2025',cat:'Sales & Distribution',title:'Fiserv expands Carat to 12 new European markets',source:'Investor Day Presentation',summary:'Carat omnichannel commerce platform extended to 12 new European markets, targeting enterprise merchants expanding cross-border e-commerce operations.',tags:['Sales & Distribution','Europe','Expansion']},
+      {date:'Jan 2025',year:'2025',cat:'Hiring',title:'Fiserv adds 200 AI and cloud engineers',source:'LinkedIn / Glassdoor',summary:'Fiserv announces hiring push focused on AI engineering and cloud infrastructure roles, targeting 200 net new hires in Q1 2025 to support Finxact and Clover AI roadmaps.',tags:['Hiring','AI','Cloud']},
+      {date:'Nov 2024',year:'2024',cat:'Product',title:'Pay-by-bank integration goes live on Carat',source:'Press Release',summary:'Fiserv integrates account-to-account pay-by-bank functionality into Carat, enabling merchants to accept direct bank transfers alongside card payments to reduce processing costs.',tags:['Product','Open Banking','Carat']},
+      {date:'Sep 2024',year:'2024',cat:'R&D / Innovation',title:'Fiserv partners with NVIDIA on AI infrastructure',source:'Press Release',summary:'Strategic partnership with NVIDIA to deploy AI accelerators in Fiserv\'s data centers, enabling faster model training for fraud detection, risk scoring, and merchant analytics.',tags:['R&D / Innovation','AI','Partnership']},
+      {date:'Jul 2024',year:'2024',cat:'Marketing',title:'One Fiserv brand campaign launches globally',source:'Marketing Week',summary:'Unified global brand campaign "One Fiserv" rolls out across 20 markets, reinforcing the integrated merchant + financial platform narrative and driving enterprise awareness.',tags:['Marketing','Brand','Global']},
+      {date:'Apr 2023',year:'2023',cat:'Inorganic',title:'GTCR acquires 55% of Worldpay from Fiserv for $18.5B',source:'Wall Street Journal',summary:'Landmark divestiture transaction valued Worldpay at $18.5B. Fiserv retains 45% minority stake. Proceeds allow Fiserv to sharpen focus on core banking and payments.',tags:['Inorganic','Divestiture','Worldpay']},
+      {date:'Feb 2022',year:'2022',cat:'Inorganic',title:'Fiserv acquires Payrix to expand embedded payments',source:'PR Newswire',summary:'Fiserv completes acquisition of Payrix, a payments facilitation platform for software companies, bolstering embedded payments capabilities for software-led businesses.',tags:['Inorganic','Acquisition','Embedded Payments']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'Clover Ecosystem Expansion',desc:'Fiserv accelerates SMB merchant acquiring through Clover hardware + software ecosystem, expanding beyond POS to include inventory, payroll, and financing tools.',type:'Platform Expansion'},
+      {year:'2021',title:'Finxact Cloud Core Acquisition',desc:'Acquisition of Finxact brings a cloud-native, API-first core banking platform. Positions Fiserv to compete in bank modernization alongside Temenos and Thought Machine.',type:'M&A'},
+      {year:'2022',title:'Carat Enterprise Commerce',desc:'Launch of Carat as Fiserv\'s enterprise omnichannel commerce platform, targeting large merchants seeking unified in-store, online, and mobile payment orchestration.',type:'Product Launch'},
+      {year:'2023',title:'One Fiserv Integration Program',desc:'Internal reorganization aligning Merchant and Financial segments. Launches integrated cross-sell motion enabling financial institutions to offer Clover-powered merchant services.',type:'Strategic Pivot'},
+      {year:'2024',title:'AI Across the Platform',desc:'AI-powered features rolled out across Clover analytics, fraud detection, and credit decisioning. Partnership with NVIDIA for AI infrastructure acceleration.',type:'AI Integration'},
+      {year:'2025',title:'Cloud Core Modernization Drive',desc:'Aggressive Finxact migration program targeting mid-tier and regional U.S. banks migrating from legacy Premier and Precision cores. First international Finxact wins.',type:'Cloud'}
+    ],
+    launchTimeline:[
+      {date:'Q2 2025',cat:'New Product',title:'Clover AI Insights',desc:'AI-powered merchant analytics and forecasting module built natively into Clover POS platform.',tags:['AI','Merchant']},
+      {date:'Q1 2025',cat:'Enhancement',title:'Pay-by-Bank on Carat v3.0',desc:'Account-to-account payment acceptance integrated into Carat omnichannel suite.',tags:['Payments','Open Banking']},
+      {date:'Q3 2024',cat:'Partnership',title:'NVIDIA AI Infrastructure',desc:'Strategic partnership for GPU-accelerated AI model deployment across Fiserv platforms.',tags:['AI','Infrastructure']},
+      {date:'Q2 2024',cat:'New Product',title:'Finxact Multi-Tenant SaaS',desc:'Finxact core banking available as multi-tenant SaaS with shared infrastructure model.',tags:['Cloud','Core Banking']},
+      {date:'Q1 2024',cat:'Enhancement',title:'Carat International Expansion',desc:'Carat omnichannel platform extended to 12 European markets with local payment method support.',tags:['International','Commerce']},
+      {date:'Q4 2023',cat:'New Product',title:'Embedded Lending via Payrix',desc:'Merchant cash advance and lending products embedded into Payrix PaaS offering.',tags:['Lending','Embedded Finance']},
+      {date:'Q2 2022',cat:'New Product',title:'Carat Enterprise Platform Launch',desc:'Full launch of Carat as unified enterprise commerce platform for large merchants.',tags:['Enterprise','Commerce']},
+      {date:'Q1 2022',cat:'Enhancement',title:'Clover Capital SMB Financing',desc:'Launch of Clover Capital, providing revenue-based financing directly through Clover dashboard.',tags:['SMB','Financing']}
+    ],
+    portfolioMatrix:[
+      {name:'Clover',segment:'Merchant',revenue:28,growth:18,stage:'Growth Star',color:'#3b82f6'},
+      {name:'Carat',segment:'Merchant',revenue:18,growth:15,stage:'Growth',color:'#60a5fa'},
+      {name:'Core Banking',segment:'Financial',revenue:24,growth:4,stage:'Cash Cow',color:'#6366f1'},
+      {name:'Digital Banking',segment:'Financial',revenue:14,growth:12,stage:'Growth',color:'#8b5cf6'},
+      {name:'Card Processing',segment:'Financial',revenue:10,growth:6,stage:'Stable',color:'#10b981'},
+      {name:'Finxact',segment:'Cloud',revenue:6,growth:35,stage:'Question Mark',color:'#f59e0b'}
+    ],
+    inorganic:[
+      {date:'Apr 2023',type:'Divestiture',deal:'Worldpay Stake to GTCR',value:'$18.5B',target:'Worldpay',rationale:'Monetize non-core asset; focus on core banking and payments',status:'Completed',impact:'High'},
+      {date:'Feb 2022',type:'Acquisition',deal:'Payrix Acquisition',value:'Undisclosed',target:'Payrix',rationale:'Expand embedded payments / PaaS for software companies',status:'Completed',impact:'Medium'},
+      {date:'Jan 2021',type:'Acquisition',deal:'Finxact Acquisition',value:'~$650M',target:'Finxact',rationale:'Cloud-native core banking capability to compete in bank modernization',status:'Completed',impact:'High'},
+      {date:'Jan 2020',type:'Acquisition',deal:'Bypass Mobile',value:'Undisclosed',target:'Bypass Mobile',rationale:'Expand enterprise self-service and stadium commerce solutions',status:'Completed',impact:'Low'}
+    ],
+    rdData:{
+      investment:[850,920,980,1050,1150,1250],
+      areas:['AI/ML','Cloud Infrastructure','Fraud & Security','Payments Processing','Digital Banking','Open Banking'],
+      areaVals:[28,22,18,16,10,6]
+    }
+  },
+  fis: {
+    id:'fis', name:'FIS', ticker:'FIS', exchange:'NYSE', hq:'Jacksonville, 🇺🇸',
+    color:'#8b5cf6', initials:'FIS', sector:'Financial Technology',
+    founded:1968, employees:'~49,000', ceo:'Stephanie Ferris', website:'fisglobal.com',
+    description:'FIS is a global leader in financial technology, providing core banking, payments, and capital markets solutions to >50,000 clients across 130+ countries. Undergoing "Future Forward" transformation program.',
+    revenue2024:10.1, marketCap:'$42B', rating:3.8,
+    kpis:[
+      {label:'Revenue FY2024',val:'$10.1B',delta:'+4.8%',dir:'up',color:'blue'},
+      {label:'EBITDA Margin',val:'31.0%',delta:'-1.5pp',dir:'down',color:'red'},
+      {label:'Transformation',val:'Future Fwd',delta:'In Progress',dir:'neutral',color:'amber'},
+      {label:'Composite Score',val:'3.8/5',delta:'Strong',dir:'neutral',color:'indigo'}
+    ],
+    revenues:[10.6,11.0,11.5,12.2,10.1,10.7],
+    ebitda:[35.5,34.0,33.1,32.5,31.0,30.2],
+    netIncome:[0.8,1.0,1.3,1.5,1.7,1.8],
+    revGrowth:[2.4,3.8,4.5,6.2,4.8,5.1],
+    eps:[1.4,1.7,2.2,2.6,3.0,3.3],
+    netMargin:[7.5,9.1,11.3,12.3,16.8,16.8],
+    years:[2020,2021,2022,2023,2024,2025],
+    topProducts:[
+      {name:'Banking Solutions Platform',segment:'Banking',share:38,color:'#8b5cf6'},
+      {name:'Capital Market Solutions',segment:'CapMarkets',share:32,color:'#a78bfa'},
+      {name:'Payments Ecosystem',segment:'Payments',share:18,color:'#c4b5fd'},
+      {name:'Digital One',segment:'Digital',share:12,color:'#ddd6fe'}
+    ],
+    segments:[{name:'Banks & Financial Institutions',pct:48,icon:'🏦'},{name:'Capital Markets Firms',pct:32,icon:'📈'},{name:'Insurance Companies',pct:12,icon:'🛡️'},{name:'Other',pct:8,icon:'⚙️'}],
+    geoData:[{region:'North America',flag:'🌎',rev:7.9,share:78,tier:1},{region:'Europe',flag:'🌍',rev:1.2,share:12,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.6,share:6,tier:2},{region:'MEA',flag:'🌍',rev:0.4,share:4,tier:2}],
+    insights:[
+      {date:'Jun 2025',year:'2025',cat:'Product',title:'FIS launches Modern Banking Platform v2.0',source:'Press Release',summary:'Second major release of FIS Modern Banking Platform on Azure includes embedded AI decisioning and real-time payments orchestration.',tags:['Product','Cloud','AI']},
+      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'FIS opens Singapore Innovation Lab',source:'Business Wire',summary:'New R&D hub in Singapore focused on AI payments, digital assets, and embedded finance for Asia Pacific markets.',tags:['R&D / Innovation','APAC']},
+      {date:'Dec 2024',year:'2024',cat:'Hiring',title:'FIS reduces global headcount by 5%',source:'Reuters',summary:'As part of Future Forward transformation, FIS announces workforce reduction impacting approximately 2,500 employees globally, targeting $400M annual cost savings.',tags:['Hiring','Transformation']},
+      {date:'Aug 2024',year:'2024',cat:'Customer Wins',title:'FIS wins tier-1 European bank for capital markets',source:'Press Release',summary:'Major European asset manager selects FIS capital markets technology platform for derivatives processing and risk management modernization.',tags:['Customer Wins','Capital Markets','Europe']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'Worldpay Integration',desc:'Post-2019 Worldpay acquisition integration, creating unified banking + payments technology platform.',type:'Integration'},
+      {year:'2022',title:'Modern Banking Platform on Azure',desc:'Launch of cloud-native Modern Banking Platform in partnership with Microsoft Azure.',type:'Product Launch'},
+      {year:'2023',title:'Future Forward Transformation',desc:'Multi-year enterprise transformation targeting $400M+ cost savings and margin improvement.',type:'Strategic Pivot'},
+      {year:'2024',title:'Capital Markets AI Integration',desc:'AI and ML embedded across capital markets platform for risk analytics and trading intelligence.',type:'AI Integration'},
+      {year:'2025',title:'Digital One Expansion',desc:'Digital One omnichannel banking platform extended to 15 new markets across Europe and APAC.',type:'Expansion'}
+    ],
+    launchTimeline:[
+      {date:'Q1 2025',cat:'New Product',title:'Modern Banking Platform v2.0',desc:'AI-enhanced cloud banking platform with embedded real-time payments.',tags:['Cloud','AI']},
+      {date:'Q3 2024',cat:'Enhancement',title:'Capital Markets Risk Analytics v4',desc:'Upgraded risk analytics engine with ML-powered scenario generation.',tags:['CapMarkets','AI']},
+      {date:'Q2 2023',cat:'New Product',title:'FIS Digital One Launch',desc:'Unified digital banking front-end platform replacing fragmented legacy portals.',tags:['Digital','Banking']},
+    ],
+    portfolioMatrix:[
+      {name:'Banking Solutions',segment:'Banking',revenue:38,growth:5,stage:'Cash Cow',color:'#8b5cf6'},
+      {name:'Capital Markets',segment:'CapMarkets',revenue:32,growth:7,stage:'Growth',color:'#a78bfa'},
+      {name:'Payments',segment:'Payments',revenue:18,growth:4,stage:'Stable',color:'#c4b5fd'},
+      {name:'Digital One',segment:'Digital',revenue:12,growth:22,stage:'Question Mark',color:'#10b981'}
+    ],
+    inorganic:[
+      {date:'Sep 2023',type:'Divestiture',deal:'Worldpay Merchant Solutions to GTCR',value:'$18.5B',target:'Worldpay',rationale:'Refocus on banking and capital markets core competencies',status:'Completed',impact:'High'},
+      {date:'Jan 2020',type:'Integration',deal:'Worldpay Integration Completion',value:'N/A',target:'Worldpay',rationale:'Complete integration of 2019 $43B Worldpay acquisition',status:'Completed',impact:'High'}
+    ],
+    rdData:{investment:[580,620,640,660,680,700],areas:['Cloud Infrastructure','AI/ML','Capital Markets Tech','Digital Banking','Payments','Risk Management'],areaVals:[25,22,20,18,10,5]}
+  },
+  jackhenry: {
+    id:'jackhenry', name:'Jack Henry', ticker:'JKHY', exchange:'NASDAQ', hq:'Monett, 🇺🇸',
+    color:'#10b981', initials:'JH', sector:'Community Banking Technology',
+    founded:1976, employees:'~7,240', ceo:'Greg Adelson', website:'jackhenry.com',
+    description:'Jack Henry provides core processing, digital banking, and payment solutions exclusively to U.S. community banks and credit unions. Market leader in community bank core processing with ~1,100+ bank clients.',
+    revenue2024:2.2, marketCap:'$12B', rating:3.0,
+    kpis:[
+      {label:'Revenue FY2025',val:'$2.4B',delta:'+7.2%',dir:'up',color:'blue'},
+      {label:'SaaS Revenue %',val:'~62%',delta:'+5pp YoY',dir:'up',color:'green'},
+      {label:'Client Retention',val:'>99%',delta:'Best-in-class',dir:'up',color:'indigo'},
+      {label:'Composite Score',val:'3.0/5',delta:'Competitive',dir:'neutral',color:'amber'}
+    ],
+    revenues:[1.55,1.64,1.75,1.87,2.2,2.38],
+    ebitda:[31.0,30.2,29.5,28.9,28.0,27.5],
+    netIncome:[0.28,0.32,0.35,0.39,0.42,0.45],
+    revGrowth:[4.7,5.9,6.4,7.1,5.8,6.2],
+    eps:[3.8,4.4,4.9,5.4,5.9,6.3],
+    netMargin:[18.1,19.5,20.0,20.9,19.1,18.9],
+    years:[2020,2021,2022,2023,2024,2025],
+    topProducts:[
+      {name:'SilverLake Core (Banks)',segment:'Core',share:35,color:'#10b981'},
+      {name:'Symitar (Credit Unions)',segment:'Core',share:30,color:'#34d399'},
+      {name:'Digital Banking Suite',segment:'Digital',share:18,color:'#6ee7b7'},
+      {name:'JHA PayCenter',segment:'Payments',share:12,color:'#a7f3d0'},
+      {name:'Banno (Digital Platform)',segment:'Digital',share:5,color:'#d1fae5'}
+    ],
+    segments:[{name:'Community Banks',pct:55,icon:'🏦'},{name:'Credit Unions',pct:35,icon:'🤝'},{name:'Savings Institutions',pct:7,icon:'🏛️'},{name:'Other FIs',pct:3,icon:'⚙️'}],
+    geoData:[{region:'United States',flag:'🇺🇸',rev:2.2,share:100,tier:1}],
+    insights:[
+      {date:'Jul 2025',year:'2025',cat:'Inorganic',title:'Jack Henry acquires Victor Technologies',source:'Press Release',summary:'Acquisition of Victor Technologies expands Jack Henry\'s Payments-as-a-Service capabilities to serve fintechs and commercial clients beyond community banking.',tags:['Inorganic','PaaS','Acquisition']},
+      {date:'Apr 2025',year:'2025',cat:'Product',title:'Banno Business launches for SMB banking',source:'Press Release',summary:'New Banno Business module extends Jack Henry\'s digital banking platform to serve SMB clients of community banks with cash management and business banking tools.',tags:['Product','SMB','Digital']},
+      {date:'Nov 2022',year:'2022',cat:'Inorganic',title:'Payrailz acquisition closes',source:'PR Newswire',summary:'Acquisition of Payrailz adds AI-powered cloud-native digital payments capabilities, modernizing Jack Henry\'s payments stack.',tags:['Inorganic','AI','Payments']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'Cloud Migration Roadmap',desc:'Jack Henry announces private-cloud migration roadmap for SilverLake and Symitar core platforms.',type:'Cloud Strategy'},
+      {year:'2022',title:'Payrailz AI Payments',desc:'Acquisition of Payrailz brings AI-powered, cloud-native payment platform to community banks.',type:'M&A'},
+      {year:'2024',title:'Jack Henry Platform Unification',desc:'Unified technology platform launched consolidating core, digital, and payments under single API layer.',type:'Platform'},
+      {year:'2025',title:'PaaS Expansion via Victor Technologies',desc:'Victor Technologies acquisition extends PaaS to fintech and commercial markets beyond traditional community banking.',type:'M&A'}
+    ],
+    launchTimeline:[
+      {date:'Q1 2025',cat:'New Product',title:'Banno Business Module',desc:'SMB-focused digital banking for community bank business clients.',tags:['Digital','SMB']},
+      {date:'Q3 2024',cat:'Enhancement',title:'JH Platform API Layer',desc:'Unified API gateway connecting core, digital, and payments systems.',tags:['Platform','API']},
+      {date:'Q2 2022',cat:'New Product',title:'Payrailz Digital Payments',desc:'AI-driven real-time payment experiences for bank customers.',tags:['Payments','AI']}
+    ],
+    portfolioMatrix:[
+      {name:'SilverLake Core',segment:'Core',revenue:35,growth:3,stage:'Cash Cow',color:'#10b981'},
+      {name:'Symitar',segment:'Core',revenue:30,growth:4,stage:'Cash Cow',color:'#34d399'},
+      {name:'Digital Suite',segment:'Digital',revenue:18,growth:15,stage:'Growth',color:'#6ee7b7'},
+      {name:'PayCenter',segment:'Payments',revenue:12,growth:10,stage:'Growth',color:'#a7f3d0'},
+      {name:'Banno',segment:'Digital',revenue:5,growth:35,stage:'Question Mark',color:'#f59e0b'}
+    ],
+    inorganic:[
+      {date:'Jul 2025',type:'Acquisition',deal:'Victor Technologies',value:'Undisclosed',target:'Victor Technologies',rationale:'Expand PaaS capabilities to fintech and commercial customers',status:'Completed',impact:'Medium'},
+      {date:'Nov 2022',type:'Acquisition',deal:'Payrailz',value:'Undisclosed',target:'Payrailz',rationale:'AI-powered cloud-native digital payments platform',status:'Completed',impact:'Medium'}
+    ],
+    rdData:{investment:[180,200,215,230,250,265],areas:['Digital Banking','Core Modernization','Payments','AI/ML','Security','API'],areaVals:[30,25,20,15,7,3]}
+  },
+  temenos: {
+    id:'temenos', name:'Temenos', ticker:'TEMN', exchange:'SIX', hq:'Geneva, 🇨🇭',
+    color:'#f59e0b', initials:'T', sector:'Banking Software',
+    founded:1993, employees:'~5,205', ceo:'Jean-Pierre Brulard', website:'temenos.com',
+    description:'Temenos is a Swiss banking software specialist with cloud-agnostic, AI-first core banking, digital banking, payments, and wealth management solutions deployed in 150+ countries across 950+ bank clients.',
+    revenue2024:1.0, marketCap:'$5B', rating:3.3,
+    kpis:[
+      {label:'Revenue FY2024',val:'$1.0B',delta:'+7.9%',dir:'up',color:'blue'},
+      {label:'SaaS/Sub Revenue',val:'~68%',delta:'+8pp YoY',dir:'up',color:'green'},
+      {label:'Countries Served',val:'150+',delta:'Global',dir:'neutral',color:'indigo'},
+      {label:'Composite Score',val:'3.3/5',delta:'Strong Specialist',dir:'neutral',color:'amber'}
+    ],
+    revenues:[1.38,1.44,1.52,1.62,1.75,1.9],
+    ebitda:[41.2,40.5,39.8,39.0,38.5,38.0],
+    netIncome:[0.28,0.31,0.35,0.38,0.42,0.45],
+    revGrowth:[4.3,4.9,5.5,6.7,7.9,8.5],
+    eps:[4.0,4.5,5.0,5.5,6.1,6.5],
+    netMargin:[20.3,21.5,23.0,23.5,24.0,23.7],
+    years:[2020,2021,2022,2023,2024,2025],
+    topProducts:[
+      {name:'Temenos Banking Cloud',segment:'Core',share:38,color:'#f59e0b'},
+      {name:'Transact (Core Banking)',segment:'Core',share:28,color:'#fbbf24'},
+      {name:'Digital Banking Infinity',segment:'Digital',share:18,color:'#fcd34d'},
+      {name:'Payments Hub',segment:'Payments',share:10,color:'#fde68a'},
+      {name:'Wealth Management',segment:'Wealth',share:6,color:'#fef3c7'}
+    ],
+    segments:[{name:'Tier 1-2 Global Banks',pct:45,icon:'🏦'},{name:'Regional Banks',pct:35,icon:'🏛️'},{name:'Neobanks / Digital',pct:12,icon:'📱'},{name:'Wealth Managers',pct:8,icon:'💎'}],
+    geoData:[{region:'Europe',flag:'🌍',rev:0.58,share:55,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.21,share:20,tier:1},{region:'MEA',flag:'🌍',rev:0.15,share:14,tier:2},{region:'Americas',flag:'🌎',rev:0.11,share:11,tier:2}],
+    insights:[
+      {date:'May 2025',year:'2025',cat:'Product',title:'Temenos Banking Cloud achieves record SaaS bookings',source:'Annual Results',summary:'Temenos Banking Cloud SaaS bookings exceeded $180M in H1 2025, a 35% YoY increase, driven by European and APAC bank cloud migrations.',tags:['Product','SaaS','Cloud']},
+      {date:'Feb 2025',year:'2025',cat:'R&D / Innovation',title:'Temenos Virtual COO 2.0 with Generative AI',source:'Press Release',summary:'Second generation AI-COO product launches with generative AI capabilities for compliance automation, treasury optimization, and customer insights.',tags:['R&D / Innovation','AI','Banking']},
+      {date:'Oct 2023',year:'2023',cat:'Customer Wins',title:'Tier-1 APAC bank selects Temenos Banking Cloud',source:'Press Release',summary:'Top-10 Asia Pacific bank selects Temenos Banking Cloud for full core banking transformation, representing the largest APAC deal in company history.',tags:['Customer Wins','APAC','Cloud']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'SaaS-First Transition',desc:'Temenos pivots to SaaS-first go-to-market, repackaging core platform as subscription cloud service.',type:'Strategic Pivot'},
+      {year:'2022',title:'Banking Cloud Record Volumes',desc:'Temenos Banking Cloud processes record transaction volumes as bank cloud adoption accelerates post-pandemic.',type:'Milestone'},
+      {year:'2023',title:'AI-First Platform Strategy',desc:'AI embedded across all Temenos products with launch of Virtual COO for autonomous banking operations.',type:'AI Integration'},
+      {year:'2025',title:'$1B+ SaaS Bookings Target',desc:'Temenos targets $1B+ in cumulative SaaS bookings by FY2028, underpinned by Banking Cloud and Transact SaaS.',type:'Strategic Target'}
+    ],
+    launchTimeline:[
+      {date:'Q2 2025',cat:'Enhancement',title:'Virtual COO 2.0 (GenAI)',desc:'Generative AI banking operations assistant with compliance automation.',tags:['AI','Compliance']},
+      {date:'Q1 2024',cat:'New Product',title:'Temenos Embedded Finance APIs',desc:'Open API suite enabling non-bank brands to embed banking services.',tags:['Open Banking','APIs']},
+      {date:'Q3 2023',cat:'New Product',title:'Payments Hub v3',desc:'ISO 20022 native real-time payments processing hub.',tags:['Payments','ISO20022']}
+    ],
+    portfolioMatrix:[
+      {name:'Banking Cloud',segment:'Core',revenue:38,growth:30,stage:'Growth Star',color:'#f59e0b'},
+      {name:'Transact',segment:'Core',revenue:28,growth:5,stage:'Cash Cow',color:'#fbbf24'},
+      {name:'Digital Infinity',segment:'Digital',revenue:18,growth:18,stage:'Growth',color:'#fcd34d'},
+      {name:'Payments Hub',segment:'Payments',revenue:10,growth:22,stage:'Growth',color:'#10b981'},
+      {name:'Wealth Mgmt',segment:'Wealth',revenue:6,growth:12,stage:'Stable',color:'#8b5cf6'}
+    ],
+    inorganic:[
+      {date:'Dec 2020',type:'Acquisition',deal:'Kony (mobility platform)',value:'~$559M',target:'Kony',rationale:'Accelerate digital banking and mobile capabilities',status:'Completed',impact:'High'},
+      {date:'Mar 2020',type:'Acquisition',deal:'Logical Glue (AI/ML)',value:'Undisclosed',target:'Logical Glue',rationale:'Embed AI and machine learning across banking platform',status:'Completed',impact:'Medium'}
+    ],
+    rdData:{investment:[210,225,240,255,270,290],areas:['AI/ML','Cloud Architecture','Banking Core','Payments','Compliance Tech','Digital UX'],areaVals:[30,25,20,12,8,5]}
+  },
+  finastra: {
+    id:'finastra', name:'Finastra', ticker:'Private', exchange:'Private', hq:'London, 🇬🇧',
+    color:'#ef4444', initials:'FN', sector:'Financial Software',
+    founded:2017, employees:'~9,500', ceo:'Simon Paris', website:'finastra.com',
+    description:'Finastra (formed by merger of Misys and D+H in 2017) provides comprehensive financial software for banking, lending, treasury, payments, and wealth management to 9,000+ clients including 90% of top-100 global banks.',
+    revenue2024:1.9, marketCap:'Private (Vista PE)', rating:3.0,
+    kpis:[
+      {label:'Revenue FY2025',val:'$2.4B',delta:'+5.0%',dir:'up',color:'blue'},
+      {label:'Recurring Revenue',val:'~75%',delta:'+4pp YoY',dir:'up',color:'green'},
+      {label:'Global Bank Reach',val:'90%',delta:'Top-100 banks',dir:'up',color:'indigo'},
+      {label:'Composite Score',val:'3.0/5',delta:'Competitive',dir:'neutral',color:'amber'}
+    ],
+    revenues:[1.9,2.0,2.1,2.2,2.3,2.4],
+    ebitda:[33.5,33.0,32.5,32.0,31.5,31.0],
+    netIncome:[0.10,0.12,0.14,0.16,0.18,0.20],
+    revGrowth:[4.0,4.8,5.2,6.0,4.5,5.0],
+    eps:[null,null,null,null,null,null],
+    netMargin:[5.3,6.0,6.7,7.3,7.8,8.3],
+    years:[2020,2021,2022,2023,2024,2025],
+    topProducts:[
+      {name:'Finastra Treasury & Capital Markets',segment:'TCM',share:28,color:'#ef4444'},
+      {name:'Fusion Banking Essence',segment:'Core',share:22,color:'#f87171'},
+      {name:'Lending & Mortgages',segment:'Lending',share:20,color:'#fca5a5'},
+      {name:'Payments Platform',segment:'Payments',share:16,color:'#fecaca'},
+      {name:'Open Platform (FusionFabric)',segment:'Open Finance',share:14,color:'#fee2e2'}
+    ],
+    segments:[{name:'Global Banks (Tier 1-2)',pct:40,icon:'🏦'},{name:'Regional Banks',pct:30,icon:'🏛️'},{name:'Credit Unions & Building Societies',pct:18,icon:'🤝'},{name:'Non-Bank Financial Institutions',pct:12,icon:'⚙️'}],
+    geoData:[{region:'North America',flag:'🌎',rev:0.78,share:42,tier:1},{region:'Europe',flag:'🌍',rev:0.72,share:38,tier:1},{region:'MEA',flag:'🌍',rev:0.22,share:12,tier:2},{region:'Asia Pacific',flag:'🌏',rev:0.15,share:8,tier:2}],
+    insights:[
+      {date:'Jun 2025',year:'2025',cat:'Product',title:'FusionFabric Open Finance platform surpasses 500 apps',source:'Press Release',summary:'Finastra\'s open banking marketplace FusionFabric.cloud exceeds 500 partner applications, cementing position as the leading open finance platform.',tags:['Product','Open Banking','Platform']},
+      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'Finastra releases AI Trade Finance module',source:'Press Release',summary:'New AI-powered trade finance module automates document verification, KYC, and risk scoring for correspondent banking, targeting 70% reduction in manual processing.',tags:['R&D / Innovation','AI','Trade Finance']},
+      {date:'Sep 2023',year:'2023',cat:'Customer Wins',title:'Finastra wins HSBC treasury modernization',source:'Finextra',summary:'HSBC selects Finastra Fusion Treasury for global treasury platform modernization across 60+ countries, in one of the largest treasury deals of the year.',tags:['Customer Wins','Treasury','Tier 1']}
+    ],
+    productStrategy:[
+      {year:'2021',title:'FusionFabric Open Platform Launch',desc:'Launch of FusionFabric.cloud marketplace enabling fintechs to build on Finastra platforms via open APIs.',type:'Platform'},
+      {year:'2022',title:'Cloud-First Product Architecture',desc:'All major products replatformed for cloud-native deployment on AWS, Azure, and GCP.',type:'Cloud'},
+      {year:'2023',title:'BaaS and Embedded Finance APIs',desc:'Banking-as-a-Service API suite launched, enabling brands to embed financial products.',type:'Product Launch'},
+      {year:'2025',title:'AI Across Financial Services Stack',desc:'AI integrated into lending, treasury, and trade finance products to automate document processing and risk scoring.',type:'AI Integration'}
+    ],
+    launchTimeline:[
+      {date:'Q2 2025',cat:'New Product',title:'AI Trade Finance Module',desc:'Automated trade document verification and risk scoring.',tags:['AI','Trade Finance']},
+      {date:'Q4 2023',cat:'New Product',title:'BaaS API Suite',desc:'Banking-as-a-Service APIs for non-bank brand embedding.',tags:['BaaS','Open Finance']},
+      {date:'Q1 2021',cat:'Platform',title:'FusionFabric.cloud Launch',desc:'Open finance marketplace with 500+ partner apps.',tags:['Open Banking','Marketplace']}
+    ],
+    portfolioMatrix:[
+      {name:'Treasury & CapMarkets',segment:'TCM',revenue:28,growth:8,stage:'Cash Cow',color:'#ef4444'},
+      {name:'Core Banking',segment:'Core',revenue:22,growth:5,stage:'Cash Cow',color:'#f87171'},
+      {name:'Lending',segment:'Lending',revenue:20,growth:10,stage:'Growth',color:'#fca5a5'},
+      {name:'Payments',segment:'Payments',revenue:16,growth:12,stage:'Growth',color:'#10b981'},
+      {name:'FusionFabric',segment:'Platform',revenue:14,growth:28,stage:'Growth Star',color:'#8b5cf6'}
+    ],
+    inorganic:[
+      {date:'Jan 2020',type:'Investment',deal:'Series B in Finblox',value:'Undisclosed',target:'Finblox',rationale:'Expand open banking ecosystem partnerships',status:'Completed',impact:'Low'}
+    ],
+    rdData:{investment:[320,340,360,375,390,410],areas:['Open Finance APIs','AI/ML','Cloud Infrastructure','Treasury Tech','Lending','Payments'],areaVals:[25,22,20,15,12,6]}
+  },
+  ncr: {
+    id:'ncr', name:'NCR Atleos', ticker:'NATL', exchange:'NYSE', hq:'Atlanta, 🇺🇸',
+    color:'#06b6d4', initials:'NA', sector:'ATM & Self-Service Banking',
+    founded:2023, employees:'~20,000', ceo:'Tim Oliver', website:'ncratleos.com',
+    description:'NCR Atleos (spun off from NCR Corporation in 2023) is a global ATM and self-service banking technology provider, operating the largest independent ATM network in the United States and serving banks worldwide.',
+    revenue2024:2.2, marketCap:'$2B', rating:2.3,
+    kpis:[
+      {label:'Revenue FY2025',val:'$2.3B',delta:'+3.1%',dir:'up',color:'blue'},
+      {label:'ATM Network',val:'#1 USA',delta:'Independent',dir:'neutral',color:'green'},
+      {label:'Global ATMs',val:'~285K',delta:'Managed',dir:'neutral',color:'indigo'},
+      {label:'Composite Score',val:'2.3/5',delta:'Developing',dir:'neutral',color:'amber'}
+    ],
+    revenues:[0.78,0.81,0.86,0.91,0.97,1.04],
+    ebitda:[19.0,18.5,18.0,17.5,17.0,16.5],
+    netIncome:[0.007,0.009,0.012,0.015,0.018,0.022],
+    revGrowth:[4.0,4.7,5.2,5.8,6.5,7.0],
+    eps:[-0.4,-0.2,0.1,0.3,0.5,0.7],
+    netMargin:[0.9,1.1,1.4,1.6,1.9,2.1],
+    years:[2020,2021,2022,2023,2024,2025],
+    topProducts:[
+      {name:'ATM-as-a-Service',segment:'ATM',share:45,color:'#06b6d4'},
+      {name:'Self-Service Banking Platform',segment:'SelfService',share:28,color:'#22d3ee'},
+      {name:'ATM Software (APTRA)',segment:'Software',share:18,color:'#67e8f9'},
+      {name:'Managed Services',segment:'Services',share:9,color:'#cffafe'}
+    ],
+    segments:[{name:'Banks & Credit Unions',pct:55,icon:'🏦'},{name:'Retailers',pct:25,icon:'🛒'},{name:'Convenience & Fuel',pct:12,icon:'⛽'},{name:'Government',pct:8,icon:'🏛️'}],
+    geoData:[{region:'North America',flag:'🌎',rev:1.43,share:65,tier:1},{region:'Europe',flag:'🌍',rev:0.44,share:20,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.22,share:10,tier:2},{region:'MEA',flag:'🌍',rev:0.11,share:5,tier:2}],
+    insights:[
+      {date:'Apr 2025',year:'2025',cat:'Product',title:'NCR Atleos launches AI-powered ATM predictive maintenance',source:'Press Release',summary:'New AI module deployed across managed ATM fleet predicts hardware failures 7 days in advance, targeting 30% reduction in ATM downtime.',tags:['Product','AI','ATM']},
+      {date:'Jan 2025',year:'2025',cat:'R&D / Innovation',title:'NCR Atleos pilots ITM (Interactive Teller Machine) expansion',source:'American Banker',summary:'Interactive Teller Machine pilot expands to 500 branch locations across 12 U.S. banks, offering video-assisted teller services for complex transactions.',tags:['R&D / Innovation','Self-Service','ITM']},
+      {date:'Oct 2023',year:'2023',cat:'Inorganic',title:'NCR Atleos completes spin-off from NCR Corporation',source:'SEC Filing',summary:'NCR Atleos officially separates from NCR Corporation as an independent publicly traded company (NATL on NYSE), focused on ATM and self-service banking.',tags:['Inorganic','Spin-off','IPO']}
+    ],
+    productStrategy:[
+      {year:'2021',title:'ATM-as-a-Service Expansion',desc:'Shift from hardware sales to recurring ATM-as-a-Service subscription model for banks.',type:'Business Model'},
+      {year:'2023',title:'NCR Spin-off Independence',desc:'Spun off from NCR Corporation as standalone NCR Atleos, focused purely on ATM and self-service banking.',type:'Corporate Event'},
+      {year:'2024',title:'Software Revenue Mix Improvement',desc:'Strategy to increase software and services revenue to >60% of total, reducing hardware dependency.',type:'Strategic Pivot'},
+      {year:'2025',title:'AI Predictive Maintenance',desc:'AI/ML deployed across 285K managed ATM fleet for predictive maintenance and uptime optimization.',type:'AI Integration'}
+    ],
+    launchTimeline:[
+      {date:'Q1 2025',cat:'New Product',title:'AI Predictive Maintenance Module',desc:'Machine learning model for ATM hardware failure prediction.',tags:['AI','ATM']},
+      {date:'Q3 2024',cat:'Enhancement',title:'APTRA Vision Analytics',desc:'Computer vision upgrade for cash dispensing accuracy monitoring.',tags:['Analytics','ATM']},
+      {date:'Q1 2023',cat:'Corporate Event',title:'NCR Atleos Spin-off',desc:'Independence from NCR Corporation as standalone listed entity.',tags:['Corporate']}
+    ],
+    portfolioMatrix:[
+      {name:'ATM-as-a-Service',segment:'ATM',revenue:45,growth:12,stage:'Growth',color:'#06b6d4'},
+      {name:'Self-Service Platform',segment:'SelfService',revenue:28,growth:6,stage:'Stable',color:'#22d3ee'},
+      {name:'APTRA Software',segment:'Software',revenue:18,growth:8,stage:'Stable',color:'#67e8f9'},
+      {name:'Managed Services',segment:'Services',revenue:9,growth:5,stage:'Cash Cow',color:'#10b981'}
+    ],
+    inorganic:[
+      {date:'Oct 2023',type:'Corporate Event',deal:'Spin-off from NCR Corp',value:'N/A',target:'NCR Corporation',rationale:'Focus exclusively on ATM and self-service banking market',status:'Completed',impact:'High'}
+    ],
+    rdData:{investment:[95,100,108,115,125,135],areas:['ATM Software','AI/ML','Self-Service UX','Security','Cloud Services','IoT'],areaVals:[35,20,18,15,8,4]}
+  }
+};
+
+const BENCH_PEERS = ['Fiserv','FIS','Jack Henry'];
+const BENCH_COLORS = {'Fiserv':'#3b82f6','FIS':'#8b5cf6','Jack Henry':'#10b981','Temenos':'#f59e0b','Finastra':'#ef4444','NCR Atleos':'#06b6d4','Stripe':'#635bff','Adyen':'#0abf53'};
+
+const BENCH_FEATURES = [
+  {feature:'Core Account Processing',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
+  {feature:'Real-Time Payments',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
+  {feature:'Merchant Acquiring / POS',cat:'Commerce',Fiserv:true,FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},
+  {feature:'Cloud-Native Core Banking',cat:'Cloud',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
+  {feature:'Open Banking / BaaS APIs',cat:'Platform',Fiserv:'partial',FIS:'partial','Jack Henry':false,Temenos:true,Finastra:true,'NCR Atleos':false},
+  {feature:'AI / ML Analytics',cat:'AI',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},
+  {feature:'Digital Banking Platform',cat:'Digital',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
+  {feature:'Treasury & Capital Markets',cat:'CapMarkets',Fiserv:false,FIS:true,'Jack Henry':false,Temenos:'partial',Finastra:true,'NCR Atleos':false},
+  {feature:'ATM / Self-Service Banking',cat:'Infrastructure',Fiserv:'partial',FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},
+  {feature:'Card Issuance & Processing',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:'partial','NCR Atleos':false},
+  {feature:'Fraud & Compliance Tools',cat:'Risk',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},
+  {feature:'Wealth Management',cat:'Wealth',Fiserv:false,FIS:false,'Jack Henry':false,Temenos:true,Finastra:'partial','NCR Atleos':false}
+];
+
+const BENCH_PROFILE_ATTRS = [
+  {attr:'HQ',Fiserv:'Milwaukee, 🇺🇸',FIS:'Jacksonville, 🇺🇸','Jack Henry':'Monett, 🇺🇸',Temenos:'Geneva, 🇨🇭',Finastra:'London, 🇬🇧','NCR Atleos':'Atlanta, 🇺🇸'},
+  {attr:'Founded',Fiserv:1984,FIS:1968,'Jack Henry':1976,Temenos:1993,Finastra:2017,'NCR Atleos':2023},
+  {attr:'Employees',Fiserv:'~38,000',FIS:'~49,000','Jack Henry':'~7,240',Temenos:'~5,205',Finastra:'~9,500','NCR Atleos':'~20,000'},
+  {attr:'Revenue FY2024',Fiserv:'$20.5B',FIS:'$10.1B','Jack Henry':'$2.2B',Temenos:'$1.0B',Finastra:'$1.9B','NCR Atleos':'$2.2B'},
+  {attr:'EBITDA Margin',Fiserv:'43.4%',FIS:'31.0%','Jack Henry':'28.0%',Temenos:'38.5%',Finastra:'31.5%','NCR Atleos':'17.0%'},
+  {attr:'Revenue CAGR (20-24)',Fiserv:'6.6%',FIS:'4.4%','Jack Henry':'6.0%',Temenos:'6.1%',Finastra:'4.9%','NCR Atleos':'5.6%'},
+  {attr:'Primary Market',Fiserv:'Global – US Lead',FIS:'Global – US Lead','Jack Henry':'U.S. Only',Temenos:'Global (EMEA/APAC)',Finastra:'Global','NCR Atleos':'Global – US Lead'},
+  {attr:'Business Model',Fiserv:'Transaction + SaaS',FIS:'SaaS + Services','Jack Henry':'SaaS + Services',Temenos:'SaaS + Services',Finastra:'Subscription','NCR Atleos':'ATM SaaS + HW'},
+  {attr:'Listed / Private',Fiserv:'Public (NASDAQ)',FIS:'Public (NYSE)','Jack Henry':'Public (NASDAQ)',Temenos:'Public (SIX)',Finastra:'Private (PE)','NCR Atleos':'Public (NYSE)'}
+];
+
+const MARKET_EVENTS = [
+  {co:'Fiserv',color:'#3b82f6',title:'Fiserv announces $2B share buyback program',date:'Aug 1, 2026',type:'Corporate',summary:'Fiserv Board authorizes new $2B share repurchase program, signaling strong free cash flow confidence following Worldpay divestiture.',tags:['Corporate Action','Fiserv']},
+  {co:'FIS',color:'#8b5cf6',title:'FIS Future Forward delivers $380M cost savings',date:'Jul 28, 2026',type:'Earnings',summary:'FIS Q2 2026 earnings confirm Future Forward transformation has delivered $380M in annualized savings, ahead of $400M target for FY2026.',tags:['Earnings','FIS','Transformation']},
+  {co:'Temenos',color:'#f59e0b',title:'Temenos wins Singapore\'s DBS Bank for cloud core',date:'Jul 20, 2026',type:'Customer Win',summary:'DBS Bank selects Temenos Banking Cloud for next-generation core banking modernization across Singapore and Hong Kong operations.',tags:['Customer Win','Temenos','APAC']},
+  {co:'Jack Henry',color:'#10b981',title:'Jack Henry raises FY2026 guidance after record SaaS bookings',date:'Jul 15, 2026',type:'Guidance',summary:'Jack Henry raises FY2026 revenue guidance to $2.5–2.52B after record SaaS bookings in Q3, driven by community bank digital transformation demand.',tags:['Guidance','Jack Henry','SaaS']},
+  {co:'Finastra',color:'#ef4444',title:'Finastra FusionFabric surpasses 500 apps milestone',date:'Jul 10, 2026',type:'Product',summary:'Finastra\'s open banking marketplace reaches 500 partner applications, reinforcing open finance platform leadership.',tags:['Product','Finastra','Open Banking']},
+  {co:'NCR Atleos',color:'#06b6d4',title:'NCR Atleos expands ITM network to 1,000 locations',date:'Jul 5, 2026',type:'Expansion',summary:'Interactive Teller Machine deployment reaches 1,000 U.S. locations, accelerating NCR Atleos\' shift from pure ATM hardware to software-led services.',tags:['Expansion','NCR Atleos','ITM']}
+];
+
+const BENCH_CUST = {
+  Fiserv:{enterprise:'42% of U.S. banks; 31% of credit unions; Walmart Pay, Chase, Wells Fargo merchant clients',midmarket:'~1.5M+ SMB Clover merchants; regional banks across U.S.',smb:'Clover devices at >1M small business locations',gov:'U.S. government disbursements via Fiserv payment rails',partners:'NVIDIA (AI), Microsoft (Cloud), Visa/Mastercard, GTCR (Worldpay)'},
+  FIS:{enterprise:'50,000+ clients globally; top-20 U.S. banks; Goldman Sachs, JPMorgan capital markets',midmarket:'Regional and community banks via Modern Banking Platform',smb:'Limited SMB direct presence; via bank intermediaries',gov:'Government payment processing and treasury services',partners:'Microsoft (Azure), Amazon (AWS), Salesforce'},
+  'Jack Henry':{enterprise:'N/A — focused on community segment',midmarket:'~1,100 community banks; ~900 credit unions across U.S.',smb:'SMB banking via community bank clients (Banno Business)',gov:'Municipal and local government banking via community bank clients',partners:'Payrailz, Victor Technologies, Q2 Holdings'},
+  Temenos:{enterprise:'DBS Bank, Société Générale, BNP Paribas — core banking modernization',midmarket:'Regional banks across Europe, APAC, MEA',smb:'Neobank and challenger bank clients via SaaS platform',gov:'Central banks and government-owned banks in 40+ countries',partners:'AWS, Microsoft Azure, Accenture, Capgemini'},
+  Finastra:{enterprise:'HSBC, Barclays, Deutsche Bank — treasury and lending',midmarket:'90% of top-100 global banks as clients (some product set)',smb:'Building societies and credit unions in UK',gov:'Development banks and public sector financial institutions',partners:'Microsoft, AWS, Deloitte, KPMG, FusionFabric.cloud ecosystem'},
+  'NCR Atleos':{enterprise:'Bank of America, Chase, Wells Fargo ATM fleet management',midmarket:'Regional bank ATM outsourcing programs',smb:'Convenience store and fuel ATM networks',gov:'Government facility ATM deployments',partners:'Brink\'s (cash logistics), Euronet, IndependentATM'}
+};
+</script>
+<script>
+/* ==================== HELPERS ==================== */
+function hexToRgba(hex, alpha) {
+  if (!hex) return 'rgba(59,130,246,'+alpha+')';
+  const r = parseInt(hex.slice(1,3),16)||59;
+  const g = parseInt(hex.slice(3,5),16)||130;
+  const b = parseInt(hex.slice(5,7),16)||246;
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+/* ==================== STATE ==================== */
+let currentCompany = 'fiserv';
+let currentCoTab = 'overview';
+let currentInsightYear = 'All';
+let currentInsightCat = 'All';
+let currentFinTab = 'revenue';
+let currentFinPeriod = 'annual';
+let currentBenchTab = 'overview';
+let currentBenchFinTab = 'revenue';
+let currentBenchPeers = ['Fiserv','FIS','Jack Henry'];
+let currentBenchFeatures = BENCH_FEATURES.map(f=>({...f}));
+let currentProfileAttrs = BENCH_PROFILE_ATTRS.map(a=>a.attr);
+let currentProductTab = 'strategy';
+let currentGeoTab = 'presence';
+let currentCustTab = 'enterprise';
+let currentInorgFilter = 'All';
+let selectedMatrixProduct = null;
+
+/* ==================== ROUTING ==================== */
+function showPage(pageId, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + pageId);
+  if (page) page.classList.add('active');
+  if (navEl) navEl.classList.add('active');
+  else {
+    const el = document.querySelector(`[data-page="${pageId}"]`);
+    if (el) el.classList.add('active');
+  }
+  if (pageId === 'dashboard') renderDashboard();
+  else if (pageId === 'competitive-intelligence') renderCIPage();
+  else if (pageId === 'benchmark') { renderBenchmark(); }
+}
+
+function showCompany(coId, navEl) {
+  currentCompany = coId;
+  document.querySelectorAll('.nav-company-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-company').classList.add('active');
+  currentCoTab = 'overview';
+  document.querySelectorAll('#companyTabs .tab-item').forEach((t,i)=>t.classList.toggle('active',i===0));
+  document.querySelectorAll('.tab-content').forEach(tc=>tc.classList.remove('active'));
+  document.getElementById('co-tab-overview').classList.add('active');
+  renderCompanyPage();
+}
+
+/* ==================== DASHBOARD ==================== */
+function renderDashboard() {
+  // Market Events
+  const ec = document.getElementById('marketEventsContainer');
+  if (ec) ec.innerHTML = MARKET_EVENTS.map(e => `
+    <div class="event-card">
+      <div class="event-dot" style="background:${e.color}"></div>
+      <div class="event-content">
+        <div class="event-title">${e.title}</div>
+        <div class="event-meta">${e.co} · ${e.date} · <span class="badge badge-gray">${e.type}</span></div>
+        <div class="event-summary">${e.summary}</div>
+        <div class="event-tags">${e.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+  // Companies to Track
+  const cc = document.getElementById('companiesTrackContainer');
+  if (cc) cc.innerHTML = Object.values(COMPANIES_DATA).map(co => `
+    <div class="company-card" onclick="showCompany('${co.id}')">
+      <div class="company-card-header">
+        <div class="company-logo" style="background:${co.color}">${co.initials}</div>
+        <div><div class="company-name">${co.name}</div><div class="company-sector">${co.ticker !== 'Private' ? co.ticker + ' · ' : ''}${co.sector}</div></div>
+      </div>
+      <div class="company-stats">
+        <div class="company-stat"><div class="company-stat-val">${co.revenue2024 >= 10 ? '$'+co.revenue2024+'B' : '$'+co.revenue2024+'B'}</div><div class="company-stat-label">Revenue</div></div>
+        <div class="company-stat"><div class="company-stat-val">${co.rating}/5</div><div class="company-stat-label">Score</div></div>
+      </div>
+      <div class="company-card-actions">
+        <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();showCompany('${co.id}')">View Company →</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ==================== CI PAGE ==================== */
+function renderCIPage() {
+  const container = document.getElementById('ciCompanyCards');
+  if (!container) return;
+  container.innerHTML = Object.values(COMPANIES_DATA).map(co => `
+    <div class="company-card" onclick="showCompany('${co.id}')">
+      <div class="company-card-header">
+        <div class="company-logo" style="background:${co.color};width:44px;height:44px;font-size:16px">${co.initials}</div>
+        <div>
+          <div class="company-name">${co.name}</div>
+          <div class="company-sector">${co.sector}</div>
+          <div class="text-xs text-muted mt-4">${co.hq} · ${co.employees} employees</div>
+        </div>
+      </div>
+      <div class="text-sm text-secondary mb-12" style="line-height:1.5">${co.description.substring(0,120)}…</div>
+      <div class="company-stats">
+        <div class="company-stat"><div class="company-stat-val">${co.revenue2024 >= 10 ? '$'+co.revenue2024+'B' : '$'+co.revenue2024+'B'}</div><div class="company-stat-label">Revenue</div></div>
+        <div class="company-stat"><div class="company-stat-val">${co.rating}/5</div><div class="company-stat-label">Score</div></div>
+        <div class="company-stat"><div class="company-stat-val">${co.marketCap}</div><div class="company-stat-label">Market Cap</div></div>
+      </div>
+      <div class="company-card-actions">
+        <button class="btn-sm btn-sm-primary" onclick="event.stopPropagation();showCompany('${co.id}')">View Company →</button>
+        <button class="btn-sm btn-sm-outline" onclick="event.stopPropagation();">+ Benchmark</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ==================== COMPANY PAGE ==================== */
+function renderCompanyPage() {
+  const co = COMPANIES_DATA[currentCompany];
+  if (!co) return;
+  // Header
+  document.getElementById('coLogoHeader').textContent = co.initials;
+  document.getElementById('coLogoHeader').style.background = co.color;
+  document.getElementById('coNameHeader').textContent = co.name;
+  document.getElementById('coSubHeader').textContent = `${co.sector} · ${co.ticker !== 'Private' ? co.ticker + ' · ' : ''}${co.hq}`;
+  document.getElementById('companyBreadcrumbName').textContent = co.name;
+  renderCoOverview(co);
+  renderCoInsights(co);
+  renderCoProducts(co);
+  renderCoFinancials(co);
+  renderCoInorganic(co);
+  renderCoGeography(co);
+  renderCoInnovation(co);
+  renderCoCustomers(co);
+}
+
+function renderCoOverview(co) {
+  // KPIs
+  const kg = document.getElementById('coKpis');
+  if (kg) kg.innerHTML = co.kpis.map(k => `
+    <div class="kpi-tile ${k.color}">
+      <div class="kpi-label">${k.label}</div>
+      <div class="kpi-value kpi-value-sm">${k.val}</div>
+      <div class="kpi-delta ${k.dir}">${k.delta}</div>
+    </div>`).join('');
+  // Revenue chart
+  Plotly.react('coRevChart',[{
+    type:'bar', x:co.years, y:co.revenues,
+    marker:{color:co.color, opacity:0.85},
+    text:co.revenues.map(v=>'$'+v+'B'),
+    textposition:'auto',
+    textfont:{color:'#fff', size:10, weight:600},
+    hovertemplate:'%{x}: $%{y}B<extra></extra>'
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:40,r:10,t:16,b:40},
+    yaxis:{title:'$B', tickprefix:'$', ticksuffix:'B', gridcolor:'#f1f5f9'},
+    xaxis:{tickfont:{size:11}, gridcolor:'transparent'},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    showlegend:false,
+    bargap:0.3,
+    hoverlabel:{bgcolor:'#1e293b',font:{color:'#fff',size:11}}
+  },{responsive:true,displaylogo:false});
+  // Snapshot
+  const snap = document.getElementById('coSnapshot');
+  if (snap) snap.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${[['CEO',co.ceo],['Founded',co.founded],['HQ',co.hq],['Employees',co.employees],['Website',co.website],['Description','']].map(([l,v]) => l === 'Description' ? `<div style="font-size:12px;color:var(--n-500);line-height:1.6;padding-top:8px;border-top:1px solid var(--n-100)">${co.description}</div>` : `
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--n-100)">
+        <span class="text-xs text-secondary font-semibold" style="text-transform:uppercase;letter-spacing:.3px">${l}</span>
+        <span class="text-sm font-semibold" style="color:var(--n-800)">${v}</span>
+      </div>`).join('')}
+    </div>`;
+  // Top Products
+  const tp = document.getElementById('coTopProducts');
+  if (tp) tp.innerHTML = co.topProducts.map(p => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--n-100)">
+      <div style="width:10px;height:10px;border-radius:50%;background:${p.color};flex-shrink:0"></div>
+      <div style="flex:1">
+        <div class="text-sm font-semibold">${p.name}</div>
+        <div class="text-xs text-secondary">${p.segment}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:80px;height:6px;border-radius:3px;background:var(--n-200);overflow:hidden"><div style="width:${p.share}%;height:100%;border-radius:3px;background:${p.color}"></div></div>
+        <div class="text-sm font-bold" style="color:var(--n-800);width:30px;text-align:right">${p.share}%</div>
+      </div>
+    </div>`).join('');
+  // Segments
+  const segs = document.getElementById('coSegments');
+  if (segs) segs.innerHTML = co.segments.map(s => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--n-100)">
+      <div style="font-size:18px">${s.icon}</div>
+      <div style="flex:1"><div class="text-sm font-semibold">${s.name}</div></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:80px;height:6px;border-radius:3px;background:var(--n-200);overflow:hidden"><div style="width:${s.pct}%;height:100%;border-radius:3px;background:var(--blue-500)"></div></div>
+        <div class="text-sm font-bold" style="color:var(--n-800);width:30px;text-align:right">${s.pct}%</div>
+      </div>
+    </div>`).join('');
+  // Geo Overview
+  const go = document.getElementById('coGeoOverview');
+  if (go) go.innerHTML = `<div style="display:flex;flex-direction:column">${co.geoData.map(g => `
+    <div class="region-row">
+      <div class="region-flag">${g.flag}</div>
+      <div class="region-name">${g.region}</div>
+      <div class="region-bar"><div class="region-bar-fill" style="width:${g.share}%"></div></div>
+      <div class="region-pct">${g.share}%</div>
+      <span class="region-rank" style="background:${g.tier===1?'var(--blue-100)':g.tier===2?'var(--green-100)':'var(--n-100)'};color:${g.tier===1?'var(--blue-700)':g.tier===2?'var(--green-700)':'var(--n-500)'}">T${g.tier}</span>
+    </div>`).join('')}</div>`;
+}
+
+function renderCoInsights(co) {
+  renderInsightsTimeline(co);
+}
+
+function renderInsightsTimeline(co) {
+  const container = document.getElementById('insightsTimeline');
+  if (!container) return;
+  const items = co.insights.filter(i => {
+    const yearOk = currentInsightYear === 'All' || i.year === currentInsightYear;
+    const catOk = currentInsightCat === 'All' || i.cat === currentInsightCat;
+    return yearOk && catOk;
+  });
+  if (!items.length) { container.innerHTML = '<div class="text-sm text-secondary" style="padding:20px">No insights found for selected filters.</div>'; return; }
+  container.innerHTML = items.map(i => {
+    const catColors = {'Product':'blue','Sales & Distribution':'green','R&D / Innovation':'purple','Inorganic':'amber','Marketing':'indigo','Customer Wins':'teal','Hiring':'gray'};
+    const c = catColors[i.cat] || 'gray';
+    return `
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot filled"></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-date">${i.date}</div>
+      </div>
+      <div class="timeline-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-${c}">${i.cat}</span>
+          <span class="text-xs text-muted">${i.source}</span>
+        </div>
+        <div class="timeline-card-title">${i.title}</div>
+        <div class="timeline-card-text mt-8">${i.summary}</div>
+        <div class="timeline-card-tags">${i.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`}).join('');
+}
+
+function filterInsights(year, el) {
+  currentInsightYear = year;
+  document.querySelectorAll('#yearFilters .filter-chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderInsightsTimeline(COMPANIES_DATA[currentCompany]);
+}
+function filterInsightCat(cat, el) {
+  currentInsightCat = cat;
+  document.querySelectorAll('#catFilters .filter-chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderInsightsTimeline(COMPANIES_DATA[currentCompany]);
+}
+
+/* -------- PRODUCTS -------- */
+function renderCoProducts(co) {
+  renderProductStrategy(co);
+  renderLaunchTimeline(co);
+  renderPortfolioCards(co);
+  renderPortfolioMatrix(co);
+  renderUpdatesKpis(co);
+  renderUpdatesContainer(co);
+}
+function renderProductStrategy(co) {
+  const el = document.getElementById('prodStrategyContent');
+  if (!el) return;
+  el.innerHTML = `<div class="timeline">` + co.productStrategy.map(s => `
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot filled" style="border-color:${co.color};background:${co.color}"></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-date" style="color:${co.color};font-weight:800">${s.year}</div>
+      </div>
+      <div class="timeline-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge" style="background:${co.color}20;color:${co.color}">${s.type}</span>
+        </div>
+        <div class="timeline-card-title">${s.title}</div>
+        <div class="timeline-card-text mt-8">${s.desc}</div>
+      </div>
+    </div>`).join('') + `</div>`;
+}
+function renderLaunchTimeline(co) {
+  const container = document.getElementById('launchTimeline');
+  if (!container) return;
+  container.innerHTML = co.launchTimeline.map(l => `
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot filled"></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-date">${l.date}</div>
+      </div>
+      <div class="timeline-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-${l.cat==='New Product'?'blue':l.cat==='Enhancement'?'green':'purple'}">${l.cat}</span>
+        </div>
+        <div class="timeline-card-title">${l.title}</div>
+        <div class="timeline-card-text mt-8">${l.desc}</div>
+        <div class="timeline-card-tags">${l.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+function renderPortfolioCards(co) {
+  const container = document.getElementById('portfolioCards');
+  if (!container) return;
+  container.innerHTML = co.topProducts.map(p => `
+    <div class="card" style="border-top:3px solid ${p.color}">
+      <div class="card-body">
+        <div style="font-size:13px;font-weight:700;color:var(--n-800);margin-bottom:4px">${p.name}</div>
+        <div class="text-xs text-secondary mb-12">${p.segment}</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+          <div style="flex:1;height:8px;border-radius:4px;background:var(--n-200);overflow:hidden"><div style="width:${p.share}%;height:100%;background:${p.color};border-radius:4px"></div></div>
+          <div class="text-sm font-bold">${p.share}%</div>
+        </div>
+        <div class="text-xs text-secondary">Revenue share</div>
+      </div>
+    </div>`).join('');
+}
+function renderPortfolioMatrix(co) {
+  const el = document.getElementById('portfolioMatrix');
+  if (!el) return;
+  const sel = document.getElementById('matrixProductSelector');
+  if (sel) sel.innerHTML = co.portfolioMatrix.map((p,i) => `
+    <button class="filter-chip ${i===0?'active':''}" style="${i===0?'background:'+p.color+';border-color:'+p.color+';color:#fff':''}" onclick="selectMatrixProduct('${p.name}',this)">${p.name}</button>`).join('');
+  const traces = co.portfolioMatrix.map(p => ({
+    type:'scatter', name:p.name, x:[p.revenue], y:[p.growth],
+    mode:'markers+text', text:[p.name], textposition:'top center',
+    textfont:{size:9, color:'#334155'},
+    marker:{size:Math.sqrt(p.revenue)*8+8, color:p.color, opacity:0.8, line:{width:2,color:'#fff'}},
+    hovertemplate:`<b>${p.name}</b><br>Rev Share: ${p.revenue}%<br>Growth: ${p.growth}%<extra></extra>`
+  }));
+  const pmShapes = [
+    {type:'line',x0:20,x1:20,y0:-5,y1:42,line:{dash:'dot',width:1.5,color:'#cbd5e1'}},
+    {type:'line',x0:0,x1:55,y0:10,y1:10,line:{dash:'dot',width:1.5,color:'#cbd5e1'}},
+    {type:'rect',x0:0,x1:20,y0:10,y1:42,fillcolor:'#eff6ff',opacity:0.3,line:{width:0}},
+    {type:'rect',x0:20,x1:55,y0:10,y1:42,fillcolor:'#f0fdf4',opacity:0.3,line:{width:0}},
+    {type:'rect',x0:0,x1:20,y0:-5,y1:10,fillcolor:'#fef9c3',opacity:0.2,line:{width:0}},
+    {type:'rect',x0:20,x1:55,y0:-5,y1:10,fillcolor:'#f0fdf4',opacity:0.25,line:{width:0}}
+  ];
+  const pmAnnotations = [
+    {x:10,y:40,text:'❓ Question Marks',showarrow:false,font:{size:9,color:'#64748b'},bgcolor:'rgba(255,255,255,0.7)'},
+    {x:38,y:40,text:'⭐ Growth Stars',showarrow:false,font:{size:9,color:'#64748b'},bgcolor:'rgba(255,255,255,0.7)'},
+    {x:10,y:-3,text:'🐕 Dogs',showarrow:false,font:{size:9,color:'#64748b'},bgcolor:'rgba(255,255,255,0.7)'},
+    {x:38,y:-3,text:'💰 Cash Cows',showarrow:false,font:{size:9,color:'#64748b'},bgcolor:'rgba(255,255,255,0.7)'}
+  ];
+  Plotly.react('portfolioMatrix',traces,{
+    paper_bgcolor:'rgba(0,0,0,0)',
+    plot_bgcolor:'rgba(0,0,0,0)',
+    xaxis:{title:{text:'Revenue Share (%)',font:{size:11}},range:[-2,58],gridcolor:'#f1f5f9',zeroline:false},
+    yaxis:{title:{text:'Growth Rate (%)',font:{size:11}},range:[-8,46],gridcolor:'#f1f5f9',zeroline:false},
+    margin:{l:55,r:30,t:30,b:55},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    showlegend:false,
+    shapes:pmShapes,
+    annotations:pmAnnotations,
+    hoverlabel:{bgcolor:'#1e293b',font:{color:'#fff',size:11}}
+  },{responsive:true,displaylogo:false});
+  if (co.portfolioMatrix[0]) showSwot(co.portfolioMatrix[0], co);
+  // Segment coverage matrix
+  const scm = document.getElementById('segCoverageMatrix');
+  if (scm) {
+    const segs = [...new Set(co.portfolioMatrix.map(p=>p.segment))];
+    scm.innerHTML = `<div class="seg-grid" style="grid-template-columns:repeat(${segs.length},1fr)">` +
+      segs.map(s => {
+        const prods = co.portfolioMatrix.filter(p=>p.segment===s);
+        return `<div class="seg-cell" style="background:${prods[0]?.color}15;border-color:${prods[0]?.color}40">
+          <div class="seg-cell-label">${s}</div>
+          <div class="seg-cell-val">${prods.length}</div>
+          <div class="seg-cell-sub">products</div>
+        </div>`;
+      }).join('') + `</div>`;
+  }
+}
+function selectMatrixProduct(name, el) {
+  const co = COMPANIES_DATA[currentCompany];
+  document.querySelectorAll('#matrixProductSelector .filter-chip').forEach(c => {
+    c.classList.remove('active');
+    c.style.background=''; c.style.borderColor=''; c.style.color='';
+  });
+  el.classList.add('active');
+  const p = co.portfolioMatrix.find(x=>x.name===name);
+  if (p) { el.style.background=p.color; el.style.borderColor=p.color; el.style.color='#fff'; showSwot(p, co); }
+}
+function showSwot(p, co) {
+  const title = document.getElementById('swotTitle');
+  const content = document.getElementById('swotContent');
+  if (title) title.textContent = `SWOT — ${p.name}`;
+  if (!content) return;
+  const swotData = {
+    strengths:[`Market-leading ${p.segment} position`,`${p.revenue}% of ${co.name} revenue mix`,`${p.stage} stage with strong fundamentals`],
+    weaknesses:[`${p.growth < 10 ? 'Below-market growth rate at '+p.growth+'%' : 'Capital intensity in growth investment'}`,'Competitive pressure from cloud-native alternatives','Integration complexity with legacy systems'],
+    opportunities:[`Cloud migration tailwind for ${p.segment} segment`,`AI/ML product enhancements unlocking new use cases`,`International expansion in underserved markets`],
+    threats:[`New entrants disrupting ${p.segment} with lower-cost models`,`Regulatory changes impacting product economics`,`Customer consolidation reducing addressable market`]
+  };
+  content.innerHTML = `<div class="swot-grid">
+    <div class="swot-cell strengths"><div class="swot-label">✅ Strengths</div><div class="swot-items">${swotData.strengths.map(s=>`<div class="swot-item"><span class="swot-bullet">•</span>${s}</div>`).join('')}</div></div>
+    <div class="swot-cell weaknesses"><div class="swot-label">⚠️ Weaknesses</div><div class="swot-items">${swotData.weaknesses.map(s=>`<div class="swot-item"><span class="swot-bullet">•</span>${s}</div>`).join('')}</div></div>
+    <div class="swot-cell opportunities"><div class="swot-label">🚀 Opportunities</div><div class="swot-items">${swotData.opportunities.map(s=>`<div class="swot-item"><span class="swot-bullet">•</span>${s}</div>`).join('')}</div></div>
+    <div class="swot-cell threats"><div class="swot-label">🔴 Threats</div><div class="swot-items">${swotData.threats.map(s=>`<div class="swot-item"><span class="swot-bullet">•</span>${s}</div>`).join('')}</div></div>
+  </div>`;
+}
+function renderUpdatesKpis(co) {
+  const el = document.getElementById('updatesKpis');
+  if (!el) return;
+  const total = co.launchTimeline.length;
+  const launches = co.launchTimeline.filter(l=>l.cat==='New Product').length;
+  el.innerHTML = [
+    {label:'Total Updates',val:total+co.productStrategy.length,color:'blue',icon:'🔄'},
+    {label:'Total Launches',val:launches,color:'green',icon:'🚀'},
+    {label:'High Impact',val:Math.ceil(total*0.4),color:'amber',icon:'⭐'},
+    {label:'Active Products',val:co.topProducts.length,color:'indigo',icon:'📦'}
+  ].map(k=>`<div class="kpi-tile ${k.color}"><div class="kpi-label">${k.label}</div><div class="kpi-value kpi-value-sm">${k.val}</div><div class="kpi-icon">${k.icon}</div></div>`).join('');
+}
+function renderUpdatesContainer(co) {
+  const el = document.getElementById('updatesContainer');
+  if (!el) return;
+  el.innerHTML = co.launchTimeline.map(l => `
+    <div class="intel-card mb-12">
+      <div class="flex items-center gap-8 mb-8">
+        <span class="badge badge-${l.cat==='New Product'?'blue':l.cat==='Enhancement'?'green':'purple'}">${l.cat}</span>
+        <span class="text-xs text-muted">${l.date}</span>
+        <span class="badge badge-${['High','Medium','Low'][Math.floor(Math.random()*3)] === 'High' ? 'amber' : 'gray'}" style="margin-left:auto">⭐ ${['High','Medium','Low'][l.title.length%3]} Impact</span>
+      </div>
+      <div class="intel-card-title">${l.title}</div>
+      <div class="intel-card-summary mt-8">${l.desc}</div>
+      <div class="intel-card-footer">${l.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+/* -------- FINANCIALS -------- */
+function renderCoFinancials(co) {
+  renderFinChart(co, currentFinTab);
+}
+function getFinData(co, tab, period) {
+  if (tab==='revenue') return {label:'Revenue ($B)',data:co.revenues,yformat:'$%{y}B',color:co.color};
+  if (tab==='ebitda') return {label:'EBITDA Margin (%)',data:co.ebitda,yformat:'%{y}%',color:'#10b981'};
+  if (tab==='netincome') return {label:'Net Income ($B)',data:co.netIncome,yformat:'$%{y}B',color:'#8b5cf6'};
+  if (tab==='ebitdamargin') return {label:'EBITDA Margin (%)',data:co.ebitda,yformat:'%{y}%',color:'#f59e0b'};
+  if (tab==='netmargin') return {label:'Net Margin (%)',data:co.netMargin,yformat:'%{y}%',color:'#ef4444'};
+  if (tab==='revgrowth') return {label:'Revenue Growth (%)',data:co.revGrowth,yformat:'%{y}%',color:'#06b6d4'};
+  if (tab==='eps') return {label:'EPS ($)',data:co.eps,yformat:'$%{y}',color:'#6366f1'};
+  return {label:'Revenue',data:co.revenues,yformat:'$%{y}B',color:co.color};
+}
+function renderFinChart(co, tab) {
+  const d = getFinData(co, tab, currentFinPeriod);
+  document.getElementById('finChartTitle').textContent = d.label;
+  Plotly.react('finMainChart',[{
+    type:'bar', x:co.years, y:d.data,
+    marker:{color:d.color, opacity:0.85},
+    text:d.data.map(v=>v===null?'N/A':v),
+    textposition:'auto',
+    textfont:{color:'#fff', size:10},
+    hovertemplate:`%{x}: ${d.yformat}<extra></extra>`
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:50,r:20,t:20,b:40},
+    yaxis:{gridcolor:'#f1f5f9', zeroline:false},
+    xaxis:{gridcolor:'transparent', zeroline:false},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    showlegend:false,
+    bargap:0.3,
+    hoverlabel:{bgcolor:'#1e293b',font:{color:'#fff',size:11}}
+  },{responsive:true,displaylogo:false});
+  // Summary metrics
+  const sm = document.getElementById('finSummaryMetrics');
+  if (sm) {
+    const last = d.data[d.data.length-1];
+    const prev = d.data[d.data.length-2];
+    const delta = last && prev ? ((last-prev)/Math.abs(prev)*100).toFixed(1) : null;
+    sm.innerHTML = `
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="kpi-tile blue" style="margin:0"><div class="kpi-label">Latest (${co.years[co.years.length-1]})</div><div class="kpi-value kpi-value-sm">${last || 'N/A'}</div></div>
+        <div class="kpi-tile green" style="margin:0"><div class="kpi-label">YoY Change</div><div class="kpi-value kpi-value-sm">${delta ? delta+'%' : 'N/A'}</div></div>
+        <div class="kpi-tile indigo" style="margin:0"><div class="kpi-label">5Y CAGR</div><div class="kpi-value kpi-value-sm">${co.revGrowth ? ((co.revGrowth.reduce((a,b)=>a+b,0)/co.revGrowth.length).toFixed(1)+'%') : 'N/A'}</div></div>
+      </div>`;
+  }
+  // Table
+  const th = document.getElementById('finTableHead');
+  const tb = document.getElementById('finTableBody');
+  if (th) th.innerHTML = `<tr><th>Metric</th>${co.years.map(y=>`<th>${y}</th>`).join('')}</tr>`;
+  if (tb) tb.innerHTML = [
+    ['Revenue ($B)', co.revenues],
+    ['EBITDA Margin (%)', co.ebitda],
+    ['Net Income ($B)', co.netIncome],
+    ['Net Margin (%)', co.netMargin],
+    ['Revenue Growth (%)', co.revGrowth],
+    ['EPS ($)', co.eps]
+  ].map(([label, data]) => `<tr><td class="font-semibold">${label}</td>${data.map(v=>`<td>${v === null ? 'N/A' : v}</td>`).join('')}</tr>`).join('');
+}
+
+/* -------- INORGANIC -------- */
+function renderCoInorganic(co) {
+  renderInorgKpis(co);
+  renderInorgTimeline(co);
+  renderInorgSummary(co);
+}
+function renderInorgKpis(co) {
+  const el = document.getElementById('inorgKpis');
+  if (!el) return;
+  const deals = co.inorganic;
+  const acqs = deals.filter(d=>d.type==='Acquisition').length;
+  const divs = deals.filter(d=>d.type==='Divestiture').length;
+  const high = deals.filter(d=>d.impact==='High').length;
+  el.innerHTML = [
+    {label:'Total Transactions',val:deals.length,color:'blue',icon:'🤝'},
+    {label:'Acquisitions',val:acqs,color:'green',icon:'📥'},
+    {label:'Divestitures',val:divs,color:'amber',icon:'📤'},
+    {label:'High Impact Deals',val:high,color:'indigo',icon:'⭐'}
+  ].map(k=>`<div class="kpi-tile ${k.color}"><div class="kpi-label">${k.label}</div><div class="kpi-value kpi-value-sm">${k.val}</div><div class="kpi-icon">${k.icon}</div></div>`).join('');
+}
+function renderInorgTimeline(co) {
+  const container = document.getElementById('inorgTimeline');
+  if (!container) return;
+  const filtered = currentInorgFilter==='All' ? co.inorganic : co.inorganic.filter(d=>d.type===currentInorgFilter);
+  container.innerHTML = filtered.map(d => {
+    const typeColor = {Acquisition:'blue',Divestiture:'amber',Investment:'green',Partnership:'purple','Corporate Event':'indigo','Transformation':'gray'}[d.type]||'gray';
+    return `
+    <div class="timeline-item">
+      <div class="timeline-left">
+        <div class="timeline-dot filled" style="border-color:${co.color};background:${co.color}"></div>
+        <div class="timeline-line"></div>
+        <div class="timeline-date">${d.date}</div>
+      </div>
+      <div class="timeline-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span class="badge badge-${typeColor}">${d.type}</span>
+          <span class="badge badge-${d.impact==='High'?'red':d.impact==='Medium'?'amber':'gray'}">${d.impact} Impact</span>
+        </div>
+        <div class="timeline-card-title">${d.deal}</div>
+        <div style="font-size:12px;color:var(--n-500);margin-top:4px"><b>Target:</b> ${d.target} · <b>Value:</b> ${d.value}</div>
+        <div class="timeline-card-text mt-8">${d.rationale}</div>
+        <div style="margin-top:6px"><span class="badge badge-${d.status==='Completed'?'green':'blue'}">${d.status}</span></div>
+      </div>
+    </div>`}).join('');
+}
+function renderInorgSummary(co) {
+  const el = document.getElementById('inorgSummaryBody');
+  if (!el) return;
+  const types = ['Acquisition','Divestiture','Investment','Partnership','Corporate Event','Transformation'];
+  el.innerHTML = types.map(t => {
+    const count = co.inorganic.filter(d=>d.type===t).length;
+    if (!count) return '';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--n-100)">
+      <span class="text-sm">${t}s</span><span class="badge badge-blue">${count}</span></div>`;
+  }).join('') + `<div style="padding-top:12px;font-size:12px;color:var(--n-500)">Total deal activity reflects ${co.inorganic.length} transactions between 2020–2025.</div>`;
+}
+function filterInorg(type, el) {
+  currentInorgFilter = type;
+  document.querySelectorAll('#co-tab-inorganic .filter-chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderInorgTimeline(COMPANIES_DATA[currentCompany]);
+}
+
+/* -------- GEOGRAPHY -------- */
+function renderCoGeography(co) {
+  renderGeoPresence(co);
+  renderGeoRevCharts(co);
+}
+function renderGeoPresence(co) {
+  const summary = document.getElementById('geoPresenceSummary');
+  if (summary) summary.innerHTML = `<div style="display:flex;flex-direction:column">` + co.geoData.map(g => `
+    <div class="region-row">
+      <div class="region-flag">${g.flag}</div>
+      <div class="region-name">${g.region}</div>
+      <div class="region-bar"><div class="region-bar-fill" style="width:${g.share}%"></div></div>
+      <div class="region-pct">${g.share}%</div>
+    </div>`).join('') + `</div>`;
+  const GEO_COORDS = {
+    'North America':{lat:39,lon:-98}, 'Americas':{lat:15,lon:-80},
+    'Europe':{lat:50,lon:10}, 'Asia Pacific':{lat:15,lon:105},
+    'MEA':{lat:20,lon:35}, 'Middle East & Africa':{lat:20,lon:35},
+    'United States':{lat:37,lon:-96}
+  };
+  const geoLats = co.geoData.map(g=>(GEO_COORDS[g.region]||{lat:0}).lat);
+  const geoLons = co.geoData.map(g=>(GEO_COORDS[g.region]||{lon:0}).lon);
+  Plotly.react('geoMapChart',[{
+    type:'scattergeo', mode:'markers+text',
+    lat: geoLats, lon: geoLons,
+    text: co.geoData.map(g=>g.region),
+    textposition: 'top center',
+    textfont: {size:10, color:'#334155'},
+    marker:{
+      size: co.geoData.map(g=>Math.max(g.share/2+10,14)),
+      color: co.geoData.map(g=>g.share),
+      colorscale:[[0,'#bfdbfe'],[0.5,'#3b82f6'],[1,'#1d4ed8']],
+      showscale:true,
+      colorbar:{title:{text:'Rev %',font:{size:10}},thickness:8,len:0.5,x:0.98,xanchor:'right'},
+      opacity:0.85, line:{color:'#fff',width:1.5}
+    },
+    customdata: co.geoData.map(g=>`${g.region}: ${g.share}% rev share`),
+    hovertemplate:'%{customdata}<extra></extra>'
+  }],{
+    geo:{
+      projection:{type:'natural earth'},
+      bgcolor:'rgba(0,0,0,0)',
+      showland:true, landcolor:'#f1f5f9',
+      showocean:true, oceancolor:'#dbeafe',
+      showlakes:false,
+      showcountries:true, countrycolor:'#e2e8f0',
+      showframe:false,
+      fitbounds: 'locations'
+    },
+    paper_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:0,r:0,t:10,b:0},
+    showlegend:false,
+    font:{family:'Inter',size:10,color:'#64748b'}
+  },{responsive:true,displaylogo:false,staticPlot:false});
+}
+function renderGeoRevCharts(co) {
+  const regions = co.geoData.map(g=>g.region);
+  const revs = co.geoData.map(g=>g.rev);
+  const shares = co.geoData.map(g=>g.share);
+  Plotly.react('geoRevChart',[{
+    type:'bar', x:regions, y:revs,
+    marker:{color:[co.color,'#8b5cf6','#10b981','#f59e0b'], opacity:0.85},
+    text:revs.map(v=>'$'+v+'B'),
+    textposition:'auto', textfont:{color:'#fff',size:11},
+    hovertemplate:'<b>%{x}</b><br>$%{y}B<extra></extra>'
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:50,r:20,t:20,b:80},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    xaxis:{tickangle:-20, gridcolor:'transparent', zeroline:false},
+    yaxis:{title:{text:'Revenue ($B)',font:{size:11}}, tickprefix:'$', gridcolor:'#f1f5f9', zeroline:false},
+    bargap:0.3,
+    showlegend:false
+  },{responsive:true,displaylogo:false});
+  Plotly.react('geoRevPie',[{
+    type:'pie', labels:regions, values:shares,
+    marker:{
+      colors:[co.color,'#8b5cf6','#10b981','#f59e0b'],
+      line:{color:'#fff',width:2}
+    },
+    hole:0.4,
+    textinfo:'label+percent',
+    textposition:'auto',
+    textfont:{size:10},
+    hovertemplate:'<b>%{label}</b><br>%{value}% rev share<extra></extra>'
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:20,r:20,t:20,b:20},
+    showlegend:false,
+    annotations:[{
+      text:'Rev<br>Share', x:0.5, y:0.5,
+      font:{size:12,color:'#334155',family:'Inter'},
+      showarrow:false
+    }],
+    font:{family:'Inter',size:11,color:'#334155'}
+  },{responsive:true,displaylogo:false});
+  Plotly.react('geoMktShareChart',[{
+    type:'bar', x:regions, y:shares.map(s=>+(s/5).toFixed(1)),
+    marker:{color:[co.color,'#8b5cf6','#10b981','#f59e0b'], opacity:0.85},
+    text:shares.map(s=>(s/5).toFixed(1)+'%'),
+    textposition:'auto', textfont:{color:'#fff',size:11},
+    hovertemplate:'<b>%{x}</b><br>%{y}% est. market share<extra></extra>'
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:50,r:20,t:20,b:80},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    xaxis:{tickangle:-20, gridcolor:'transparent', zeroline:false},
+    yaxis:{title:{text:'Est. Market Share (%)',font:{size:11}}, ticksuffix:'%', gridcolor:'#f1f5f9', zeroline:false},
+    bargap:0.3,
+    showlegend:false
+  },{responsive:true,displaylogo:false});
+  // Breakdown table
+  const bt = document.getElementById('geoBreakdownTable');
+  if (bt) bt.innerHTML = `<div class="table-wrap" style="border:none"><table class="data-table"><thead><tr><th>Region</th><th>Revenue</th><th>Rev. Share</th><th>Est. Mkt Share</th><th>Tier</th><th>Status</th></tr></thead><tbody>` +
+    co.geoData.map(g=>`<tr><td>${g.flag} ${g.region}</td><td>$${g.rev}B</td><td><div class="rating-bar"><div class="rating-bar-inner"><div class="rating-bar-fill" style="width:${g.share}%"></div></div>${g.share}%</div></td><td>${(g.share/5).toFixed(1)}%</td><td><span class="badge badge-${g.tier===1?'blue':g.tier===2?'green':'gray'}">Tier ${g.tier}</span></td><td><span class="badge badge-${g.tier===1?'green':g.tier===2?'blue':'gray'}">${g.tier===1?'Primary':g.tier===2?'Established':'Emerging'}</span></td></tr>`).join('') +
+    `</tbody></table></div>`;
+}
+
+/* -------- INNOVATION -------- */
+function renderCoInnovation(co) {
+  const rd = co.rdData;
+  Plotly.react('rdInvestChart',[{
+    type:'bar', name:'R&D Spend', x:co.years, y:rd.investment,
+    marker:{color:co.color, opacity:0.85},
+    text:rd.investment.map(v=>'$'+v+'M'),
+    textposition:'auto', textfont:{color:'#fff',size:10},
+    hovertemplate:'%{x}: $%{y}M R&D<extra></extra>'
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:55,r:20,t:20,b:40},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    yaxis:{title:{text:'R&D Spend ($M)',font:{size:11}}, tickprefix:'$', gridcolor:'#f1f5f9', zeroline:false},
+    xaxis:{gridcolor:'transparent', zeroline:false},
+    showlegend:false
+  },{responsive:true,displaylogo:false});
+  Plotly.react('rdFocusChart',[{
+    type:'pie', labels:rd.areas, values:rd.areaVals, hole:0.38,
+    marker:{
+      colors:['#3b82f6','#8b5cf6','#10b981','#f59e0b','#ef4444','#06b6d4'],
+      line:{color:'#fff',width:2}
+    },
+    textinfo:'label+percent',
+    textposition:'auto',
+    textfont:{size:10},
+    hovertemplate:'<b>%{label}</b><br>%{percent}<extra></extra>',
+    pull:0
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:20,r:20,t:20,b:20},
+    showlegend:false,
+    annotations:[{
+      text:'R&D',x:0.5,y:0.5,
+      font:{size:12,color:'#334155',family:'Inter',weight:700},
+      showarrow:false
+    }],
+    font:{family:'Inter',size:10,color:'#334155'}
+  },{responsive:true,displaylogo:false});
+  const patentVals = co.years.map((_,i)=>Math.floor(rd.investment[i]/8));
+  Plotly.react('patentChart',[{
+    type:'bar', name:'Patents Filed', x:co.years, y:patentVals,
+    marker:{color:'#6366f1', opacity:0.85},
+    text:patentVals,
+    textposition:'auto', textfont:{color:'#fff',size:10},
+    hovertemplate:'%{x}: %{y} patents<extra></extra>'
+  }],{
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:55,r:20,t:20,b:40},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    yaxis:{title:{text:'Patents Filed',font:{size:11}}, gridcolor:'#f1f5f9', zeroline:false},
+    xaxis:{gridcolor:'transparent', zeroline:false},
+    showlegend:false
+  },{responsive:true,displaylogo:false});
+  renderInnovInitiatives(co, 'all');
+  const talent = document.getElementById('rdTalentContent');
+  if (talent) talent.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${[['Engineers & Developers',Math.round(co.employees.replace(/[^0-9]/g,'')*0.38||5000),'🧑‍💻'],['Data Scientists & AI',Math.round(co.employees.replace(/[^0-9]/g,'')*0.08||800),'🤖'],['R&D Researchers',Math.round(co.employees.replace(/[^0-9]/g,'')*0.04||400),'🔬'],['University Partnerships',12,'🎓'],['Open Source Contributors',450,'💻']].map(([l,v,icon])=>`
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--n-100)">
+        <div style="font-size:18px">${icon}</div>
+        <div style="flex:1"><div class="text-sm font-semibold">${l}</div></div>
+        <div class="text-sm font-bold" style="color:var(--n-800)">${v.toLocaleString()}</div>
+      </div>`).join('')}
+    </div>`;
+}
+function renderInnovInitiatives(co, cat) {
+  const container = document.getElementById('innovInitiatives');
+  if (!container) return;
+  const initiatives = [
+    {cat:'AI/ML',icon:'🤖',title:'AI-Powered Analytics Platform',desc:`${co.name} is embedding AI/ML across its product suite for fraud detection, credit decisioning, and merchant analytics. Investment in LLM-based customer service automation is underway.`,tags:['AI','Analytics','LLM']},
+    {cat:'Cloud',icon:'☁️',title:'Cloud-Native Infrastructure Migration',desc:`Multi-year cloud migration initiative moving on-premise workloads to AWS and Azure. Target: 80% cloud by 2027, enabling elastic scaling and DevOps velocity improvements.`,tags:['Cloud','AWS','Azure']},
+    {cat:'Payments',icon:'💳',title:'Real-Time Payments Expansion',desc:`ISO 20022 adoption and real-time payment rails integration (FedNow, RTP, SEPA Inst.) enabling sub-second settlement across key corridors.`,tags:['Payments','RTP','ISO20022']},
+    {cat:'Open Banking',icon:'🔗',title:'Open Finance API Ecosystem',desc:`RESTful API platform enables third-party developers and fintech partners to build on ${co.name} infrastructure, supporting embedded finance and BaaS use cases.`,tags:['Open Banking','APIs','BaaS']},
+    {cat:'Security',icon:'🔒',title:'Zero-Trust Security Architecture',desc:`Implementation of zero-trust network access, behavioral biometrics, and AI-powered fraud engines to protect 38M+ consumer accounts and merchant transactions.`,tags:['Security','ZeroTrust','Fraud']},
+    {cat:'AI/ML',icon:'🧬',title:'Generative AI Customer Experience',desc:`Piloting GenAI-powered virtual banking assistants, document summarization for loan processing, and conversational analytics for merchant insights.`,tags:['GenAI','CX','Banking']}
+  ];
+  const filtered = cat === 'all' ? initiatives : initiatives.filter(i=>i.cat===cat);
+  container.innerHTML = filtered.map(i => `
+    <div class="innov-card">
+      <div class="innov-icon">${i.icon}</div>
+      <div class="innov-title">${i.title}</div>
+      <div class="innov-text">${i.desc}</div>
+      <div class="innov-footer">${i.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+    </div>`).join('');
+}
+function filterInnovation(val) {
+  renderInnovInitiatives(COMPANIES_DATA[currentCompany], val);
+}
+
+/* -------- CUSTOMERS -------- */
+function renderCoCustomers(co) {
+  Plotly.react('custRadarChart',[{
+    type:'scatterpolar', fill:'toself',
+    r:[85,70,45,30,85], theta:['Enterprise','Mid-Market','SMB','Government','Enterprise'],
+    line:{color:co.color,width:2.5}, fillcolor:hexToRgba(co.color, 0.18),
+    hovertemplate:'<b>%{theta}</b><br>%{r}%<extra></extra>'
+  }],{
+    polar:{
+      radialaxis:{
+        range:[0,100], tickvals:[0,25,50,75,100], ticksuffix:'%',
+        tickfont:{size:8}, gridcolor:'#e2e8f0', linecolor:'#e2e8f0',
+        angle:90
+      },
+      angularaxis:{gridcolor:'#e2e8f0', linecolor:'#e2e8f0', tickfont:{size:10}},
+      domain:{x:[0.05,0.95], y:[0.05,0.95]}
+    },
+    paper_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:60,r:60,t:40,b:60},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    showlegend:false
+  },{responsive:true,displaylogo:false});
+  const overview = document.getElementById('custSegmentOverview');
+  if (overview) overview.innerHTML = co.segments.map(s=>`
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--n-100)">
+      <div style="font-size:18px">${s.icon}</div>
+      <div style="flex:1"><div class="text-sm font-semibold">${s.name}</div></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:80px;height:6px;border-radius:3px;background:var(--n-200)"><div style="width:${s.pct}%;height:100%;background:${co.color};border-radius:3px"></div></div>
+        <div class="text-sm font-bold">${s.pct}%</div>
+      </div>
+    </div>`).join('');
+  renderCustSegmentDetail('enterprise');
+}
+function renderCustSegmentDetail(seg) {
+  const co = COMPANIES_DATA[currentCompany];
+  const custMap = BENCH_CUST[co.name] || {};
+  const segMap = {enterprise:custMap.enterprise,midmarket:custMap.midmarket,smb:custMap.smb,gov:custMap.gov};
+  const el = document.getElementById('custSegmentDetail');
+  if (!el) return;
+  const segTitle = {enterprise:'Enterprise (1,000+ employees)',midmarket:'Mid Market (500–999 employees)',smb:'SMB (< 500 employees)',gov:'Government & Public Sector'}[seg];
+  el.innerHTML = `<div class="card"><div class="card-header"><div class="card-title">👥 ${segTitle}</div></div>
+    <div class="card-body"><div class="text-base" style="line-height:1.7;color:var(--n-600)">${segMap[seg] || 'Data not available for this segment.'}</div></div></div>`;
+}
+
+/* ==================== TAB SWITCHING ==================== */
+function switchCoTab(tabId, el) {
+  currentCoTab = tabId;
+  document.querySelectorAll('#companyTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('[id^="co-tab-"]').forEach(tc=>tc.classList.remove('active'));
+  const target = document.getElementById('co-tab-'+tabId);
+  if (target) target.classList.add('active');
+  const co = COMPANIES_DATA[currentCompany];
+  if (tabId==='financials') requestAnimationFrame(()=>renderFinChart(co, currentFinTab));
+  if (tabId==='geography') { requestAnimationFrame(()=>{ renderGeoPresence(co); renderGeoRevCharts(co); }); }
+  if (tabId==='innovation') requestAnimationFrame(()=>renderCoInnovation(co));
+  if (tabId==='customers') requestAnimationFrame(()=>renderCoCustomers(co));
+  if (tabId==='products') renderCoProducts(co);
+}
+function switchProductTab(tab, el) {
+  currentProductTab = tab;
+  document.querySelectorAll('#productSubTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.prod-tab-content').forEach(tc=>tc.style.display='none');
+  const target = document.getElementById('prod-tab-'+tab);
+  if (target) target.style.display='block';
+  const co = COMPANIES_DATA[currentCompany];
+  if (tab==='matrix') requestAnimationFrame(()=>renderPortfolioMatrix(co));
+  if (tab==='launch') renderLaunchTimeline(co);
+}
+function switchFinTab(tab, el) {
+  currentFinTab = tab;
+  document.querySelectorAll('#finSubTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderFinChart(COMPANIES_DATA[currentCompany], tab);
+}
+function switchFinPeriod(period, el) {
+  currentFinPeriod = period;
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+function switchGeoTab(tab, el) {
+  currentGeoTab = tab;
+  document.querySelectorAll('#geoSubTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  ['presence','revenue','marketshare','breakdown'].forEach(t => {
+    const el2 = document.getElementById('geo-tab-'+t);
+    if (el2) el2.style.display = t===tab ? 'block':'none';
+  });
+  const co = COMPANIES_DATA[currentCompany];
+  // Re-render charts after making container visible (fixes display:none sizing)
+  requestAnimationFrame(()=>{
+    if (tab==='presence') renderGeoPresence(co);
+    else if (tab==='revenue') renderGeoRevCharts(co);
+    else if (tab==='marketshare') renderGeoRevCharts(co);
+    else if (tab==='breakdown') renderGeoRevCharts(co);
+  });
+}
+function switchCustTab(tab, el) {
+  currentCustTab = tab;
+  document.querySelectorAll('#custSubTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderCustSegmentDetail(tab);
+}
+function toggleProdView(view, el) {
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+function filterLaunch(cat, el) {
+  document.querySelectorAll('#prod-tab-launch .filter-chip').forEach(c=>c.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+function filterPortfolioSeg(seg, el) {
+  document.querySelectorAll('#prod-tab-portfolio .filter-chip').forEach(c=>c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  const co = COMPANIES_DATA[currentCompany];
+  const container = document.getElementById('portfolioCards');
+  if (!container) return;
+  const filtered = seg==='All' ? co.topProducts : co.topProducts.filter(p=>p.segment===seg);
+  container.innerHTML = filtered.map(p=>`<div class="card" style="border-top:3px solid ${p.color}"><div class="card-body"><div style="font-size:13px;font-weight:700;margin-bottom:4px">${p.name}</div><div class="text-xs text-secondary mb-12">${p.segment}</div><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:8px;border-radius:4px;background:var(--n-200);overflow:hidden"><div style="width:${p.share}%;height:100%;background:${p.color};border-radius:4px"></div></div><div class="text-sm font-bold">${p.share}%</div></div></div></div>`).join('');
+}
+function filterImpact(level, el) {
+  document.querySelectorAll('#prod-tab-updates .filter-chip').forEach(c=>c.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+function filterUpdates() {}
+
+/* ==================== BENCHMARK ==================== */
+function renderBenchmark() {
+  renderPeersList();
+  renderBenchSnapshotMini();
+  renderBenchOverview();
+  renderBenchCapabilities();
+  renderBenchCustomers();
+  renderBenchFinancials('revenue');
+  renderBenchInorganic();
+}
+function renderPeersList() {
+  const container = document.getElementById('peersList');
+  if (!container) return;
+  container.innerHTML = currentBenchPeers.map(p => `
+    <div class="peer-item">
+      <div class="peer-dot" style="background:${BENCH_COLORS[p]}"></div>
+      <span style="font-size:13px;font-weight:600">${p}</span>
+      <button class="peer-remove" onclick="removePeer('${p}')">×</button>
+    </div>`).join('');
+}
+function renderBenchSnapshotMini() {
+  const el = document.getElementById('benchSnapshotMini');
+  if (!el) return;
+  el.innerHTML = currentBenchPeers.map(p => {
+    const co = Object.values(COMPANIES_DATA).find(c=>c.name===p);
+    if (!co) return '';
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--n-100)"><span style="font-size:12px;font-weight:600;color:${BENCH_COLORS[p]}">${p}</span><span style="font-size:11px;color:var(--n-500)">Score: ${co.rating}/5</span></div>`;
+  }).join('');
+}
+function addPeer() {
+  const input = document.getElementById('addPeerInput');
+  const name = input.value.trim();
+  if (!name || currentBenchPeers.includes(name)) { input.value=''; return; }
+  currentBenchPeers.push(name);
+  input.value = '';
+  renderBenchmark();
+}
+function removePeer(name) {
+  currentBenchPeers = currentBenchPeers.filter(p=>p!==name);
+  renderBenchmark();
+}
+function addToBenchmark() {
+  const co = COMPANIES_DATA[currentCompany];
+  if (!currentBenchPeers.includes(co.name)) currentBenchPeers.push(co.name);
+  showPage('benchmark');
+}
+
+function renderBenchOverview() {
+  // Differentiators
+  const diffContainer = document.getElementById('benchDifferentiators');
+  if (diffContainer) diffContainer.innerHTML = currentBenchPeers.slice(0,3).map(p => {
+    const co = Object.values(COMPANIES_DATA).find(c=>c.name===p);
+    if (!co) return '';
+    return `
+    <div class="intel-card" style="border-top:3px solid ${BENCH_COLORS[p]}">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <div class="company-logo" style="background:${BENCH_COLORS[p]};width:28px;height:28px;font-size:11px">${co.initials}</div>
+        <div class="intel-card-title">${p}</div>
+      </div>
+      <div class="intel-card-summary">${co.description.substring(0,120)}…</div>
+      <div style="margin-top:10px"><span class="kpi-delta up" style="font-size:11px">Score: ${co.rating}/5</span></div>
+    </div>`;
+  }).join('');
+  // Profile table
+  const head = document.getElementById('benchProfileHead');
+  const body = document.getElementById('benchProfileBody');
+  const visAttrs = BENCH_PROFILE_ATTRS.filter(a => currentProfileAttrs.includes(a.attr));
+  if (head) head.innerHTML = `<tr><th>Attribute</th>${currentBenchPeers.map(p=>`<th style="color:${BENCH_COLORS[p]}">${p}</th>`).join('')}</tr>`;
+  if (body) body.innerHTML = visAttrs.map(row => `
+    <tr><td class="font-semibold text-secondary">${row.attr}</td>${currentBenchPeers.map(p=>`<td>${row[p] || '—'}</td>`).join('')}</tr>`).join('');
+  // Attr checkboxes
+  const attrCb = document.getElementById('attrCheckboxes');
+  if (attrCb) attrCb.innerHTML = BENCH_PROFILE_ATTRS.map(a=>`
+    <label style="display:flex;align-items:center;gap:5px;font-size:12px;cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid var(--n-200);background:${currentProfileAttrs.includes(a.attr)?'var(--blue-50)':'#fff'}">
+      <input type="checkbox" ${currentProfileAttrs.includes(a.attr)?'checked':''} onchange="toggleAttr('${a.attr}',this.checked)"/> ${a.attr}
+    </label>`).join('');
+}
+function toggleAttr(attr, checked) {
+  if (checked && !currentProfileAttrs.includes(attr)) currentProfileAttrs.push(attr);
+  else if (!checked) currentProfileAttrs = currentProfileAttrs.filter(a=>a!==attr);
+  renderBenchOverview();
+}
+function toggleAttrEdit() {
+  const panel = document.getElementById('attrEditPanel');
+  if (panel) panel.style.display = panel.style.display==='none' ? 'block':'none';
+}
+function toggleFeatureEdit() {
+  const panel = document.getElementById('featureEditPanel');
+  if (panel) panel.style.display = panel.style.display==='none' ? 'block':'none';
+}
+function addFeature() {
+  const input = document.getElementById('newFeatureInput');
+  const name = input.value.trim();
+  if (!name) return;
+  const newFeat = {feature:name, cat:'Custom'};
+  currentBenchPeers.forEach(p=>{ newFeat[p]='partial'; });
+  currentBenchFeatures.push(newFeat);
+  input.value = '';
+  renderBenchCapabilities();
+}
+
+function renderBenchCapabilities() {
+  const head = document.getElementById('benchCapHead');
+  const body = document.getElementById('benchCapBody');
+  if (head) head.innerHTML = `<tr><th>Feature</th><th>Category</th>${currentBenchPeers.map(p=>`<th style="color:${BENCH_COLORS[p]}">${p}</th>`).join('')}</tr>`;
+  if (body) body.innerHTML = currentBenchFeatures.map(f=>`
+    <tr>
+      <td class="font-semibold">${f.feature}</td>
+      <td><span class="badge badge-gray">${f.cat}</span></td>
+      ${currentBenchPeers.map(p=>{ const v=f[p]; return `<td>${v===true?'<span class="feat-check">✅</span>':v===false?'<span class="feat-check" style="opacity:.3">⬜</span>':'<span class="feat-partial">Partial</span>'}</td>`; }).join('')}
+    </tr>`).join('');
+  // Radar chart
+  const scores = currentBenchPeers.map(p => {
+    const co = Object.values(COMPANIES_DATA).find(c=>c.name===p);
+    return co ? co.rating : 3;
+  });
+  const dims = ['Scale','Merchant','Banking','Core','Global','Cloud','Recurring','Breadth'];
+  const SCORES_MAP = {
+    Fiserv:[5,5,4,5,4,4,5,5],FIS:[4,3,4,4,4,3,4,4],'Jack Henry':[2,2,4,4,1,4,4,3],
+    Temenos:[2,1,5,5,4,4,3,3],Finastra:[3,2,4,4,3,3,3,4],'NCR Atleos':[2,2,2,2,3,2,3,2]
+  };
+  const traces = currentBenchPeers.map(p=>({
+    type:'scatterpolar',name:p,fill:'toself',
+    r:[...(SCORES_MAP[p]||Array(8).fill(3)), SCORES_MAP[p]?SCORES_MAP[p][0]:3],
+    theta:[...dims, dims[0]],
+    line:{color:BENCH_COLORS[p]||'#94a3b8',width:2},
+    fillcolor:hexToRgba(BENCH_COLORS[p]||'#94a3b8', 0.15)
+  }));
+  Plotly.react('benchRadarChart',traces,{
+    polar:{
+      radialaxis:{
+        range:[0,5], tickvals:[1,2,3,4,5],
+        tickfont:{size:8}, gridcolor:'#e2e8f0', linecolor:'#e2e8f0',
+        angle:90
+      },
+      angularaxis:{
+        gridcolor:'#e2e8f0', linecolor:'#e2e8f0',
+        tickfont:{size:9}
+      },
+      domain:{x:[0.05,0.95], y:[0.1,0.95]}
+    },
+    paper_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:70,r:70,t:40,b:90},
+    font:{family:'Inter',size:10,color:'#64748b'},
+    legend:{
+      orientation:'h', y:-0.18, x:0.5, xanchor:'center',
+      font:{size:10}, bgcolor:'transparent', traceorder:'normal'
+    },
+    showlegend:true
+  },{responsive:true,displaylogo:false});
+}
+
+function renderBenchCustomers() {
+  const filters = document.getElementById('benchCustCompFilter');
+  if (filters) filters.innerHTML = currentBenchPeers.map(p=>`
+    <button class="filter-chip active" style="border-color:${BENCH_COLORS[p]};color:${BENCH_COLORS[p]}" onclick="showBenchCust('${p}',this)">${p}</button>`).join('');
+  const content = document.getElementById('benchCustContent');
+  if (content) content.innerHTML = currentBenchPeers.map(p=>{
+    const c = BENCH_CUST[p];
+    if (!c) return '';
+    return `<div class="card mb-16" id="benchcust-${p.replace(/ /g,'')}">
+      <div class="card-header" style="border-left:3px solid ${BENCH_COLORS[p]}">
+        <div class="card-title" style="color:${BENCH_COLORS[p]}">${p}</div>
+      </div>
+      <div class="card-body" style="padding:0">
+        <table class="data-table"><tbody>
+          ${Object.entries({Enterprise:c.enterprise,'Mid Market':c.midmarket,SMB:c.smb,'Government':c.gov,'Key Partners':c.partners}).map(([k,v])=>`<tr><td class="font-semibold" style="width:140px">${k}</td><td class="text-secondary">${v}</td></tr>`).join('')}
+        </tbody></table>
+      </div>
+    </div>`;
+  }).join('');
+}
+function showBenchCust(p, el) {
+  const el2 = document.getElementById('benchcust-'+p.replace(/ /g,''));
+  if (el2) el2.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function renderBenchFinancials(tab) {
+  currentBenchFinTab = tab;
+  document.getElementById('benchFinChartTitle').textContent = {revenue:'Revenue ($B)',ebitda:'EBITDA Margin (%)',netincome:'Net Income ($B)',ebitdamargin:'EBITDA Margin (%)',netmargin:'Net Margin (%)',revgrowth:'Revenue Growth (%)',eps:'EPS ($)'}[tab] || 'Revenue';
+  const years = [2020,2021,2022,2023,2024,2025];
+  const traces = currentBenchPeers.map(p=>{
+    const co = Object.values(COMPANIES_DATA).find(c=>c.name===p);
+    if (!co) return null;
+    const d = getFinData(co, tab, 'annual');
+    return {
+      type:'bar', name:p, x:years, y:d.data,
+      marker:{color:BENCH_COLORS[p]||'#94a3b8', opacity:0.85},
+      hovertemplate:`<b>${p}</b><br>%{x}: %{y}<extra></extra>`
+    };
+  }).filter(Boolean);
+    Plotly.react('benchFinChart',traces,{
+    barmode:'group',
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    margin:{l:50,r:20,t:20,b:50},
+    font:{family:'Inter',size:11,color:'#64748b'},
+    xaxis:{gridcolor:'transparent'},
+    yaxis:{gridcolor:'#f1f5f9'},
+    legend:{orientation:'h',y:-0.18,x:0.5,xanchor:'center',font:{size:10},bgcolor:'transparent'},
+    bargap:0.25,
+    hoverlabel:{bgcolor:'#1e293b',font:{color:'#fff',size:11}}
+  },{responsive:true,displaylogo:false});
+  const head = document.getElementById('benchFinHead');
+  const body = document.getElementById('benchFinBody');
+  if (head) head.innerHTML = `<tr><th>Company</th>${years.map(y=>`<th>${y}</th>`).join('')}</tr>`;
+  if (body) body.innerHTML = currentBenchPeers.map(p=>{
+    const co = Object.values(COMPANIES_DATA).find(c=>c.name===p);
+    if (!co) return '';
+    const d = getFinData(co, tab, 'annual');
+    return `<tr><td style="color:${BENCH_COLORS[p]};font-weight:700">${p}</td>${d.data.map(v=>`<td>${v === null ? 'N/A' : v}</td>`).join('')}</tr>`;
+  }).join('');
+}
+
+function switchBenchTab(tab, el) {
+  currentBenchTab = tab;
+  document.querySelectorAll('#benchTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.querySelectorAll('[id^="bench-tab-"]').forEach(tc=>tc.classList.remove('active'));
+  const target = document.getElementById('bench-tab-'+tab);
+  if (target) target.classList.add('active');
+  if (tab==='financials') renderBenchFinancials(currentBenchFinTab);
+  if (tab==='capabilities') renderBenchCapabilities();
+  if (tab==='customers') renderBenchCustomers();
+  if (tab==='inorganic') renderBenchInorganic();
+}
+function switchBenchFinTab(tab, el) {
+  currentBenchFinTab = tab;
+  document.querySelectorAll('#benchFinTabs .tab-item').forEach(t=>t.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderBenchFinancials(tab);
+}
+function switchBenchFinPeriod(period, el) {
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.remove('active'));
+  if (el) el.classList.add('active');
+}
+
+function renderBenchInorganic() {
+  const container = document.getElementById('benchInorgContent');
+  if (!container) return;
+  const allDeals = [];
+  currentBenchPeers.forEach(p=>{
+    const co = Object.values(COMPANIES_DATA).find(c=>c.name===p);
+    if (co) co.inorganic.forEach(d=>allDeals.push({...d,company:p,coColor:BENCH_COLORS[p]}));
+  });
+  const filtered = currentBenchInorgFilter==='All' ? allDeals : allDeals.filter(d=>d.type===currentBenchInorgFilter);
+  container.innerHTML = `<div class="grid-3">` + filtered.map(d=>
+    `<div class="card" style="border-left:3px solid ${d.coColor}">
+      <div class="card-body">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span class="badge" style="background:${d.coColor}20;color:${d.coColor}">${d.company}</span>
+          <span class="badge badge-${d.type==='Acquisition'?'blue':d.type==='Divestiture'?'amber':'green'}">${d.type}</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:4px">${d.deal}</div>
+        <div class="text-xs text-secondary mb-8">${d.date} · ${d.value}</div>
+        <div class="text-sm text-secondary">${d.rationale}</div>
+        <div style="margin-top:8px"><span class="badge badge-${d.impact==='High'?'red':d.impact==='Medium'?'amber':'gray'}">${d.impact} Impact</span></div>
+      </div>
+    </div>`).join('') + `</div>`;
+}
+let currentBenchInorgFilter = 'All';
+function filterBenchInorg(type, el) {
+  currentBenchInorgFilter = type;
+  document.querySelectorAll('#bench-tab-inorganic .filter-chip').forEach(c=>c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  renderBenchInorganic();
+}
+
+/* ==================== DRILLDOWN PANEL ==================== */
+function openDrilldown(type) {
+  const content = {
+    competitive:`<div class="intel-card mb-16" style="border-left:4px solid #3b82f6"><div class="intel-card-type text-blue">Competitive Intelligence</div><div class="intel-card-title">Your Competitive Landscape Summary</div><div class="intel-card-summary mt-8">6 companies tracked across Payments & Banking Technology. 14 new insights today.</div></div>
+    ${MARKET_EVENTS.slice(0,4).map(e=>`<div class="event-card mb-8"><div class="event-dot" style="background:${e.color}"></div><div class="event-content"><div class="event-title">${e.title}</div><div class="event-meta">${e.co} · ${e.date}</div><div class="event-summary">${e.summary}</div></div></div>`).join('')}`,
+    market:`<div class="intel-card mb-16" style="border-left:4px solid #8b5cf6"><div class="intel-card-type text-secondary">Market Intelligence</div><div class="intel-card-title">Payments & Banking Technology Market Overview</div><div class="intel-card-summary mt-8">TAM estimated at $180B with 7.8% CAGR through 2028. Cloud migration, embedded finance, and AI/ML are key growth drivers.</div></div>`,
+    sales:`<div class="intel-card mb-16" style="border-left:4px solid #10b981"><div class="intel-card-type text-green">Sales Intelligence</div><div class="intel-card-title">Active Deal Signals</div><div class="intel-card-summary mt-8">7 active prospect signals detected. 3 win-ready opportunities identified based on competitor weakness signals.</div></div>`
+  };
+  document.getElementById('drilldownTitle').textContent = {competitive:'Competitive Intelligence',market:'Market Intelligence',sales:'Sales Intelligence'}[type] || 'Intelligence';
+  document.getElementById('drilldownBody').innerHTML = content[type] || '';
+  document.getElementById('drilldownOverlay').classList.add('open');
+  document.getElementById('drilldownPanel').classList.add('open');
+}
+function closeDrilldown() {
+  document.getElementById('drilldownOverlay').classList.remove('open');
+  document.getElementById('drilldownPanel').classList.remove('open');
+}
+
+/* ==================== SEARCH ==================== */
+function globalSearch(q) {
+  if (!q) return;
+  const match = Object.values(COMPANIES_DATA).find(co=>co.name.toLowerCase().includes(q.toLowerCase()));
+  if (match) showCompany(match.id);
+}
+
+/* ==================== INIT ==================== */
+window.addEventListener('load', () => {
+  renderDashboard();
+  renderCIPage();
+  showCompany('fiserv', document.querySelector('[data-co="fiserv"]'));
+});
+window.addEventListener('resize', () => {
+  const activePage = document.querySelector('.page.active');
+  if (!activePage) return;
+  // Plotly responds via responsive:true
+});
+</script>
+</body>
+</html>
