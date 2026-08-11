@@ -3214,17 +3214,7 @@ function getYearSlice(co) {
   return out;
 }
 
-/* ---- applyYearFilter override (replaces original) ---- */
-/* original is still present — this overrides it at runtime */
-window.applyYearFilter = function(){
-  APP.yearFrom = document.getElementById('year-from').value;
-  APP.yearTo   = document.getElementById('year-to').value;
-  var stEl = document.getElementById('topbar-subtitle');
-  if(stEl) stEl.textContent = (PAGE_META[APP.currentPage]&&PAGE_META[APP.currentPage].subtitle||'') + ' \u00b7 ' + APP.yearFrom + '\u2013' + APP.yearTo;
-  APP.chartsRendered.clear();
-  renderPageCharts(APP.currentPage);
-  LOG.info('FILTER','FY range: ' + APP.yearFrom + ' \u2013 ' + APP.yearTo);
-};
+
 
 
 /* ---- renderDashboard v5.0 ---- */
@@ -3467,39 +3457,7 @@ window.applyYearFilter = function(){
   showToast(`Fiscal year filter applied: ${from}–${to} ✓`,'success');
 };
 
-/* ── getYearSlice — slice all data arrays to FY range ── */
-window.getYearSlice = function(co){
-  if(!co) return co;
-  const from=APP.yearFrom||'FY21', to=APP.yearTo||'FY25';
-  const ys=co.years||[];
-  const fi=ys.findIndex(y=>y>=from.replace('FY','20').replace('20','FY'));
-  const ti=ys.findIndex(y=>y>=to.replace('FY','20').replace('20','FY'));
-  const start=fi<0?0:fi;
-  const end=ti<0?ys.length-1:ti;
-  const slice=arr=>(Array.isArray(arr)?arr.slice(start,end+1):arr);
-  return Object.assign({},co,{
-    years:slice(ys),
-    revenues:slice(co.revenues),
-    ebitda:slice(co.ebitda),
-    netIncome:slice(co.netIncome),
-    revGrowth:slice(co.revGrowth),
-    eps:slice(co.eps),
-    netMargin:slice(co.netMargin),
-    ebitdaMargin:slice(co.ebitdaMargin||(co.ebitda||[]).map((e,i)=>co.revenues[i]?+(e/co.revenues[i]*100).toFixed(1):0)),
-    balance: co.balance ? {
-      years: slice(co.balance.years||ys),
-      cash: slice(co.balance.cash),
-      totalAssets: slice(co.balance.totalAssets),
-      totalDebt: slice(co.balance.totalDebt)
-    } : co.balance,
-    cashflow: co.cashflow ? {
-      years: slice(co.cashflow.years||ys),
-      operatingCF: slice(co.cashflow.operatingCF),
-      capex: slice(co.cashflow.capex),
-      freeCF: slice(co.cashflow.freeCF)
-    } : co.cashflow
-  });
-};
+
 
 /* ── switchFinSnap — Financial Snapshot metric toggle ── */
 window.switchFinSnap = function(metric){
@@ -3692,7 +3650,7 @@ if(typeof window.renderInsightsPage==='undefined'){
     if(typeof renderInsightsFeed==='function') renderInsightsFeed('product','all');
     if(typeof renderPageCharts==='function'){} // chain
     // Render risk radar
-    const dims=['Competitive','Regulatory','Technology','Market','Execution'];
+    const dims=['competitive','regulatory','technology','market','execution'];
     const traces=APP.selectedCompanies.map(id=>{
       const co=COMPANIES_DATA[id]; if(!co) return null;
       const rs=co.riskScores||{Competitive:6,Regulatory:5,Technology:7,Market:6,Execution:5};
