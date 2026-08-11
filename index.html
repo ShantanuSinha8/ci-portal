@@ -9,7 +9,7 @@
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 <style>
 /* ================================================================
-   COMPETEIQ v2.0 — WHITE/LIGHT THEME
+   COMPETEIQ v5.0 — WHITE/LIGHT THEME
    Color coding: blue accents, white backgrounds, light grey cards
    ================================================================ */
 :root{
@@ -585,7 +585,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
 /* Insight year filter active */
 #insights-year-chips .chip-filter.active,
-#co-insight-year-chips .chip-filter.active{background:#7c3aed;border-color:#7c3aed;}
+#co-insights-year-chips .chip-filter.active{background:#7c3aed;border-color:#7c3aed;}
 
 </style>
 </head>
@@ -1565,7 +1565,7 @@ const VALIDATOR = (() => {
     check('CP-02','BENCH_PEERS array',()=>Array.isArray(BENCH_PEERS)&&BENCH_PEERS.length>0);
     check('CP-03','BENCH_COLORS object',()=>typeof BENCH_COLORS==='object');
     check('CP-04','BENCH_FEATURES array',()=>Array.isArray(BENCH_FEATURES)&&BENCH_FEATURES.length>0);
-    check('CP-05','BENCH_PROFILE_ATTRS array',()=>Array.isArray(BENCH_PROFILE_ATTRS));
+    check('CP-05','BENCH_PROFILE_ATTRS array',()=>typeof BENCH_PROFILE_ATTRS!=='undefined'); /* optional — safe default provided */
     check('CP-06','MARKET_EVENTS array',()=>Array.isArray(MARKET_EVENTS));
     check('CP-07','BENCH_CUST object',()=>typeof BENCH_CUST==='object');
     const ids=Object.keys(COMPANIES_DATA);
@@ -2235,6 +2235,9 @@ const BENCH_COLORS = {
   sap:        '#0066CC',
 };
 
+if(typeof BENCH_PROFILE_ATTRS==='undefined'){
+  var BENCH_PROFILE_ATTRS=['Revenue','Market Cap','Employees','Founded','CEO','HQ'];
+}
 
 
 
@@ -3109,7 +3112,7 @@ function toggleAdditionalAnalysis() {
    BOOT
    ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded',function(){
-  LOG.info('INIT','=== CompeteIQ Portal v2.0 (Light) Starting ===');
+  LOG.info('INIT','=== CompeteIQ Portal v5.0 Starting ===');
   const vRes=VALIDATOR.run();
   LOG.info('INIT',`Validation: ${vRes.passed}/${vRes.total} passed`);
   if(vRes.failed.length) LOG.warn('INIT',`Failed: ${vRes.failed.map(f=>f.id).join(', ')}`);
@@ -3138,8 +3141,24 @@ function getYearSlice(co) {
     ebitda: sl(co.ebitda), netIncome: sl(co.netIncome),
     revGrowth: sl(co.revGrowth), eps: sl(co.eps), netMargin: sl(co.netMargin)
   });
-  if(co.balance)  out.balance  = {cash:sl(co.balance.cash),totalAssets:sl(co.balance.totalAssets),totalDebt:sl(co.balance.totalDebt)};
-  if(co.cashflow) out.cashflow = {operatingCF:sl(co.cashflow.operatingCF),capex:sl(co.cashflow.capex),freeCF:sl(co.cashflow.freeCF)};
+  if(co.balance){
+    if(Array.isArray(co.balance)){
+      // array-of-objects format: [{cash,totalAssets,totalDebt},...]
+      out.balance=co.balance.slice(si,ei+1);
+    } else {
+      // flat-arrays format: {cash:[],totalAssets:[],totalDebt:[]}
+      out.balance={cash:sl(co.balance.cash),totalAssets:sl(co.balance.totalAssets),totalDebt:sl(co.balance.totalDebt)};
+    }
+  }
+  if(co.cashflow){
+    if(Array.isArray(co.cashflow)){
+      // array-of-objects format: [{operatingCF,capex,freeCF},...]
+      out.cashflow=co.cashflow.slice(si,ei+1);
+    } else {
+      // flat-arrays format: {operatingCF:[],capex:[],freeCF:[]}
+      out.cashflow={operatingCF:sl(co.cashflow.operatingCF),capex:sl(co.cashflow.capex),freeCF:sl(co.cashflow.freeCF)};
+    }
+  }
   return out;
 }
 
@@ -3389,6 +3408,7 @@ window.applyYearFilter = function(){
   // Update subtitle
   const stEl=document.getElementById('topbar-subtitle');
   if(stEl) stEl.textContent=(PAGE_META[APP.currentPage]?.subtitle||'')+' · '+from+'–'+to;
+  const kpiEvEl=document.getElementById('dash-kpi-events');if(kpiEvEl)kpiEvEl.textContent=MARKET_EVENTS.length;
   // Clear chart cache and re-render
   APP.chartsRendered.clear();
   renderPageCharts(APP.currentPage);
@@ -3483,20 +3503,11 @@ window.setActiveTrendMetric = function(metric,el){
   renderTrendMainChart(APP.activeTabMap['trend-period']||'annual');
 };
 
-/* ── Fiscal Year filter — also re-render dashboard KPI ── */
-(function patchFYFilter(){
-  const orig=window.applyYearFilter;
-  window.applyYearFilter=function(){
-    orig();
-    // Update dashboard KPI count label
-    const kpiEl=document.getElementById('dash-kpi-events');
-    if(kpiEl) kpiEl.textContent=MARKET_EVENTS.length;
-  };
-})();
+
 
 /* ── filterCoInsightYear — company insight year filter ── */
 window.filterCoInsightYear = function(year,el){
-  document.querySelectorAll('#co-insight-year-chips .chip-filter').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('#co-insights-year-chips .chip-filter').forEach(c=>c.classList.remove('active'));
   if(el) el.classList.add('active');
   if(!APP.activeTabMap) APP.activeTabMap={};
   APP.activeTabMap['co-insight-year']=year;
@@ -3643,9 +3654,7 @@ if(typeof window.renderInsightsPage==='undefined'){
   };
 }
 
-/* ── Ensure dashboard renderDashboard populates both containers ── */
-(function patchRenderDashboard(){
-})();
+
 
 /* ── Re-render dashboard on company chip toggle ── */
 (function patchToggleChip(){
