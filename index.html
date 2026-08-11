@@ -2952,6 +2952,18 @@ function renderCoProducts(co) {
   }
 }
 
+
+/* ── balance/cashflow normalizer — works with both flat-arrays and array-of-objects ── */
+function normBal(b){
+  if(!b) return {cash:[],totalAssets:[],totalDebt:[]};
+  if(Array.isArray(b)) return {cash:b.map(function(x){return x.cash||null;}),totalAssets:b.map(function(x){return x.totalAssets||null;}),totalDebt:b.map(function(x){return x.totalDebt||null;})};
+  return b;
+}
+function normCF(c){
+  if(!c) return {operatingCF:[],capex:[],freeCF:[]};
+  if(Array.isArray(c)) return {operatingCF:c.map(function(x){return x.operatingCF||null;}),capex:c.map(function(x){return x.capex||null;}),freeCF:c.map(function(x){return x.freeCF||null;})};
+  return c;
+}
 function renderCoFinancials(co) {
   const cs=getYearSlice(co);
   const kEl=document.getElementById('co-fin-kpis'); if(kEl) kEl.innerHTML=co.kpis.map(k=>`<div class="kpi-tile"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub ${k.up?'up':'down'}">${k.change}</div></div>`).join('');
@@ -2965,14 +2977,14 @@ function renderCoFinancials(co) {
     {type:'bar',name:'Net Income',x:cs.years,y:cs.netIncome,marker:{color:'#059669',opacity:.8}}
   ],{...PL(320),barmode:'group',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
   safeRender('chart-co-balance',[
-    {type:'scatter',mode:'lines+markers',name:'Total Assets',x:cs.years,y:cs.balance?.totalAssets||[],line:{color:co.color,width:2.5},marker:{size:6}},
-    {type:'scatter',mode:'lines+markers',name:'Cash',x:cs.years,y:cs.balance?.cash||[],line:{color:'#059669',width:2.5},marker:{size:6}},
-    {type:'scatter',mode:'lines+markers',name:'Total Debt',x:cs.years,y:cs.balance?.totalDebt||[],line:{color:'#dc2626',width:2.5},marker:{size:6}}
+    {type:'scatter',mode:'lines+markers',name:'Total Assets',x:cs.years,y:normBal(cs.balance).totalAssets,line:{color:co.color,width:2.5},marker:{size:6}},
+    {type:'scatter',mode:'lines+markers',name:'Cash',x:cs.years,y:normBal(cs.balance).cash,line:{color:'#059669',width:2.5},marker:{size:6}},
+    {type:'scatter',mode:'lines+markers',name:'Total Debt',x:cs.years,y:normBal(cs.balance).totalDebt,line:{color:'#dc2626',width:2.5},marker:{size:6}}
   ],{...PL(320),yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
   safeRender('chart-co-cashflow',[
-    {type:'bar',name:'Operating CF',x:cs.years,y:cs.cashflow?.operatingCF||[],marker:{color:'#059669',opacity:.85}},
-    {type:'bar',name:'CapEx',x:cs.years,y:(co.cashflow?.capex||[]).map(v=>-v),marker:{color:'#dc2626',opacity:.85}},
-    {type:'scatter',mode:'lines+markers',name:'Free CF',x:cs.years,y:cs.cashflow?.freeCF||[],line:{color:co.color,width:2.5},marker:{size:6}}
+    {type:'bar',name:'Operating CF',x:cs.years,y:normCF(cs.cashflow).operatingCF,marker:{color:'#059669',opacity:.85}},
+    {type:'bar',name:'CapEx',x:cs.years,y:(normCF(co.cashflow).capex).map(v=>-v),marker:{color:'#dc2626',opacity:.85}},
+    {type:'scatter',mode:'lines+markers',name:'Free CF',x:cs.years,y:normCF(cs.cashflow).freeCF,line:{color:co.color,width:2.5},marker:{size:6}}
   ],{...PL(320),barmode:'relative',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
 }
 
@@ -3033,8 +3045,8 @@ function setFinancialSection(sec,el) {
   const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
   setTimeout(()=>{
     if(sec==='income') safeRender('chart-co-income',[{type:'bar',name:'Revenue',x:co.years,y:co.revenues,marker:{color:co.color,opacity:.8}},{type:'bar',name:'EBITDA',x:co.years,y:co.ebitda,marker:{color:'#d97706',opacity:.8}},{type:'bar',name:'Net Income',x:co.years,y:co.netIncome,marker:{color:'#059669',opacity:.8}}],{...PL(320),barmode:'group',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
-    if(sec==='balance') safeRender('chart-co-balance',[{type:'scatter',mode:'lines+markers',name:'Total Assets',x:co.years,y:co.balance?.totalAssets||[],line:{color:co.color,width:2.5},marker:{size:6}},{type:'scatter',mode:'lines+markers',name:'Cash',x:co.years,y:co.balance?.cash||[],line:{color:'#059669',width:2.5},marker:{size:6}},{type:'scatter',mode:'lines+markers',name:'Debt',x:co.years,y:co.balance?.totalDebt||[],line:{color:'#dc2626',width:2.5},marker:{size:6}}],{...PL(320),yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
-    if(sec==='cashflow') safeRender('chart-co-cashflow',[{type:'bar',name:'Operating CF',x:co.years,y:co.cashflow?.operatingCF||[],marker:{color:'#059669',opacity:.85}},{type:'bar',name:'CapEx (neg)',x:co.years,y:(co.cashflow?.capex||[]).map(v=>-v),marker:{color:'#dc2626',opacity:.85}},{type:'scatter',mode:'lines+markers',name:'Free CF',x:co.years,y:co.cashflow?.freeCF||[],line:{color:co.color,width:2.5},marker:{size:6}}],{...PL(320),barmode:'relative',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+    if(sec==='balance') safeRender('chart-co-balance',[{type:'scatter',mode:'lines+markers',name:'Total Assets',x:co.years,y:normBal(co.balance).totalAssets||[],line:{color:co.color,width:2.5},marker:{size:6}},{type:'scatter',mode:'lines+markers',name:'Cash',x:co.years,y:normBal(co.balance).cash||[],line:{color:'#059669',width:2.5},marker:{size:6}},{type:'scatter',mode:'lines+markers',name:'Debt',x:co.years,y:normBal(co.balance).totalDebt||[],line:{color:'#dc2626',width:2.5},marker:{size:6}}],{...PL(320),yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+    if(sec==='cashflow') safeRender('chart-co-cashflow',[{type:'bar',name:'Operating CF',x:co.years,y:normCF(co.cashflow).operatingCF,marker:{color:'#059669',opacity:.85}},{type:'bar',name:'CapEx (neg)',x:co.years,y:(normCF(co.cashflow).capex).map(v=>-v),marker:{color:'#dc2626',opacity:.85}},{type:'scatter',mode:'lines+markers',name:'Free CF',x:co.years,y:normCF(co.cashflow).freeCF,line:{color:co.color,width:2.5},marker:{size:6}}],{...PL(320),barmode:'relative',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
   },80);
 }
 
@@ -3175,19 +3187,27 @@ function getYearSlice(co) {
   });
   if(co.balance){
     if(Array.isArray(co.balance)){
-      // array-of-objects format: [{cash,totalAssets,totalDebt},...]
-      out.balance=co.balance.slice(si,ei+1);
+      // array-of-objects [{cash,totalAssets,totalDebt},...] → normalize to flat-arrays
+      var balSlice=co.balance.slice(si,ei+1);
+      out.balance={
+        cash:       balSlice.map(function(b){return b.cash||null;}),
+        totalAssets:balSlice.map(function(b){return b.totalAssets||null;}),
+        totalDebt:  balSlice.map(function(b){return b.totalDebt||null;})
+      };
     } else {
-      // flat-arrays format: {cash:[],totalAssets:[],totalDebt:[]}
       out.balance={cash:sl(co.balance.cash),totalAssets:sl(co.balance.totalAssets),totalDebt:sl(co.balance.totalDebt)};
     }
   }
   if(co.cashflow){
     if(Array.isArray(co.cashflow)){
-      // array-of-objects format: [{operatingCF,capex,freeCF},...]
-      out.cashflow=co.cashflow.slice(si,ei+1);
+      // array-of-objects [{operatingCF,capex,freeCF},...] → normalize to flat-arrays
+      var cfSlice=co.cashflow.slice(si,ei+1);
+      out.cashflow={
+        operatingCF:cfSlice.map(function(c){return c.operatingCF||null;}),
+        capex:      cfSlice.map(function(c){return c.capex||null;}),
+        freeCF:     cfSlice.map(function(c){return c.freeCF||null;})
+      };
     } else {
-      // flat-arrays format: {operatingCF:[],capex:[],freeCF:[]}
       out.cashflow={operatingCF:sl(co.cashflow.operatingCF),capex:sl(co.cashflow.capex),freeCF:sl(co.cashflow.freeCF)};
     }
   }
