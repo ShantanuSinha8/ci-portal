@@ -667,12 +667,19 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="filter-label">Fiscal Year Range</div>
       <div class="year-range">
         <select class="year-select" id="year-from" onchange="applyYearFilter()">
-          <option>FY2021</option><option>FY2022</option>
-          <option selected>FY2023</option><option>FY2024</option>
+          <option value="FY21">FY21</option>
+          <option value="FY22">FY22</option>
+          <option value="FY23">FY23</option>
+          <option value="FY24">FY24</option>
+          <option value="FY25" selected>FY25</option>
         </select>
         <span class="year-sep">–</span>
         <select class="year-select" id="year-to" onchange="applyYearFilter()">
-          <option>FY2024</option><option selected>FY2025</option><option>FY2026</option>
+          <option value="FY21">FY21</option>
+          <option value="FY22">FY22</option>
+          <option value="FY23">FY23</option>
+          <option value="FY24">FY24</option>
+          <option value="FY25" selected>FY25</option>
         </select>
       </div>
     </div>
@@ -2235,6 +2242,22 @@ const BENCH_COLORS = {
   sap:        '#0066CC',
 };
 
+/* ── BENCH_CUST safe default (populated from COMPANIES_DATA if not in data layer) ── */
+if(typeof BENCH_CUST==='undefined'){
+  var BENCH_CUST={totalCustomers:{},retention:{},nrr:{},nps:{},enterprise:{},midmarket:{}};
+  (BENCH_PEERS||[]).forEach(function(id){
+    var co=COMPANIES_DATA[id]||{};
+    var cs=(co.customerSegments||[]);
+    var ent=cs.find(function(s){return (s.name||'').toLowerCase().indexOf('enterprise')>-1;});
+    var mid=cs.find(function(s){return (s.name||'').toLowerCase().indexOf('mid')>-1;});
+    BENCH_CUST.totalCustomers[id]=co.totalCustomers||0;
+    BENCH_CUST.retention[id]=co.retention||92;
+    BENCH_CUST.nrr[id]=co.nrr||110;
+    BENCH_CUST.nps[id]=co.nps||60;
+    BENCH_CUST.enterprise[id]=ent?ent.pct:50;
+    BENCH_CUST.midmarket[id]=mid?mid.pct:30;
+  });
+}
 if(typeof BENCH_PROFILE_ATTRS==='undefined'){
   var BENCH_PROFILE_ATTRS=['Revenue','Market Cap','Employees','Founded','CEO','HQ'];
 }
@@ -2760,6 +2783,7 @@ function filterDeals(type,el){document.querySelectorAll('.card-header .chip-filt
    CUSTOMERS & PARTNERS
    ═══════════════════════════════════════════════════════════════ */
 function renderCustomersCharts() {
+  if(typeof BENCH_CUST==='undefined'){LOG.warn('RENDER','BENCH_CUST undefined — customers page skipped');return;}
   LOG.info('RENDER','Customers');
   const names=APP.selectedCompanies.map(id=>COMPANIES_DATA[id].name);
   const vals=APP.selectedCompanies.map(id=>(BENCH_CUST.totalCustomers[id]||0)/1000);
@@ -2975,12 +2999,12 @@ function renderCoInnovation(co) {
 function renderCoCustomers(co) {
   safeRender('chart-co-cust-radar',[{type:'scatterpolar',fill:'toself',opacity:.4,r:[co.capabilityScores.CRM||7,7.5,6,4.5],theta:['Enterprise','Mid-Market','SMB','Government'],line:{color:co.color,width:2}}],{...PL(320),polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{color:'#94a3b8',size:9}},bgcolor:'rgba(0,0,0,0)'},showlegend:false,margin:{l:20,r:20,t:20,b:20}});
   const summary=document.getElementById('co-customer-summary'); if(summary) summary.innerHTML=`
-    <div class="stat-row"><div class="stat-label">Total Customers</div><div class="stat-val">${(BENCH_CUST.totalCustomers[co.identifier]||0).toLocaleString()}</div></div>
-    <div class="stat-row"><div class="stat-label">Retention Rate</div><div class="stat-val">${BENCH_CUST.retention[co.identifier]||'N/A'}%</div></div>
-    <div class="stat-row"><div class="stat-label">NRR</div><div class="stat-val">${BENCH_CUST.nrr[co.identifier]||'N/A'}%</div></div>
-    <div class="stat-row"><div class="stat-label">NPS Score</div><div class="stat-val">${BENCH_CUST.nps[co.identifier]||'N/A'}</div></div>
-    <div class="stat-row"><div class="stat-label">Enterprise Share</div><div class="stat-val">${BENCH_CUST.enterprise[co.identifier]||'N/A'}%</div></div>
-    <div class="stat-row"><div class="stat-label">Mid-Market Share</div><div class="stat-val">${BENCH_CUST.midmarket[co.identifier]||'N/A'}%</div></div>`;
+    <div class="stat-row"><div class="stat-label">Total Customers</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.totalCustomers[co.identifier]||0).toLocaleString():'N/A'}</div></div>
+    <div class="stat-row"><div class="stat-label">Retention Rate</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.retention[co.identifier]||'N/A'):'N/A'}%</div></div>
+    <div class="stat-row"><div class="stat-label">NRR</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.nrr[co.identifier]||'N/A'):'N/A'}%</div></div>
+    <div class="stat-row"><div class="stat-label">NPS Score</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.nps[co.identifier]||'N/A'):'N/A'}</div></div>
+    <div class="stat-row"><div class="stat-label">Enterprise Share</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.enterprise[co.identifier]||'N/A'):'N/A'}%</div></div>
+    <div class="stat-row"><div class="stat-label">Mid-Market Share</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.midmarket[co.identifier]||'N/A'):'N/A'}%</div></div>`;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -3113,6 +3137,14 @@ function toggleAdditionalAnalysis() {
    ═══════════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded',function(){
   LOG.info('INIT','=== CompeteIQ Portal v5.0 Starting ===');
+  // Sync year selects to APP defaults
+  var yfEl=document.getElementById('year-from');
+  var ytEl=document.getElementById('year-to');
+  if(yfEl) yfEl.value=APP.yearFrom;
+  if(ytEl) ytEl.value=APP.yearTo;
+  // If value didn't match any option, reset to APP default text
+  if(yfEl && !yfEl.value) { for(var i=0;i<yfEl.options.length;i++){ if(yfEl.options[i].text===APP.yearFrom||yfEl.options[i].value===APP.yearFrom){yfEl.selectedIndex=i;break;} } }
+  if(ytEl && !ytEl.value) { for(var i=0;i<ytEl.options.length;i++){ if(ytEl.options[i].text===APP.yearTo||ytEl.options[i].value===APP.yearTo){ytEl.selectedIndex=i;break;} } }
   const vRes=VALIDATOR.run();
   LOG.info('INIT',`Validation: ${vRes.passed}/${vRes.total} passed`);
   if(vRes.failed.length) LOG.warn('INIT',`Failed: ${vRes.failed.map(f=>f.id).join(', ')}`);
