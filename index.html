@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CompeteIQ v5.0 — Competitive Intelligence Portal (2026-08-11 08:16)</title>
+<title>CompeteIQ v5.0 — Competitive Intelligence Portal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
@@ -684,13 +684,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
      ══════════════════════════════════════════════════════════ -->
 <div id="main">
   <!-- TOP BAR -->
-  <!-- VERSION: v5.0 patched 2026-08-11 -->
+  <!-- VERSION: v5.0 -->
 <div id="topbar">
     <div>
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div class="topbar-subtitle" id="topbar-subtitle">Intelligence Overview · FY2023–FY2025</div>
     </div>
-    <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v5.0 · 2026-08-11</div>
+    <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v5.0</div>
     <div class="topbar-actions">
       <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
       <button class="topbar-btn" onclick="exportPortal()">⬇ Export</button>
@@ -1602,26 +1602,6 @@ const VALIDATOR = (() => {
 /* ═══════════════════════════════════════════════════════════════
    DATA LAYER  (replaced by data_layer.js in live portal)
    ═══════════════════════════════════════════════════════════════ */
-/* ═══════════════════════════════════════════════════════════════════════════
-   CompeteIQ — DATA LAYER v3.0
-   Companies: Salesforce (base) | Microsoft | ServiceNow
-   Period:    FY2021 – FY2025
-   Generated: 2026-08-11
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-
-/* ═══════════════════════════════════════════════════════════════
-   DATA LAYER — REPLACE THIS BLOCK WITH RESEARCHED DATA
-   Run: inject data_layer.js here (lines 1358-END_DATA_LAYER)
-   See: references/data-layer-contract.md for full spec
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   CompeteIQ — DATA LAYER v3.0
-   Companies: Salesforce (base) | Microsoft | ServiceNow
-   Period:    FY2021 – FY2025
-   Generated: 2026-08-11 10:33
-   ═══════════════════════════════════════════════════════════════════════════ */
 
 // CI Portal Data Layer — ServiceNow Base | FY21–FY25
 // Generated: 2026-08-11 | Sector: AI-Powered Enterprise Software
@@ -2255,88 +2235,7 @@ const BENCH_COLORS = {
   sap:        '#0066CC',
 };
 
-/* end COMPANIES_DATA */
 
-
-/* ── BENCH PEERS ──────────────────────────────────────────────────────────── */
-const BENCH_PEERS = ["salesforce", "microsoft", "servicenow"];
-
-
-/* ── BENCH COLORS ─────────────────────────────────────────────────────────── */
-const BENCH_COLORS = {
-  salesforce:  "#2563eb",
-  microsoft:   "#7c3aed",
-  servicenow:  "#059669"
-};
-
-
-/* ── BENCH FEATURES (12-dimension capability matrix) ─────────────────────── */
-const BENCH_FEATURES = [
-  "AI", "Cloud", "CRM", "Analytics", "Security",
-  "Integration", "Mobile", "Partner", "Innovation",
-  "Support", "Pricing", "Global"
-];
-
-
-/* ── BENCH PROFILE ATTRS (default company profile attributes) ─────────────── */
-const BENCH_PROFILE_ATTRS = [
-  "Founded",
-  "Revenue (FY2025)",
-  "Core Strength",
-  "Geographic Footprint",
-  "Business Model",
-  "Key Risks",
-  "Market Share (%)",
-  "Employees",
-  "CEO",
-  "Technology Initiatives"
-];
-
-
-/* ── MARKET EVENTS ─────────────────────────────────────────────────────────── */
-const MARKET_EVENTS = [
-  { id: "e1", category: "ai",          company: "microsoft",   date: "May 2025",
-    title: "Copilot+ PC Lineup Launched with NPU Chips",
-    summary: "Microsoft unveiled Copilot+ PCs across Surface and OEM partners with Neural Processing Unit chips, enabling on-device AI (Recall, Cocreator, Live Captions). First PC platform certified for AI agents offline." },
-  { id: "e2", category: "m&a",         company: "salesforce",  date: "Nov 2024",
-    title: "Salesforce Completes Own Company Acquisition ($1.9B)",
-    summary: "Salesforce completed the $1.9B acquisition of Own Company, adding enterprise data protection, backup, and seeding capabilities for Salesforce workloads — critical for regulated industries." },
-  { id: "e3", category: "product",     company: "servicenow",  date: "Mar 2025",
-    title: "ServiceNow Now Assist GA — 75+ GenAI Use Cases",
-    summary: "ServiceNow released Now Assist across all major workflow categories (ITSM, HR, CSM, SecOps) with 75+ GenAI use cases and autonomous incident resolution for enterprise customers." },
-  { id: "e4", category: "partnership", company: "servicenow",  date: "Jan 2025",
-    title: "ServiceNow × NVIDIA Deep Partnership for Agent Inference",
-    summary: "ServiceNow and NVIDIA expanded partnership to accelerate enterprise AI agent inference using NIM microservices on the Now Platform — reducing agent response latency by 3×." },
-  { id: "e5", category: "expansion",   company: "salesforce",  date: "Apr 2025",
-    title: "Salesforce Opens Tokyo AI Research Center",
-    summary: "Salesforce opened its 5th global AI Research hub in Tokyo, focusing on Japanese-language foundation models, Agentforce localisation, and APAC enterprise AI adoption." },
-  { id: "e6", category: "customer",    company: "microsoft",   date: "Feb 2025",
-    title: "JP Morgan Chase $2B+ Azure Annual Commitment",
-    summary: "JP Morgan Chase expanded Azure commitment to $2B+ annually — the largest BFSI cloud deal closed in FY2025 — covering AI, data, trading infrastructure, and M365 Copilot rollout." },
-  { id: "e7", category: "ai",          company: "salesforce",  date: "Feb 2025",
-    title: "Agentforce 2.0 Launches with Multi-Agent Orchestration",
-    summary: "Salesforce launched Agentforce 2.0 with Atlas reasoning engine, multi-agent orchestration, 200+ pre-built skills, and 5,000 enterprise production deployments in first 90 days." },
-  { id: "e8", category: "corporate",   company: "microsoft",   date: "Oct 2024",
-    title: "Activision Blizzard Integration Completed",
-    summary: "Microsoft completed full Activision Blizzard integration under Xbox brand. King mobile, Blizzard gaming, and Call of Duty now unified. Xbox Game Pass content library expanded by 35%." },
-  { id: "e9", category: "product",     company: "microsoft",   date: "Jan 2025",
-    title: "Microsoft Security Copilot Generally Available",
-    summary: "Security Copilot — AI-native SOC assistant — launched GA with 40% reduction in analyst triage time. Available as standalone and add-on across Sentinel, Defender, Entra, Intune, and Purview." },
-  { id: "e10",category: "expansion",   company: "servicenow",  date: "Feb 2025",
-    title: "ServiceNow European Sovereign Cloud GA",
-    summary: "ServiceNow launched sovereign cloud in EU (Frankfurt) and Australia (Sydney), enabling GDPR-compliant and data-residency-controlled Now Platform deployments for regulated industries." }
-];
-
-
-/* ── BENCH CUST (customer benchmarking data) ─────────────────────────────── */
-const BENCH_CUST = {
-  totalCustomers: { salesforce: 150000, microsoft: 300000, servicenow: 8100 },
-  retention:      { salesforce: 93,     microsoft: 97,     servicenow: 93   },
-  nrr:            { salesforce: 110,    microsoft: 115,    servicenow: 128  },
-  nps:            { salesforce: 67,     microsoft: 71,     servicenow: 79   },
-  enterprise:     { salesforce: 72,     microsoft: 62,     servicenow: 72   },
-  midmarket:      { salesforce: 31,     microsoft: 24,     servicenow: 22   }
-};
 
 
 
@@ -2498,11 +2397,9 @@ function renderPageCharts(pageId) {
    DASHBOARD
    ═══════════════════════════════════════════════════════════════ */
 function renderDashboard() {
-  /* v5.0-patch: delegate to window.renderDashboard override defined below */
-  if(typeof window._renderDashboardImpl === 'function') {
-    window._renderDashboardImpl();
-  } else {
-    LOG.info('RENDER','Dashboard (pre-override stub)');
+  /* v5.0: delegate to window._rdImpl */
+  if (window._rdImpl) { window._rdImpl(); } else {
+    LOG.info('RENDER','Dashboard');
     filterNewsEvents('all', document.querySelector('#news-event-chips .chip-filter'));
   }
 }
@@ -2886,11 +2783,11 @@ function renderInsightsPage() {
   LOG.info('RENDER','Insights');
   // Risk Radar — per-company risk profile
   const dims5=['Product Risk','Market Risk','Tech Risk','Regulatory','Competition'];
-  const riskScores={
-    salesforce:[6.5,6.0,5.5,6.8,7.5],
-    microsoft:[5.5,5.0,4.5,6.0,7.0],
-    servicenow:[6.0,6.5,5.0,5.8,6.8]
-  };
+  const riskScores={}; APP.selectedCompanies.forEach(id=>{
+    const co=COMPANIES_DATA[id];
+    if(co&&co.riskScores) riskScores[id]=[co.riskScores.competitive||5,co.riskScores.market||5,co.riskScores.technology||5,co.riskScores.regulatory||5,co.riskScores.execution||5];
+    else riskScores[id]=[5,5,5,5,5];
+  });
   const rT=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'scatterpolar',fill:'toself',opacity:.35,name:co.name,r:riskScores[id]||[6,6,6,6,6],theta:dims5,line:{color:co.color,width:2.5},marker:{size:6,color:co.color}};});
   safeRender('chart-risk-radar',rT,{...PL(360),polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{color:'#94a3b8',size:9}},angularaxis:{gridcolor:'#e2e8f0',tickfont:{color:'#64748b',size:10}},bgcolor:'rgba(0,0,0,0)'},showlegend:true,legend:{orientation:'h',y:-0.18},margin:{l:40,r:40,t:20,b:60}});
   // Default: show product insights
@@ -3258,8 +3155,9 @@ window.applyYearFilter = function(){
   LOG.info('FILTER','FY range: ' + APP.yearFrom + ' \u2013 ' + APP.yearTo);
 };
 
-/* ---- renderDashboard override (v5.0-patch) ---- */
-window._renderDashboardImpl = function(){
+
+/* ---- renderDashboard v5.0 ---- */
+window._rdImpl = function(){
   LOG.info('RENDER','Dashboard (Workday v4)');
   // Date subtitle
   var dsub = document.getElementById('dash-date-sub');
@@ -3326,9 +3224,8 @@ window._renderDashboardImpl = function(){
     }).join('');
   }
 };
+window.renderDashboard = window._rdImpl;
 
-/* v5.0-patch: bind impl to public name */
-window.renderDashboard = window._renderDashboardImpl;
 
 /* ---- Intel Drilldown ---- */
 function openIntelDD(type) {
@@ -3638,8 +3535,8 @@ window.openProductDetail = function(prodName){
   const popup=document.getElementById('product-detail-popup'); if(!popup) return;
   const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
   const prod=(co.products||[]).find(p=>p.name===prodName)||{name:prodName,desc:'Product details not available.',category:'',revenue:'N/A'};
-  const nameEl=document.getElementById('product-detail-name')||document.getElementById('pd-popup-title');
-  const descEl=document.getElementById('product-detail-desc')||document.getElementById('pd-popup-body');
+  const nameEl=(document.getElementById('product-detail-name')||document.getElementById('pd-popup-title'));
+  const descEl=(document.getElementById('product-detail-desc')||document.getElementById('pd-popup-body'));
   if(nameEl) nameEl.textContent=prod.name;
   if(descEl) descEl.innerHTML=`
     <div style="font-size:12px;color:#64748b;margin-bottom:8px;">${prod.category||'Product'}</div>
@@ -3748,27 +3645,6 @@ if(typeof window.renderInsightsPage==='undefined'){
 
 /* ── Ensure dashboard renderDashboard populates both containers ── */
 (function patchRenderDashboard(){
-  const _orig = window.renderDashboard;
-  window.renderDashboard = function(){
-    // Populate KPI counts dynamically
-    const kpiCos=document.getElementById('dash-kpi-companies');
-    if(kpiCos) kpiCos.textContent=APP.selectedCompanies.length;
-    const kpiEvts=document.getElementById('dash-kpi-events');
-    if(kpiEvts) kpiEvts.textContent=MARKET_EVENTS.length;
-    const coBadge=document.getElementById('dash-badge-cos');
-    if(coBadge) coBadge.textContent=APP.selectedCompanies.length+' companies';
-    const coCount=document.getElementById('dash-co-count');
-    if(coCount) coCount.textContent=APP.selectedCompanies.length+' cos';
-    // Set date subtitle
-    const dateSub=document.getElementById('dash-date-sub');
-    if(dateSub){const d=new Date();dateSub.textContent="Here's your competitive intelligence summary for "+d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});}
-    // Call original
-    if(typeof _orig==='function') _orig();
-    // After original, populate market events with filter chips
-    setTimeout(()=>{
-      filterNewsEvents('all',document.querySelector('#news-event-chips .chip-filter.active'));
-    },80);
-  };
 })();
 
 /* ── Re-render dashboard on company chip toggle ── */
