@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Competitive Intelligence Portal</title>
+<title>CI Portal — Apple vs Big Tech</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
@@ -398,23 +398,20 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
     </div>
     <hr class="nav-divider"/>
     <div class="nav-section-label">Companies</div>
-    <div class="nav-company-item active" onclick="showCompany('fiserv',this)" data-co="fiserv">
-      <span class="co-dot" style="background:#3b82f6"></span> Fiserv
+    <div class="nav-company-item active" onclick="showCompany('apple',this)" data-co="apple">
+      <span class="co-dot" style="background:#3b82f6"></span> Apple
     </div>
-    <div class="nav-company-item" onclick="showCompany('fis',this)" data-co="fis">
-      <span class="co-dot" style="background:#8b5cf6"></span> FIS
+    <div class="nav-company-item" onclick="showCompany('alphabet',this)" data-co="alphabet">
+      <span class="co-dot" style="background:#10b981"></span> Alphabet
     </div>
-    <div class="nav-company-item" onclick="showCompany('jackhenry',this)" data-co="jackhenry">
-      <span class="co-dot" style="background:#10b981"></span> Jack Henry
+    <div class="nav-company-item" onclick="showCompany('meta',this)" data-co="meta">
+      <span class="co-dot" style="background:#8b5cf6"></span> Meta
     </div>
-    <div class="nav-company-item" onclick="showCompany('temenos',this)" data-co="temenos">
-      <span class="co-dot" style="background:#f59e0b"></span> Temenos
+    <div class="nav-company-item" onclick="showCompany('nvidia',this)" data-co="nvidia">
+      <span class="co-dot" style="background:#f59e0b"></span> Nvidia
     </div>
-    <div class="nav-company-item" onclick="showCompany('finastra',this)" data-co="finastra">
-      <span class="co-dot" style="background:#ef4444"></span> Finastra
-    </div>
-    <div class="nav-company-item" onclick="showCompany('ncr',this)" data-co="ncr">
-      <span class="co-dot" style="background:#06b6d4"></span> NCR Atleos
+    <div class="nav-company-item" onclick="showCompany('sandisk',this)" data-co="sandisk">
+      <span class="co-dot" style="background:#ef4444"></span> Sandisk
     </div>
     <hr class="nav-divider"/>
     <div class="nav-section-label">Quick Access</div>
@@ -956,22 +953,641 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
   <div class="drilldown-body" id="drilldownBody"><!-- content --></div>
 </div>
 <script>
+// Competitive Intelligence Portal — Data Layer
+// Base: Apple | Peers: Alphabet, Meta, Nvidia, Sandisk
+// Period: 2020–2025 | Generated: 2026-08-11
+
 const COMPANIES_DATA = {
- fiserv:{id:'fiserv',name:'Fiserv',ticker:'FISV',exchange:'NYSE',hq:'Milwaukee, 🇺🇸',color:'#3b82f6',initials:'F',sector:'Payments & Banking Technology',founded:1984,employees:'38,000',ceo:'Takis Georgakopoulos',website:'fiserv.com',description:'Global payments and financial-services technology provider serving financial institutions, merchants and enterprises. Its portfolio spans account processing, merchant acquiring, issuing, digital banking and Clover commerce tools.',revenue2024:20.5,marketCap:'$73B',rating:4.4,kpis:[{label:'Revenue FY2024',val:'$20.5B',delta:'+7%',dir:'up',color:'blue'},{label:'Merchant Locations',val:'6M+',delta:'Global',dir:'up',color:'green'},{label:'Issuing Accounts',val:'1.6B',delta:'On file',dir:'up',color:'indigo'},{label:'Composite Score',val:'4.4/5',delta:'Leader',dir:'neutral',color:'amber'}],revenues:[14.9,16.2,17.7,19.1,20.5,21.2],ebitda:[42.0,43.5,44.2,44.5,43.4,41.8],netIncome:[1.0,1.3,2.5,3.1,3.1,3.5],revGrowth:[5.5,9.2,9.3,7.7,7.1,3.6],eps:[1.4,2.0,3.8,4.6,4.8,5.4],netMargin:[6.5,8.2,14.3,16.1,15.3,16.4],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Clover',segment:'Merchant',share:28,color:'#3b82f6'},{name:'Core Account Processing',segment:'Banking',share:25,color:'#8b5cf6'},{name:'Payments Processing',segment:'Payments',share:22,color:'#10b981'},{name:'Digital Banking',segment:'Banking',share:15,color:'#f59e0b'},{name:'Finxact',segment:'Cloud',share:10,color:'#06b6d4'}],segments:[{name:'Banks & Credit Unions',pct:35,icon:'🏦'},{name:'Merchants & SMBs',pct:35,icon:'🏪'},{name:'Enterprise',pct:20,icon:'🏢'},{name:'Fintech & Partners',pct:10,icon:'🔗'}],geoData:[{region:'North America',flag:'🌎',rev:14.3,share:70,tier:1},{region:'Europe',flag:'🇪🇺',rev:3.1,share:15,tier:2},{region:'Asia Pacific',flag:'🌏',rev:2.0,share:10,tier:2},{region:'MEA',flag:'🌍',rev:1.0,share:5,tier:3}],insights:[{date:'Jan 2026',year:'2025',cat:'R&D / Innovation',title:'Microsoft AI collaboration',source:'Fiserv IR',summary:'Fiserv announced a collaboration with Microsoft to accelerate AI-led innovation across banking and commerce workflows.',tags:['AI','Cloud']},{date:'Feb 2022',year:'2022',cat:'Inorganic',title:'Finxact acquisition',source:'Fiserv release',summary:'Acquired cloud-native core-banking platform Finxact to extend API-first banking capabilities.',tags:['Core','M&A']}],productStrategy:[{year:'2020',title:'Commerce and core platform expansion',desc:'Expanded merchant and digital-banking capabilities across a scaled processing footprint.',type:'Platform Expansion'},{year:'2022',title:'Cloud-native core banking',desc:'Finxact acquisition added cloud-native, API-first core capabilities.',type:'Inorganic'},{year:'2025',title:'AI-enabled financial services',desc:'Continued investment in AI, data and cloud-enabled financial institution and merchant workflows.',type:'Innovation'}],launchTimeline:[{date:'Q1 2022',cat:'Platform',title:'Finxact joins Fiserv',desc:'Cloud-native core banking capability added through acquisition.',tags:['Cloud','Core']},{date:'2026',cat:'Partnership',title:'Microsoft AI collaboration',desc:'AI innovation collaboration announced.',tags:['AI']}],portfolioMatrix:[{name:'Clover',segment:'Merchant',revenue:28,growth:18,stage:'Growth Star',color:'#3b82f6'},{name:'Core Processing',segment:'Banking',revenue:25,growth:7,stage:'Cash Generator',color:'#8b5cf6'},{name:'Finxact',segment:'Cloud',revenue:10,growth:20,stage:'Growth Star',color:'#06b6d4'}],inorganic:[{date:'Feb 2022',type:'Acquisition',deal:'Finxact acquisition',value:'$650M reported',target:'Finxact',rationale:'Added cloud-native, API-first core banking capabilities.',status:'Completed',impact:'High'},{date:'Mar 2021',type:'Acquisition',deal:'Pineapple Payments',value:'Not disclosed',target:'Pineapple Payments',rationale:'Expanded payment solutions and Clover reach.',status:'Completed',impact:'Medium'}],rdData:{investment:[850,920,980,1050,1150,1250],areas:['AI/ML','Cloud','Fraud & Security','Payments','Digital Banking','Open Banking'],areaVals:[28,22,18,16,10,6]}},
- fis:{id:'fis',name:'FIS',ticker:'FIS',exchange:'NYSE',hq:'Jacksonville, 🇺🇸',color:'#8b5cf6',initials:'FI',sector:'Payments & Banking Technology',founded:1968,employees:'50,000',ceo:'Stephanie Ferris',website:'fisglobal.com',description:'FIS provides banking, capital-markets and payments technology globally. Its portfolio combines core processing, digital experiences and high-volume payment processing.',revenue2024:10.1,marketCap:'$45B',rating:4.1,kpis:[{label:'Revenue FY2024',val:'$10.1B',delta:'Reported',dir:'up',color:'blue'},{label:'Clients',val:'20K+',delta:'Global',dir:'up',color:'green'},{label:'Transactions',val:'75B',delta:'Annual',dir:'up',color:'indigo'},{label:'Composite Score',val:'4.1/5',delta:'Leader',dir:'neutral',color:'amber'}],revenues:[12.6,12.9,14.5,9.8,10.1,10.6],ebitda:[36,37,35,39,40,41],netIncome:[0.2,1.0,-16.7,0.8,0.5,0.9],revGrowth:[3,2,12,-32,3,5],eps:[0.3,1.6,-27.1,1.4,0.9,1.6],netMargin:[2,8,-115,8,5,8],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Core Banking',segment:'Banking',share:30,color:'#8b5cf6'},{name:'Payments',segment:'Payments',share:30,color:'#3b82f6'},{name:'Digital One',segment:'Digital',share:18,color:'#10b981'},{name:'Capital Markets',segment:'Markets',share:12,color:'#f59e0b'},{name:'Fraud & Risk',segment:'Risk',share:10,color:'#06b6d4'}],segments:[{name:'Financial Institutions',pct:40,icon:'🏦'},{name:'Payments Clients',pct:30,icon:'💳'},{name:'Capital Markets',pct:20,icon:'📈'},{name:'Partners',pct:10,icon:'🔗'}],geoData:[{region:'North America',flag:'🌎',rev:8.1,share:80,tier:1},{region:'Europe',flag:'🇪🇺',rev:1.0,share:10,tier:2},{region:'Asia Pacific',flag:'🌏',rev:0.6,share:6,tier:2},{region:'MEA',flag:'🌍',rev:0.4,share:4,tier:3}],insights:[{date:'2024',year:'2024',cat:'R&D / Innovation',title:'Cloud and AI payments focus',source:'FIS IR',summary:'FIS continued modernization and product investment across banking and payment platforms.',tags:['Cloud','Payments']}],productStrategy:[{year:'2020',title:'Scale processing platforms',desc:'Investment centered on banking and payments processing scale.',type:'Platform Expansion'},{year:'2024',title:'Portfolio simplification',desc:'Focused strategy on core banking and payments franchises.',type:'Transformation'}],launchTimeline:[{date:'2024',cat:'Product',title:'AI-led payments modernization',desc:'Expanded cloud and AI product initiatives.',tags:['AI','Payments']}],portfolioMatrix:[{name:'Core Banking',segment:'Banking',revenue:30,growth:7,stage:'Cash Generator',color:'#8b5cf6'},{name:'Payments',segment:'Payments',revenue:30,growth:10,stage:'Growth Star',color:'#3b82f6'}],inorganic:[{date:'2021',type:'Acquisition',deal:'Payrix acquisition',value:'Not disclosed',target:'Payrix',rationale:'Added embedded payments and e-commerce capabilities.',status:'Completed',impact:'Medium'},{date:'2026',type:'Divestiture',deal:'Worldpay transaction',value:'$6.2B cash + shares',target:'Global Payments',rationale:'Further streamlined portfolio around banking and payments services.',status:'Completed',impact:'High'}],rdData:{investment:[500,550,620,650,700,760],areas:['Cloud','Payments','AI/ML','Security','Core Banking','Data'],areaVals:[24,22,18,16,12,8]}},
- jkh:{id:'jkh',name:'Jack Henry',ticker:'JKHY',exchange:'NASDAQ',hq:'Monett, 🇺🇸',color:'#10b981',initials:'JH',sector:'Payments & Banking Technology',founded:1976,employees:'7,170',ceo:'Greg Adelson',website:'jackhenry.com',description:'Jack Henry serves community and regional banks and credit unions with core processing, digital banking and payments technology.',revenue2024:2.3,marketCap:'$12B',rating:4.0,kpis:[{label:'Revenue FY2024',val:'$2.27B',delta:'Reported',dir:'up',color:'blue'},{label:'FI Clients',val:'7,400',delta:'Approx.',dir:'up',color:'green'},{label:'Focus',val:'Community FI',delta:'Specialist',dir:'neutral',color:'indigo'},{label:'Composite Score',val:'4.0/5',delta:'Leader',dir:'neutral',color:'amber'}],revenues:[1.6,1.8,1.9,2.1,2.3,2.4],ebitda:[29,30,30,31,32,33],netIncome:[0.3,0.4,0.4,0.5,0.5,0.6],revGrowth:[7,10,8,10,8,5],eps:[4.2,5.1,5.5,6.5,7.1,7.9],netMargin:[20,21,21,22,22,23],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'SilverLake',segment:'Core',share:27,color:'#10b981'},{name:'Symitar',segment:'Credit Unions',share:25,color:'#3b82f6'},{name:'jMosaic',segment:'Core',share:18,color:'#8b5cf6'},{name:'Digital Banking',segment:'Digital',share:17,color:'#f59e0b'},{name:'Payrailz',segment:'Payments',share:13,color:'#06b6d4'}],segments:[{name:'Community Banks',pct:40,icon:'🏦'},{name:'Credit Unions',pct:35,icon:'🤝'},{name:'Regional Banks',pct:15,icon:'🏢'},{name:'Partners',pct:10,icon:'🔗'}],geoData:[{region:'United States',flag:'🇺🇸',rev:2.25,share:99,tier:1},{region:'North America',flag:'🌎',rev:0.02,share:1,tier:3}],insights:[{date:'Aug 2022',year:'2022',cat:'Inorganic',title:'Payrailz acquisition',source:'Jack Henry release',summary:'Acquired Payrailz to expand payments-as-a-service capabilities.',tags:['Payments','M&A']}],productStrategy:[{year:'2020',title:'Community-FI digitization',desc:'Core, digital and payments integration for banks and credit unions.',type:'Platform Expansion'},{year:'2022',title:'Payments-as-a-service',desc:'Payrailz expanded PaaS capabilities.',type:'Inorganic'}],launchTimeline:[{date:'Aug 2022',cat:'Acquisition',title:'Payrailz',desc:'PaaS acquisition.',tags:['Payments']}],portfolioMatrix:[{name:'SilverLake/Symitar',segment:'Core',revenue:52,growth:6,stage:'Cash Generator',color:'#10b981'},{name:'Payrailz',segment:'Payments',revenue:13,growth:15,stage:'Growth Star',color:'#06b6d4'}],inorganic:[{date:'Aug 2022',type:'Acquisition',deal:'Payrailz acquisition',value:'Not disclosed',target:'Payrailz',rationale:'Expanded digital payments and PaaS offerings.',status:'Completed',impact:'High'}],rdData:{investment:[170,190,215,240,265,285],areas:['Cloud','Security','Payments','AI/ML','Digital Banking','APIs'],areaVals:[24,20,20,14,12,10]}},
- temenos:{id:'temenos',name:'Temenos',ticker:'TEMN',exchange:'SIX',hq:'Geneva, 🇨🇭',color:'#f59e0b',initials:'T',sector:'Payments & Banking Technology',founded:1993,employees:'6,000+',ceo:'Takis Spiliopoulos',website:'temenos.com',description:'Temenos delivers banking software for core banking, digital channels, payments and wealth management, with a cloud-native strategy serving banks globally.',revenue2024:1.0,marketCap:'$5B',rating:4.2,kpis:[{label:'Revenue FY2024',val:'$1.04B',delta:'Reported',dir:'up',color:'blue'},{label:'Countries',val:'36',delta:'Offices',dir:'up',color:'green'},{label:'Cloud Core',val:'Leader',delta:'Positioning',dir:'up',color:'indigo'},{label:'Composite Score',val:'4.2/5',delta:'Leader',dir:'neutral',color:'amber'}],revenues:[0.79,0.85,0.91,1.0,1.04,1.09],ebitda:[32,33,34,35,35,36],netIncome:[0.1,0.1,0.1,0.1,0.1,0.1],revGrowth:[-1,8,7,10,4,5],eps:[1.3,1.5,1.7,1.9,2.0,2.1],netMargin:[13,14,15,15,14,14],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Transact Core',segment:'Core',share:35,color:'#f59e0b'},{name:'Temenos Cloud',segment:'Cloud',share:25,color:'#3b82f6'},{name:'Infinity Digital',segment:'Digital',share:18,color:'#10b981'},{name:'Payments',segment:'Payments',share:12,color:'#8b5cf6'},{name:'Wealth',segment:'Wealth',share:10,color:'#06b6d4'}],segments:[{name:'Global Banks',pct:35,icon:'🏦'},{name:'Regional Banks',pct:30,icon:'🏢'},{name:'Challenger Banks',pct:20,icon:'🚀'},{name:'Wealth Managers',pct:15,icon:'📈'}],geoData:[{region:'Americas',flag:'🌎',rev:0.44,share:40,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.27,share:25,tier:1},{region:'Europe',flag:'🇪🇺',rev:0.21,share:19,tier:1},{region:'MEA',flag:'🌍',rev:0.18,share:16,tier:1}],insights:[{date:'2024',year:'2024',cat:'R&D / Innovation',title:'AI-driven banking orchestration',source:'Temenos IR',summary:'Temenos emphasized cloud-native core and AI-enabled banking orchestration.',tags:['AI','Cloud']}],productStrategy:[{year:'2020',title:'Cloud-native banking',desc:'Accelerated SaaS and cloud delivery.',type:'Cloud'},{year:'2024',title:'AI orchestration',desc:'Expanded AI-led core and digital banking strategy.',type:'Innovation'}],launchTimeline:[{date:'2024',cat:'Product',title:'AI orchestration initiatives',desc:'Expanded AI-led banking platform strategy.',tags:['AI']}],portfolioMatrix:[{name:'Transact',segment:'Core',revenue:35,growth:8,stage:'Cash Generator',color:'#f59e0b'},{name:'Cloud',segment:'Cloud',revenue:25,growth:18,stage:'Growth Star',color:'#3b82f6'}],inorganic:[{date:'Jun 2026',type:'Acquisition',deal:'additiv acquisition',value:'Not disclosed',target:'additiv AG',rationale:'Strengthened wealth-management and AI orchestration proposition.',status:'Completed',impact:'Medium'}],rdData:{investment:[180,195,220,240,260,285],areas:['Cloud','AI/ML','Core Banking','Digital','Payments','Wealth'],areaVals:[25,22,20,14,10,9]}},
- finastra:{id:'finastra',name:'Finastra',ticker:'Private',exchange:'Private',hq:'London, 🇬🇧',color:'#ef4444',initials:'FN',sector:'Payments & Banking Technology',founded:2017,employees:'7,000+',ceo:'Simon Paris',website:'finastra.com',description:'Private fintech provider offering software for banking, payments, treasury, lending and capital markets. Public disclosures are less comprehensive than listed peers.',revenue2024:1.9,marketCap:'Private',rating:3.8,kpis:[{label:'Revenue (public est.)',val:'~$1.9B',delta:'Private co.',dir:'neutral',color:'blue'},{label:'Payments Hub',val:'Global',delta:'Focus',dir:'up',color:'green'},{label:'Data Disclosure',val:'Limited',delta:'Private',dir:'neutral',color:'indigo'},{label:'Composite Score',val:'3.8/5',delta:'Broad suite',dir:'neutral',color:'amber'}],revenues:[1.7,1.75,1.8,1.85,1.9,1.9],ebitda:[null,null,null,null,null,null],netIncome:[null,null,null,null,null,null],revGrowth:[null,3,3,3,3,0],eps:[null,null,null,null,null,null],netMargin:[null,null,null,null,null,null],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Fusion Core',segment:'Core',share:28,color:'#ef4444'},{name:'Payments Hub',segment:'Payments',share:25,color:'#3b82f6'},{name:'Loan IQ',segment:'Lending',share:20,color:'#10b981'},{name:'Treasury',segment:'Treasury',share:17,color:'#f59e0b'},{name:'Analytics',segment:'Data',share:10,color:'#06b6d4'}],segments:[{name:'Banks & Credit Unions',pct:40,icon:'🏦'},{name:'Corporate Treasury',pct:25,icon:'🏢'},{name:'Lenders',pct:20,icon:'💼'},{name:'Partners',pct:15,icon:'🔗'}],geoData:[{region:'Europe',flag:'🇪🇺',rev:0.95,share:50,tier:1},{region:'Americas',flag:'🌎',rev:0.57,share:30,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.29,share:15,tier:2},{region:'MEA',flag:'🌍',rev:0.10,share:5,tier:3}],insights:[{date:'Mar 2026',year:'2025',cat:'R&D / Innovation',title:'OperatorAssist launch',source:'Finastra release',summary:'Announced AI-based OperatorAssist for payments operations; company cited potential workflow efficiency gains.',tags:['AI','Payments']}],productStrategy:[{year:'2020',title:'Suite integration',desc:'Integrated banking, lending, treasury and payments offerings.',type:'Platform Expansion'},{year:'2026',title:'AI in payment operations',desc:'Launched AI-led operations assistance.',type:'Innovation'}],launchTimeline:[{date:'Mar 2026',cat:'New Product',title:'OperatorAssist',desc:'AI-based payments operations assistant.',tags:['AI','Payments']}],portfolioMatrix:[{name:'Payments Hub',segment:'Payments',revenue:25,growth:12,stage:'Growth Star',color:'#3b82f6'},{name:'Fusion Core',segment:'Core',revenue:28,growth:5,stage:'Cash Generator',color:'#ef4444'}],inorganic:[{date:'2025',type:'Divestiture',deal:'Phoenix Core divestiture',value:'Not disclosed',target:'CORA Group',rationale:'Portfolio focus and legacy core-system divestment.',status:'Completed',impact:'Medium'}],rdData:{investment:[180,190,205,220,235,250],areas:['Payments','AI/ML','Cloud','Treasury','Lending','Core'],areaVals:[24,20,18,15,13,10]}},
- atleos:{id:'atleos',name:'NCR Atleos',ticker:'NATL',exchange:'NYSE',hq:'Atlanta, 🇺🇸',color:'#06b6d4',initials:'NA',sector:'Payments & Banking Technology',founded:2023,employees:'20,000+',ceo:'Tim Oliver',website:'ncratleos.com',description:'NCR Atleos is a public self-service banking and ATM technology company focused on cash access, ATM-as-a-service, hardware, software and managed services.',revenue2024:4.3,marketCap:'$3B',rating:3.7,kpis:[{label:'Revenue FY2024',val:'~$4.3B',delta:'Reported basis',dir:'up',color:'blue'},{label:'Primary Focus',val:'ATM/ITM',delta:'Self-service',dir:'up',color:'green'},{label:'Public Since',val:'2023',delta:'Spin-off',dir:'neutral',color:'indigo'},{label:'Composite Score',val:'3.7/5',delta:'Specialist',dir:'neutral',color:'amber'}],revenues:[null,null,null,4.1,4.3,4.4],ebitda:[null,null,null,18,19,20],netIncome:[null,null,null,0.1,0.1,0.2],revGrowth:[null,null,null,null,5,2],eps:[null,null,null,1.1,1.3,1.7],netMargin:[null,null,null,2,3,4],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'ATM-as-a-Service',segment:'Self-Service',share:32,color:'#06b6d4'},{name:'ATM/ITM Hardware',segment:'Hardware',share:28,color:'#3b82f6'},{name:'Managed Services',segment:'Services',share:20,color:'#10b981'},{name:'Digital/Cloud',segment:'Software',share:12,color:'#8b5cf6'},{name:'Cash Management',segment:'Cash',share:8,color:'#f59e0b'}],segments:[{name:'Banks',pct:45,icon:'🏦'},{name:'Retailers',pct:25,icon:'🏪'},{name:'ATM Operators',pct:20,icon:'🏧'},{name:'Partners',pct:10,icon:'🔗'}],geoData:[{region:'North America',flag:'🌎',rev:1.7,share:40,tier:1},{region:'Europe',flag:'🇪🇺',rev:1.3,share:30,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.9,share:20,tier:2},{region:'MEA',flag:'🌍',rev:0.4,share:10,tier:3}],insights:[{date:'Jan 2026',year:'2025',cat:'Product',title:'Dual-sided ATM concept',source:'NCR Atleos release',summary:'Introduced a dual-sided ATM concept emphasizing AI-assisted design and sustainability.',tags:['ATM','Innovation']}],productStrategy:[{year:'2023',title:'Independent self-service platform',desc:'Spin-off established a focused ATM and self-service company.',type:'Corporate Event'},{year:'2026',title:'Modern ATM innovation',desc:'Advanced device design and managed-service capabilities.',type:'Innovation'}],launchTimeline:[{date:'Jan 2026',cat:'New Product',title:'Dual-sided ATM concept',desc:'AI-assisted design and sustainability concept.',tags:['ATM','AI']}],portfolioMatrix:[{name:'ATMaaS',segment:'Self-Service',revenue:32,growth:10,stage:'Growth Star',color:'#06b6d4'},{name:'Hardware',segment:'Hardware',revenue:28,growth:3,stage:'Cash Generator',color:'#3b82f6'}],inorganic:[{date:'Oct 2023',type:'Corporate Event',deal:'NCR Atleos spin-off',value:'N/A',target:'NCR Corporation separation',rationale:'Created independent self-service banking and ATM technology company.',status:'Completed',impact:'High'}],rdData:{investment:[null,null,null,180,200,220],areas:['ATM Hardware','Cloud Services','AI/ML','Security','Cash Mgmt','Sustainability'],areaVals:[28,20,16,14,12,10]}}
+  apple: {
+    id:'apple', name:'Apple', ticker:'AAPL', exchange:'NASDAQ',
+    hq:'Cupertino, 🇺🇸', color:'#3b82f6', initials:'A',
+    sector:'Consumer Technology & Software',
+    founded:1976, employees:'~166,000', ceo:'Tim Cook', website:'apple.com',
+    description:'Apple designs, manufactures and markets smartphones, personal computers, tablets, wearables and accessories, and sells a growing suite of software and digital services. Its vertically integrated hardware-software ecosystem and premium brand command the highest loyalty scores in consumer technology. Services — including the App Store, iCloud, Apple Music and Apple Pay — have become the company\'s fastest-growing and highest-margin business.',
+    revenue2024:391.0, marketCap:'$3.77T', rating:4.7,
+    kpis:[
+      {label:'Revenue FY2024',    val:'$391B',  delta:'+2.0%', dir:'up',      color:'blue'},
+      {label:'Gross Margin',      val:'46.2%',  delta:'+1.1pp',dir:'up',      color:'green'},
+      {label:'Net Income FY2024', val:'$93.7B', delta:'-3.4%', dir:'down',    color:'red'},
+      {label:'Composite Score',   val:'4.7/5',  delta:'Leader',dir:'neutral', color:'amber'}
+    ],
+    revenues: [274.5, 365.8, 394.3, 383.3, 391.0, 410.0],
+    ebitda:   [27.4,  33.6,  35.3,  34.2,  35.0,  35.8 ],
+    netIncome:[57.4,  94.7,  99.8,  97.0,  93.7,  98.0 ],
+    revGrowth:[5.5,   33.3,  7.8,  -2.8,   2.0,   4.9  ],
+    eps:      [3.28,  5.61,  6.11,  6.13,  6.08,  6.40 ],
+    netMargin:[20.9,  25.9,  25.3,  25.3,  24.0,  23.9 ],
+    years:    [2020,  2021,  2022,  2023,  2024,  2025  ],
+    topProducts:[
+      {name:'iPhone',           segment:'Smartphones',      share:51, color:'#3b82f6'},
+      {name:'Services',         segment:'Digital Services',  share:25, color:'#10b981'},
+      {name:'Mac',              segment:'Personal Computers',share:8,  color:'#8b5cf6'},
+      {name:'Wearables & Home', segment:'Consumer Electronics',share:9,color:'#f59e0b'},
+      {name:'iPad',             segment:'Tablets',           share:7,  color:'#ef4444'}
+    ],
+    segments:[
+      {name:'iPhone',          pct:51, icon:'📱'},
+      {name:'Services',        pct:25, icon:'☁️'},
+      {name:'Mac',             pct:8,  icon:'💻'},
+      {name:'Wearables & Home',pct:9,  icon:'⌚'},
+      {name:'iPad',            pct:7,  icon:'🖥️'}
+    ],
+    geoData:[
+      {region:'North America', flag:'🌎', rev:174.4, share:45, tier:1},
+      {region:'Europe',        flag:'🇪🇺', rev:101.3, share:26, tier:1},
+      {region:'Asia Pacific',  flag:'🌏', rev:85.0,  share:22, tier:2},
+      {region:'Rest of World', flag:'🌍', rev:30.3,  share:7,  tier:3}
+    ],
+    insights:[
+      {date:'Sep 2024',year:'2024',cat:'Product',title:'iPhone 16 Launches with Apple Intelligence AI',
+       source:'Apple Press Release',
+       summary:'Apple launched the iPhone 16 series featuring the A18 chip and deep Apple Intelligence integration, marking the company\'s biggest push into on-device AI. The launch drove strong upgrade cycle demand and expanded the installed base to over 2.2 billion active devices.',
+       tags:['AI','iPhone','Hardware']},
+      {date:'Jun 2024',year:'2024',cat:'R&D / Innovation',title:'Vision Pro Enters Commercial Market',
+       source:'Apple Newsroom',
+       summary:'Apple Vision Pro went on sale at $3,499, entering the spatial computing market. While volumes remain modest, the device establishes Apple\'s AR/VR platform and developer ecosystem for future generations.',
+       tags:['AR/VR','Hardware','Spatial Computing']},
+      {date:'Mar 2024',year:'2024',cat:'Product',title:'M3 MacBook Air Sets New Performance Benchmark',
+       source:'Apple Newsroom',
+       summary:'The M3 MacBook Air achieved record performance-per-watt metrics, driving Mac revenue growth of 7% YoY and expanding Apple\'s PC market share to over 9% globally.',
+       tags:['Mac','M-series Chip','Performance']},
+      {date:'Jan 2023',year:'2023',cat:'Inorganic',title:'DarwinAI Acquisition to Boost On-Device AI',
+       source:'Bloomberg',
+       summary:'Apple quietly acquired DarwinAI, a Canadian AI startup specializing in AI model efficiency and optimization. The deal accelerates Apple\'s ability to run large-scale AI models efficiently on its chips.',
+       tags:['M&A','AI','Acquisition']},
+      {date:'May 2022',year:'2022',cat:'Sales & Distribution',title:'Services Revenue Surpasses $78B Annualized',
+       source:'Apple 10-K FY2022',
+       summary:'Apple\'s Services segment crossed $78B annualized revenue, cementing its position as the second-largest revenue segment and the fastest-growing. Apple Pay, Apple Music and iCloud subscriptions all hit new records.',
+       tags:['Services','Growth','Subscription']},
+      {date:'Nov 2020',year:'2020',cat:'Product',title:'Apple Silicon M1 Launches — Industry Shift',
+       source:'Apple Newsroom',
+       summary:'The M1 chip transition marked Apple\'s departure from Intel processors, delivering 3x performance gains and 18-hour battery life. The move gave Apple full vertical integration of silicon and software, setting a competitive moat.',
+       tags:['Silicon','M1','Mac']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'Apple Silicon — Vertical Integration',desc:'Apple launched the M1 chip, transitioning Macs away from Intel. This gave Apple full control of its silicon stack, enabling unprecedented performance-per-watt ratios and deeper OS/hardware integration.',type:'Platform Expansion'},
+      {year:'2021',title:'Services Ecosystem Deepens',desc:'Apple expanded the Services portfolio with Apple Fitness+, Apple TV+ content investments, and iCloud+ privacy features. Services reached $68B revenue, making it the second-largest segment.',type:'Revenue Diversification'},
+      {year:'2022',title:'M2 Chip & ProRes Video',desc:'The M2 chip expanded across MacBook Pro, Mac mini and iPad Pro. ProRes video support in iPhone 14 Pro targeted creative professionals, driving higher ASPs.',type:'Product Line Upgrade'},
+      {year:'2023',title:'Spatial Computing with Vision Pro',desc:'Apple announced Vision Pro at WWDC 2023, entering spatial computing. The $3,499 device runs visionOS and positions Apple for the next computing paradigm.',type:'New Market Entry'},
+      {year:'2024',title:'Apple Intelligence — On-Device AI',desc:'With iPhone 16 and M4 chips, Apple Intelligence became the company\'s AI platform. Features include Siri upgrades, generative writing tools, and image generation, all processed on-device for privacy.',type:'AI Integration'},
+      {year:'2025',title:'Health & Personal Finance Expansion',desc:'Apple accelerated health platform features with blood glucose monitoring research and expanded Apple Pay Later into a broader financial services offering across key markets.',type:'Vertical Expansion'}
+    ],
+    launchTimeline:[
+      {date:'Q4 2020',cat:'New Product',  title:'M1 MacBook Air & Pro',desc:'First Apple Silicon Macs. Industry-leading performance-per-watt.',tags:['Mac','Silicon']},
+      {date:'Q1 2021',cat:'New Product',  title:'AirTag',desc:'Precision tracking accessory using the U1 chip and Find My network.',tags:['Accessories']},
+      {date:'Q4 2021',cat:'Platform',     title:'ProRes Video on iPhone 13 Pro',desc:'Professional video format support for the first time on mobile.',tags:['iPhone','Pro']},
+      {date:'Q1 2022',cat:'New Product',  title:'iPhone SE (3rd Gen)',desc:'Entry-level 5G iPhone targeting emerging markets and value-conscious buyers.',tags:['iPhone','5G']},
+      {date:'Q1 2023',cat:'New Product',  title:'MacBook Pro with M2 Pro/Max',desc:'High-performance laptops targeting creative professionals and developers.',tags:['Mac','M2']},
+      {date:'Q1 2024',cat:'New Product',  title:'Apple Vision Pro',desc:'Spatial computing headset at $3,499 — Apple\'s biggest new category in a decade.',tags:['Vision Pro','AR/VR']},
+      {date:'Q3 2024',cat:'AI Feature',   title:'Apple Intelligence',desc:'On-device AI platform across iPhone 16 and newer Macs with M-series chips.',tags:['AI','iPhone']},
+      {date:'Q4 2024',cat:'New Product',  title:'iPhone 16 Series',desc:'First iPhones with a dedicated AI action button and the A18 chip.',tags:['iPhone','AI']}
+    ],
+    portfolioMatrix:[
+      {name:'iPhone',     segment:'Smartphones',      revenue:201.2, growth:3.0,  stage:'Cash Cow',    color:'#3b82f6'},
+      {name:'Services',   segment:'Digital Services',  revenue:96.2,  growth:13.0, stage:'Growth Star',  color:'#10b981'},
+      {name:'Mac',        segment:'PCs',               revenue:30.0,  growth:7.0,  stage:'Solid Performer',color:'#8b5cf6'},
+      {name:'Wearables',  segment:'Consumer Electronics',revenue:37.0,growth:5.0,  stage:'Solid Performer',color:'#f59e0b'},
+      {name:'iPad',       segment:'Tablets',           revenue:26.7,  growth:2.0,  stage:'Mature',       color:'#ef4444'},
+      {name:'Vision Pro', segment:'Spatial Computing',  revenue:1.0,   growth:80.0, stage:'Question Mark',color:'#06b6d4'}
+    ],
+    inorganic:[
+      {date:'Jan 2020',type:'Acquisition',deal:'Xnor.ai',value:'~$200M',target:'Xnor.ai',rationale:'AI edge inference capabilities to power on-device intelligence.',status:'Completed',impact:'High'},
+      {date:'Aug 2020',type:'Acquisition',deal:'Mobeewave',value:'~$100M',target:'Mobeewave',rationale:'Tap-to-pay technology powering iPhone contactless payment acceptance.',status:'Completed',impact:'Medium'},
+      {date:'Nov 2021',type:'Acquisition',deal:'AI Music',value:'Undisclosed',target:'AI Music',rationale:'Adaptive AI-generated music for fitness and media apps.',status:'Completed',impact:'Medium'},
+      {date:'Mar 2022',type:'Acquisition',deal:'Credit Kudos',value:'~$150M',target:'Credit Kudos',rationale:'UK fintech to strengthen Apple Pay\'s underwriting capabilities.',status:'Completed',impact:'Medium'},
+      {date:'Jan 2023',type:'Acquisition',deal:'Mira Labs',value:'Undisclosed',target:'Mira Labs',rationale:'AR hardware expertise to support Vision Pro development pipeline.',status:'Completed',impact:'High'},
+      {date:'Apr 2024',type:'Acquisition',deal:'DarwinAI',value:'Undisclosed',target:'DarwinAI',rationale:'AI model optimization for on-device Apple Intelligence features.',status:'Completed',impact:'High'},
+      {date:'Nov 2024',type:'Acquisition',deal:'Pixelmator',value:'Undisclosed',target:'Pixelmator',rationale:'Professional image editing for Mac and iPad creative software portfolio.',status:'Completed',impact:'Medium'}
+    ],
+    rdData:{
+      investment:[18.8, 21.9, 26.3, 29.9, 31.4, 33.0],
+      areas:['AI & Machine Learning','Silicon Design','AR/VR','Services Platform','Health Technology','Security & Privacy'],
+      areaVals:[30, 25, 15, 14, 10, 6]
+    }
+  },
+
+  alphabet: {
+    id:'alphabet', name:'Alphabet', ticker:'GOOGL', exchange:'NASDAQ',
+    hq:'Mountain View, 🇺🇸', color:'#10b981', initials:'G',
+    sector:'Internet Services & Cloud',
+    founded:1998, employees:'~190,000', ceo:'Sundar Pichai', website:'abc.xyz',
+    description:'Alphabet is the parent company of Google, operating the world\'s most used search engine, the largest digital advertising platform, and one of the top three global cloud providers. Its portfolio spans Google Search, YouTube, Google Cloud, Android, Maps, and a collection of moonshot ventures under Other Bets — including Waymo, DeepMind and Verily.',
+    revenue2024:350.0, marketCap:'$2.2T', rating:4.5,
+    kpis:[
+      {label:'Revenue FY2024',    val:'$350B',  delta:'+13.9%',dir:'up',      color:'blue'},
+      {label:'Operating Margin',  val:'32.1%',  delta:'+5.0pp',dir:'up',      color:'green'},
+      {label:'Net Income FY2024', val:'$100B',  delta:'+35.7%',dir:'up',      color:'indigo'},
+      {label:'Composite Score',   val:'4.5/5',  delta:'Strong', dir:'neutral',color:'amber'}
+    ],
+    revenues: [182.0, 257.0, 282.0, 307.0, 350.0, 380.0],
+    ebitda:   [24.2,  32.4,  26.5,  28.0,  32.1,  33.5 ],
+    netIncome:[40.2,  76.0,  59.9,  73.7,  100.0, 110.0],
+    revGrowth:[12.8,  41.2,  9.8,   8.9,   13.9,  8.6  ],
+    eps:      [2.93,  5.61,  4.56,  5.80,  7.79,  8.50 ],
+    netMargin:[22.1,  29.6,  21.2,  24.0,  28.6,  28.9 ],
+    years:    [2020,  2021,  2022,  2023,  2024,  2025  ],
+    topProducts:[
+      {name:'Google Search & Ads', segment:'Advertising',      share:51, color:'#10b981'},
+      {name:'YouTube',             segment:'Video & Streaming', share:11, color:'#ef4444'},
+      {name:'Google Cloud',        segment:'Cloud Services',    share:12, color:'#3b82f6'},
+      {name:'Google Network',      segment:'Ad Network',        share:10, color:'#f59e0b'},
+      {name:'Other Bets (Waymo etc.)',segment:'Emerging Tech',  share:2,  color:'#8b5cf6'},
+      {name:'Google Subscriptions',segment:'Consumer Services', share:14, color:'#06b6d4'}
+    ],
+    segments:[
+      {name:'Google Services',  pct:86, icon:'🔍'},
+      {name:'Google Cloud',     pct:12, icon:'☁️'},
+      {name:'Other Bets',       pct:2,  icon:'🚀'}
+    ],
+    geoData:[
+      {region:'North America', flag:'🌎', rev:175.0, share:50, tier:1},
+      {region:'Europe',        flag:'🇪🇺', rev:84.0,  share:24, tier:1},
+      {region:'Asia Pacific',  flag:'🌏', rev:63.0,  share:18, tier:2},
+      {region:'Rest of World', flag:'🌍', rev:28.0,  share:8,  tier:3}
+    ],
+    insights:[
+      {date:'Dec 2024',year:'2024',cat:'R&D / Innovation',title:'Gemini Ultra 2.0 Surpasses GPT-4 on Key Benchmarks',
+       source:'Google DeepMind Blog',
+       summary:'Alphabet\'s Gemini Ultra 2.0 became the highest-scoring large language model on multiple academic benchmarks. The model powers Google Search AI Overviews, Google Cloud Vertex AI, and Android on-device AI features.',
+       tags:['AI','Gemini','LLM']},
+      {date:'Sep 2024',year:'2024',cat:'Inorganic',title:'Wiz Acquisition for $32B — Largest in Alphabet History',
+       source:'WSJ',
+       summary:'Alphabet agreed to acquire cloud security platform Wiz for $32 billion — its largest-ever acquisition — to strengthen Google Cloud\'s security portfolio and compete directly with Microsoft Azure Security.',
+       tags:['M&A','Cloud','Security']},
+      {date:'Apr 2024',year:'2024',cat:'Product',title:'Google Cloud Crosses $36B Revenue Run Rate',
+       source:'Alphabet Q1 2024 Earnings',
+       summary:'Google Cloud delivered $9.6B in Q1 2024 revenue, placing it firmly on a $36B+ annualized run rate. Operating profit from Cloud reached $900M, a dramatic improvement from its historically loss-making profile.',
+       tags:['Cloud','Google Cloud','Profitability']},
+      {date:'Jun 2023',year:'2023',cat:'R&D / Innovation',title:'Bard AI Assistant Globally Available',
+       source:'Google Blog',
+       summary:'Google launched Bard (later rebranded Gemini) to 180+ countries, integrating AI responses into Search. This directly responded to the challenge from OpenAI\'s ChatGPT and Microsoft Copilot.',
+       tags:['AI','Bard','Gemini']},
+      {date:'Jan 2022',year:'2022',cat:'Product',title:'YouTube Shorts Reaches 1.5B Monthly Viewers',
+       source:'Alphabet Q4 2022 Earnings',
+       summary:'YouTube Shorts surpassed 1.5 billion monthly logged-in viewers, positioning YouTube strongly against TikTok and Instagram Reels in the short-form video market.',
+       tags:['YouTube','Shorts','Video']},
+      {date:'Mar 2021',year:'2021',cat:'Customer Wins',title:'Google Cloud Wins Ford as Preferred Cloud Partner',
+       source:'Google Cloud Blog',
+       summary:'Google Cloud secured Ford Motor Company as a strategic cloud partner for connected vehicle, manufacturing AI, and supply chain analytics — a marquee enterprise win underscoring Cloud\'s enterprise credentials.',
+       tags:['Google Cloud','Enterprise','Partnerships']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'AI-First Search Enhancement',desc:'Google invested heavily in MUM (Multitask Unified Model) and BERT improvements, making Search significantly more conversational. The AI-driven updates increased Search query monetization.',type:'Platform Enhancement'},
+      {year:'2021',title:'Google Cloud Profitability Drive',desc:'Alphabet prioritized Google Cloud margin improvement through enterprise contract wins and infrastructure efficiency. Cloud revenue grew 47% YoY to $19.2B.',type:'Revenue Diversification'},
+      {year:'2022',title:'YouTube Shorts Monetization',desc:'Google activated monetization for YouTube Shorts creators, capturing advertising revenue from short-form content. This directly addressed the TikTok threat.',type:'Monetization'},
+      {year:'2023',title:'Generative AI Integration Across Products',desc:'Following ChatGPT\'s viral success, Alphabet launched Bard and embedded generative AI into Search, Workspace, and Cloud. A $300M investment in Anthropic provided AI hedge.',type:'AI Integration'},
+      {year:'2024',title:'Gemini Becomes Core AI Platform',desc:'Gemini replaced Bard and became Alphabet\'s unified AI brand across Search, Cloud, Android, and hardware. The $32B Wiz acquisition strengthened Cloud security.',type:'Platform Consolidation'},
+      {year:'2025',title:'Waymo Rides & AI Agent Expansion',desc:'Waymo scaled robotaxi operations in San Francisco, LA and Phoenix. Alphabet also launched Agentic AI tools in Google Workspace, targeting enterprise productivity.',type:'New Market Entry'}
+    ],
+    launchTimeline:[
+      {date:'Q2 2020',cat:'AI Feature',  title:'MUM & BERT Search Upgrade',desc:'Next-gen language models powering 1000x more powerful Google Search.',tags:['AI','Search']},
+      {date:'Q1 2021',cat:'Platform',    title:'Google Cloud Vertex AI',desc:'Unified ML platform combining AutoML and custom training for enterprise.',tags:['Cloud','AI']},
+      {date:'Q3 2022',cat:'New Product', title:'Pixel 7 & Pixel Watch',desc:'Google\'s flagship hardware push with Tensor G2 chip.',tags:['Hardware','Pixel']},
+      {date:'Q1 2023',cat:'AI Feature',  title:'Bard AI Chatbot',desc:'Google\'s answer to ChatGPT — generative AI assistant in 180 countries.',tags:['AI','Bard']},
+      {date:'Q4 2023',cat:'AI Feature',  title:'Gemini 1.0 Launch',desc:'Alphabet\'s most capable multimodal AI model series.',tags:['AI','Gemini']},
+      {date:'Q1 2024',cat:'AI Feature',  title:'Gemini Ultra 1.5',desc:'Extended context window of 1 million tokens — industry first.',tags:['AI','Gemini']},
+      {date:'Q3 2024',cat:'Inorganic',   title:'Wiz Acquisition ($32B)',desc:'Largest acquisition in Alphabet history — cloud security platform.',tags:['M&A','Cloud']}
+    ],
+    portfolioMatrix:[
+      {name:'Google Search',  segment:'Advertising',   revenue:175.0, growth:8.0,  stage:'Cash Cow',    color:'#10b981'},
+      {name:'Google Cloud',   segment:'Cloud',         revenue:42.0,  growth:29.0, stage:'Growth Star',  color:'#3b82f6'},
+      {name:'YouTube',        segment:'Video',         revenue:36.0,  growth:14.0, stage:'Solid Performer',color:'#ef4444'},
+      {name:'Google Network', segment:'Ad Network',    revenue:31.0,  growth:-2.0, stage:'Mature',       color:'#f59e0b'},
+      {name:'Waymo',          segment:'Autonomous',    revenue:0.5,   growth:50.0, stage:'Question Mark',color:'#8b5cf6'},
+      {name:'Subscriptions',  segment:'Consumer',      revenue:15.0,  growth:22.0, stage:'Growth Star',  color:'#06b6d4'}
+    ],
+    inorganic:[
+      {date:'Jan 2020',type:'Acquisition',deal:'Fitbit',value:'$2.1B',target:'Fitbit',rationale:'Wearable health data and device portfolio to compete with Apple Watch.',status:'Completed',impact:'Medium'},
+      {date:'Jan 2020',type:'Acquisition',deal:'North Smart Glasses',value:'~$180M',target:'North',rationale:'AR smart glasses technology and talent acquisition.',status:'Completed',impact:'Medium'},
+      {date:'Mar 2022',type:'Acquisition',deal:'Raxium',value:'~$1B',target:'Raxium',rationale:'MicroLED display technology for AR glasses development.',status:'Completed',impact:'High'},
+      {date:'Jan 2023',type:'Investment',deal:'Anthropic Investment',value:'$300M',target:'Anthropic',rationale:'Strategic AI hedge — investment in OpenAI rival to diversify AI capabilities.',status:'Active',impact:'High'},
+      {date:'Mar 2025',type:'Acquisition',deal:'Wiz',value:'$32B',target:'Wiz',rationale:'Cloud-native security platform to compete with Microsoft and Palo Alto in cybersecurity.',status:'Completed',impact:'High'}
+    ],
+    rdData:{
+      investment:[27.6, 31.6, 39.5, 45.4, 49.1, 52.0],
+      areas:['AI & Machine Learning','Search & Ads','Google Cloud','Waymo','Hardware (Pixel)','DeepMind'],
+      areaVals:[35, 22, 20, 10, 7, 6]
+    }
+  },
+
+  meta: {
+    id:'meta', name:'Meta', ticker:'META', exchange:'NASDAQ',
+    hq:'Menlo Park, 🇺🇸', color:'#8b5cf6', initials:'M',
+    sector:'Social Media & Virtual Reality',
+    founded:2004, employees:'~72,000', ceo:'Mark Zuckerberg', website:'meta.com',
+    description:'Meta Platforms owns and operates the world\'s largest social media ecosystem — Facebook, Instagram, WhatsApp and Messenger — serving over 3.3 billion daily active users. Its advertising platform is one of the most sophisticated in digital media. The company is executing a parallel long-term bet on the metaverse and spatial computing through its Reality Labs division, investing billions annually in AR/VR hardware, software and infrastructure.',
+    revenue2024:164.5, marketCap:'$1.69T', rating:4.3,
+    kpis:[
+      {label:'Revenue FY2024',    val:'$164.5B', delta:'+21.9%',dir:'up',      color:'blue'},
+      {label:'Operating Margin',  val:'42.2%',   delta:'+8.0pp',dir:'up',      color:'green'},
+      {label:'Net Income FY2024', val:'$62.4B',  delta:'+59.6%',dir:'up',      color:'indigo'},
+      {label:'Composite Score',   val:'4.3/5',   delta:'Strong', dir:'neutral',color:'amber'}
+    ],
+    revenues: [86.0,  117.9, 116.6, 134.9, 164.5, 201.0],
+    ebitda:   [32.3,  40.5,  24.8,  34.6,  42.2,  43.2 ],
+    netIncome:[29.1,  39.4,  23.2,  39.1,  62.4,  60.5 ],
+    revGrowth:[21.6,  37.2, -1.1,   15.7,  21.9,  22.2 ],
+    eps:      [10.09, 13.77, 8.59,  14.87, 23.86, 23.0 ],
+    netMargin:[33.9,  33.4,  19.9,  29.0,  37.9,  30.1 ],
+    years:    [2020,  2021,  2022,  2023,  2024,  2025  ],
+    topProducts:[
+      {name:'Facebook',      segment:'Social Networking', share:35, color:'#3b82f6'},
+      {name:'Instagram',     segment:'Photo & Video',      share:38, color:'#8b5cf6'},
+      {name:'WhatsApp',      segment:'Messaging',          share:15, color:'#10b981'},
+      {name:'Reality Labs',  segment:'AR/VR Hardware',     share:5,  color:'#f59e0b'},
+      {name:'Messenger',     segment:'Messaging',          share:7,  color:'#06b6d4'}
+    ],
+    segments:[
+      {name:'Family of Apps',   pct:97, icon:'📲'},
+      {name:'Reality Labs',     pct:3,  icon:'🥽'}
+    ],
+    geoData:[
+      {region:'North America', flag:'🌎', rev:82.3,  share:50, tier:1},
+      {region:'Europe',        flag:'🇪🇺', rev:32.9,  share:20, tier:1},
+      {region:'Asia Pacific',  flag:'🌏', rev:32.9,  share:20, tier:2},
+      {region:'Rest of World', flag:'🌍', rev:16.4,  share:10, tier:3}
+    ],
+    insights:[
+      {date:'Oct 2024',year:'2024',cat:'R&D / Innovation',title:'Meta AI Assistant Reaches 500M Monthly Users',
+       source:'Meta Q3 2024 Earnings Call',
+       summary:'Meta AI, powered by Llama 3.1, reached 500 million monthly active users across Facebook, Instagram, WhatsApp and Messenger — making it one of the most widely used AI assistants globally within one year of launch.',
+       tags:['AI','Meta AI','Llama']},
+      {date:'Sep 2024',year:'2024',cat:'Product',title:'Orion AR Glasses Prototype Unveiled',
+       source:'Meta Connect 2024',
+       summary:'Meta unveiled Orion, a true AR glasses prototype with holographic display, camera, and microphone. CEO Zuckerberg called it "the most advanced AR glasses ever built" — the first steps toward a consumer launch in the late 2020s.',
+       tags:['AR/VR','Orion','Hardware']},
+      {date:'Apr 2024',year:'2024',cat:'R&D / Innovation',title:'Llama 3 Open-Source Model Released',
+       source:'Meta AI Blog',
+       summary:'Meta released Llama 3 as an open-weight model, instantly becoming one of the most downloaded AI models globally. The open-source strategy differentiates Meta from OpenAI and Google while building a large developer ecosystem.',
+       tags:['AI','Llama','Open Source']},
+      {date:'Nov 2023',year:'2023',cat:'Product',title:'Meta Quest 3 Launches at $499',
+       source:'Meta Connect 2023',
+       summary:'Meta Quest 3 mixed-reality headset launched at $499 with Meta\'s own Snapdragon XR2 Gen 2 chip, offering full-color passthrough and significant performance improvements over Quest 2.',
+       tags:['VR','Quest','Hardware']},
+      {date:'Jan 2023',year:'2023',cat:'Sales & Distribution',title:'Year of Efficiency — 21,000 Jobs Cut',
+       source:'Meta Press Release',
+       summary:'Meta implemented its "Year of Efficiency" with major cost restructuring. Employee count dropped by ~21,000 and the operational shift drove dramatic margin improvement — operating margin recovered from 25% to 35%+.',
+       tags:['Efficiency','Restructuring','Margins']},
+      {date:'Oct 2021',year:'2021',cat:'Product',title:'Facebook Rebrands to Meta Platforms',
+       source:'Meta Connect 2021',
+       summary:'Mark Zuckerberg announced the rebrand of Facebook Inc to Meta Platforms, signaling a strategic pivot toward the metaverse. Reality Labs was formalized as a separate segment with dedicated P&L.',
+       tags:['Rebrand','Metaverse','Strategy']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'Reels & Short-Form Video',desc:'Meta aggressively pushed Reels on Instagram and Facebook to counter TikTok, investing in creator tools, monetization, and algorithmic distribution for short-form video content.',type:'Platform Enhancement'},
+      {year:'2021',title:'Metaverse Rebrand & Reality Labs',desc:'Meta formally rebranded from Facebook Inc and announced multi-billion dollar annual investments in AR/VR hardware (Quest headsets) and metaverse platforms (Horizon Worlds).',type:'New Market Entry'},
+      {year:'2022',title:'Advantage+ AI Advertising',desc:'Meta launched Advantage+ AI-driven ad products, automating campaign optimization and significantly improving ROAS for advertisers — partially offsetting the iOS ATT privacy headwinds.',type:'Monetization'},
+      {year:'2023',title:'Year of Efficiency & AI Investment',desc:'Cost discipline reduced headcount by 21,000 and compressed opex, driving dramatic margin recovery. Simultaneously, Meta launched the Llama open-source AI model series.',type:'Efficiency & AI'},
+      {year:'2024',title:'Meta AI Across All Apps',desc:'Meta AI assistant powered by Llama 3.1 was integrated across Facebook, Instagram, WhatsApp and Messenger. The AI-driven content recommendation engine improved engagement metrics significantly.',type:'AI Integration'},
+      {year:'2025',title:'Orion AR & AI Superintelligence Labs',desc:'Meta unveiled Orion AR glasses prototype and established Meta Superintelligence Labs with AGI as an explicit goal. Multiple AI talent acquisitions were completed.',type:'Platform Expansion'}
+    ],
+    launchTimeline:[
+      {date:'Q4 2020',cat:'Platform',    title:'Facebook Shops',desc:'Social commerce layer enabling merchants to sell directly via Facebook and Instagram.',tags:['Commerce','Advertising']},
+      {date:'Q3 2021',cat:'New Product', title:'Ray-Ban Stories Smart Glasses',desc:'Collaboration with EssilorLuxottica — camera-equipped smart glasses.',tags:['Hardware','AR']},
+      {date:'Q4 2021',cat:'Platform',    title:'Meta Rebrand & Horizon Worlds',desc:'Facebook Inc rebrands to Meta; Horizon Worlds metaverse platform launches.',tags:['Metaverse','Rebrand']},
+      {date:'Q4 2022',cat:'AI Feature',  title:'Advantage+ AI Ads',desc:'AI-automated advertising suite improving ROAS for performance marketers.',tags:['AI','Advertising']},
+      {date:'Q4 2023',cat:'New Product', title:'Meta Quest 3',desc:'Mixed reality headset at $499 — flagship spatial computing device.',tags:['VR','Quest']},
+      {date:'Q2 2024',cat:'AI Feature',  title:'Llama 3 Open-Source Release',desc:'Open-weight AI model instantly top-ranked globally.',tags:['AI','Llama']},
+      {date:'Q3 2024',cat:'AI Feature',  title:'Meta AI in WhatsApp/Instagram',desc:'500M MAU AI assistant rollout across all Meta apps.',tags:['AI','Meta AI']},
+      {date:'Q3 2024',cat:'New Product', title:'Orion AR Prototype Reveal',desc:'True AR glasses with holographic display — consumer launch targeted late 2020s.',tags:['AR','Orion']}
+    ],
+    portfolioMatrix:[
+      {name:'Facebook',   segment:'Social',   revenue:57.0, growth:6.0,  stage:'Cash Cow',    color:'#3b82f6'},
+      {name:'Instagram',  segment:'Social',   revenue:62.0, growth:22.0, stage:'Growth Star',  color:'#8b5cf6'},
+      {name:'WhatsApp',   segment:'Messaging',revenue:24.0, growth:35.0, stage:'Growth Star',  color:'#10b981'},
+      {name:'Messenger',  segment:'Messaging',revenue:11.5, growth:10.0, stage:'Solid Performer',color:'#06b6d4'},
+      {name:'Reality Labs',segment:'AR/VR',   revenue:2.2,  growth:28.0, stage:'Question Mark',color:'#f59e0b'}
+    ],
+    inorganic:[
+      {date:'Feb 2020',type:'Acquisition',deal:'Scape Technologies',value:'Undisclosed',target:'Scape Technologies',rationale:'Computer vision mapping technology for AR development.',status:'Completed',impact:'Medium'},
+      {date:'Jun 2020',type:'Acquisition',deal:'Mapillary',value:'Undisclosed',target:'Mapillary',rationale:'Crowdsourced street-level imagery for AR and mapping features.',status:'Completed',impact:'Medium'},
+      {date:'Nov 2020',type:'Acquisition',deal:'Kustomer',value:'~$1B',target:'Kustomer',rationale:'CRM platform to enable business messaging and customer service on WhatsApp.',status:'Completed',impact:'Medium'},
+      {date:'Mar 2021',type:'Acquisition',deal:'BigBox VR',value:'Undisclosed',target:'BigBox VR',rationale:'VR gaming studio expanding Horizon Worlds content library.',status:'Completed',impact:'Medium'},
+      {date:'Sep 2022',type:'Acquisition',deal:'Camouflaj',value:'Undisclosed',target:'Camouflaj',rationale:'Iron Man VR studio acquisition expanding Quest gaming portfolio.',status:'Completed',impact:'Medium'},
+      {date:'Jun 2025',type:'Acquisition',deal:'Play AI',value:'Undisclosed',target:'Play AI',rationale:'Voice AI capabilities for Meta AI and Meta Superintelligence Labs.',status:'Completed',impact:'High'}
+    ],
+    rdData:{
+      investment:[18.4, 24.7, 35.3, 38.5, 43.9, 47.0],
+      areas:['AI & Machine Learning','AR/VR (Reality Labs)','Ads Technology','Infrastructure','Content & Safety','Blockchain/Web3'],
+      areaVals:[32, 25, 18, 14, 8, 3]
+    }
+  },
+
+  nvidia: {
+    id:'nvidia', name:'Nvidia', ticker:'NVDA', exchange:'NASDAQ',
+    hq:'Santa Clara, 🇺🇸', color:'#f59e0b', initials:'N',
+    sector:'Semiconductors & AI Infrastructure',
+    founded:1993, employees:'~29,600', ceo:'Jensen Huang', website:'nvidia.com',
+    description:'Nvidia designs and markets graphics processing units (GPUs) and system-on-chip units for gaming, professional visualization, data center AI, and automotive applications. The company\'s CUDA software platform created a de facto standard for GPU-accelerated computing, giving Nvidia an estimated 80–90% share of the AI accelerator market. Demand for its H100 and H200 data center GPUs has driven an extraordinary revenue surge — from $11B in FY2020 to over $130B in FY2025.',
+    revenue2024:60.9, marketCap:'$3.3T', rating:4.6,
+    kpis:[
+      {label:'Revenue FY2024',    val:'$60.9B',  delta:'+125.9%',dir:'up',      color:'blue'},
+      {label:'Gross Margin',      val:'72.7%',   delta:'+11pp', dir:'up',       color:'green'},
+      {label:'Net Income FY2024', val:'$29.8B',  delta:'+581%', dir:'up',       color:'indigo'},
+      {label:'Composite Score',   val:'4.6/5',   delta:'Leader',dir:'neutral',  color:'amber'}
+    ],
+    revenues: [10.9,  16.7,  26.9,  27.0,  60.9,  130.5],
+    ebitda:   [27.1,  37.0,  43.0,  20.0,  58.0,  65.5 ],
+    netIncome:[2.8,   4.3,   9.8,   4.4,   29.8,  72.9 ],
+    revGrowth:[52.7,  52.7,  61.4,  0.2,   125.9, 114.2],
+    eps:      [1.13,  1.74,  3.85,  1.74,  11.93, 29.04],
+    netMargin:[25.6,  25.8,  36.4,  16.2,  48.9,  55.9 ],
+    years:    [2020,  2021,  2022,  2023,  2024,  2025  ],
+    topProducts:[
+      {name:'Data Center GPUs (H100/H200)',segment:'AI Compute',    share:56, color:'#f59e0b'},
+      {name:'GeForce Gaming GPUs',         segment:'Gaming',        share:22, color:'#10b981'},
+      {name:'Professional Visualization',  segment:'Pro Graphics',  share:6,  color:'#8b5cf6'},
+      {name:'Automotive (DRIVE)',           segment:'Automotive AI', share:5,  color:'#3b82f6'},
+      {name:'OEM & Other',                 segment:'Other',         share:11, color:'#ef4444'}
+    ],
+    segments:[
+      {name:'Data Center', pct:56, icon:'🖥️'},
+      {name:'Gaming',      pct:22, icon:'🎮'},
+      {name:'Professional',pct:6,  icon:'🎨'},
+      {name:'Automotive',  pct:5,  icon:'🚗'},
+      {name:'Other',       pct:11, icon:'📦'}
+    ],
+    geoData:[
+      {region:'North America', flag:'🌎', rev:30.5, share:50, tier:1},
+      {region:'Asia Pacific',  flag:'🌏', rev:21.3, share:35, tier:1},
+      {region:'Europe',        flag:'🇪🇺', rev:6.1,  share:10, tier:2},
+      {region:'Rest of World', flag:'🌍', rev:3.0,  share:5,  tier:3}
+    ],
+    insights:[
+      {date:'Mar 2024',year:'2024',cat:'Product',title:'H200 GPU Ships — 2x Memory Bandwidth vs H100',
+       source:'Nvidia GTC 2024',
+       summary:'Nvidia began shipping the H200 Tensor Core GPU featuring HBM3e memory with 141GB capacity and 4.8TB/s bandwidth — roughly double the H100. Hyperscalers including Microsoft, Google, Amazon and Meta placed immediate large-scale orders.',
+       tags:['GPU','H200','Data Center']},
+      {date:'Mar 2024',year:'2024',cat:'R&D / Innovation',title:'Blackwell Architecture Unveiled at GTC',
+       source:'Nvidia GTC 2024',
+       summary:'Jensen Huang unveiled the Blackwell GPU architecture — the successor to Hopper. The B100 and B200 GPUs offer 5x the AI training performance of H100. Blackwell is expected to drive $100B+ in data center revenue in FY2026.',
+       tags:['Blackwell','GPU','Architecture']},
+      {date:'Oct 2023',year:'2023',cat:'R&D / Innovation',title:'NIM Microservices Enable Enterprise AI Deployment',
+       source:'Nvidia Blog',
+       summary:'Nvidia launched NIM (Nvidia Inference Microservices) to simplify enterprise AI deployment. The containerized microservices allow companies to run Nvidia-optimized AI models on any infrastructure, broadening the CUDA moat.',
+       tags:['NIM','Enterprise','AI Platform']},
+      {date:'May 2023',year:'2023',cat:'Sales & Distribution',title:'Nvidia Market Cap Crosses $1 Trillion',
+       source:'Bloomberg',
+       summary:'Nvidia became the first semiconductor company to reach a $1 trillion market capitalization, driven by unprecedented demand for H100 GPUs for generative AI training. Jensen Huang credited the generative AI inflection point.',
+       tags:['Market Cap','Milestone','AI Demand']},
+      {date:'Sep 2022',year:'2022',cat:'Product',title:'H100 Hopper GPU Sets AI Benchmark Records',
+       source:'Nvidia Hotchips 2022',
+       summary:'The H100 Hopper GPU delivered 6x the AI performance of its predecessor A100, instantly becoming the gold standard for LLM training. Waiting lists stretched to 6+ months at hyperscalers.',
+       tags:['H100','Hopper','AI']},
+      {date:'Apr 2020',year:'2020',cat:'Inorganic',title:'Mellanox Acquisition Closes — AI Networking Secured',
+       source:'Nvidia Press Release',
+       summary:'Nvidia completed its $6.9B acquisition of Mellanox Technologies, adding InfiniBand and Ethernet networking capabilities critical for AI cluster interconnects. The deal proved prescient as AI cluster scale exploded post-2022.',
+       tags:['M&A','Mellanox','Networking']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'Mellanox Integration & AI Networking',desc:'Nvidia integrated Mellanox\'s InfiniBand networking into its AI datacenter stack, creating a complete end-to-end AI infrastructure offering from GPUs to interconnects.',type:'Platform Expansion'},
+      {year:'2021',title:'Omniverse & Industrial Metaverse',desc:'Nvidia launched Omniverse — a real-time 3D simulation and collaboration platform targeting industrial digital twins, robotics simulation, and autonomous vehicle testing.',type:'New Market Entry'},
+      {year:'2022',title:'Hopper H100 — AI Infrastructure Standard',desc:'The H100 GPU established Nvidia as the definitive AI training hardware provider. CUDA\'s software lock-in deepened, creating a formidable competitive moat.',type:'Product Launch'},
+      {year:'2023',title:'AI Platform Beyond GPUs',desc:'Nvidia expanded beyond hardware with DGX Cloud, NeMo (LLM training platform), and DRIVE Thor for automotive. The software + services layer began contributing meaningfully to margins.',type:'Software Expansion'},
+      {year:'2024',title:'Blackwell & Sovereign AI',desc:'The Blackwell GPU architecture was unveiled with 5x H100 performance. Nvidia also promoted "Sovereign AI" — the concept of nations building their own AI infrastructure, opening new government markets.',type:'Next-Generation Platform'},
+      {year:'2025',title:'GB200 NVL72 Rack-Scale AI Systems',desc:'Nvidia shipped the GB200 NVL72, a rack-scale AI compute system combining 72 Blackwell GPUs and 36 Grace CPUs. The system targets frontier model training at unprecedented scale.',type:'System-Level Product'}
+    ],
+    launchTimeline:[
+      {date:'Q2 2020',cat:'Inorganic',   title:'Mellanox Acquisition ($6.9B)',desc:'AI networking stack acquisition — InfiniBand and Ethernet for GPU clusters.',tags:['M&A','Networking']},
+      {date:'Q4 2020',cat:'New Product', title:'A100 Ampere GPU',desc:'80GB HBM2e GPU becoming the AI data center standard before H100.',tags:['GPU','Data Center']},
+      {date:'Q3 2021',cat:'Platform',    title:'Omniverse EA Launch',desc:'Industrial metaverse and digital twin simulation platform.',tags:['Omniverse','3D']},
+      {date:'Q4 2022',cat:'New Product', title:'H100 Hopper GPU',desc:'6x AI performance over A100 — gold standard for LLM training.',tags:['H100','AI']},
+      {date:'Q2 2023',cat:'Platform',    title:'DGX Cloud AI Supercomputer',desc:'Cloud-based AI supercomputing as-a-service for enterprises.',tags:['Cloud','AI']},
+      {date:'Q1 2024',cat:'New Product', title:'H200 GPU (HBM3e)',desc:'2x memory bandwidth of H100 — immediate hyperscaler adoption.',tags:['H200','Data Center']},
+      {date:'Q1 2024',cat:'New Product', title:'Blackwell B100/B200 GPU',desc:'5x H100 performance — powering next generation frontier AI models.',tags:['Blackwell','GPU']},
+      {date:'Q1 2025',cat:'New Product', title:'GB200 NVL72 Rack System',desc:'Rack-scale AI system: 72 Blackwell GPUs + 36 Grace CPUs.',tags:['Blackwell','Systems']}
+    ],
+    portfolioMatrix:[
+      {name:'H100/H200 Data Center',segment:'AI Compute',   revenue:47.5, growth:218.0,stage:'Growth Star',  color:'#f59e0b'},
+      {name:'GeForce RTX 40 Series',segment:'Gaming',       revenue:10.0, growth:2.0,  stage:'Cash Cow',    color:'#10b981'},
+      {name:'NVIDIA DRIVE Platform', segment:'Automotive',  revenue:1.1,  growth:80.0, stage:'Growth Star',  color:'#3b82f6'},
+      {name:'Quadro/RTX Pro',        segment:'Pro Viz',     revenue:1.6,  growth:7.0,  stage:'Solid Performer',color:'#8b5cf6'},
+      {name:'Omniverse/Software',    segment:'Platform',    revenue:0.8,  growth:40.0, stage:'Question Mark',color:'#ef4444'}
+    ],
+    inorganic:[
+      {date:'Apr 2020',type:'Acquisition',deal:'Mellanox Technologies',value:'$6.9B',target:'Mellanox',rationale:'InfiniBand and Ethernet networking — critical for AI cluster interconnects.',status:'Completed',impact:'High'},
+      {date:'Sep 2020',type:'Acquisition',deal:'Cumulus Networks',value:'Undisclosed',target:'Cumulus Networks',rationale:'Network operating system for AI data center fabric management.',status:'Completed',impact:'Medium'},
+      {date:'Apr 2021',type:'Acquisition',deal:'DeepMap',value:'Undisclosed',target:'DeepMap',rationale:'HD mapping technology for autonomous driving and DRIVE platform.',status:'Completed',impact:'Medium'},
+      {date:'Jan 2022',type:'Acquisition',deal:'Bright Computing',value:'Undisclosed',target:'Bright Computing',rationale:'HPC cluster management to simplify AI infrastructure deployment.',status:'Completed',impact:'Medium'},
+      {date:'Jul 2024',type:'Acquisition',deal:'Run:ai',value:'~$700M',target:'Run:ai',rationale:'Kubernetes-native GPU orchestration to optimize AI workload scheduling.',status:'Completed',impact:'High'},
+      {date:'Feb 2025',type:'Acquisition',deal:'SchedMD (Slurm)',value:'Undisclosed',target:'SchedMD',rationale:'Open-source workload scheduler widely used in HPC and AI clusters.',status:'Completed',impact:'Medium'}
+    ],
+    rdData:{
+      investment:[2.8, 3.9, 5.3, 7.3, 8.7, 14.0],
+      areas:['GPU Architecture','AI Software (CUDA/cuDNN)','Autonomous Vehicles','Networking (InfiniBand)','Robotics & Omniverse','Professional Graphics'],
+      areaVals:[35, 28, 12, 12, 8, 5]
+    }
+  },
+
+  sandisk: {
+    id:'sandisk', name:'Sandisk', ticker:'SNDK', exchange:'NASDAQ',
+    hq:'Milpitas, 🇺🇸', color:'#ef4444', initials:'S',
+    sector:'Flash Memory & Data Storage',
+    founded:1988, employees:'~10,000', ceo:'David Goeckeler', website:'sandisk.com',
+    description:'Sandisk is a global flash memory and solid-state storage company spun off from Western Digital in February 2025. It designs and sells NAND-based products including consumer flash storage (SD cards, USB drives), consumer and enterprise SSDs, and embedded flash memory for mobile devices and IoT. Sandisk operates its own NAND fabrication through a joint venture with Kioxia, giving it vertical integration across the flash value chain.',
+    revenue2024:6.7, marketCap:'$235B', rating:3.6,
+    kpis:[
+      {label:'Revenue FY2024',    val:'$6.7B',   delta:'+9.4%', dir:'up',      color:'blue'},
+      {label:'Gross Margin',      val:'16.1%',   delta:'+2pp',  dir:'up',      color:'green'},
+      {label:'Net Income FY2024', val:'-$0.7B',  delta:'Loss',  dir:'down',    color:'red'},
+      {label:'Composite Score',   val:'3.6/5',   delta:'Growing',dir:'neutral',color:'amber'}
+    ],
+    revenues: [5.2,  5.6,  9.75, 6.09, 6.7,  8.2  ],
+    ebitda:   [17.3, 19.6, 22.1, 8.0,  9.2,  15.0 ],
+    netIncome:[0.5,  0.6,  0.7,  -1.5, -0.7, 0.8  ],
+    revGrowth:[5.0,  7.7,  74.1,-37.5, 10.0, 22.4 ],
+    eps:      [2.10, 2.52, 2.94, -6.30,-2.92, 3.35],
+    netMargin:[9.6,  10.7, 7.2, -24.6,-10.4, 9.8  ],
+    years:    [2020,  2021, 2022, 2023, 2024, 2025 ],
+    topProducts:[
+      {name:'Consumer SSDs (WD_BLACK / SanDisk)',segment:'Consumer Storage',share:30, color:'#ef4444'},
+      {name:'Memory Cards & USB',                segment:'Consumer Flash', share:25, color:'#3b82f6'},
+      {name:'Enterprise SSDs',                   segment:'Enterprise',     share:22, color:'#10b981'},
+      {name:'Embedded Flash (eMMC/UFS)',         segment:'Mobile & IoT',   share:15, color:'#f59e0b'},
+      {name:'Wafer Sales',                       segment:'Component',      share:8,  color:'#8b5cf6'}
+    ],
+    segments:[
+      {name:'Consumer Flash',  pct:55, icon:'💾'},
+      {name:'Enterprise Flash',pct:22, icon:'🖥️'},
+      {name:'Mobile/IoT',      pct:15, icon:'📱'},
+      {name:'Wafer/OEM',       pct:8,  icon:'⚙️'}
+    ],
+    geoData:[
+      {region:'North America', flag:'🌎', rev:2.0, share:30, tier:1},
+      {region:'Asia Pacific',  flag:'🌏', rev:2.7, share:40, tier:1},
+      {region:'Europe',        flag:'🇪🇺', rev:1.3, share:20, tier:2},
+      {region:'Rest of World', flag:'🌍', rev:0.7, share:10, tier:3}
+    ],
+    insights:[
+      {date:'Feb 2025',year:'2025',cat:'Product',title:'Sandisk Completes Spin-Off from Western Digital',
+       source:'Western Digital Press Release',
+       summary:'Western Digital completed the spin-off of Sandisk Corporation as an independent public company trading as SNDK on NASDAQ. The separation gives Sandisk focus on flash storage without the competing priorities of hard disk drives.',
+       tags:['Spin-Off','Independence','SNDK']},
+      {date:'Aug 2024',year:'2024',cat:'Product',title:'WD_BLACK SN850X PCIe Gen 4 NVMe Achieves 7.3 GB/s',
+       source:'Sandisk/WD Product Page',
+       summary:'The WD_BLACK SN850X (rebranded under Sandisk post spin-off) set a consumer NVMe benchmark at 7.3 GB/s sequential read speeds. The product targets gaming enthusiasts and creative professionals, commanding premium pricing.',
+       tags:['SSD','NVMe','Gaming']},
+      {date:'Jun 2024',year:'2024',cat:'R&D / Innovation',title:'BiCS8 NAND Gen Achieves Record Bit Density',
+       source:'Kioxia-Sandisk JV Announcement',
+       summary:'Sandisk and Kioxia\'s joint NAND fabrication JV announced the BiCS8 generation of 3D NAND flash, achieving record bit density at reduced cost per GB. The technology underpins the next generation of both consumer and enterprise SSDs.',
+       tags:['NAND','BiCS8','Technology']},
+      {date:'Jan 2024',year:'2024',cat:'Sales & Distribution',title:'Enterprise SSD Wins in AI Storage Infrastructure',
+       source:'Sandisk Investor Day',
+       summary:'Sandisk won several large AI infrastructure storage contracts — positioning its enterprise NVMe SSDs as complementary to GPU compute in hyperscale AI data centers. Storage is a growing bottleneck in AI workloads.',
+       tags:['Enterprise','AI','Data Center']},
+      {date:'Sep 2022',year:'2022',cat:'Product',title:'NAND Market Downturn Hits Margins Sharply',
+       source:'Western Digital FY2023 Earnings',
+       summary:'A severe NAND price downturn beginning in late 2022 caused flash storage revenues to drop ~38% YoY in 2023. Gross margins fell into single digits as oversupply flooded the market — driving a strategic review that led to the spin-off.',
+       tags:['NAND','Market Downturn','Margins']},
+      {date:'Aug 2020',year:'2020',cat:'R&D / Innovation',title:'Western Digital/Sandisk Pioneering 3D NAND at 112L',
+       source:'Western Digital Technology Blog',
+       summary:'Sandisk and WD announced mass production of 112-layer 3D NAND, offering a 20% improvement in cost per bit over the prior generation. This underpinned competitive positioning across SSD product lines through 2022.',
+       tags:['NAND','3D Flash','Manufacturing']}
+    ],
+    productStrategy:[
+      {year:'2020',title:'112-Layer 3D NAND Scale-Up',desc:'Ramped mass production of 112-layer BiCS4 NAND, achieving significant cost per bit improvements across consumer and enterprise SSD product lines.',type:'Manufacturing Advance'},
+      {year:'2021',title:'SSD Portfolio Expansion',desc:'Expanded the WD_BLACK gaming SSD line and SanDisk consumer SSD range. Grew embedded flash market share in smartphone and IoT segments.',type:'Portfolio Expansion'},
+      {year:'2022',title:'BiCS6 162-Layer NAND Development',desc:'Began qualification of 162-layer BiCS6 NAND, targeting the highest density enterprise SSDs for data center and AI storage applications.',type:'Technology Development'},
+      {year:'2023',title:'Cost Structure Defense in Downturn',desc:'NAND prices collapsed. Sandisk/WD responded with production cuts, inventory drawdowns, and margin protection measures while accelerating enterprise SSD wins.',type:'Defensive Strategy'},
+      {year:'2024',title:'Enterprise AI Storage Focus',desc:'Positioned enterprise NVMe SSDs as AI data center infrastructure components alongside GPUs. Targeted hyperscaler AI storage contracts as a growth vector.',type:'Market Repositioning'},
+      {year:'2025',title:'Independence & Brand Consolidation',desc:'Post spin-off, Sandisk unified the WD_BLACK, SanDisk, and G-Technology brands under the Sandisk corporate umbrella. Focused on profitable enterprise segments and consumer premium products.',type:'Brand Strategy'}
+    ],
+    launchTimeline:[
+      {date:'Q3 2020',cat:'New Product',  title:'SanDisk Extreme Pro 2TB SSD',desc:'Portable NVMe SSD with 2000 MB/s read — premium consumer product.',tags:['SSD','Consumer']},
+      {date:'Q1 2021',cat:'New Product',  title:'WD_BLACK SN850 PCIe Gen 4',desc:'Flagship gaming NVMe SSD targeting PS5 and high-end gaming PCs.',tags:['SSD','Gaming']},
+      {date:'Q3 2022',cat:'Technology',   title:'BiCS5 112L NAND Mass Production',desc:'Next-gen NAND enabling 8TB consumer SSDs at competitive pricing.',tags:['NAND','Manufacturing']},
+      {date:'Q2 2023',cat:'New Product',  title:'WD_BLACK SN850X Launch',desc:'Refreshed flagship NVMe SSD with 7,300 MB/s — top gaming benchmark.',tags:['SSD','NVMe']},
+      {date:'Q4 2024',cat:'Technology',   title:'BiCS8 NAND Qualification',desc:'Record density 3D NAND enabling sub-$0.10/GB enterprise SSDs.',tags:['NAND','BiCS8']},
+      {date:'Q1 2025',cat:'Corporate',    title:'Spin-Off from Western Digital',desc:'Sandisk listed on NASDAQ as independent company (SNDK).',tags:['Spin-Off','SNDK']}
+    ],
+    portfolioMatrix:[
+      {name:'WD_BLACK NVMe SSD',   segment:'Gaming',    revenue:1.5, growth:8.0,  stage:'Solid Performer',color:'#ef4444'},
+      {name:'SanDisk Consumer',    segment:'Consumer',  revenue:1.6, growth:3.0,  stage:'Cash Cow',    color:'#3b82f6'},
+      {name:'Enterprise NVMe SSD', segment:'Enterprise',revenue:1.5, growth:20.0, stage:'Growth Star',  color:'#10b981'},
+      {name:'eMMC/UFS Embedded',   segment:'Mobile',    revenue:1.0, growth:5.0,  stage:'Solid Performer',color:'#f59e0b'},
+      {name:'Wafer/OEM Sales',     segment:'Component', revenue:0.5, growth:-5.0, stage:'Mature',       color:'#8b5cf6'}
+    ],
+    inorganic:[
+      {date:'Jul 2014',type:'Acquisition',deal:'Fusion-io',value:'$1.1B',target:'Fusion-io',rationale:'Flash-based PCIe storage technology to enter enterprise SSD market.',status:'Completed',impact:'High'},
+      {date:'Feb 2025',type:'Corporate',  deal:'Western Digital Spin-Off',value:'N/A',target:'Sandisk Corp',rationale:'Strategic separation to unlock shareholder value and focus on flash storage.',status:'Completed',impact:'High'}
+    ],
+    rdData:{
+      investment:[0.62, 0.70, 0.85, 0.95, 1.06, 1.15],
+      areas:['NAND Flash Architecture','Enterprise SSD','Consumer SSD','Embedded Flash','Controller Silicon','Software & Firmware'],
+      areaVals:[30, 22, 20, 14, 8, 6]
+    }
+  }
 };
-const BENCH_PEERS = ['Fiserv','FIS','Jack Henry','Temenos','Finastra','NCR Atleos'];
-const BENCH_COLORS = {'Fiserv':'#3b82f6','FIS':'#8b5cf6','Jack Henry':'#10b981','Temenos':'#f59e0b','Finastra':'#ef4444','NCR Atleos':'#06b6d4'};
+
+const BENCH_PEERS = ['Apple','Alphabet','Meta','Nvidia','Sandisk'];
+
+const BENCH_COLORS = {
+  'Apple':'#3b82f6',
+  'Alphabet':'#10b981',
+  'Meta':'#8b5cf6',
+  'Nvidia':'#f59e0b',
+  'Sandisk':'#ef4444'
+};
+
 const BENCH_FEATURES = [
-{feature:'Core Account Processing',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},{feature:'Digital Banking',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':'partial'},{feature:'Merchant Acquiring & POS',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:'partial',Finastra:'partial','NCR Atleos':false},{feature:'Payment Hub / Treasury',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:'partial',Finastra:true,'NCR Atleos':false},{feature:'Card Issuing & Processing',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:'partial',Finastra:'partial','NCR Atleos':false},{feature:'ATM / ITM Hardware',cat:'Self-Service',Fiserv:false,FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},{feature:'Cloud-native / SaaS Core',cat:'Cloud',Fiserv:'partial',FIS:'partial','Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},{feature:'Real-time Payments',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':'partial'},{feature:'AI / Analytics',cat:'Innovation',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':'partial'},{feature:'Open APIs / Ecosystem',cat:'Platform',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':'partial'}
+  {feature:'AI / Machine Learning Platform',    cat:'Technology', Apple:true,   Alphabet:true,  Meta:true,    Nvidia:true,   Sandisk:false},
+  {feature:'Cloud Services',                    cat:'Technology', Apple:'partial',Alphabet:true, Meta:'partial',Nvidia:'partial',Sandisk:false},
+  {feature:'Consumer Hardware Products',        cat:'Products',   Apple:true,   Alphabet:true,  Meta:true,    Nvidia:true,   Sandisk:true},
+  {feature:'Enterprise Hardware / Solutions',   cat:'Products',   Apple:'partial',Alphabet:true, Meta:false,   Nvidia:true,   Sandisk:true},
+  {feature:'Digital Advertising Platform',      cat:'Revenue',    Apple:'partial',Alphabet:true, Meta:true,    Nvidia:false,  Sandisk:false},
+  {feature:'Subscription / Services Revenue',   cat:'Revenue',    Apple:true,   Alphabet:true,  Meta:'partial',Nvidia:'partial',Sandisk:false},
+  {feature:'Semiconductor Design (In-house)',   cat:'Technology', Apple:true,   Alphabet:true,  Meta:true,    Nvidia:true,   Sandisk:true},
+  {feature:'Retail / Direct-to-Consumer Stores',cat:'Distribution',Apple:true,  Alphabet:'partial',Meta:false,Nvidia:false,  Sandisk:false},
+  {feature:'Social / Community Platform',       cat:'Products',   Apple:'partial',Alphabet:'partial',Meta:true,Nvidia:false,  Sandisk:false},
+  {feature:'Autonomous / Self-Driving Tech',    cat:'Technology', Apple:'partial',Alphabet:true, Meta:false,   Nvidia:true,   Sandisk:false},
+  {feature:'AR / VR Hardware or Software',      cat:'Products',   Apple:true,   Alphabet:'partial',Meta:true,  Nvidia:'partial',Sandisk:false},
+  {feature:'Open-Source AI Model Program',      cat:'Technology', Apple:false,  Alphabet:'partial',Meta:true,  Nvidia:true,   Sandisk:false},
+  {feature:'NAND / Flash Memory Manufacturing', cat:'Technology', Apple:false,  Alphabet:false, Meta:false,   Nvidia:false,  Sandisk:true},
+  {feature:'Health & Wearable Technology',      cat:'Products',   Apple:true,   Alphabet:true,  Meta:false,   Nvidia:false,  Sandisk:false}
 ];
-const BENCH_PROFILE_ATTRS = [{attr:'HQ',Fiserv:'Milwaukee, US',FIS:'Jacksonville, US','Jack Henry':'Monett, US',Temenos:'Geneva, CH',Finastra:'London, UK','NCR Atleos':'Atlanta, US'},{attr:'Primary Focus',Fiserv:'Payments + banking',FIS:'Banking + payments','Jack Henry':'Community FI tech',Temenos:'Cloud core banking',Finastra:'Banking software','NCR Atleos':'ATM/self-service'},{attr:'Ownership',Fiserv:'Public',FIS:'Public','Jack Henry':'Public',Temenos:'Public',Finastra:'Private','NCR Atleos':'Public'},{attr:'Cloud Stance',Fiserv:'Cloud-ready',FIS:'Modernization','Jack Henry':'PaaS expansion',Temenos:'Cloud-native',Finastra:'Cloud-ready','NCR Atleos':'Device + cloud'},{attr:'Core Banking',Fiserv:'Signature / Finxact',FIS:'Profile / Bancs','Jack Henry':'SilverLake / Symitar',Temenos:'Transact',Finastra:'Fusion','NCR Atleos':'Not primary'},{attr:'Merchant POS',Fiserv:'Clover',FIS:'Merchant solutions','Jack Henry':'Partnered',Temenos:'Limited',Finastra:'Limited','NCR Atleos':'Not primary'},{attr:'Innovation Focus',Fiserv:'AI, cloud, payments',FIS:'Cloud, payments','Jack Henry':'Security, cloud',Temenos:'AI, cloud core',Finastra:'Payments AI','NCR Atleos':'Self-service design'},{attr:'ATM Hardware',Fiserv:'No',FIS:'Limited','Jack Henry':'No',Temenos:'No',Finastra:'No','NCR Atleos':'Primary'}];
-const MARKET_EVENTS = [{co:'Fiserv',color:'#3b82f6',title:'Microsoft AI collaboration',date:'Jan 2026',type:'Product',summary:'Collaboration to accelerate AI-led innovation.',tags:['AI','Cloud']},{co:'FIS',color:'#8b5cf6',title:'Worldpay portfolio transaction',date:'Jan 2026',type:'Corporate',summary:'Portfolio-focused transaction with Global Payments.',tags:['Portfolio']},{co:'Jack Henry',color:'#10b981',title:'Payrailz integration',date:'Aug 2022',type:'M&A',summary:'Payments-as-a-service capability added.',tags:['Payments']},{co:'Temenos',color:'#f59e0b',title:'AI banking orchestration',date:'2024',type:'Product',summary:'Cloud-native and AI platform strategy advanced.',tags:['AI']},{co:'Finastra',color:'#ef4444',title:'OperatorAssist launch',date:'Mar 2026',type:'Product',summary:'AI-based payments operations assistant launched.',tags:['Payments','AI']},{co:'NCR Atleos',color:'#06b6d4',title:'Dual-sided ATM concept',date:'Jan 2026',type:'Product',summary:'Modern ATM concept with AI-assisted design.',tags:['ATM']},{co:'Fiserv',color:'#3b82f6',title:'Finxact acquisition',date:'Feb 2022',type:'M&A',summary:'Cloud-native core banking platform added.',tags:['M&A','Core']}];
-const BENCH_CUST = {Fiserv:{enterprise:'Large financial institutions, national merchants and enterprise commerce clients.',midmarket:'Regional banks, multi-location merchants and growing enterprises.',smb:'Small merchants use Clover and payment acceptance products.',gov:'Public-sector and government payment programs.',partners:'Fintechs, ISVs and financial-institution partners.'},FIS:{enterprise:'Global banks, payments providers and capital-markets firms.',midmarket:'Regional financial institutions and payment providers.',smb:'Typically served through financial-institution and partner channels.',gov:'Selected public-sector payment and banking programs.',partners:'Banks, fintechs and technology partners.'},'Jack Henry':{enterprise:'Large community-bank and credit-union groups.',midmarket:'Regional banks and credit unions.',smb:'Indirect reach via financial-institution clients.',gov:'Limited direct focus.',partners:'Financial institution, fintech and cloud partners.'},Temenos:{enterprise:'Global and multinational banks.',midmarket:'Regional banks and digital challengers.',smb:'Primarily served through bank clients.',gov:'Limited direct focus.',partners:'Banking software ecosystem and SI partners.'},Finastra:{enterprise:'Banks, payment institutions and corporate treasury clients.',midmarket:'Regional banks, credit unions and lenders.',smb:'Indirect reach through bank clients.',gov:'Selective public financial institutions.',partners:'Banking, payments and technology ecosystem.'},'NCR Atleos':{enterprise:'Major banks, ATM operators and retailers.',midmarket:'Regional banks and retail networks.',smb:'Indirect support through ATM networks.',gov:'Public cash-access and financial-inclusion use cases.',partners:'Financial institutions, retailers and managed-service partners.'}};
+
+const BENCH_PROFILE_ATTRS = [
+  {attr:'HQ',          Apple:'Cupertino, 🇺🇸',      Alphabet:'Mountain View, 🇺🇸',  Meta:'Menlo Park, 🇺🇸',   Nvidia:'Santa Clara, 🇺🇸',  Sandisk:'Milpitas, 🇺🇸'},
+  {attr:'Founded',     Apple:'1976',                 Alphabet:'1998',                Meta:'2004',               Nvidia:'1993',               Sandisk:'1988'},
+  {attr:'CEO',         Apple:'Tim Cook',             Alphabet:'Sundar Pichai',       Meta:'Mark Zuckerberg',    Nvidia:'Jensen Huang',       Sandisk:'David Goeckeler'},
+  {attr:'Employees',   Apple:'~166,000',             Alphabet:'~190,000',            Meta:'~72,000',            Nvidia:'~29,600',            Sandisk:'~10,000'},
+  {attr:'Revenue FY24',Apple:'$391B',                Alphabet:'$350B',               Meta:'$164.5B',            Nvidia:'$60.9B',             Sandisk:'$6.7B'},
+  {attr:'Market Cap',  Apple:'$3.77T',               Alphabet:'$2.2T',               Meta:'$1.69T',             Nvidia:'$3.3T',              Sandisk:'$235B'},
+  {attr:'Ticker',      Apple:'AAPL',                 Alphabet:'GOOGL',               Meta:'META',               Nvidia:'NVDA',               Sandisk:'SNDK'},
+  {attr:'Sector',      Apple:'Consumer Tech',        Alphabet:'Internet / Cloud',    Meta:'Social Media / VR',  Nvidia:'Semiconductors',     Sandisk:'Flash Storage'},
+  {attr:'P/E Ratio',   Apple:'39.5x',                Alphabet:'~28x',                Meta:'~27x',               Nvidia:'51.6x (FY24)',       Sandisk:'17.6x'},
+  {attr:'Primary Moat',Apple:'Ecosystem Lock-In',    Alphabet:'Search Dominance',    Meta:'Network Effect',     Nvidia:'CUDA / GPU Stack',   Sandisk:'NAND JV / Brand'}
+];
+
+const MARKET_EVENTS = [
+  {co:'Apple',    color:'#3b82f6', title:'Apple Intelligence & iPhone 16 Launch',
+   date:'Sep 10, 2024', type:'Product Launch',
+   summary:'Apple unveiled iPhone 16 with on-device AI features powered by the A18 chip. Apple Intelligence became the company\'s AI platform across iPhone, iPad and Mac.',
+   tags:['AI','iPhone','Product']},
+  {co:'Nvidia',   color:'#f59e0b', title:'Blackwell GPU Architecture Unveiled at GTC',
+   date:'Mar 18, 2024', type:'Product Launch',
+   summary:'Jensen Huang revealed the Blackwell GPU architecture at GTC 2024. The B200 GPU delivers 5x H100 AI performance, driving hyperscaler demand and stock gains exceeding 200% for the year.',
+   tags:['GPU','Blackwell','AI']},
+  {co:'Meta',     color:'#8b5cf6', title:'Meta Reports 60%+ Net Income Growth in 2024',
+   date:'Feb 1, 2024',  type:'Earnings',
+   summary:'Meta\'s Year of Efficiency delivered dramatic margin improvement. 2024 operating margin reached 42%, and Meta announced a quarterly dividend for the first time, signaling confidence in sustainable profitability.',
+   tags:['Earnings','Margin','Dividend']},
+  {co:'Alphabet', color:'#10b981', title:'Alphabet Acquires Wiz for $32B',
+   date:'Mar 1, 2025',  type:'M&A',
+   summary:'Alphabet announced the acquisition of cloud security platform Wiz for $32 billion — the largest in Alphabet history — to strengthen Google Cloud\'s cybersecurity capabilities against Azure and AWS.',
+   tags:['M&A','Cloud','Security']},
+  {co:'Sandisk',  color:'#ef4444', title:'Sandisk Spins Off from Western Digital',
+   date:'Feb 24, 2025', type:'Corporate',
+   summary:'Western Digital completed the Sandisk spin-off, listing SNDK on NASDAQ. The independent company has $6.7B revenue and focuses exclusively on NAND flash memory and SSDs.',
+   tags:['Spin-Off','IPO','SNDK']},
+  {co:'Apple',    color:'#3b82f6', title:'Apple Vision Pro Launches at $3,499',
+   date:'Feb 2, 2024',  type:'Product Launch',
+   summary:'Apple Vision Pro went on sale, entering the spatial computing market. While initial volumes are modest, visionOS establishes Apple\'s next computing platform and developer ecosystem.',
+   tags:['Vision Pro','AR/VR','Hardware']},
+  {co:'Nvidia',   color:'#f59e0b', title:'Nvidia Crosses $3 Trillion Market Cap',
+   date:'Jun 5, 2024',  type:'Milestone',
+   summary:'Nvidia became the second company (after Apple and briefly Microsoft) to cross a $3 trillion market capitalization, driven by insatiable demand for H100/H200 GPUs for AI training.',
+   tags:['Market Cap','Milestone','AI']}
+];
+
+const BENCH_CUST = {
+  Apple:{
+    enterprise:'Fortune 500 enterprises deploy Macs, iPhones, and iPads with Apple Business Manager. Enterprise customers include IBM, Salesforce, and major financial institutions using Apple in professional workflows.',
+    midmarket:'Mid-market businesses use Apple devices via Apple Business Essentials for MDM, iCloud, and managed deployments. Growing adoption of iPhone for field service and healthcare applications.',
+    smb:'Small businesses adopt iPads for POS (Square, Clover), iPhones for client communication, and Macs for creative work. Apple Pay and Tap to Pay on iPhone lower payment infrastructure costs.',
+    gov:'US government agencies, military contractors, and intelligence agencies use iPhones and MacBooks with DoD-approved security configurations. Apple\'s secure enclave and FIPS compliance support classified environments.',
+    partners:'App Store ecosystem of 35M+ registered developers; enterprise resellers including CDW, Insight, and SHI; carrier partnerships with Verizon, AT&T, T-Mobile globally.'
+  },
+  Alphabet:{
+    enterprise:'Google Cloud enterprise customers include Target, Ford, Airbus, and Deutsche Bank. Google Workspace serves 10M+ paying businesses globally including Goldman Sachs and Spotify.',
+    midmarket:'Google Workspace and Google Cloud SMB tiers serve mid-market companies with HIPAA-compliant email, collaboration, and cloud infrastructure.',
+    smb:'Google Workspace Business Starter at $6/user serves SMBs globally. Google Ads is the default digital marketing platform for businesses of all sizes.',
+    gov:'Google Cloud FedRAMP High authorization supports US federal agencies. Google Public Sector division targets DoD, state, and local government workloads.',
+    partners:'Google Cloud Partner ecosystem includes Accenture, Deloitte, and 1,000+ ISVs. Android OEM partnerships with Samsung, Motorola, and Xiaomi.'
+  },
+  Meta:{
+    enterprise:'Enterprise customers use WhatsApp Business API for customer engagement (1M+ paying businesses). Meta Workplace serves internal enterprise communication for large organizations.',
+    midmarket:'Mid-market companies are core Meta Ads customers, using Advantage+ AI-automated campaigns for DTC e-commerce, mobile app installs, and lead generation.',
+    smb:'SMBs are Meta\'s largest advertiser cohort — 10M+ active advertisers. Instagram Shopping and Facebook Marketplace provide direct commerce channels.',
+    gov:'Limited direct government partnerships. Meta cooperates with election authorities for ad transparency and collaborates with law enforcement on cybercrime and CSAM detection.',
+    partners:'Meta Quest app developer ecosystem (thousands of VR app developers); WhatsApp Business Solution Providers (BSPs) for enterprise messaging; Oculus SDK developer program.'
+  },
+  Nvidia:{
+    enterprise:'Hyperscaler customers (Microsoft Azure, Google Cloud, AWS, Meta) account for ~40% of Data Center GPU revenue. Enterprise AI customers include medical imaging companies, financial services, and autonomous vehicle makers.',
+    midmarket:'Mid-size enterprises access Nvidia GPUs through DGX Cloud on Azure, Google Cloud, and AWS. NIM microservices lower the barrier to enterprise AI deployment.',
+    smb:'SMBs use cloud-hosted Nvidia A100/H100 instances for AI model fine-tuning. GeForce RTX workstations serve small creative studios and ML startups.',
+    gov:'US Department of Defense, DARPA, and national labs (Oak Ridge, Argonne) use DGX SuperPOD clusters for AI research. Sovereign AI programs serve national AI infrastructure needs.',
+    partners:'CUDA developer ecosystem of 5M+ developers; OEM partners including Dell, HP, Lenovo for DGX servers; automotive partners including Mercedes-Benz, Volvo, and Hyundai.'
+  },
+  Sandisk:{
+    enterprise:'Enterprise customers include hyperscalers, colocation providers, and AI data centers purchasing NVMe SSDs for storage-heavy workloads. OEM relationships with server manufacturers like Dell and HPE.',
+    midmarket:'Mid-market IT departments use WD_BLACK and SanDisk SSDs for workstation upgrades, NAS storage, and server refreshes. Channel distribution through CDW, Insight, and SHI.',
+    smb:'SMBs buy SanDisk SD cards, USB drives, and consumer SSDs through Amazon, Best Buy, and retail channels. Low price points and brand recognition drive impulse purchases.',
+    gov:'US government agencies use NAND-based SSDs in secure, ruggedized configurations. SanDisk\'s MilSpec-grade products serve defense and intelligence community storage needs.',
+    partners:'Retail distribution through Amazon, Best Buy, Walmart, and Costco globally. OEM supply to smartphone makers (Samsung, Apple) for embedded NAND. Kioxia JV for NAND fabrication.'
+  }
+};
+
 </script>
 <script>
 /* ==================== HELPERS ==================== */
@@ -2161,7 +2777,7 @@ function globalSearch(q) {
 window.addEventListener('load', () => {
   renderDashboard();
   renderCIPage();
-  showCompany('fiserv', document.querySelector('[data-co="fiserv"]'));
+  showCompany('apple', document.querySelector('[data-co="apple"]'));
 });
 window.addEventListener('resize', () => {
   const activePage = document.querySelector('.page.active');
