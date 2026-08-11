@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CompeteIQ v3.0 — Competitive Intelligence Portal (2026-08-11 08:16)</title>
+<title>CompeteIQ v5.0 — Competitive Intelligence Portal (2026-08-11 08:16)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
@@ -684,13 +684,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
      ══════════════════════════════════════════════════════════ -->
 <div id="main">
   <!-- TOP BAR -->
-  <!-- VERSION: v3.0 built 2026-08-11 08:16 -->
+  <!-- VERSION: v5.0 patched 2026-08-11 -->
 <div id="topbar">
     <div>
       <div class="topbar-title" id="topbar-title">Dashboard</div>
       <div class="topbar-subtitle" id="topbar-subtitle">Intelligence Overview · FY2023–FY2025</div>
     </div>
-    <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v3.0 · 2026-08-11 08:16</div>
+    <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v5.0 · 2026-08-11</div>
     <div class="topbar-actions">
       <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
       <button class="topbar-btn" onclick="exportPortal()">⬇ Export</button>
@@ -1283,7 +1283,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="card">
             <div class="card-header">
               <div>
-                <div class="card-title" data-fin-snap-title>Financial Snapshot &mdash; Revenue ($B)</div>
+                <div class="card-title" id="fin-snap-card-title" data-fin-snap-title>Financial Snapshot &mdash; Revenue ($B)</div>
                 <div class="card-subtitle" id="fin-snap-subtitle">Annual revenue trend</div>
               </div>
               <div style="display:flex;gap:5px;">
@@ -2498,48 +2498,18 @@ function renderPageCharts(pageId) {
    DASHBOARD
    ═══════════════════════════════════════════════════════════════ */
 function renderDashboard() {
-  LOG.info('RENDER','Dashboard');
-  filterNewsEvents('all', document.querySelector('#news-event-chips .chip-filter'));
-  // Companies grid
-  const grid=document.getElementById('dashboard-company-grid'); if(!grid) return;
-  grid.innerHTML='';
-  const wrapper=document.createElement('div'); wrapper.className='grid-2'; wrapper.style.marginBottom='10px';
-  BENCH_PEERS.forEach(id=>{
-    const co=COMPANIES_DATA[id];
-    const card=document.createElement('div'); card.className='co-analysis-card';
-    card.innerHTML=`
-      <div class="company-avatar" style="background:${co.color};">${co.initials}</div>
-      <div style="flex:1;"><div class="cac-name">${co.name}</div><div class="cac-sector">${co.sector}</div></div>
-      <div style="text-align:right;">
-        <div style="font-size:14px;font-weight:700;color:${co.color};">${co.latestRevenue}</div>
-        <div style="font-size:10.5px;color:#059669;">${co.kpis[0].change}</div>
-      </div>`;
-    card.onclick=()=>navigate('company',id); wrapper.appendChild(card);
-  });
-  grid.appendChild(wrapper);
-  const btn=document.createElement('button');
-  btn.className='topbar-btn primary'; btn.style.cssText='width:100%;margin-top:8px;justify-content:center;padding:8px 16px;font-size:12px;';
-  btn.innerHTML='🔍 Open Competitive Intelligence Analysis';
-  btn.onclick=()=>navigate('bench-overview'); grid.appendChild(btn);
-  // Tracker
-  const tracker=document.getElementById('tracker-list'); if(!tracker) return;
-  tracker.innerHTML='';
-  BENCH_PEERS.forEach(id=>{
-    const co=COMPANIES_DATA[id];
-    const last=co.revenues[co.revenues.length-1]; const prev=co.revenues[co.revenues.length-2]||last;
-    const chg=((last-prev)/prev*100).toFixed(1); const up=chg>0;
-    const card=document.createElement('div'); card.className='tracker-card';
-    card.innerHTML=`
-      <div class="company-avatar" style="background:${co.color};width:30px;height:30px;font-size:10px;border-radius:7px;">${co.initials}</div>
-      <div style="flex:1;"><div class="tc-name">${co.name}</div><div class="tc-sub">${co.ticker} · ${co.exchange}</div></div>
-      <div style="text-align:right;"><div class="tc-price">${co.latestRevenue}</div><div class="tc-chg ${up?'up':'down'}">${up?'▲':'▼'} ${Math.abs(chg)}% YoY</div></div>`;
-    card.onclick=()=>navigate('company',id); tracker.appendChild(card);
-  });
+  /* v5.0-patch: delegate to window.renderDashboard override defined below */
+  if(typeof window._renderDashboardImpl === 'function') {
+    window._renderDashboardImpl();
+  } else {
+    LOG.info('RENDER','Dashboard (pre-override stub)');
+    filterNewsEvents('all', document.querySelector('#news-event-chips .chip-filter'));
+  }
 }
 
 function renderNewsFilter(cat) {
   APP.newsFilter=cat;
-  const feed=document.getElementById('news-feed'); if(!feed) return;
+  const feed=document.getElementById('marketEventsContainer')||document.getElementById('news-feed'); if(!feed) return;
   feed.innerHTML='';
   const evts=cat==='all'?MARKET_EVENTS:MARKET_EVENTS.filter(e=>e.category===cat);
   evts.forEach(e=>{
@@ -3288,8 +3258,8 @@ window.applyYearFilter = function(){
   LOG.info('FILTER','FY range: ' + APP.yearFrom + ' \u2013 ' + APP.yearTo);
 };
 
-/* ---- renderDashboard override ---- */
-window.renderDashboard = function(){
+/* ---- renderDashboard override (v5.0-patch) ---- */
+window._renderDashboardImpl = function(){
   LOG.info('RENDER','Dashboard (Workday v4)');
   // Date subtitle
   var dsub = document.getElementById('dash-date-sub');
@@ -3356,6 +3326,9 @@ window.renderDashboard = function(){
     }).join('');
   }
 };
+
+/* v5.0-patch: bind impl to public name */
+window.renderDashboard = window._renderDashboardImpl;
 
 /* ---- Intel Drilldown ---- */
 function openIntelDD(type) {
@@ -3646,7 +3619,7 @@ window.setCoInsightSub = function(section,el){
 
 /* ── renderCoInsightFeed — company-level insight feed ── */
 function renderCoInsightFeed(section, year){
-  const container=document.getElementById('co-insight-feed'); if(!container) return;
+  const container=document.getElementById('co-insights-feed'); if(!container) return;
   const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
   const sectionLabels={product:'Product Strategy',sales:'Sales & Distribution',rnd:'R&D / Innovation',
     inorganic:'Inorganic',marketing:'Marketing',customerwins:'Customer Wins',hiring:'Hiring & Talent'};
@@ -3665,8 +3638,8 @@ window.openProductDetail = function(prodName){
   const popup=document.getElementById('product-detail-popup'); if(!popup) return;
   const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
   const prod=(co.products||[]).find(p=>p.name===prodName)||{name:prodName,desc:'Product details not available.',category:'',revenue:'N/A'};
-  const nameEl=document.getElementById('product-detail-name');
-  const descEl=document.getElementById('product-detail-desc');
+  const nameEl=document.getElementById('product-detail-name')||document.getElementById('pd-popup-title');
+  const descEl=document.getElementById('product-detail-desc')||document.getElementById('pd-popup-body');
   if(nameEl) nameEl.textContent=prod.name;
   if(descEl) descEl.innerHTML=`
     <div style="font-size:12px;color:#64748b;margin-bottom:8px;">${prod.category||'Product'}</div>
