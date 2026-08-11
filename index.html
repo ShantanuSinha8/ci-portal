@@ -398,7 +398,24 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
     </div>
     <hr class="nav-divider"/>
     <div class="nav-section-label">Companies</div>
-    <div id="dynamicCompanyNav"><!-- populated from COMPANIES_DATA --></div>
+    <div class="nav-company-item active" onclick="showCompany('fiserv',this)" data-co="fiserv">
+      <span class="co-dot" style="background:#3b82f6"></span> Fiserv
+    </div>
+    <div class="nav-company-item" onclick="showCompany('fis',this)" data-co="fis">
+      <span class="co-dot" style="background:#8b5cf6"></span> FIS
+    </div>
+    <div class="nav-company-item" onclick="showCompany('jackhenry',this)" data-co="jackhenry">
+      <span class="co-dot" style="background:#10b981"></span> Jack Henry
+    </div>
+    <div class="nav-company-item" onclick="showCompany('temenos',this)" data-co="temenos">
+      <span class="co-dot" style="background:#f59e0b"></span> Temenos
+    </div>
+    <div class="nav-company-item" onclick="showCompany('finastra',this)" data-co="finastra">
+      <span class="co-dot" style="background:#ef4444"></span> Finastra
+    </div>
+    <div class="nav-company-item" onclick="showCompany('ncr',this)" data-co="ncr">
+      <span class="co-dot" style="background:#06b6d4"></span> NCR Atleos
+    </div>
     <hr class="nav-divider"/>
     <div class="nav-section-label">Quick Access</div>
     <div class="nav-link" onclick="showPage('benchmark',this)" data-page="benchmark">
@@ -526,7 +543,7 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
       <div class="page-header">
         <div>
           <div class="page-title">Competitive Intelligence</div>
-          <div class="page-subtitle">Full coverage of tracked companies</div>
+          <div class="page-subtitle">Full coverage of 6 competitors across Payments & Banking Technology</div>
         </div>
         <div class="page-actions">
           <button class="nav-btn nav-btn-outline">🔔 Alerts</button>
@@ -546,8 +563,8 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
         <div class="flex items-center gap-16">
           <div class="company-logo" id="coLogoHeader" style="background:#3b82f6;width:48px;height:48px;font-size:18px">F</div>
           <div>
-            <div class="page-title" id="coNameHeader">Company</div>
-            <div class="page-subtitle" id="coSubHeader">Loading company profile…</div>
+            <div class="page-title" id="coNameHeader">Fiserv</div>
+            <div class="page-subtitle" id="coSubHeader">Payments & Banking Technology · NASDAQ: FISV · Milwaukee, 🇺🇸</div>
           </div>
         </div>
         <div class="page-actions">
@@ -915,7 +932,7 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
           <div id="peersList"><!-- populated --></div>
           <div class="add-peer-row">
             <input class="add-peer-input" type="text" id="addPeerInput" placeholder="Add company…" list="companyOptions"/>
-            <datalist id="companyOptions"><!-- populated from COMPANIES_DATA --></datalist>
+            <datalist id="companyOptions"><option value="Fiserv"/><option value="FIS"/><option value="Jack Henry"/><option value="Temenos"/><option value="Finastra"/><option value="NCR Atleos"/><option value="Stripe"/><option value="Adyen"/></datalist>
             <button class="add-peer-btn" onclick="addPeer()">+</button>
           </div>
           <hr class="nav-divider" style="margin:16px 0"/>
@@ -939,427 +956,21 @@ table.data-table{width:100%;border-collapse:collapse;font-size:12px}
   <div class="drilldown-body" id="drilldownBody"><!-- content --></div>
 </div>
 <script>
-/* ==================== DATA ==================== */
 const COMPANIES_DATA = {
-  fiserv: {
-    id:'fiserv', name:'Fiserv', ticker:'FISV', exchange:'NASDAQ', hq:'Milwaukee, 🇺🇸',
-    color:'#3b82f6', initials:'F', sector:'Payments & Banking Technology',
-    founded:1984, employees:'~38,000', ceo:'Mike Lyons', website:'fiserv.com',
-    description:'Global leader in payments and financial technology, operating merchant solutions (Clover, Carat) and financial services (core banking, digital banking, card processing) for banks, credit unions, and merchants worldwide.',
-    revenue2024:20.5, marketCap:'$73B', rating:4.2,
-    kpis:[
-      {label:'Revenue FY2024',val:'$20.5B',delta:'+7.1%',dir:'up',color:'blue'},
-      {label:'EBITDA Margin',val:'43.4%',delta:'+0.5pp',dir:'up',color:'green'},
-      {label:'Free Cash Flow',val:'$5.7B',delta:'+$0.5B',dir:'up',color:'indigo'},
-      {label:'Composite Score',val:'4.2/5',delta:'Leader',dir:'neutral',color:'amber'}
-    ],
-    revenues: [14.9, 16.2, 17.7, 19.1, 20.5, 21.2],
-    ebitda: [42.0, 43.5, 44.2, 44.5, 43.4, 41.8],
-    netIncome: [0.96, 1.33, 2.53, 3.07, 3.13, 3.48],
-    revGrowth: [5.5, 9.2, 9.3, 7.7, 7.1, 3.6],
-    eps: [1.4, 2.0, 3.8, 4.6, 4.8, 5.4],
-    netMargin:[6.5,8.2,14.3,16.1,15.3,16.4],
-    years:[2020,2021,2022,2023,2024,2025],
-    topProducts:[
-      {name:'Clover POS Platform',segment:'Merchant',share:28,color:'#3b82f6'},
-      {name:'Carat Omnichannel',segment:'Merchant',share:18,color:'#60a5fa'},
-      {name:'Core Banking (Premier/DNA)',segment:'Financial',share:24,color:'#6366f1'},
-      {name:'Digital Banking Suite',segment:'Financial',share:14,color:'#8b5cf6'},
-      {name:'Card Issuance & Processing',segment:'Financial',share:10,color:'#a78bfa'},
-      {name:'Finxact Cloud Core',segment:'Cloud',share:6,color:'#c4b5fd'}
-    ],
-    segments:[
-      {name:'Banks & Credit Unions',pct:52,icon:'🏦'},
-      {name:'SMB Merchants',pct:28,icon:'🏪'},
-      {name:'Enterprise Merchants',pct:14,icon:'🏢'},
-      {name:'Fintechs & Partners',pct:6,icon:'⚙️'}
-    ],
-    geoData:[
-      {region:'North America',flag:'🌎',rev:17.4,share:85,tier:1},
-      {region:'Europe',flag:'🌍',rev:1.8,share:9,tier:2},
-      {region:'Asia Pacific',flag:'🌏',rev:0.8,share:4,tier:2},
-      {region:'MEA',flag:'🌍',rev:0.5,share:2,tier:3}
-    ],
-    insights:[
-      {date:'Jul 2025',year:'2025',cat:'Product',title:'Fiserv launches Clover AI Insights',source:'Business Wire',summary:'Clover POS platform adds AI-powered merchant analytics, providing real-time sales forecasting and inventory optimization for SMB merchants. Expected to accelerate Clover ARPU growth.',tags:['Product','AI','Clover']},
-      {date:'Jun 2025',year:'2025',cat:'Inorganic',title:'Fiserv completes Worldpay stake transfer to GTCR',source:'SEC Filing',summary:'Final settlement of the $18.5B Worldpay stake sale to GTCR closes, with Fiserv retaining a minority stake. Proceeds deployed for share repurchases and balance sheet deleveraging.',tags:['Inorganic','Divestiture']},
-      {date:'May 2025',year:'2025',cat:'Customer Wins',title:'Major regional bank selects Finxact cloud core',source:'Press Release',summary:'A top-30 U.S. regional bank selected Fiserv\'s Finxact platform for cloud-native core banking modernization, representing the largest cloud core win of the year.',tags:['Customer Wins','Finxact','Cloud']},
-      {date:'Mar 2025',year:'2025',cat:'Sales & Distribution',title:'Fiserv expands Carat to 12 new European markets',source:'Investor Day Presentation',summary:'Carat omnichannel commerce platform extended to 12 new European markets, targeting enterprise merchants expanding cross-border e-commerce operations.',tags:['Sales & Distribution','Europe','Expansion']},
-      {date:'Jan 2025',year:'2025',cat:'Hiring',title:'Fiserv adds 200 AI and cloud engineers',source:'LinkedIn / Glassdoor',summary:'Fiserv announces hiring push focused on AI engineering and cloud infrastructure roles, targeting 200 net new hires in Q1 2025 to support Finxact and Clover AI roadmaps.',tags:['Hiring','AI','Cloud']},
-      {date:'Nov 2024',year:'2024',cat:'Product',title:'Pay-by-bank integration goes live on Carat',source:'Press Release',summary:'Fiserv integrates account-to-account pay-by-bank functionality into Carat, enabling merchants to accept direct bank transfers alongside card payments to reduce processing costs.',tags:['Product','Open Banking','Carat']},
-      {date:'Sep 2024',year:'2024',cat:'R&D / Innovation',title:'Fiserv partners with NVIDIA on AI infrastructure',source:'Press Release',summary:'Strategic partnership with NVIDIA to deploy AI accelerators in Fiserv\'s data centers, enabling faster model training for fraud detection, risk scoring, and merchant analytics.',tags:['R&D / Innovation','AI','Partnership']},
-      {date:'Jul 2024',year:'2024',cat:'Marketing',title:'One Fiserv brand campaign launches globally',source:'Marketing Week',summary:'Unified global brand campaign "One Fiserv" rolls out across 20 markets, reinforcing the integrated merchant + financial platform narrative and driving enterprise awareness.',tags:['Marketing','Brand','Global']},
-      {date:'Apr 2023',year:'2023',cat:'Inorganic',title:'GTCR acquires 55% of Worldpay from Fiserv for $18.5B',source:'Wall Street Journal',summary:'Landmark divestiture transaction valued Worldpay at $18.5B. Fiserv retains 45% minority stake. Proceeds allow Fiserv to sharpen focus on core banking and payments.',tags:['Inorganic','Divestiture','Worldpay']},
-      {date:'Feb 2022',year:'2022',cat:'Inorganic',title:'Fiserv acquires Payrix to expand embedded payments',source:'PR Newswire',summary:'Fiserv completes acquisition of Payrix, a payments facilitation platform for software companies, bolstering embedded payments capabilities for software-led businesses.',tags:['Inorganic','Acquisition','Embedded Payments']}
-    ],
-    productStrategy:[
-      {year:'2020',title:'Clover Ecosystem Expansion',desc:'Fiserv accelerates SMB merchant acquiring through Clover hardware + software ecosystem, expanding beyond POS to include inventory, payroll, and financing tools.',type:'Platform Expansion'},
-      {year:'2021',title:'Finxact Cloud Core Acquisition',desc:'Acquisition of Finxact brings a cloud-native, API-first core banking platform. Positions Fiserv to compete in bank modernization alongside Temenos and Thought Machine.',type:'M&A'},
-      {year:'2022',title:'Carat Enterprise Commerce',desc:'Launch of Carat as Fiserv\'s enterprise omnichannel commerce platform, targeting large merchants seeking unified in-store, online, and mobile payment orchestration.',type:'Product Launch'},
-      {year:'2023',title:'One Fiserv Integration Program',desc:'Internal reorganization aligning Merchant and Financial segments. Launches integrated cross-sell motion enabling financial institutions to offer Clover-powered merchant services.',type:'Strategic Pivot'},
-      {year:'2024',title:'AI Across the Platform',desc:'AI-powered features rolled out across Clover analytics, fraud detection, and credit decisioning. Partnership with NVIDIA for AI infrastructure acceleration.',type:'AI Integration'},
-      {year:'2025',title:'Cloud Core Modernization Drive',desc:'Aggressive Finxact migration program targeting mid-tier and regional U.S. banks migrating from legacy Premier and Precision cores. First international Finxact wins.',type:'Cloud'}
-    ],
-    launchTimeline:[
-      {date:'Q2 2025',cat:'New Product',title:'Clover AI Insights',desc:'AI-powered merchant analytics and forecasting module built natively into Clover POS platform.',tags:['AI','Merchant']},
-      {date:'Q1 2025',cat:'Enhancement',title:'Pay-by-Bank on Carat v3.0',desc:'Account-to-account payment acceptance integrated into Carat omnichannel suite.',tags:['Payments','Open Banking']},
-      {date:'Q3 2024',cat:'Partnership',title:'NVIDIA AI Infrastructure',desc:'Strategic partnership for GPU-accelerated AI model deployment across Fiserv platforms.',tags:['AI','Infrastructure']},
-      {date:'Q2 2024',cat:'New Product',title:'Finxact Multi-Tenant SaaS',desc:'Finxact core banking available as multi-tenant SaaS with shared infrastructure model.',tags:['Cloud','Core Banking']},
-      {date:'Q1 2024',cat:'Enhancement',title:'Carat International Expansion',desc:'Carat omnichannel platform extended to 12 European markets with local payment method support.',tags:['International','Commerce']},
-      {date:'Q4 2023',cat:'New Product',title:'Embedded Lending via Payrix',desc:'Merchant cash advance and lending products embedded into Payrix PaaS offering.',tags:['Lending','Embedded Finance']},
-      {date:'Q2 2022',cat:'New Product',title:'Carat Enterprise Platform Launch',desc:'Full launch of Carat as unified enterprise commerce platform for large merchants.',tags:['Enterprise','Commerce']},
-      {date:'Q1 2022',cat:'Enhancement',title:'Clover Capital SMB Financing',desc:'Launch of Clover Capital, providing revenue-based financing directly through Clover dashboard.',tags:['SMB','Financing']}
-    ],
-    portfolioMatrix:[
-      {name:'Clover',segment:'Merchant',revenue:28,growth:18,stage:'Growth Star',color:'#3b82f6'},
-      {name:'Carat',segment:'Merchant',revenue:18,growth:15,stage:'Growth',color:'#60a5fa'},
-      {name:'Core Banking',segment:'Financial',revenue:24,growth:4,stage:'Cash Cow',color:'#6366f1'},
-      {name:'Digital Banking',segment:'Financial',revenue:14,growth:12,stage:'Growth',color:'#8b5cf6'},
-      {name:'Card Processing',segment:'Financial',revenue:10,growth:6,stage:'Stable',color:'#10b981'},
-      {name:'Finxact',segment:'Cloud',revenue:6,growth:35,stage:'Question Mark',color:'#f59e0b'}
-    ],
-    inorganic:[
-      {date:'Apr 2023',type:'Divestiture',deal:'Worldpay Stake to GTCR',value:'$18.5B',target:'Worldpay',rationale:'Monetize non-core asset; focus on core banking and payments',status:'Completed',impact:'High'},
-      {date:'Feb 2022',type:'Acquisition',deal:'Payrix Acquisition',value:'Undisclosed',target:'Payrix',rationale:'Expand embedded payments / PaaS for software companies',status:'Completed',impact:'Medium'},
-      {date:'Jan 2021',type:'Acquisition',deal:'Finxact Acquisition',value:'~$650M',target:'Finxact',rationale:'Cloud-native core banking capability to compete in bank modernization',status:'Completed',impact:'High'},
-      {date:'Jan 2020',type:'Acquisition',deal:'Bypass Mobile',value:'Undisclosed',target:'Bypass Mobile',rationale:'Expand enterprise self-service and stadium commerce solutions',status:'Completed',impact:'Low'}
-    ],
-    rdData:{
-      investment:[850,920,980,1050,1150,1250],
-      areas:['AI/ML','Cloud Infrastructure','Fraud & Security','Payments Processing','Digital Banking','Open Banking'],
-      areaVals:[28,22,18,16,10,6]
-    }
-  },
-  fis: {
-    id:'fis', name:'FIS', ticker:'FIS', exchange:'NYSE', hq:'Jacksonville, 🇺🇸',
-    color:'#8b5cf6', initials:'FIS', sector:'Financial Technology',
-    founded:1968, employees:'~49,000', ceo:'Stephanie Ferris', website:'fisglobal.com',
-    description:'FIS is a global leader in financial technology, providing core banking, payments, and capital markets solutions to >50,000 clients across 130+ countries. Undergoing "Future Forward" transformation program.',
-    revenue2024:10.1, marketCap:'$42B', rating:3.8,
-    kpis:[
-      {label:'Revenue FY2024',val:'$10.1B',delta:'+4.8%',dir:'up',color:'blue'},
-      {label:'EBITDA Margin',val:'31.0%',delta:'-1.5pp',dir:'down',color:'red'},
-      {label:'Transformation',val:'Future Fwd',delta:'In Progress',dir:'neutral',color:'amber'},
-      {label:'Composite Score',val:'3.8/5',delta:'Strong',dir:'neutral',color:'indigo'}
-    ],
-    revenues:[10.6,11.0,11.5,12.2,10.1,10.7],
-    ebitda:[35.5,34.0,33.1,32.5,31.0,30.2],
-    netIncome:[0.8,1.0,1.3,1.5,1.7,1.8],
-    revGrowth:[2.4,3.8,4.5,6.2,4.8,5.1],
-    eps:[1.4,1.7,2.2,2.6,3.0,3.3],
-    netMargin:[7.5,9.1,11.3,12.3,16.8,16.8],
-    years:[2020,2021,2022,2023,2024,2025],
-    topProducts:[
-      {name:'Banking Solutions Platform',segment:'Banking',share:38,color:'#8b5cf6'},
-      {name:'Capital Market Solutions',segment:'CapMarkets',share:32,color:'#a78bfa'},
-      {name:'Payments Ecosystem',segment:'Payments',share:18,color:'#c4b5fd'},
-      {name:'Digital One',segment:'Digital',share:12,color:'#ddd6fe'}
-    ],
-    segments:[{name:'Banks & Financial Institutions',pct:48,icon:'🏦'},{name:'Capital Markets Firms',pct:32,icon:'📈'},{name:'Insurance Companies',pct:12,icon:'🛡️'},{name:'Other',pct:8,icon:'⚙️'}],
-    geoData:[{region:'North America',flag:'🌎',rev:7.9,share:78,tier:1},{region:'Europe',flag:'🌍',rev:1.2,share:12,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.6,share:6,tier:2},{region:'MEA',flag:'🌍',rev:0.4,share:4,tier:2}],
-    insights:[
-      {date:'Jun 2025',year:'2025',cat:'Product',title:'FIS launches Modern Banking Platform v2.0',source:'Press Release',summary:'Second major release of FIS Modern Banking Platform on Azure includes embedded AI decisioning and real-time payments orchestration.',tags:['Product','Cloud','AI']},
-      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'FIS opens Singapore Innovation Lab',source:'Business Wire',summary:'New R&D hub in Singapore focused on AI payments, digital assets, and embedded finance for Asia Pacific markets.',tags:['R&D / Innovation','APAC']},
-      {date:'Dec 2024',year:'2024',cat:'Hiring',title:'FIS reduces global headcount by 5%',source:'Reuters',summary:'As part of Future Forward transformation, FIS announces workforce reduction impacting approximately 2,500 employees globally, targeting $400M annual cost savings.',tags:['Hiring','Transformation']},
-      {date:'Aug 2024',year:'2024',cat:'Customer Wins',title:'FIS wins tier-1 European bank for capital markets',source:'Press Release',summary:'Major European asset manager selects FIS capital markets technology platform for derivatives processing and risk management modernization.',tags:['Customer Wins','Capital Markets','Europe']}
-    ],
-    productStrategy:[
-      {year:'2020',title:'Worldpay Integration',desc:'Post-2019 Worldpay acquisition integration, creating unified banking + payments technology platform.',type:'Integration'},
-      {year:'2022',title:'Modern Banking Platform on Azure',desc:'Launch of cloud-native Modern Banking Platform in partnership with Microsoft Azure.',type:'Product Launch'},
-      {year:'2023',title:'Future Forward Transformation',desc:'Multi-year enterprise transformation targeting $400M+ cost savings and margin improvement.',type:'Strategic Pivot'},
-      {year:'2024',title:'Capital Markets AI Integration',desc:'AI and ML embedded across capital markets platform for risk analytics and trading intelligence.',type:'AI Integration'},
-      {year:'2025',title:'Digital One Expansion',desc:'Digital One omnichannel banking platform extended to 15 new markets across Europe and APAC.',type:'Expansion'}
-    ],
-    launchTimeline:[
-      {date:'Q1 2025',cat:'New Product',title:'Modern Banking Platform v2.0',desc:'AI-enhanced cloud banking platform with embedded real-time payments.',tags:['Cloud','AI']},
-      {date:'Q3 2024',cat:'Enhancement',title:'Capital Markets Risk Analytics v4',desc:'Upgraded risk analytics engine with ML-powered scenario generation.',tags:['CapMarkets','AI']},
-      {date:'Q2 2023',cat:'New Product',title:'FIS Digital One Launch',desc:'Unified digital banking front-end platform replacing fragmented legacy portals.',tags:['Digital','Banking']},
-    ],
-    portfolioMatrix:[
-      {name:'Banking Solutions',segment:'Banking',revenue:38,growth:5,stage:'Cash Cow',color:'#8b5cf6'},
-      {name:'Capital Markets',segment:'CapMarkets',revenue:32,growth:7,stage:'Growth',color:'#a78bfa'},
-      {name:'Payments',segment:'Payments',revenue:18,growth:4,stage:'Stable',color:'#c4b5fd'},
-      {name:'Digital One',segment:'Digital',revenue:12,growth:22,stage:'Question Mark',color:'#10b981'}
-    ],
-    inorganic:[
-      {date:'Sep 2023',type:'Divestiture',deal:'Worldpay Merchant Solutions to GTCR',value:'$18.5B',target:'Worldpay',rationale:'Refocus on banking and capital markets core competencies',status:'Completed',impact:'High'},
-      {date:'Jan 2020',type:'Integration',deal:'Worldpay Integration Completion',value:'N/A',target:'Worldpay',rationale:'Complete integration of 2019 $43B Worldpay acquisition',status:'Completed',impact:'High'}
-    ],
-    rdData:{investment:[580,620,640,660,680,700],areas:['Cloud Infrastructure','AI/ML','Capital Markets Tech','Digital Banking','Payments','Risk Management'],areaVals:[25,22,20,18,10,5]}
-  },
-  jackhenry: {
-    id:'jackhenry', name:'Jack Henry', ticker:'JKHY', exchange:'NASDAQ', hq:'Monett, 🇺🇸',
-    color:'#10b981', initials:'JH', sector:'Community Banking Technology',
-    founded:1976, employees:'~7,240', ceo:'Greg Adelson', website:'jackhenry.com',
-    description:'Jack Henry provides core processing, digital banking, and payment solutions exclusively to U.S. community banks and credit unions. Market leader in community bank core processing with ~1,100+ bank clients.',
-    revenue2024:2.2, marketCap:'$12B', rating:3.0,
-    kpis:[
-      {label:'Revenue FY2025',val:'$2.4B',delta:'+7.2%',dir:'up',color:'blue'},
-      {label:'SaaS Revenue %',val:'~62%',delta:'+5pp YoY',dir:'up',color:'green'},
-      {label:'Client Retention',val:'>99%',delta:'Best-in-class',dir:'up',color:'indigo'},
-      {label:'Composite Score',val:'3.0/5',delta:'Competitive',dir:'neutral',color:'amber'}
-    ],
-    revenues:[1.55,1.64,1.75,1.87,2.2,2.38],
-    ebitda:[31.0,30.2,29.5,28.9,28.0,27.5],
-    netIncome:[0.28,0.32,0.35,0.39,0.42,0.45],
-    revGrowth:[4.7,5.9,6.4,7.1,5.8,6.2],
-    eps:[3.8,4.4,4.9,5.4,5.9,6.3],
-    netMargin:[18.1,19.5,20.0,20.9,19.1,18.9],
-    years:[2020,2021,2022,2023,2024,2025],
-    topProducts:[
-      {name:'SilverLake Core (Banks)',segment:'Core',share:35,color:'#10b981'},
-      {name:'Symitar (Credit Unions)',segment:'Core',share:30,color:'#34d399'},
-      {name:'Digital Banking Suite',segment:'Digital',share:18,color:'#6ee7b7'},
-      {name:'JHA PayCenter',segment:'Payments',share:12,color:'#a7f3d0'},
-      {name:'Banno (Digital Platform)',segment:'Digital',share:5,color:'#d1fae5'}
-    ],
-    segments:[{name:'Community Banks',pct:55,icon:'🏦'},{name:'Credit Unions',pct:35,icon:'🤝'},{name:'Savings Institutions',pct:7,icon:'🏛️'},{name:'Other FIs',pct:3,icon:'⚙️'}],
-    geoData:[{region:'United States',flag:'🇺🇸',rev:2.2,share:100,tier:1}],
-    insights:[
-      {date:'Jul 2025',year:'2025',cat:'Inorganic',title:'Jack Henry acquires Victor Technologies',source:'Press Release',summary:'Acquisition of Victor Technologies expands Jack Henry\'s Payments-as-a-Service capabilities to serve fintechs and commercial clients beyond community banking.',tags:['Inorganic','PaaS','Acquisition']},
-      {date:'Apr 2025',year:'2025',cat:'Product',title:'Banno Business launches for SMB banking',source:'Press Release',summary:'New Banno Business module extends Jack Henry\'s digital banking platform to serve SMB clients of community banks with cash management and business banking tools.',tags:['Product','SMB','Digital']},
-      {date:'Nov 2022',year:'2022',cat:'Inorganic',title:'Payrailz acquisition closes',source:'PR Newswire',summary:'Acquisition of Payrailz adds AI-powered cloud-native digital payments capabilities, modernizing Jack Henry\'s payments stack.',tags:['Inorganic','AI','Payments']}
-    ],
-    productStrategy:[
-      {year:'2020',title:'Cloud Migration Roadmap',desc:'Jack Henry announces private-cloud migration roadmap for SilverLake and Symitar core platforms.',type:'Cloud Strategy'},
-      {year:'2022',title:'Payrailz AI Payments',desc:'Acquisition of Payrailz brings AI-powered, cloud-native payment platform to community banks.',type:'M&A'},
-      {year:'2024',title:'Jack Henry Platform Unification',desc:'Unified technology platform launched consolidating core, digital, and payments under single API layer.',type:'Platform'},
-      {year:'2025',title:'PaaS Expansion via Victor Technologies',desc:'Victor Technologies acquisition extends PaaS to fintech and commercial markets beyond traditional community banking.',type:'M&A'}
-    ],
-    launchTimeline:[
-      {date:'Q1 2025',cat:'New Product',title:'Banno Business Module',desc:'SMB-focused digital banking for community bank business clients.',tags:['Digital','SMB']},
-      {date:'Q3 2024',cat:'Enhancement',title:'JH Platform API Layer',desc:'Unified API gateway connecting core, digital, and payments systems.',tags:['Platform','API']},
-      {date:'Q2 2022',cat:'New Product',title:'Payrailz Digital Payments',desc:'AI-driven real-time payment experiences for bank customers.',tags:['Payments','AI']}
-    ],
-    portfolioMatrix:[
-      {name:'SilverLake Core',segment:'Core',revenue:35,growth:3,stage:'Cash Cow',color:'#10b981'},
-      {name:'Symitar',segment:'Core',revenue:30,growth:4,stage:'Cash Cow',color:'#34d399'},
-      {name:'Digital Suite',segment:'Digital',revenue:18,growth:15,stage:'Growth',color:'#6ee7b7'},
-      {name:'PayCenter',segment:'Payments',revenue:12,growth:10,stage:'Growth',color:'#a7f3d0'},
-      {name:'Banno',segment:'Digital',revenue:5,growth:35,stage:'Question Mark',color:'#f59e0b'}
-    ],
-    inorganic:[
-      {date:'Jul 2025',type:'Acquisition',deal:'Victor Technologies',value:'Undisclosed',target:'Victor Technologies',rationale:'Expand PaaS capabilities to fintech and commercial customers',status:'Completed',impact:'Medium'},
-      {date:'Nov 2022',type:'Acquisition',deal:'Payrailz',value:'Undisclosed',target:'Payrailz',rationale:'AI-powered cloud-native digital payments platform',status:'Completed',impact:'Medium'}
-    ],
-    rdData:{investment:[180,200,215,230,250,265],areas:['Digital Banking','Core Modernization','Payments','AI/ML','Security','API'],areaVals:[30,25,20,15,7,3]}
-  },
-  temenos: {
-    id:'temenos', name:'Temenos', ticker:'TEMN', exchange:'SIX', hq:'Geneva, 🇨🇭',
-    color:'#f59e0b', initials:'T', sector:'Banking Software',
-    founded:1993, employees:'~5,205', ceo:'Jean-Pierre Brulard', website:'temenos.com',
-    description:'Temenos is a Swiss banking software specialist with cloud-agnostic, AI-first core banking, digital banking, payments, and wealth management solutions deployed in 150+ countries across 950+ bank clients.',
-    revenue2024:1.0, marketCap:'$5B', rating:3.3,
-    kpis:[
-      {label:'Revenue FY2024',val:'$1.0B',delta:'+7.9%',dir:'up',color:'blue'},
-      {label:'SaaS/Sub Revenue',val:'~68%',delta:'+8pp YoY',dir:'up',color:'green'},
-      {label:'Countries Served',val:'150+',delta:'Global',dir:'neutral',color:'indigo'},
-      {label:'Composite Score',val:'3.3/5',delta:'Strong Specialist',dir:'neutral',color:'amber'}
-    ],
-    revenues:[1.38,1.44,1.52,1.62,1.75,1.9],
-    ebitda:[41.2,40.5,39.8,39.0,38.5,38.0],
-    netIncome:[0.28,0.31,0.35,0.38,0.42,0.45],
-    revGrowth:[4.3,4.9,5.5,6.7,7.9,8.5],
-    eps:[4.0,4.5,5.0,5.5,6.1,6.5],
-    netMargin:[20.3,21.5,23.0,23.5,24.0,23.7],
-    years:[2020,2021,2022,2023,2024,2025],
-    topProducts:[
-      {name:'Temenos Banking Cloud',segment:'Core',share:38,color:'#f59e0b'},
-      {name:'Transact (Core Banking)',segment:'Core',share:28,color:'#fbbf24'},
-      {name:'Digital Banking Infinity',segment:'Digital',share:18,color:'#fcd34d'},
-      {name:'Payments Hub',segment:'Payments',share:10,color:'#fde68a'},
-      {name:'Wealth Management',segment:'Wealth',share:6,color:'#fef3c7'}
-    ],
-    segments:[{name:'Tier 1-2 Global Banks',pct:45,icon:'🏦'},{name:'Regional Banks',pct:35,icon:'🏛️'},{name:'Neobanks / Digital',pct:12,icon:'📱'},{name:'Wealth Managers',pct:8,icon:'💎'}],
-    geoData:[{region:'Europe',flag:'🌍',rev:0.58,share:55,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.21,share:20,tier:1},{region:'MEA',flag:'🌍',rev:0.15,share:14,tier:2},{region:'Americas',flag:'🌎',rev:0.11,share:11,tier:2}],
-    insights:[
-      {date:'May 2025',year:'2025',cat:'Product',title:'Temenos Banking Cloud achieves record SaaS bookings',source:'Annual Results',summary:'Temenos Banking Cloud SaaS bookings exceeded $180M in H1 2025, a 35% YoY increase, driven by European and APAC bank cloud migrations.',tags:['Product','SaaS','Cloud']},
-      {date:'Feb 2025',year:'2025',cat:'R&D / Innovation',title:'Temenos Virtual COO 2.0 with Generative AI',source:'Press Release',summary:'Second generation AI-COO product launches with generative AI capabilities for compliance automation, treasury optimization, and customer insights.',tags:['R&D / Innovation','AI','Banking']},
-      {date:'Oct 2023',year:'2023',cat:'Customer Wins',title:'Tier-1 APAC bank selects Temenos Banking Cloud',source:'Press Release',summary:'Top-10 Asia Pacific bank selects Temenos Banking Cloud for full core banking transformation, representing the largest APAC deal in company history.',tags:['Customer Wins','APAC','Cloud']}
-    ],
-    productStrategy:[
-      {year:'2020',title:'SaaS-First Transition',desc:'Temenos pivots to SaaS-first go-to-market, repackaging core platform as subscription cloud service.',type:'Strategic Pivot'},
-      {year:'2022',title:'Banking Cloud Record Volumes',desc:'Temenos Banking Cloud processes record transaction volumes as bank cloud adoption accelerates post-pandemic.',type:'Milestone'},
-      {year:'2023',title:'AI-First Platform Strategy',desc:'AI embedded across all Temenos products with launch of Virtual COO for autonomous banking operations.',type:'AI Integration'},
-      {year:'2025',title:'$1B+ SaaS Bookings Target',desc:'Temenos targets $1B+ in cumulative SaaS bookings by FY2028, underpinned by Banking Cloud and Transact SaaS.',type:'Strategic Target'}
-    ],
-    launchTimeline:[
-      {date:'Q2 2025',cat:'Enhancement',title:'Virtual COO 2.0 (GenAI)',desc:'Generative AI banking operations assistant with compliance automation.',tags:['AI','Compliance']},
-      {date:'Q1 2024',cat:'New Product',title:'Temenos Embedded Finance APIs',desc:'Open API suite enabling non-bank brands to embed banking services.',tags:['Open Banking','APIs']},
-      {date:'Q3 2023',cat:'New Product',title:'Payments Hub v3',desc:'ISO 20022 native real-time payments processing hub.',tags:['Payments','ISO20022']}
-    ],
-    portfolioMatrix:[
-      {name:'Banking Cloud',segment:'Core',revenue:38,growth:30,stage:'Growth Star',color:'#f59e0b'},
-      {name:'Transact',segment:'Core',revenue:28,growth:5,stage:'Cash Cow',color:'#fbbf24'},
-      {name:'Digital Infinity',segment:'Digital',revenue:18,growth:18,stage:'Growth',color:'#fcd34d'},
-      {name:'Payments Hub',segment:'Payments',revenue:10,growth:22,stage:'Growth',color:'#10b981'},
-      {name:'Wealth Mgmt',segment:'Wealth',revenue:6,growth:12,stage:'Stable',color:'#8b5cf6'}
-    ],
-    inorganic:[
-      {date:'Dec 2020',type:'Acquisition',deal:'Kony (mobility platform)',value:'~$559M',target:'Kony',rationale:'Accelerate digital banking and mobile capabilities',status:'Completed',impact:'High'},
-      {date:'Mar 2020',type:'Acquisition',deal:'Logical Glue (AI/ML)',value:'Undisclosed',target:'Logical Glue',rationale:'Embed AI and machine learning across banking platform',status:'Completed',impact:'Medium'}
-    ],
-    rdData:{investment:[210,225,240,255,270,290],areas:['AI/ML','Cloud Architecture','Banking Core','Payments','Compliance Tech','Digital UX'],areaVals:[30,25,20,12,8,5]}
-  },
-  finastra: {
-    id:'finastra', name:'Finastra', ticker:'Private', exchange:'Private', hq:'London, 🇬🇧',
-    color:'#ef4444', initials:'FN', sector:'Financial Software',
-    founded:2017, employees:'~9,500', ceo:'Simon Paris', website:'finastra.com',
-    description:'Finastra (formed by merger of Misys and D+H in 2017) provides comprehensive financial software for banking, lending, treasury, payments, and wealth management to 9,000+ clients including 90% of top-100 global banks.',
-    revenue2024:1.9, marketCap:'Private (Vista PE)', rating:3.0,
-    kpis:[
-      {label:'Revenue FY2025',val:'$2.4B',delta:'+5.0%',dir:'up',color:'blue'},
-      {label:'Recurring Revenue',val:'~75%',delta:'+4pp YoY',dir:'up',color:'green'},
-      {label:'Global Bank Reach',val:'90%',delta:'Top-100 banks',dir:'up',color:'indigo'},
-      {label:'Composite Score',val:'3.0/5',delta:'Competitive',dir:'neutral',color:'amber'}
-    ],
-    revenues:[1.9,2.0,2.1,2.2,2.3,2.4],
-    ebitda:[33.5,33.0,32.5,32.0,31.5,31.0],
-    netIncome:[0.10,0.12,0.14,0.16,0.18,0.20],
-    revGrowth:[4.0,4.8,5.2,6.0,4.5,5.0],
-    eps:[null,null,null,null,null,null],
-    netMargin:[5.3,6.0,6.7,7.3,7.8,8.3],
-    years:[2020,2021,2022,2023,2024,2025],
-    topProducts:[
-      {name:'Finastra Treasury & Capital Markets',segment:'TCM',share:28,color:'#ef4444'},
-      {name:'Fusion Banking Essence',segment:'Core',share:22,color:'#f87171'},
-      {name:'Lending & Mortgages',segment:'Lending',share:20,color:'#fca5a5'},
-      {name:'Payments Platform',segment:'Payments',share:16,color:'#fecaca'},
-      {name:'Open Platform (FusionFabric)',segment:'Open Finance',share:14,color:'#fee2e2'}
-    ],
-    segments:[{name:'Global Banks (Tier 1-2)',pct:40,icon:'🏦'},{name:'Regional Banks',pct:30,icon:'🏛️'},{name:'Credit Unions & Building Societies',pct:18,icon:'🤝'},{name:'Non-Bank Financial Institutions',pct:12,icon:'⚙️'}],
-    geoData:[{region:'North America',flag:'🌎',rev:0.78,share:42,tier:1},{region:'Europe',flag:'🌍',rev:0.72,share:38,tier:1},{region:'MEA',flag:'🌍',rev:0.22,share:12,tier:2},{region:'Asia Pacific',flag:'🌏',rev:0.15,share:8,tier:2}],
-    insights:[
-      {date:'Jun 2025',year:'2025',cat:'Product',title:'FusionFabric Open Finance platform surpasses 500 apps',source:'Press Release',summary:'Finastra\'s open banking marketplace FusionFabric.cloud exceeds 500 partner applications, cementing position as the leading open finance platform.',tags:['Product','Open Banking','Platform']},
-      {date:'Mar 2025',year:'2025',cat:'R&D / Innovation',title:'Finastra releases AI Trade Finance module',source:'Press Release',summary:'New AI-powered trade finance module automates document verification, KYC, and risk scoring for correspondent banking, targeting 70% reduction in manual processing.',tags:['R&D / Innovation','AI','Trade Finance']},
-      {date:'Sep 2023',year:'2023',cat:'Customer Wins',title:'Finastra wins HSBC treasury modernization',source:'Finextra',summary:'HSBC selects Finastra Fusion Treasury for global treasury platform modernization across 60+ countries, in one of the largest treasury deals of the year.',tags:['Customer Wins','Treasury','Tier 1']}
-    ],
-    productStrategy:[
-      {year:'2021',title:'FusionFabric Open Platform Launch',desc:'Launch of FusionFabric.cloud marketplace enabling fintechs to build on Finastra platforms via open APIs.',type:'Platform'},
-      {year:'2022',title:'Cloud-First Product Architecture',desc:'All major products replatformed for cloud-native deployment on AWS, Azure, and GCP.',type:'Cloud'},
-      {year:'2023',title:'BaaS and Embedded Finance APIs',desc:'Banking-as-a-Service API suite launched, enabling brands to embed financial products.',type:'Product Launch'},
-      {year:'2025',title:'AI Across Financial Services Stack',desc:'AI integrated into lending, treasury, and trade finance products to automate document processing and risk scoring.',type:'AI Integration'}
-    ],
-    launchTimeline:[
-      {date:'Q2 2025',cat:'New Product',title:'AI Trade Finance Module',desc:'Automated trade document verification and risk scoring.',tags:['AI','Trade Finance']},
-      {date:'Q4 2023',cat:'New Product',title:'BaaS API Suite',desc:'Banking-as-a-Service APIs for non-bank brand embedding.',tags:['BaaS','Open Finance']},
-      {date:'Q1 2021',cat:'Platform',title:'FusionFabric.cloud Launch',desc:'Open finance marketplace with 500+ partner apps.',tags:['Open Banking','Marketplace']}
-    ],
-    portfolioMatrix:[
-      {name:'Treasury & CapMarkets',segment:'TCM',revenue:28,growth:8,stage:'Cash Cow',color:'#ef4444'},
-      {name:'Core Banking',segment:'Core',revenue:22,growth:5,stage:'Cash Cow',color:'#f87171'},
-      {name:'Lending',segment:'Lending',revenue:20,growth:10,stage:'Growth',color:'#fca5a5'},
-      {name:'Payments',segment:'Payments',revenue:16,growth:12,stage:'Growth',color:'#10b981'},
-      {name:'FusionFabric',segment:'Platform',revenue:14,growth:28,stage:'Growth Star',color:'#8b5cf6'}
-    ],
-    inorganic:[
-      {date:'Jan 2020',type:'Investment',deal:'Series B in Finblox',value:'Undisclosed',target:'Finblox',rationale:'Expand open banking ecosystem partnerships',status:'Completed',impact:'Low'}
-    ],
-    rdData:{investment:[320,340,360,375,390,410],areas:['Open Finance APIs','AI/ML','Cloud Infrastructure','Treasury Tech','Lending','Payments'],areaVals:[25,22,20,15,12,6]}
-  },
-  ncr: {
-    id:'ncr', name:'NCR Atleos', ticker:'NATL', exchange:'NYSE', hq:'Atlanta, 🇺🇸',
-    color:'#06b6d4', initials:'NA', sector:'ATM & Self-Service Banking',
-    founded:2023, employees:'~20,000', ceo:'Tim Oliver', website:'ncratleos.com',
-    description:'NCR Atleos (spun off from NCR Corporation in 2023) is a global ATM and self-service banking technology provider, operating the largest independent ATM network in the United States and serving banks worldwide.',
-    revenue2024:2.2, marketCap:'$2B', rating:2.3,
-    kpis:[
-      {label:'Revenue FY2025',val:'$2.3B',delta:'+3.1%',dir:'up',color:'blue'},
-      {label:'ATM Network',val:'#1 USA',delta:'Independent',dir:'neutral',color:'green'},
-      {label:'Global ATMs',val:'~285K',delta:'Managed',dir:'neutral',color:'indigo'},
-      {label:'Composite Score',val:'2.3/5',delta:'Developing',dir:'neutral',color:'amber'}
-    ],
-    revenues:[0.78,0.81,0.86,0.91,0.97,1.04],
-    ebitda:[19.0,18.5,18.0,17.5,17.0,16.5],
-    netIncome:[0.007,0.009,0.012,0.015,0.018,0.022],
-    revGrowth:[4.0,4.7,5.2,5.8,6.5,7.0],
-    eps:[-0.4,-0.2,0.1,0.3,0.5,0.7],
-    netMargin:[0.9,1.1,1.4,1.6,1.9,2.1],
-    years:[2020,2021,2022,2023,2024,2025],
-    topProducts:[
-      {name:'ATM-as-a-Service',segment:'ATM',share:45,color:'#06b6d4'},
-      {name:'Self-Service Banking Platform',segment:'SelfService',share:28,color:'#22d3ee'},
-      {name:'ATM Software (APTRA)',segment:'Software',share:18,color:'#67e8f9'},
-      {name:'Managed Services',segment:'Services',share:9,color:'#cffafe'}
-    ],
-    segments:[{name:'Banks & Credit Unions',pct:55,icon:'🏦'},{name:'Retailers',pct:25,icon:'🛒'},{name:'Convenience & Fuel',pct:12,icon:'⛽'},{name:'Government',pct:8,icon:'🏛️'}],
-    geoData:[{region:'North America',flag:'🌎',rev:1.43,share:65,tier:1},{region:'Europe',flag:'🌍',rev:0.44,share:20,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.22,share:10,tier:2},{region:'MEA',flag:'🌍',rev:0.11,share:5,tier:2}],
-    insights:[
-      {date:'Apr 2025',year:'2025',cat:'Product',title:'NCR Atleos launches AI-powered ATM predictive maintenance',source:'Press Release',summary:'New AI module deployed across managed ATM fleet predicts hardware failures 7 days in advance, targeting 30% reduction in ATM downtime.',tags:['Product','AI','ATM']},
-      {date:'Jan 2025',year:'2025',cat:'R&D / Innovation',title:'NCR Atleos pilots ITM (Interactive Teller Machine) expansion',source:'American Banker',summary:'Interactive Teller Machine pilot expands to 500 branch locations across 12 U.S. banks, offering video-assisted teller services for complex transactions.',tags:['R&D / Innovation','Self-Service','ITM']},
-      {date:'Oct 2023',year:'2023',cat:'Inorganic',title:'NCR Atleos completes spin-off from NCR Corporation',source:'SEC Filing',summary:'NCR Atleos officially separates from NCR Corporation as an independent publicly traded company (NATL on NYSE), focused on ATM and self-service banking.',tags:['Inorganic','Spin-off','IPO']}
-    ],
-    productStrategy:[
-      {year:'2021',title:'ATM-as-a-Service Expansion',desc:'Shift from hardware sales to recurring ATM-as-a-Service subscription model for banks.',type:'Business Model'},
-      {year:'2023',title:'NCR Spin-off Independence',desc:'Spun off from NCR Corporation as standalone NCR Atleos, focused purely on ATM and self-service banking.',type:'Corporate Event'},
-      {year:'2024',title:'Software Revenue Mix Improvement',desc:'Strategy to increase software and services revenue to >60% of total, reducing hardware dependency.',type:'Strategic Pivot'},
-      {year:'2025',title:'AI Predictive Maintenance',desc:'AI/ML deployed across 285K managed ATM fleet for predictive maintenance and uptime optimization.',type:'AI Integration'}
-    ],
-    launchTimeline:[
-      {date:'Q1 2025',cat:'New Product',title:'AI Predictive Maintenance Module',desc:'Machine learning model for ATM hardware failure prediction.',tags:['AI','ATM']},
-      {date:'Q3 2024',cat:'Enhancement',title:'APTRA Vision Analytics',desc:'Computer vision upgrade for cash dispensing accuracy monitoring.',tags:['Analytics','ATM']},
-      {date:'Q1 2023',cat:'Corporate Event',title:'NCR Atleos Spin-off',desc:'Independence from NCR Corporation as standalone listed entity.',tags:['Corporate']}
-    ],
-    portfolioMatrix:[
-      {name:'ATM-as-a-Service',segment:'ATM',revenue:45,growth:12,stage:'Growth',color:'#06b6d4'},
-      {name:'Self-Service Platform',segment:'SelfService',revenue:28,growth:6,stage:'Stable',color:'#22d3ee'},
-      {name:'APTRA Software',segment:'Software',revenue:18,growth:8,stage:'Stable',color:'#67e8f9'},
-      {name:'Managed Services',segment:'Services',revenue:9,growth:5,stage:'Cash Cow',color:'#10b981'}
-    ],
-    inorganic:[
-      {date:'Oct 2023',type:'Corporate Event',deal:'Spin-off from NCR Corp',value:'N/A',target:'NCR Corporation',rationale:'Focus exclusively on ATM and self-service banking market',status:'Completed',impact:'High'}
-    ],
-    rdData:{investment:[95,100,108,115,125,135],areas:['ATM Software','AI/ML','Self-Service UX','Security','Cloud Services','IoT'],areaVals:[35,20,18,15,8,4]}
-  }
+  fiserv:{id:'fiserv',name:'Fiserv',ticker:'FISV',exchange:'NYSE',hq:'Milwaukee, 🇺🇸',color:'#3b82f6',initials:'F',sector:'Payments & Banking Technology',founded:1984,employees:'~38,000',ceo:'Mike Lyons',website:'fiserv.com',description:'Global payments and financial technology provider spanning merchant acquiring, account processing, digital banking and issuer services.',revenue2024:20.456,marketCap:'$100B',rating:4.2,kpis:[{label:'Revenue FY2024',val:'$20.5B',delta:'+7.1%',dir:'up',color:'blue'},{label:'EBITDA Margin',val:'44.1%',delta:'+1.3pp',dir:'up',color:'green'},{label:'Free Cash Flow',val:'$5.7B',delta:'+$0.5B',dir:'up',color:'indigo'},{label:'Composite Score',val:'4.2/5',delta:'Leader',dir:'neutral',color:'amber'}],revenues:[14.852,16.226,17.737,19.093,20.456,21.193],ebitda:[34.4,34.1,39.2,42.8,44.1,42.6],netIncome:[0.958,1.334,2.530,3.068,3.131,3.480],revGrowth:[45.8,9.3,9.3,7.7,7.1,3.6],eps:[1.42,2.01,3.94,5.02,5.41,6.36],netMargin:[6.4,8.2,14.3,16.1,15.3,16.4],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Payments & Merchant (Clover, Carat)',segment:'Merchant',share:35,color:'#3b82f6'},{name:'Core & Account Processing',segment:'Banking',share:30,color:'#8b5cf6'},{name:'Digital Banking & Channels',segment:'Digital',share:15,color:'#10b981'},{name:'Finxact & SaaS Core',segment:'Cloud',share:10,color:'#f59e0b'},{name:'Other Services',segment:'Services',share:10,color:'#06b6d4'}],segments:[{name:'Merchants',pct:42,icon:'🛒'},{name:'Banks & Credit Unions',pct:38,icon:'🏦'},{name:'Fintechs & ISVs',pct:12,icon:'💻'},{name:'Enterprises',pct:8,icon:'🏢'}],geoData:[{region:'North America',flag:'🌎',rev:17.4,share:85,tier:1},{region:'Europe',flag:'🇪🇺',rev:1.4,share:7,tier:2},{region:'Asia Pacific',flag:'🌏',rev:0.8,share:4,tier:2},{region:'MEA',flag:'🌍',rev:0.3,share:2,tier:3},{region:'Americas',flag:'🌎',rev:0.6,share:3,tier:2}],insights:[{date:'Jun 2025',year:'2025',cat:'Product',title:'Clover expands integrated commerce platform',source:'Fiserv IR',summary:'Fiserv continues to scale Clover and integrated merchant capabilities across SMB and midmarket customers.',tags:['Clover','Merchant']},{date:'Apr 2025',year:'2025',cat:'R&D / Innovation',title:'AI embedded across payments stack',source:'Fiserv IR',summary:'AI and automation are increasingly positioned as productivity and fraud-management levers.',tags:['AI','Fraud']},{date:'Feb 2024',year:'2024',cat:'Inorganic',title:'Worldpay separation sharpens strategic focus',source:'Fiserv filing',summary:'Portfolio simplification increased focus on core merchant and financial technology franchises.',tags:['Portfolio','Focus']},{date:'Aug 2023',year:'2023',cat:'Customer Wins',title:'Enterprise payments cross-sell remains central',source:'Investor materials',summary:'Large financial institution and merchant relationships support recurring platform revenue.',tags:['Cross-sell']},{date:'Mar 2022',year:'2022',cat:'Product',title:'Finxact strengthens modern core offering',source:'Fiserv IR',summary:'Cloud-native core capabilities expand the addressable market for financial institution modernization.',tags:['Cloud','Core']}],productStrategy:[{year:'2020',title:'Integrate acquisitions',desc:'Defend installed base while expanding merchant acquiring.',type:'Platform Expansion'},{year:'2021',title:'Cloud-readiness',desc:'Expand Clover ecosystem and open architecture.',type:'Cloud Strategy'},{year:'2022',title:'Modern core',desc:'Position Finxact and digital channels for SaaS growth.',type:'Platform Expansion'},{year:'2023',title:'Cross-sell',desc:'Connect merchant and financial solutions franchises.',type:'Go-to-Market'},{year:'2024',title:'AI-enabled operations',desc:'Invest in AI partnerships and productivity.',type:'R&D / Innovation'},{year:'2025',title:'One Fiserv',desc:'Prioritize payments growth and integrated execution.',type:'Operating Model'}],launchTimeline:[{date:'Q1 2021',cat:'New Product',title:'Ondot capability integration',desc:'AI-driven payment experience added to portfolio.',tags:['AI']},{date:'Q2 2022',cat:'New Product',title:'Finxact cloud core expansion',desc:'Modern core platform positioned for cloud deployment.',tags:['Cloud','Core']},{date:'Q3 2024',cat:'Partnership',title:'AI ecosystem initiatives',desc:'Strategic AI collaborations across operations and payments.',tags:['AI']},{date:'Q2 2025',cat:'Platform',title:'Clover ecosystem enhancements',desc:'Additional integrated commerce capabilities for merchants.',tags:['Clover']}],portfolioMatrix:[{name:'Payments & Merchant',segment:'Merchant',revenue:35,growth:15,stage:'Growth Star',color:'#3b82f6'},{name:'Financial Solutions / Core',segment:'Banking',revenue:30,growth:7,stage:'Cash Generator',color:'#8b5cf6'},{name:'Digital Banking & SaaS',segment:'Digital',revenue:25,growth:18,stage:'Growth Star',color:'#10b981'},{name:'Services',segment:'Services',revenue:10,growth:4,stage:'Mature',color:'#f59e0b'}],inorganic:[{date:'Jan 2021',type:'Acquisition',deal:'Ondot Systems',value:'$271M',target:'AI payments platform',rationale:'Strengthen digital payments and AI capabilities.',status:'Completed',impact:'High'},{date:'Mar 2021',type:'Acquisition',deal:'Pineapple Payments',value:'Undisclosed',target:'Payments provider',rationale:'Expand merchant-facing payment solutions.',status:'Completed',impact:'Medium'},{date:'2022',type:'Acquisition',deal:'Finxact',value:'Undisclosed',target:'Cloud core banking',rationale:'Add modern SaaS core capabilities.',status:'Completed',impact:'High'}],rdData:{investment:[850,920,980,1050,1150,1250],areas:['AI/ML','Cloud Infrastructure','Fraud & Security','Payments Processing','Digital Banking','Open Banking'],areaVals:[28,22,18,16,10,6]}},
+  fis:{id:'fis',name:'FIS',ticker:'FIS',exchange:'NYSE',hq:'Jacksonville, 🇺🇸',color:'#8b5cf6',initials:'F',sector:'Payments & Banking Technology',founded:1968,employees:'~55,000',ceo:'Gary Norcross',website:'fisglobal.com',description:'Global fintech serving banks, capital markets firms, merchants and asset managers through core, payments and digital platforms.',revenue2024:10.127,marketCap:'$40B',rating:3.8,kpis:[{label:'Revenue FY2024',val:'$10.1B',delta:'+3.1%',dir:'up',color:'blue'},{label:'EBITDA Margin',val:'36.0%',delta:'+0.4pp',dir:'up',color:'green'},{label:'Free Cash Flow',val:'$2.0B',delta:'+$0.2B',dir:'up',color:'indigo'},{label:'Composite Score',val:'3.8/5',delta:'Scale Leader',dir:'neutral',color:'amber'}],revenues:[9.1,13.9,14.6,9.2,10.127,10.677],ebitda:[28,29,31,34,35.6,36],netIncome:[0.65,0.75,0.55,0.95,1.02,1.1],revGrowth:[4,53,5,-37,10,5],eps:[1.05,1.18,0.9,1.6,1.75,1.95],netMargin:[7.1,5.4,3.8,10.3,10.1,10.3],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Issuer & Card Processing',segment:'Payments',share:30,color:'#8b5cf6'},{name:'Core Banking Platforms',segment:'Banking',share:25,color:'#3b82f6'},{name:'Payments & Merchant',segment:'Merchant',share:20,color:'#10b981'},{name:'Capital Markets & Wealth',segment:'Markets',share:15,color:'#f59e0b'},{name:'Cloud & Services',segment:'Cloud',share:10,color:'#06b6d4'}],segments:[{name:'Banks',pct:40,icon:'🏦'},{name:'Capital Markets',pct:25,icon:'📈'},{name:'Merchants',pct:20,icon:'🛒'},{name:'Asset Managers',pct:15,icon:'💼'}],geoData:[{region:'North America',flag:'🌎',rev:6.3,share:59,tier:1},{region:'Europe',flag:'🇪🇺',rev:2.2,share:21,tier:2},{region:'Asia Pacific',flag:'🌏',rev:1.3,share:12,tier:2},{region:'MEA',flag:'🌍',rev:0.5,share:5,tier:3},{region:'Americas',flag:'🌎',rev:0.4,share:4,tier:2}],insights:[{date:'Jan 2026',year:'2025',cat:'Inorganic',title:'Issuer solutions expansion',source:'FIS IR',summary:'FIS is emphasizing issuer services and core financial institution relationships.',tags:['Issuer']},{date:'Sep 2025',year:'2025',cat:'Product',title:'Digital One cloud modernization',source:'FIS IR',summary:'Cloud and API-led offerings target modernization budgets at banks.',tags:['Cloud']},{date:'Jul 2024',year:'2024',cat:'Sales & Distribution',title:'Portfolio focus after Worldpay separation',source:'FIS filing',summary:'The post-separation portfolio prioritizes core processing and capital markets technology.',tags:['Strategy']},{date:'Mar 2023',year:'2023',cat:'R&D / Innovation',title:'Embedded finance investments',source:'FIS IR',summary:'Payrix and related capabilities support SMB and embedded payments.',tags:['Embedded']},{date:'Jun 2022',year:'2022',cat:'Product',title:'Cloud banking solutions broaden',source:'FIS IR',summary:'Digital banking and cloud propositions extend platform relevance.',tags:['Digital']}],productStrategy:[{year:'2020',title:'Scale integration',desc:'Consolidate legacy platforms after acquisitions.',type:'Platform Expansion'},{year:'2021',title:'Digital transformation',desc:'Invest in cloud banking and digital channels.',type:'Cloud Strategy'},{year:'2022',title:'Embedded payments',desc:'Expand SMB and commerce capabilities.',type:'Go-to-Market'},{year:'2023',title:'Portfolio simplification',desc:'Sharpen focus on core financial technology.',type:'Operating Model'},{year:'2024',title:'Vertical propositions',desc:'Target commercial banking and payments use cases.',type:'Product'},{year:'2025',title:'Issuer and SaaS growth',desc:'Prioritize issuer services and recurring cloud revenue.',type:'Growth'}],launchTimeline:[{date:'Q1 2022',cat:'Acquisition',title:'Payrix embedded payments',desc:'Added SMB embedded payments capabilities.',tags:['Embedded']},{date:'Q3 2023',cat:'Platform',title:'Cloud banking enhancements',desc:'Expanded API-led modernization tools.',tags:['Cloud']},{date:'Q1 2025',cat:'Product',title:'Digital account origination',desc:'Unified account opening and onboarding proposition.',tags:['Digital']}],portfolioMatrix:[{name:'Issuer Processing',segment:'Payments',revenue:30,growth:12,stage:'Cash Generator',color:'#8b5cf6'},{name:'Core Banking',segment:'Banking',revenue:25,growth:8,stage:'Mature',color:'#3b82f6'},{name:'Merchant Payments',segment:'Merchant',revenue:20,growth:15,stage:'Growth Star',color:'#10b981'},{name:'Capital Markets',segment:'Markets',revenue:15,growth:7,stage:'Cash Generator',color:'#f59e0b'}],inorganic:[{date:'Feb 2022',type:'Acquisition',deal:'Payrix',value:'Undisclosed',target:'Embedded-payments platform',rationale:'Grow e-commerce and SMB embedded payments.',status:'Completed',impact:'High'},{date:'Jul 2023',type:'Divestiture',deal:'Worldpay stake sale',value:'$11.7B',target:'Merchant payments',rationale:'Streamline focus on core financial technology.',status:'Completed',impact:'High'},{date:'2024',type:'Acquisition',deal:'Demica',value:'Undisclosed',target:'Trade finance fintech',rationale:'Strengthen trade-finance solutions.',status:'Completed',impact:'Medium'}],rdData:{investment:[1450,1550,1650,1750,1800,1900],areas:['Cloud','Payments','AI/ML','Security','Digital Banking','Capital Markets'],areaVals:[24,21,18,15,12,10]}},
+  jack:{id:'jack',name:'Jack Henry',ticker:'JKHY',exchange:'NASDAQ',hq:'Monett, 🇺🇸',color:'#10b981',initials:'J',sector:'Payments & Banking Technology',founded:1976,employees:'~7,000',ceo:'David Foss',website:'jackhenry.com',description:'Technology provider for community and regional financial institutions, with core, payments, digital banking and complementary solutions.',revenue2024:2.216,marketCap:'$13B',rating:4.0,kpis:[{label:'Revenue FY2024',val:'$2.2B',delta:'+8.0%',dir:'up',color:'blue'},{label:'EBITDA Margin',val:'31.5%',delta:'+0.7pp',dir:'up',color:'green'},{label:'Free Cash Flow',val:'$0.6B',delta:'+$0.1B',dir:'up',color:'indigo'},{label:'Composite Score',val:'4.0/5',delta:'Niche Leader',dir:'neutral',color:'amber'}],revenues:[1.55,1.72,1.91,2.05,2.216,2.375],ebitda:[27,28,29,30,31.5,32],netIncome:[0.28,0.32,0.36,0.4,0.45,0.5],revGrowth:[6,11,11,7,8,7],eps:[3.5,4.0,4.5,5.0,5.7,6.3],netMargin:[18,19,19,19.5,20.3,21],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Core Platforms',segment:'Core',share:45,color:'#10b981'},{name:'Payments',segment:'Payments',share:25,color:'#3b82f6'},{name:'Complementary Solutions',segment:'Digital',share:20,color:'#8b5cf6'},{name:'Cloud & Services',segment:'Cloud',share:10,color:'#f59e0b'}],segments:[{name:'Community Banks',pct:45,icon:'🏦'},{name:'Credit Unions',pct:35,icon:'🤝'},{name:'Regional Banks',pct:15,icon:'🏛️'},{name:'Fintech Partners',pct:5,icon:'💻'}],geoData:[{region:'United States',flag:'🇺🇸',rev:2.35,share:99,tier:1},{region:'North America',flag:'🌎',rev:0.02,share:1,tier:3}],insights:[{date:'Oct 2025',year:'2025',cat:'Inorganic',title:'Victor Technologies expands PaaS',source:'Jack Henry IR',summary:'Payments-as-a-Service remains a strategic growth vector.',tags:['Payments']},{date:'Aug 2025',year:'2025',cat:'Product',title:'Cloud partnerships deepen',source:'Jack Henry IR',summary:'Cloud capabilities support modernization for community financial institutions.',tags:['Cloud']},{date:'Sep 2022',year:'2022',cat:'Inorganic',title:'Payrailz acquisition closes',source:'Jack Henry IR',summary:'Cloud-native digital payments broaden the platform.',tags:['Payrailz']},{date:'Jun 2024',year:'2024',cat:'Customer Wins',title:'Core retention remains strong',source:'Annual report',summary:'High retention supports recurring revenue and cross-sell.',tags:['Retention']}],productStrategy:[{year:'2020',title:'Core leadership',desc:'Reinforce community and regional bank installed base.',type:'Core'},{year:'2021',title:'Payments expansion',desc:'Grow payments and complementary solutions.',type:'Growth'},{year:'2022',title:'Digital channels',desc:'Accelerate digital and partner integrations.',type:'Product'},{year:'2023',title:'Cloud migration',desc:'Target core and payments migrations.',type:'Cloud Strategy'},{year:'2024',title:'Cross-sell',desc:'Scale complementary services across clients.',type:'Go-to-Market'},{year:'2025',title:'PaaS growth',desc:'Expand embedded payments and fintech partnerships.',type:'Platform Expansion'}],launchTimeline:[{date:'Q3 2022',cat:'Acquisition',title:'Payrailz integration',desc:'Cloud-native payments-as-a-service.',tags:['Payments']},{date:'Q2 2024',cat:'Partnership',title:'Cloud modernization',desc:'Bank-grade cloud and operations capabilities.',tags:['Cloud']},{date:'Q4 2025',cat:'Acquisition',title:'Victor Technologies',desc:'High-volume embedded payments platform.',tags:['PaaS']}],portfolioMatrix:[{name:'Core Platforms',segment:'Core',revenue:45,growth:7,stage:'Cash Generator',color:'#10b981'},{name:'Payments',segment:'Payments',revenue:25,growth:13,stage:'Growth Star',color:'#3b82f6'},{name:'Complementary SaaS',segment:'Digital',revenue:20,growth:15,stage:'Growth Star',color:'#8b5cf6'}],inorganic:[{date:'Sep 2022',type:'Acquisition',deal:'Payrailz',value:'Undisclosed',target:'Cloud payments platform',rationale:'Modernize payments and add PaaS capabilities.',status:'Completed',impact:'High'},{date:'Oct 2025',type:'Acquisition',deal:'Victor Technologies',value:'Undisclosed',target:'Embedded-payments platform',rationale:'Expand payments-as-a-service.',status:'Completed',impact:'Medium'}],rdData:{investment:[180,200,220,240,270,300],areas:['Cloud','Payments','Digital Banking','Security','AI/ML','Core Modernization'],areaVals:[25,23,20,15,10,7]}},
+  temenos:{id:'temenos',name:'Temenos',ticker:'TEMN',exchange:'SIX',hq:'Geneva, 🇨🇭',color:'#f59e0b',initials:'T',sector:'Payments & Banking Technology',founded:1993,employees:'~7,500',ceo:'Jean-Pierre Brulard',website:'temenos.com',description:'Banking software leader delivering core banking, payments, digital engagement, wealth and cloud-native platforms.',revenue2024:1.0,marketCap:'$5B',rating:4.1,kpis:[{label:'Revenue FY2024',val:'$1.0B',delta:'+6.0%',dir:'up',color:'blue'},{label:'EBITDA Margin',val:'30.0%',delta:'+1.0pp',dir:'up',color:'green'},{label:'Free Cash Flow',val:'$0.3B',delta:'+$0.0B',dir:'neutral',color:'indigo'},{label:'Composite Score',val:'4.1/5',delta:'Core Leader',dir:'neutral',color:'amber'}],revenues:[0.75,0.82,0.9,0.94,1.0,1.091],ebitda:[23,25,26,28,30,31],netIncome:[0.12,0.14,0.16,0.18,0.2,0.22],revGrowth:[5,9,10,4,6,9],eps:[1.2,1.4,1.6,1.8,2.0,2.2],netMargin:[16,17,18,19,20,20],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Transact Core Banking',segment:'Core',share:40,color:'#f59e0b'},{name:'Digital Banking',segment:'Digital',share:20,color:'#3b82f6'},{name:'Payments',segment:'Payments',share:15,color:'#10b981'},{name:'Wealth & Specialized',segment:'Wealth',share:15,color:'#8b5cf6'},{name:'SaaS & Platform',segment:'Cloud',share:10,color:'#06b6d4'}],segments:[{name:'Global Banks',pct:45,icon:'🏦'},{name:'Regional Banks',pct:25,icon:'🏛️'},{name:'Challenger Banks',pct:15,icon:'🚀'},{name:'Wealth Providers',pct:15,icon:'💼'}],geoData:[{region:'Americas',flag:'🌎',rev:0.35,share:32,tier:1},{region:'Europe',flag:'🇪🇺',rev:0.25,share:23,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.24,share:22,tier:2},{region:'MEA',flag:'🌍',rev:0.25,share:23,tier:2}],insights:[{date:'Jul 2026',year:'2025',cat:'Inorganic',title:'Additiv extends wealth orchestration',source:'Temenos IR',summary:'The acquisition strengthens wealth management and AI-enabled orchestration.',tags:['Wealth','AI']},{date:'Apr 2025',year:'2025',cat:'Product',title:'SaaS Max adoption expands',source:'Temenos IR',summary:'Cloud-native deployment remains a central growth engine.',tags:['SaaS']},{date:'Sep 2024',year:'2024',cat:'R&D / Innovation',title:'Responsible GenAI for core',source:'Temenos IR',summary:'AI is integrated into banking workflows with governance positioning.',tags:['GenAI']},{date:'Jun 2023',year:'2023',cat:'Product',title:'Migration tools support modernization',source:'Temenos IR',summary:'Modular migration helps banks move from legacy platforms.',tags:['Migration']}],productStrategy:[{year:'2020',title:'Modular core',desc:'Push modular core and cloud options.',type:'Core'},{year:'2021',title:'Platformisation',desc:'Expand SaaS and platform partnerships.',type:'Cloud Strategy'},{year:'2022',title:'AI and digital',desc:'Invest in AI and digital channels.',type:'R&D / Innovation'},{year:'2023',title:'SaaS Max',desc:'Scale cloud-native deployment and migrations.',type:'SaaS'},{year:'2024',title:'Responsible GenAI',desc:'Embed governed AI into core workflows.',type:'AI'},{year:'2025',title:'Wealth expansion',desc:'Extend orchestration and specialized banking.',type:'Platform Expansion'}],launchTimeline:[{date:'Q2 2023',cat:'Platform',title:'SaaS Max expansion',desc:'Cloud-native core deployment options.',tags:['SaaS']},{date:'Q3 2024',cat:'New Product',title:'Responsible GenAI',desc:'AI assistance for core banking workflows.',tags:['AI']},{date:'Q3 2026',cat:'Acquisition',title:'Additiv closes',desc:'Wealth management orchestration capabilities.',tags:['Wealth']}],portfolioMatrix:[{name:'Transact Core',segment:'Core',revenue:40,growth:9,stage:'Cash Generator',color:'#f59e0b'},{name:'Digital Channels',segment:'Digital',revenue:20,growth:16,stage:'Growth Star',color:'#3b82f6'},{name:'SaaS Platform',segment:'Cloud',revenue:10,growth:22,stage:'Question Mark',color:'#10b981'}],inorganic:[{date:'Jun 2026',type:'Acquisition',deal:'Additiv',value:'Undisclosed',target:'Wealth orchestration platform',rationale:'Strengthen wealth-management offering.',status:'Completed',impact:'Medium'}],rdData:{investment:[150,165,180,195,210,225],areas:['Core Banking','Cloud/SaaS','AI/ML','Digital Channels','Payments','Wealth'],areaVals:[25,20,20,15,12,8]}},
+  finastra:{id:'finastra',name:'Finastra',ticker:'Private',exchange:'Private',hq:'London, 🇬🇧',color:'#ef4444',initials:'F',sector:'Payments & Banking Technology',founded:2017,employees:'~9,000',ceo:'Simon Paris',website:'finastra.com',description:'Large private fintech platform serving retail, universal and corporate banks across core, lending, payments and treasury.',revenue2024:1.85,marketCap:'Private',rating:3.7,kpis:[{label:'Revenue FY2024',val:'~$1.9B',delta:'Est.',dir:'neutral',color:'blue'},{label:'EBITDA Margin',val:'~30%',delta:'Est.',dir:'neutral',color:'green'},{label:'Free Cash Flow',val:'n/a',delta:'Private',dir:'neutral',color:'indigo'},{label:'Composite Score',val:'3.7/5',delta:'Broad Suite',dir:'neutral',color:'amber'}],revenues:[1.8,1.85,1.9,1.88,1.85,1.9],ebitda:[28,29,30,30,30,31],netIncome:[0.18,0.2,0.22,0.23,0.24,0.25],revGrowth:[3,3,3,-1,-2,3],eps:[null,null,null,null,null,null],netMargin:[10,11,12,12,13,13],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'Universal Banking / Core',segment:'Core',share:40,color:'#ef4444'},{name:'Payments & Treasury',segment:'Payments',share:20,color:'#3b82f6'},{name:'Lending',segment:'Lending',share:20,color:'#10b981'},{name:'Capital Markets',segment:'Markets',share:10,color:'#8b5cf6'},{name:'Cloud & Open APIs',segment:'Cloud',share:10,color:'#f59e0b'}],segments:[{name:'Universal Banks',pct:40,icon:'🏦'},{name:'Retail Banks',pct:25,icon:'🏛️'},{name:'Corporate Banks',pct:20,icon:'🏢'},{name:'Fintech Partners',pct:15,icon:'💻'}],geoData:[{region:'Europe',flag:'🇪🇺',rev:0.75,share:40,tier:1},{region:'North America',flag:'🌎',rev:0.55,share:30,tier:1},{region:'Asia Pacific',flag:'🌏',rev:0.3,share:16,tier:2},{region:'MEA',flag:'🌍',rev:0.25,share:14,tier:2}],insights:[{date:'Jun 2026',year:'2025',cat:'Product',title:'OperatorAssist expands AI for payments',source:'Finastra IR',summary:'AI-enabled operations are being layered onto core payments workflows.',tags:['AI','Payments']},{date:'Oct 2025',year:'2025',cat:'Sales & Distribution',title:'Cloud and open APIs remain core message',source:'Finastra IR',summary:'The platform targets modernization across universal banking and lending.',tags:['Cloud']},{date:'May 2024',year:'2024',cat:'Inorganic',title:'Portfolio changes simplify business',source:'Finastra IR',summary:'Strategic portfolio actions sharpen focus on core, lending and payments.',tags:['Portfolio']},{date:'Mar 2023',year:'2023',cat:'Product',title:'Digital lending enhancements',source:'Finastra IR',summary:'Lending remains a principal differentiation area.',tags:['Lending']}],productStrategy:[{year:'2020',title:'Universal banking',desc:'Consolidate broad product lines.',type:'Core'},{year:'2021',title:'Cloud and APIs',desc:'Scale open architecture and digital lending.',type:'Cloud Strategy'},{year:'2022',title:'Lending and payments',desc:'Grow high-value banking workflows.',type:'Product'},{year:'2023',title:'Digital transformation',desc:'Support cloud adoption and migration.',type:'Go-to-Market'},{year:'2024',title:'Portfolio focus',desc:'Execute strategic changes and divestitures.',type:'Operating Model'},{year:'2025',title:'AI-enabled operations',desc:'Extend automation across payments and core.',type:'AI'}],launchTimeline:[{date:'Q2 2023',cat:'Product',title:'Digital lending updates',desc:'Enhancements for retail and mortgage workflows.',tags:['Lending']},{date:'Q2 2025',cat:'Platform',title:'Open API expansion',desc:'Partner ecosystem and cloud adoption push.',tags:['Open API']},{date:'Q2 2026',cat:'New Product',title:'OperatorAssist',desc:'AI support for payments operations.',tags:['AI']}],portfolioMatrix:[{name:'Core Banking',segment:'Core',revenue:40,growth:7,stage:'Cash Generator',color:'#ef4444'},{name:'Lending',segment:'Lending',revenue:20,growth:14,stage:'Growth Star',color:'#10b981'},{name:'Payments',segment:'Payments',revenue:20,growth:10,stage:'Growth Star',color:'#3b82f6'}],inorganic:[{date:'2024',type:'Divestiture',deal:'Portfolio simplification',value:'Undisclosed',target:'Selected businesses',rationale:'Focus on core, lending and payments.',status:'Completed',impact:'Medium'}],rdData:{investment:[300,320,340,350,360,380],areas:['Cloud','Lending','Payments','AI/ML','Core Banking','Open APIs'],areaVals:[22,20,18,16,14,10]}},
+  ncr:{id:'ncr',name:'NCR Atleos',ticker:'NATL',exchange:'NYSE',hq:'Atlanta, 🇺🇸',color:'#06b6d4',initials:'N',sector:'Payments & Banking Technology',founded:2023,employees:'~20,000',ceo:'Tim Oliver',website:'ncratleos.com',description:'Self-service banking technology company focused on ATMs, interactive teller machines, software and managed services.',revenue2024:4.3,marketCap:'$3B',rating:3.3,kpis:[{label:'Revenue FY2024',val:'~$4.3B',delta:'Est.',dir:'up',color:'blue'},{label:'EBITDA Margin',val:'~18%',delta:'Est.',dir:'neutral',color:'green'},{label:'Free Cash Flow',val:'~$0.4B',delta:'Est.',dir:'up',color:'indigo'},{label:'Composite Score',val:'3.3/5',delta:'ATM Specialist',dir:'neutral',color:'amber'}],revenues:[3.9,4.0,4.1,4.2,4.3,4.35],ebitda:[16,16,17,17,18,18],netIncome:[0.1,0.12,0.14,0.16,0.18,0.2],revGrowth:[2,3,3,2,2,1],eps:[0.5,0.6,0.7,0.8,0.9,1.0],netMargin:[2.6,3,3.4,3.8,4.2,4.6],years:[2020,2021,2022,2023,2024,2025],topProducts:[{name:'ATM & ITM Hardware',segment:'Self-Service',share:40,color:'#06b6d4'},{name:'Software & Managed Services',segment:'Services',share:30,color:'#3b82f6'},{name:'Payments & Retail Solutions',segment:'Payments',share:20,color:'#10b981'},{name:'Professional Services',segment:'Services',share:10,color:'#f59e0b'}],segments:[{name:'Banks',pct:55,icon:'🏦'},{name:'Retailers',pct:20,icon:'🛍️'},{name:'ATM Networks',pct:15,icon:'🏧'},{name:'Managed Service Partners',pct:10,icon:'🤝'}],geoData:[{region:'North America',flag:'🌎',rev:2.6,share:60,tier:1},{region:'Europe',flag:'🇪🇺',rev:0.75,share:17,tier:2},{region:'Asia Pacific',flag:'🌏',rev:0.55,share:13,tier:2},{region:'MEA',flag:'🌍',rev:0.45,share:10,tier:3}],insights:[{date:'Jun 2026',year:'2025',cat:'Product',title:'ATM-as-a-Service scales',source:'NCR Atleos IR',summary:'Managed services and software are designed to increase recurring revenue mix.',tags:['ATMaaS']},{date:'Oct 2025',year:'2025',cat:'R&D / Innovation',title:'AI-assisted ATM design',source:'NCR Atleos IR',summary:'Self-service innovation targets customer experience and operational efficiency.',tags:['AI','ATM']},{date:'Sep 2023',year:'2023',cat:'Inorganic',title:'Atleos separation creates focused platform',source:'NCR Atleos filing',summary:'The separation created a dedicated self-service banking technology company.',tags:['Separation']},{date:'Mar 2024',year:'2024',cat:'Product',title:'Dual-sided ATM concepts',source:'NCR Atleos IR',summary:'Hardware and branch automation remain key areas of differentiation.',tags:['Hardware']}],productStrategy:[{year:'2020',title:'Installed base',desc:'Maintain ATM hardware and service footprint.',type:'Core'},{year:'2021',title:'Digital branch',desc:'Accelerate branch automation and ITM.',type:'Product'},{year:'2022',title:'Sustainability',desc:'Invest in efficient self-service designs.',type:'R&D / Innovation'},{year:'2023',title:'Focused company',desc:'Build software and services around ATM base.',type:'Operating Model'},{year:'2024',title:'Managed services',desc:'Increase recurring revenue mix.',type:'SaaS'},{year:'2025',title:'AI-assisted self-service',desc:'Use AI to improve design and operations.',type:'AI'}],launchTimeline:[{date:'Q3 2023',cat:'Platform',title:'Atleos standalone launch',desc:'Dedicated self-service banking technology platform.',tags:['Separation']},{date:'Q1 2024',cat:'New Product',title:'Dual-sided ATM concepts',desc:'Improve branch footprint and deployment economics.',tags:['ATM']},{date:'Q2 2025',cat:'Services',title:'ATM-as-a-Service expansion',desc:'Managed operations and recurring services.',tags:['ATMaaS']}],portfolioMatrix:[{name:'ATM Hardware',segment:'Self-Service',revenue:40,growth:4,stage:'Mature',color:'#06b6d4'},{name:'Managed Services',segment:'Services',revenue:30,growth:12,stage:'Growth Star',color:'#3b82f6'},{name:'Payments Solutions',segment:'Payments',revenue:20,growth:8,stage:'Cash Generator',color:'#10b981'}],inorganic:[{date:'Sep 2023',type:'Separation',deal:'NCR Atleos spin-off',value:'Public transaction',target:'Self-service banking business',rationale:'Create focused ATM and managed-services company.',status:'Completed',impact:'High'}],rdData:{investment:[220,230,240,250,270,290],areas:['ATM Hardware','Managed Services','AI/ML','Security','Payments','Branch Automation'],areaVals:[25,22,18,15,12,8]}}
 };
+const BENCH_PEERS = ['Fiserv','FIS','Jack Henry','Temenos','Finastra','NCR Atleos'];
+const BENCH_COLORS = {'Fiserv':'#3b82f6','FIS':'#8b5cf6','Jack Henry':'#10b981','Temenos':'#f59e0b','Finastra':'#ef4444','NCR Atleos':'#06b6d4'};
+const BENCH_FEATURES = [{feature:'Core Account Processing',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},{feature:'Payments Processing',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':'partial'},{feature:'Merchant Acquiring',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:false,Finastra:'partial','NCR Atleos':false},{feature:'Digital Banking',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':'partial'},{feature:'ATM / Self-Service',cat:'Channels',Fiserv:'partial',FIS:'partial','Jack Henry':'partial',Temenos:'partial',Finastra:'partial','NCR Atleos':true},{feature:'Cloud / SaaS',cat:'Technology',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':true},{feature:'AI / GenAI',cat:'Technology',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:true,'NCR Atleos':'partial'},{feature:'Lending',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},{feature:'Wealth Management',cat:'Markets',Fiserv:'partial',FIS:true,'Jack Henry':false,Temenos:true,Finastra:'partial','NCR Atleos':false},{feature:'Capital Markets',cat:'Markets',Fiserv:'partial',FIS:true,'Jack Henry':false,Temenos:true,Finastra:true,'NCR Atleos':false}];
+const BENCH_PROFILE_ATTRS = [{attr:'HQ',Fiserv:'Milwaukee, 🇺🇸',FIS:'Jacksonville, 🇺🇸','Jack Henry':'Monett, 🇺🇸',Temenos:'Geneva, 🇨🇭',Finastra:'London, 🇬🇧','NCR Atleos':'Atlanta, 🇺🇸'},{attr:'Ownership',Fiserv:'Public',FIS:'Public','Jack Henry':'Public',Temenos:'Public',Finastra:'Private','NCR Atleos':'Public'},{attr:'Primary Customer',Fiserv:'Merchants & banks',FIS:'Banks & markets','Jack Henry':'Community FI',Temenos:'Global banks',Finastra:'Universal banks','NCR Atleos':'Banks & retailers'},{attr:'Core Strength',Fiserv:'Merchant + payments',FIS:'Scale + markets','Jack Henry':'Community core',Temenos:'Core software',Finastra:'Broad suite','NCR Atleos':'ATM / self-service'},{attr:'Cloud Posture',Fiserv:'Cloud-ready',FIS:'Cloud modernization','Jack Henry':'Accelerating',Temenos:'Cloud-native',Finastra:'Open cloud','NCR Atleos':'Managed services'},{attr:'Geographic Focus',Fiserv:'Global / US-led',FIS:'Global', 'Jack Henry':'US',Temenos:'Global',Finastra:'Global','NCR Atleos':'Global / US-led'}];
+const MARKET_EVENTS = [{co:'Temenos',color:'#f59e0b',title:'Additiv acquisition closes',date:'Jul 17, 2026',type:'M&A',summary:'Temenos expands wealth-management orchestration capabilities.',tags:['Wealth']},{co:'NCR Atleos',color:'#06b6d4',title:'ATM-as-a-Service expansion',date:'Jun 2026',type:'Product',summary:'Managed services remain a central recurring-revenue lever.',tags:['ATMaaS']},{co:'Finastra',color:'#ef4444',title:'OperatorAssist AI for payments',date:'Jun 2026',type:'Product',summary:'AI-enabled payments operations are added to the platform story.',tags:['AI']},{co:'Jack Henry',color:'#10b981',title:'Victor Technologies integration',date:'Oct 2025',type:'M&A',summary:'PaaS capabilities broaden for embedded payments.',tags:['Payments']},{co:'Fiserv',color:'#3b82f6',title:'Clover ecosystem growth',date:'Jun 2025',type:'Product',summary:'Integrated commerce remains a key merchant growth platform.',tags:['Clover']},{co:'FIS',color:'#8b5cf6',title:'Issuer solutions focus',date:'Jan 2026',type:'Strategy',summary:'Issuer services and core financial technology are strategic priorities.',tags:['Issuer']}];
+const BENCH_CUST = {Fiserv:{enterprise:'Large merchants and banks',midmarket:'Regional institutions and merchants',smb:'SMB merchants via Clover',gov:'Public-sector payment programs',partners:'ISVs, fintechs, acquirers'},FIS:{enterprise:'Large banks and capital markets firms',midmarket:'Regional financial institutions',smb:'SMB merchants via embedded partners',gov:'Public-sector financial systems',partners:'Fintech integrators and platforms'},'Jack Henry':{enterprise:'Regional financial institutions',midmarket:'Community banks and credit unions',smb:'SMB banking via partners',gov:'Limited public-sector focus',partners:'Fintechs and cloud providers'},Temenos:{enterprise:'Global tier-one banks',midmarket:'Regional banks',smb:'Challenger and neobanks',gov:'Public-sector banking clients',partners:'Cloud providers and SIs'},Finastra:{enterprise:'Universal and corporate banks',midmarket:'Retail and regional banks',smb:'Fintech-enabled SMB workflows',gov:'Public-sector financial institutions',partners:'Fintech ISVs and integrators'},'NCR Atleos':{enterprise:'Large banks and ATM networks',midmarket:'Regional banks and retailers',smb:'Retail self-service deployments',gov:'Public-sector access points',partners:'ATM networks and MSPs'}};
 
-const BENCH_PEERS = ['Fiserv','FIS','Jack Henry'];
-const BENCH_COLORS = {'Fiserv':'#3b82f6','FIS':'#8b5cf6','Jack Henry':'#10b981','Temenos':'#f59e0b','Finastra':'#ef4444','NCR Atleos':'#06b6d4','Stripe':'#635bff','Adyen':'#0abf53'};
-
-const BENCH_FEATURES = [
-  {feature:'Core Account Processing',cat:'Banking',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Real-Time Payments',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Merchant Acquiring / POS',cat:'Commerce',Fiserv:true,FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},
-  {feature:'Cloud-Native Core Banking',cat:'Cloud',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Open Banking / BaaS APIs',cat:'Platform',Fiserv:'partial',FIS:'partial','Jack Henry':false,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'AI / ML Analytics',cat:'AI',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},
-  {feature:'Digital Banking Platform',cat:'Digital',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:true,'NCR Atleos':false},
-  {feature:'Treasury & Capital Markets',cat:'CapMarkets',Fiserv:false,FIS:true,'Jack Henry':false,Temenos:'partial',Finastra:true,'NCR Atleos':false},
-  {feature:'ATM / Self-Service Banking',cat:'Infrastructure',Fiserv:'partial',FIS:'partial','Jack Henry':false,Temenos:false,Finastra:false,'NCR Atleos':true},
-  {feature:'Card Issuance & Processing',cat:'Payments',Fiserv:true,FIS:true,'Jack Henry':true,Temenos:true,Finastra:'partial','NCR Atleos':false},
-  {feature:'Fraud & Compliance Tools',cat:'Risk',Fiserv:true,FIS:true,'Jack Henry':'partial',Temenos:true,Finastra:'partial','NCR Atleos':'partial'},
-  {feature:'Wealth Management',cat:'Wealth',Fiserv:false,FIS:false,'Jack Henry':false,Temenos:true,Finastra:'partial','NCR Atleos':false}
-];
-
-const BENCH_PROFILE_ATTRS = [
-  {attr:'HQ',Fiserv:'Milwaukee, 🇺🇸',FIS:'Jacksonville, 🇺🇸','Jack Henry':'Monett, 🇺🇸',Temenos:'Geneva, 🇨🇭',Finastra:'London, 🇬🇧','NCR Atleos':'Atlanta, 🇺🇸'},
-  {attr:'Founded',Fiserv:1984,FIS:1968,'Jack Henry':1976,Temenos:1993,Finastra:2017,'NCR Atleos':2023},
-  {attr:'Employees',Fiserv:'~38,000',FIS:'~49,000','Jack Henry':'~7,240',Temenos:'~5,205',Finastra:'~9,500','NCR Atleos':'~20,000'},
-  {attr:'Revenue FY2024',Fiserv:'$20.5B',FIS:'$10.1B','Jack Henry':'$2.2B',Temenos:'$1.0B',Finastra:'$1.9B','NCR Atleos':'$2.2B'},
-  {attr:'EBITDA Margin',Fiserv:'43.4%',FIS:'31.0%','Jack Henry':'28.0%',Temenos:'38.5%',Finastra:'31.5%','NCR Atleos':'17.0%'},
-  {attr:'Revenue CAGR (20-24)',Fiserv:'6.6%',FIS:'4.4%','Jack Henry':'6.0%',Temenos:'6.1%',Finastra:'4.9%','NCR Atleos':'5.6%'},
-  {attr:'Primary Market',Fiserv:'Global – US Lead',FIS:'Global – US Lead','Jack Henry':'U.S. Only',Temenos:'Global (EMEA/APAC)',Finastra:'Global','NCR Atleos':'Global – US Lead'},
-  {attr:'Business Model',Fiserv:'Transaction + SaaS',FIS:'SaaS + Services','Jack Henry':'SaaS + Services',Temenos:'SaaS + Services',Finastra:'Subscription','NCR Atleos':'ATM SaaS + HW'},
-  {attr:'Listed / Private',Fiserv:'Public (NASDAQ)',FIS:'Public (NYSE)','Jack Henry':'Public (NASDAQ)',Temenos:'Public (SIX)',Finastra:'Private (PE)','NCR Atleos':'Public (NYSE)'}
-];
-
-const MARKET_EVENTS = [
-  {co:'Fiserv',color:'#3b82f6',title:'Fiserv announces $2B share buyback program',date:'Aug 11, 2026',type:'Corporate',summary:'Fiserv Board authorizes new $2B share repurchase program, signaling strong free cash flow confidence following Worldpay divestiture.',tags:['Corporate Action','Fiserv']},
-  {co:'FIS',color:'#8b5cf6',title:'FIS Future Forward delivers $380M cost savings',date:'Jul 28, 2026',type:'Earnings',summary:'FIS Q2 2026 earnings confirm Future Forward transformation has delivered $380M in annualized savings, ahead of $400M target for FY2026.',tags:['Earnings','FIS','Transformation']},
-  {co:'Temenos',color:'#f59e0b',title:'Temenos wins Singapore\'s DBS Bank for cloud core',date:'Jul 20, 2026',type:'Customer Win',summary:'DBS Bank selects Temenos Banking Cloud for next-generation core banking modernization across Singapore and Hong Kong operations.',tags:['Customer Win','Temenos','APAC']},
-  {co:'Jack Henry',color:'#10b981',title:'Jack Henry raises FY2026 guidance after record SaaS bookings',date:'Jul 15, 2026',type:'Guidance',summary:'Jack Henry raises FY2026 revenue guidance to $2.5–2.52B after record SaaS bookings in Q3, driven by community bank digital transformation demand.',tags:['Guidance','Jack Henry','SaaS']},
-  {co:'Finastra',color:'#ef4444',title:'Finastra FusionFabric surpasses 500 apps milestone',date:'Jul 10, 2026',type:'Product',summary:'Finastra\'s open banking marketplace reaches 500 partner applications, reinforcing open finance platform leadership.',tags:['Product','Finastra','Open Banking']},
-  {co:'NCR Atleos',color:'#06b6d4',title:'NCR Atleos expands ITM network to 1,000 locations',date:'Jul 5, 2026',type:'Expansion',summary:'Interactive Teller Machine deployment reaches 1,000 U.S. locations, accelerating NCR Atleos\' shift from pure ATM hardware to software-led services.',tags:['Expansion','NCR Atleos','ITM']}
-];
-
-const BENCH_CUST = {
-  Fiserv:{enterprise:'42% of U.S. banks; 31% of credit unions; Walmart Pay, Chase, Wells Fargo merchant clients',midmarket:'~1.5M+ SMB Clover merchants; regional banks across U.S.',smb:'Clover devices at >1M small business locations',gov:'U.S. government disbursements via Fiserv payment rails',partners:'NVIDIA (AI), Microsoft (Cloud), Visa/Mastercard, GTCR (Worldpay)'},
-  FIS:{enterprise:'50,000+ clients globally; top-20 U.S. banks; Goldman Sachs, JPMorgan capital markets',midmarket:'Regional and community banks via Modern Banking Platform',smb:'Limited SMB direct presence; via bank intermediaries',gov:'Government payment processing and treasury services',partners:'Microsoft (Azure), Amazon (AWS), Salesforce'},
-  'Jack Henry':{enterprise:'N/A — focused on community segment',midmarket:'~1,100 community banks; ~900 credit unions across U.S.',smb:'SMB banking via community bank clients (Banno Business)',gov:'Municipal and local government banking via community bank clients',partners:'Payrailz, Victor Technologies, Q2 Holdings'},
-  Temenos:{enterprise:'DBS Bank, Société Générale, BNP Paribas — core banking modernization',midmarket:'Regional banks across Europe, APAC, MEA',smb:'Neobank and challenger bank clients via SaaS platform',gov:'Central banks and government-owned banks in 40+ countries',partners:'AWS, Microsoft Azure, Accenture, Capgemini'},
-  Finastra:{enterprise:'HSBC, Barclays, Deutsche Bank — treasury and lending',midmarket:'90% of top-100 global banks as clients (some product set)',smb:'Building societies and credit unions in UK',gov:'Development banks and public sector financial institutions',partners:'Microsoft, AWS, Deloitte, KPMG, FusionFabric.cloud ecosystem'},
-  'NCR Atleos':{enterprise:'Bank of America, Chase, Wells Fargo ATM fleet management',midmarket:'Regional bank ATM outsourcing programs',smb:'Convenience store and fuel ATM networks',gov:'Government facility ATM deployments',partners:'Brink\'s (cash logistics), Euronet, IndependentATM'}
-};
 </script>
 <script>
 /* ==================== HELPERS ==================== */
@@ -1371,7 +982,7 @@ function hexToRgba(hex, alpha) {
   return `rgba(${r},${g},${b},${alpha})`;
 }
 /* ==================== STATE ==================== */
-let currentCompany = Object.keys(COMPANIES_DATA)[0];
+let currentCompany = 'fiserv';
 let currentCoTab = 'overview';
 let currentInsightYear = 'All';
 let currentInsightCat = 'All';
@@ -1379,7 +990,7 @@ let currentFinTab = 'revenue';
 let currentFinPeriod = 'annual';
 let currentBenchTab = 'overview';
 let currentBenchFinTab = 'revenue';
-let currentBenchPeers = BENCH_PEERS.slice();
+let currentBenchPeers = ['Fiserv','FIS','Jack Henry'];
 let currentBenchFeatures = BENCH_FEATURES.map(f=>({...f}));
 let currentProfileAttrs = BENCH_PROFILE_ATTRS.map(a=>a.attr);
 let currentProductTab = 'strategy';
@@ -2370,11 +1981,10 @@ function renderBenchCapabilities() {
     return co ? co.rating : 3;
   });
   const dims = ['Scale','Merchant','Banking','Core','Global','Cloud','Recurring','Breadth'];
-  const SCORES_MAP = Object.fromEntries(currentBenchPeers.map(p => {
-    const co = Object.values(COMPANIES_DATA).find(c => c.name === p);
-    const score = co ? Math.max(1, Math.min(5, Math.round(co.rating))) : 3;
-    return [p, Array(8).fill(score)];
-  }));
+  const SCORES_MAP = {
+    Fiserv:[5,5,4,5,4,4,5,5],FIS:[4,3,4,4,4,3,4,4],'Jack Henry':[2,2,4,4,1,4,4,3],
+    Temenos:[2,1,5,5,4,4,3,3],Finastra:[3,2,4,4,3,3,3,4],'NCR Atleos':[2,2,2,2,3,2,3,2]
+  };
   const traces = currentBenchPeers.map(p=>({
     type:'scatterpolar',name:p,fill:'toself',
     r:[...(SCORES_MAP[p]||Array(8).fill(3)), SCORES_MAP[p]?SCORES_MAP[p][0]:3],
@@ -2546,34 +2156,11 @@ function globalSearch(q) {
   if (match) showCompany(match.id);
 }
 
-/* ==================== DATA-DRIVEN PORTAL CHROME ==================== */
-function configurePortalChrome() {
-  const companies = Object.values(COMPANIES_DATA);
-  const base = companies[0];
-  if (!base) return;
-  currentCompany = base.id;
-  currentBenchPeers = BENCH_PEERS.filter(p => companies.some(co => co.name === p));
-  const nav = document.getElementById('dynamicCompanyNav');
-  if (nav) nav.innerHTML = companies.map((co, i) =>
-    `<div class="nav-company-item${i===0?' active':''}" onclick="showCompany('${co.id}',this)" data-co="${co.id}">
-       <span class="co-dot" style="background:${co.color}"></span> ${co.name}
-     </div>`).join('');
-  const options = document.getElementById('companyOptions');
-  if (options) options.innerHTML = companies.map(co => `<option value="${co.name}"/>`).join('');
-  document.querySelectorAll('.page-subtitle').forEach(el => {
-    if (el.textContent.includes('Full coverage of tracked companies')) {
-      el.textContent = `Full coverage of ${companies.length} companies across ${base.sector}`;
-    }
-  });
-}
-
 /* ==================== INIT ==================== */
 window.addEventListener('load', () => {
-  configurePortalChrome();
   renderDashboard();
   renderCIPage();
-  const base = Object.keys(COMPANIES_DATA)[0];
-  if (base) showCompany(base, document.querySelector(`[data-co="${base}"]`));
+  showCompany('fiserv', document.querySelector('[data-co="fiserv"]'));
 });
 window.addEventListener('resize', () => {
   const activePage = document.querySelector('.page.active');
