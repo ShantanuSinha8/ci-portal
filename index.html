@@ -6,462 +6,7 @@
 <title>CompeteIQ v3.0 — Competitive Intelligence Portal (2026-08-11 08:16)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<script src="https://cdn.plot.ly/plotly-2.27.0.min.js">
-/* ══════════════════════════════════════════════
-   INPUT WIZARD
-══════════════════════════════════════════════ */
-function showInputWizard(){
-  document.getElementById('inputWizardOverlay').classList.add('modal-show');
-  document.getElementById('inputWizardOverlay').style.display='flex';
-}
-function closeInputWizard(){
-  document.getElementById('inputWizardOverlay').style.display='none';
-}
-function applyWizardDefaults(){
-  document.getElementById('wiz-base').value='Microsoft';
-  document.getElementById('wiz-peers').value='Salesforce, ServiceNow, Google (Alphabet), Oracle, SAP';
-  document.getElementById('wiz-from').value='FY2021';
-  document.getElementById('wiz-to').value='FY2025';
-  document.getElementById('wiz-sector').value='AI-Powered Enterprise Software';
-  document.getElementById('wiz-geo').value='Global';
-}
-function applyWizardInputs(){
-  const base=document.getElementById('wiz-base').value.trim();
-  const peers=document.getElementById('wiz-peers').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const from=document.getElementById('wiz-from').value;
-  const to=document.getElementById('wiz-to').value;
-  const sector=document.getElementById('wiz-sector').value.trim();
-  const geo=document.getElementById('wiz-geo').value;
-  APP.yearFrom=from; APP.yearTo=to;
-  document.getElementById('year-from').value=from;
-  document.getElementById('year-to').value=to;
-  closeInputWizard();
-  showToast(`Analysis configured: ${base} vs ${peers.length} peers · ${from}–${to} · ${sector} · ${geo}`,'info');
-  // Update KPI tile
-  const kpiEl=document.getElementById('dash-kpi-companies');
-  if(kpiEl) kpiEl.textContent=1+peers.length;
-  const subEl=document.getElementById('dash-kpi-sector');
-  if(subEl) subEl.textContent=sector;
-  APP.chartCache={};
-  const cur=document.querySelector('.page.active');
-  if(cur) renderCurrentPage(cur.id.replace('page-',''));
-}
-
-/* ══════════════════════════════════════════════
-   VIEW ALL EVENTS MODAL
-══════════════════════════════════════════════ */
-function openAllEvents(filterType){
-  const ov=document.getElementById('allEventsOverlay');
-  ov.style.display='flex';
-  const types=['All','M&A','Product','AI','Partnership','Earnings','Expansion'];
-  const chips=document.getElementById('allEventsChips');
-  chips.innerHTML=types.map(t=>`<div class="chip-filter${(!filterType||t==='All'&&!filterType)?'':''}" style="font-size:11px;padding:3px 9px;border-radius:12px;border:1.5px solid ${t===(filterType||'All')?'#2563eb':'#e2e8f0'};background:${t===(filterType||'All')?'#eff6ff':'#fff'};color:${t===(filterType||'All')?'#2563eb':'#64748b'};cursor:pointer;font-weight:500;" onclick="filterAllEventsModal('${t}',this)">${t}</div>`).join('');
-  renderAllEventsModal(filterType||'all');
-}
-function closeAllEvents(){document.getElementById('allEventsOverlay').style.display='none';}
-function renderAllEventsModal(type){
-  const body=document.getElementById('allEventsBody');
-  const events=MARKET_EVENTS||[];
-  const filtered=type&&type!=='all'&&type!=='All'?events.filter(e=>e.type===type):events;
-  if(!filtered.length){body.innerHTML='<div class="no-data-msg"><div class="no-data-icon">📭</div><div class="no-data-text">No events found</div></div>';return;}
-  body.innerHTML=filtered.map(ev=>{
-    const co=Object.values(COMPANIES_DATA).find(c=>c.name===ev.company)||{color:'#94a3b8',name:ev.company||'Market'};
-    return `<div style="padding:14px 16px;border:1.5px solid #e2e8f0;border-radius:10px;border-left:3px solid ${co.color};">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;">
-        <div style="font-size:13px;font-weight:600;color:#1e293b;">${ev.title||ev.headline||'Event'}</div>
-        <span style="font-size:10.5px;padding:2px 8px;border-radius:10px;background:#f1f5f9;color:#64748b;white-space:nowrap;">${ev.type||'General'}</span>
-      </div>
-      <div style="font-size:12px;color:#64748b;margin-bottom:6px;">${ev.summary||ev.body||''}</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;">
-        ${(ev.tags||[ev.company||'Market']).map(t=>`<span style="font-size:10.5px;padding:2px 8px;border-radius:10px;background:#eff6ff;color:#2563eb;">${t}</span>`).join('')}
-        <span style="font-size:10.5px;color:#94a3b8;margin-left:auto;">${ev.date||''}</span>
-      </div>
-    </div>`;
-  }).join('');
-}
-function filterAllEventsModal(type,el){
-  document.querySelectorAll('#allEventsChips div').forEach(c=>{
-    c.style.borderColor='#e2e8f0';c.style.background='#fff';c.style.color='#64748b';
-  });
-  el.style.borderColor='#2563eb';el.style.background='#eff6ff';el.style.color='#2563eb';
-  renderAllEventsModal(type);
-}
-function viewAllEvents(){openAllEvents('all');}
-
-/* ══════════════════════════════════════════════
-   SEE ALL COMPANIES MODAL
-══════════════════════════════════════════════ */
-function openAllCompanies(){
-  const ov=document.getElementById('allCompaniesOverlay');
-  ov.style.display='flex';
-  const body=document.getElementById('allCompaniesBody');
-  const ids=Object.keys(COMPANIES_DATA);
-  if(!ids.length){body.innerHTML='<div class="no-data-msg"><div class="no-data-icon">🏢</div><div class="no-data-text">No companies loaded</div></div>';return;}
-  body.innerHTML=ids.map(id=>{
-    const co=COMPANIES_DATA[id];
-    const rev=co.revenues?co.revenues[co.revenues.length-1]:null;
-    const yoy=co.revGrowth?co.revGrowth[co.revGrowth.length-1]:null;
-    return `<div style="padding:16px;border:1.5px solid #e2e8f0;border-radius:12px;border-top:3px solid ${co.color};">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-        <div style="width:40px;height:40px;border-radius:10px;background:${co.color};color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;">${(co.name||'?')[0]}</div>
-        <div>
-          <div style="font-size:13.5px;font-weight:700;color:#1e293b;">${co.name}</div>
-          <div style="font-size:11px;color:#94a3b8;">${co.ticker||id.toUpperCase()}</div>
-        </div>
-      </div>
-      ${rev?`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
-        <div style="padding:8px;background:#f8fafc;border-radius:8px;text-align:center;">
-          <div style="font-size:11px;color:#94a3b8;">Revenue</div>
-          <div style="font-size:13.5px;font-weight:700;color:#1e293b;">$${rev}B</div>
-        </div>
-        ${yoy!==null?`<div style="padding:8px;background:#f8fafc;border-radius:8px;text-align:center;">
-          <div style="font-size:11px;color:#94a3b8;">YoY Growth</div>
-          <div style="font-size:13.5px;font-weight:700;color:${yoy>=0?'#16a34a':'#dc2626'};">${yoy>=0?'+':''}${yoy}%</div>
-        </div>`:''}
-      </div>`:''}
-      <div style="font-size:11.5px;color:#475569;line-height:1.5;">${co.description?co.description.substring(0,90)+'…':''}</div>
-      <button onclick="closeAllCompanies();setCoProfile('${id}')" style="margin-top:10px;width:100%;padding:7px;border:1.5px solid ${co.color};border-radius:8px;background:#fff;color:${co.color};font-size:12px;font-weight:600;cursor:pointer;">View Profile →</button>
-    </div>`;
-  }).join('');
-}
-function closeAllCompanies(){document.getElementById('allCompaniesOverlay').style.display='none';}
-function seeAllCompanies(){openAllCompanies();}
-
-/* ══════════════════════════════════════════════
-   EDIT PROFILE ATTRIBUTES MODAL
-══════════════════════════════════════════════ */
-const ALL_PROFILE_ATTRS=[
-  {key:'founded',label:'Founded'},
-  {key:'hq',label:'Headquarters'},
-  {key:'employees',label:'Employees'},
-  {key:'ceo',label:'CEO'},
-  {key:'revenue',label:'Latest Revenue'},
-  {key:'market_cap',label:'Market Cap'},
-  {key:'ticker',label:'Ticker'},
-  {key:'sector',label:'Sector'},
-  {key:'products',label:'Key Products'},
-  {key:'description',label:'Description'},
-];
-let ACTIVE_PROFILE_ATTRS=ALL_PROFILE_ATTRS.map(a=>a.key);
-function openEditAttrs(){
-  const ov=document.getElementById('editAttrsOverlay');
-  ov.style.display='flex';
-  const body=document.getElementById('editAttrsBody');
-  body.innerHTML=`<div style="display:flex;flex-direction:column;gap:8px;">`+
-    ALL_PROFILE_ATTRS.map(a=>`
-      <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-        <input type="checkbox" ${ACTIVE_PROFILE_ATTRS.includes(a.key)?'checked':''} value="${a.key}" style="width:16px;height:16px;accent-color:#2563eb;">
-        <span style="font-size:13px;color:#1e293b;font-weight:500;">${a.label}</span>
-      </label>`).join('')+`</div>`;
-}
-function closeEditAttrs(){document.getElementById('editAttrsOverlay').style.display='none';}
-function applyProfileAttrs(){
-  ACTIVE_PROFILE_ATTRS=Array.from(document.querySelectorAll('#editAttrsBody input:checked')).map(i=>i.value);
-  closeEditAttrs();
-  APP.chartCache={};
-  if(document.querySelector('#page-bench-overview.active')) renderExecOverview();
-  showToast(`Profile showing ${ACTIVE_PROFILE_ATTRS.length} attributes`,'info');
-}
-function editProfileAttrs(){openEditAttrs();}
-
-/* ══════════════════════════════════════════════
-   EXPORT PDF MODAL
-══════════════════════════════════════════════ */
-function openExportPDF(){
-  document.getElementById('exportPDFOverlay').style.display='flex';
-}
-function closeExportPDF(){document.getElementById('exportPDFOverlay').style.display='none';}
-function runExportPDF(){
-  const checked=Array.from(document.querySelectorAll('#exportSectionsList input:checked')).map(i=>i.value);
-  closeExportPDF();
-  showToast(`Preparing PDF with ${checked.length} section${checked.length!==1?'s':''}… (print dialog opening)`,'info');
-  setTimeout(()=>window.print(),600);
-}
-function exportPortal(){openExportPDF();}
-
-/* ══════════════════════════════════════════════
-   TREND CHART TYPES (Bar/Line/Stacked/Pie/Donut/Spider/Bubble)
-   + Trend Lines on bar charts
-══════════════════════════════════════════════ */
-APP.trendChartType='bar';
-function setTrendChartType(type,btn){
-  APP.trendChartType=type;
-  document.querySelectorAll('.trend-type-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  APP.chartCache['chart-trend-main']=null;
-  renderTrendMainChart(APP.activeTabMap['trend-period']||'annual');
-}
-function setActiveTrendMetric(metric,el){
-  APP.activeTabMap['trend-metric']=metric;
-  document.querySelectorAll('#trend-metric-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
-  el.classList.add('active');
-  // Default chart types per metric
-  const typeMap={revenue:'bar',ebitda:'bar',netIncome:'bar',
-    ebitdaMargin:'spider',netMargin:'donut',revGrowth:'stacked',eps:'bubble'};
-  const defaultType=typeMap[metric]||'bar';
-  APP.trendChartType=defaultType;
-  document.querySelectorAll('.trend-type-btn').forEach(b=>b.classList.remove('active'));
-  const typeLabels={bar:'Bar',line:'Line',stacked:'Stacked Bar',pie:'Pie',donut:'Donut',spider:'Spider',bubble:'Bubble'};
-  document.querySelectorAll('.trend-type-btn').forEach(b=>{
-    if(b.textContent.trim()===typeLabels[defaultType]) b.classList.add('active');
-  });
-  APP.chartCache['chart-trend-main']=null;
-  renderTrendMainChart(APP.activeTabMap['trend-period']||'annual');
-}
-function renderTrendMainChart(period){
-  const metric=APP.activeTabMap['trend-metric']||'revenue';
-  const chartType=APP.trendChartType||'bar';
-  const metaMap={
-    revenue:{key:'revenues',label:'Revenue ($B)',title:'Revenue Comparison'},
-    ebitda:{key:'ebitda',label:'EBITDA ($B)',title:'EBITDA Comparison'},
-    netIncome:{key:'netIncome',label:'Net Income ($B)',title:'Net Income Comparison'},
-    ebitdaMargin:{key:'ebitda',label:'EBITDA Margin (%)',title:'EBITDA Margin',derived:true,base:'revenues'},
-    netMargin:{key:'netMargin',label:'Net Margin (%)',title:'Net Margin (%)'},
-    revGrowth:{key:'revGrowth',label:'Rev. Growth (%)',title:'Revenue Growth (%)'},
-    eps:{key:'eps',label:'EPS ($)',title:'EPS Comparison'}
-  };
-  const m=metaMap[metric]||metaMap.revenue;
-  const titleEl=document.getElementById('trend-chart-title'); if(titleEl) titleEl.textContent=m.title+' · '+chartType.charAt(0).toUpperCase()+chartType.slice(1);
-  const subEl=document.getElementById('trend-chart-sub'); if(subEl) subEl.textContent='Selected companies · '+APP.yearFrom+'–'+APP.yearTo;
-
-  const companies=APP.selectedCompanies.map(id=>{
-    const co=getYearSlice(COMPANIES_DATA[id]); let y=co[m.key]||[];
-    if(m.derived&&m.base){const base=co[m.base]||[];y=y.map((v,i)=>base[i]?(v/base[i]*100):0);}
-    return{id,co,y,years:co.years};
-  }).filter(c=>c.y.length>0);
-
-  if(!companies.length){showNoData('chart-trend-main','No financial data available for selected period');return;}
-
-  let traces=[];
-  const allYears=[...new Set(companies.flatMap(c=>c.years))].sort();
-
-  if(chartType==='pie'){
-    // Latest year pie
-    const latestYear=allYears[allYears.length-1];
-    traces=[{type:'pie',labels:companies.map(c=>c.co.name),
-      values:companies.map(c=>{const idx=c.years.indexOf(latestYear);return idx>=0?Math.abs(c.y[idx]||0):0;}),
-      marker:{colors:companies.map(c=>c.co.color)},
-      textinfo:'label+percent',hovertemplate:'%{label}: %{value}<br>%{percent}<extra></extra>'}];
-    safeRender('chart-trend-main',traces,{...PL(380),title:{text:m.title+' — '+latestYear,font:{size:13}}});
-  } else if(chartType==='donut'){
-    const latestYear=allYears[allYears.length-1];
-    traces=[{type:'pie',hole:0.45,labels:companies.map(c=>c.co.name),
-      values:companies.map(c=>{const idx=c.years.indexOf(latestYear);return idx>=0?Math.abs(c.y[idx]||0):0;}),
-      marker:{colors:companies.map(c=>c.co.color)},
-      textinfo:'label+percent',hovertemplate:'%{label}: %{value}<br>%{percent}<extra></extra>'}];
-    safeRender('chart-trend-main',traces,{...PL(380),title:{text:m.title+' — '+latestYear,font:{size:13}}});
-  } else if(chartType==='spider'){
-    traces=companies.map(c=>({type:'scatterpolar',fill:'toself',opacity:0.35,
-      name:c.co.name,r:c.y,theta:c.years,line:{color:c.co.color,width:2},
-      marker:{color:c.co.color,size:6}}));
-    safeRender('chart-trend-main',traces,{...PL(380),
-      polar:{radialaxis:{visible:true,gridcolor:'#f1f5f9'},angularaxis:{gridcolor:'#f1f5f9'}},
-      legend:{orientation:'h',y:-0.15}});
-  } else if(chartType==='bubble'){
-    traces=companies.map(c=>({type:'scatter',mode:'markers',name:c.co.name,
-      x:c.years,y:c.y,
-      marker:{size:c.y.map(v=>Math.max(10,Math.abs(v||0)*2.5)),color:c.co.color,opacity:0.75,
-        sizemode:'area',line:{color:'#fff',width:1}},
-      hovertemplate:'%{x}: %{y}<extra>'+c.co.name+'</extra>'}));
-    safeRender('chart-trend-main',traces,{...PL(380),
-      xaxis:{title:{text:'Fiscal Year',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
-      yaxis:{title:{text:m.label,font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
-      legend:{orientation:'h',y:-0.18}});
-  } else if(chartType==='stacked'){
-    traces=companies.map(c=>({type:'bar',name:c.co.name,x:c.years,y:c.y,
-      marker:{color:c.co.color},hovertemplate:'%{x}: %{y}<extra>'+c.co.name+'</extra>'}));
-    safeRender('chart-trend-main',traces,{...PL(380),barmode:'stack',
-      xaxis:{title:{text:'Fiscal Year'},gridcolor:'#f1f5f9'},
-      yaxis:{title:{text:m.label},gridcolor:'#f1f5f9'},
-      legend:{orientation:'h',y:-0.18}});
-  } else if(chartType==='line'){
-    // explicit line type — falls through to default scatter below
-  } else if(chartType==='bar'){
-    // Grouped bar + trend line overlay per company
-    traces=[];
-    companies.forEach(c=>{
-      traces.push({type:'bar',name:c.co.name,x:c.years,y:c.y,
-        marker:{color:c.co.color,opacity:0.85},
-        hovertemplate:'%{x}: %{y:.1f}<extra>'+c.co.name+'</extra>'});
-      // Trend line
-      if(c.y.length>1){
-        const n=c.y.length,sumX=c.y.reduce((_,__,i)=>_+i,0),sumY=c.y.reduce((a,b)=>a+(b||0),0);
-        const sumXY=c.y.reduce((a,v,i)=>a+i*(v||0),0),sumX2=c.y.reduce((a,_,i)=>a+i*i,0);
-        const slope=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX+1e-9);
-        const intercept=(sumY-slope*sumX)/n;
-        const trendY=c.years.map((_,i)=>+(intercept+slope*i).toFixed(2));
-        traces.push({type:'scatter',mode:'lines',name:c.co.name+' trend',x:c.years,y:trendY,
-          line:{color:c.co.color,width:1.5,dash:'dot'},showlegend:false,
-          hoverinfo:'skip'});
-      }
-    });
-    safeRender('chart-trend-main',traces,{...PL(380),barmode:'group',
-      xaxis:{title:{text:'Fiscal Year'},gridcolor:'#f1f5f9'},
-      yaxis:{title:{text:m.label},gridcolor:'#f1f5f9'},
-      legend:{orientation:'h',y:-0.18}});
-  } else {
-    // Line chart (chartType==='line' or default fallback) + trend lines
-    // type:'line' is the default for non-bar/pie/donut/spider/bubble/stacked
-    traces=[];
-    companies.forEach(c=>{
-      traces.push({type:'scatter',mode:'lines+markers',name:c.co.name,x:c.years,y:c.y,
-        line:{color:c.co.color,width:2.5},marker:{size:7,color:c.co.color,symbol:'circle'}});
-      if(c.y.length>1){
-        const n=c.y.length,sumX=c.y.reduce((_,__,i)=>_+i,0),sumY=c.y.reduce((a,b)=>a+(b||0),0);
-        const sumXY=c.y.reduce((a,v,i)=>a+i*(v||0),0),sumX2=c.y.reduce((a,_,i)=>a+i*i,0);
-        const slope=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX+1e-9);
-        const intercept=(sumY-slope*sumX)/n;
-        const trendY=c.years.map((_,i)=>+(intercept+slope*i).toFixed(2));
-        traces.push({type:'scatter',mode:'lines',name:c.co.name+' trend',x:c.years,y:trendY,
-          line:{color:c.co.color,width:1.5,dash:'dot'},showlegend:false,hoverinfo:'skip'});
-      }
-    });
-    safeRender('chart-trend-main',traces,{...PL(380),
-      xaxis:{title:{text:'Fiscal Year'},gridcolor:'#f1f5f9'},
-      yaxis:{title:{text:m.label},gridcolor:'#f1f5f9'},
-      legend:{orientation:'h',y:-0.18}});
-  }
-}
-
-/* ══════════════════════════════════════════════
-   NO-DATA HELPER
-══════════════════════════════════════════════ */
-function showNoData(chartId,msg,sub){
-  const el=document.getElementById(chartId);
-  if(!el) return;
-  el.innerHTML=`<div class="no-data-msg">
-    <div class="no-data-icon">📊</div>
-    <div class="no-data-text">${msg||'Data not available'}</div>
-    ${sub?`<div class="no-data-sub">${sub}</div>`:''}
-  </div>`;
-}
-
-/* ══════════════════════════════════════════════
-   LOGGING TO WORKSPACE (console + LOG array)
-══════════════════════════════════════════════ */
-window.PORTAL_LOGS=[];
-const _origLog=window.LOG||{};
-const LOG={
-  info:(tag,msg)=>{const e={level:'INFO',tag,msg,ts:new Date().toISOString()};window.PORTAL_LOGS.push(e);console.log(`[INFO][${tag}] ${msg}`);},
-  ok:(tag,msg)=>{const e={level:'OK',tag,msg,ts:new Date().toISOString()};window.PORTAL_LOGS.push(e);console.log(`[OK][${tag}] ${msg}`);},
-  warn:(tag,msg)=>{const e={level:'WARN',tag,msg,ts:new Date().toISOString()};window.PORTAL_LOGS.push(e);console.warn(`[WARN][${tag}] ${msg}`);},
-  error:(tag,msg)=>{const e={level:'ERROR',tag,msg,ts:new Date().toISOString()};window.PORTAL_LOGS.push(e);console.error(`[ERROR][${tag}] ${msg}`);},
-  summary:()=>{
-    const errs=window.PORTAL_LOGS.filter(e=>e.level==='ERROR');
-    const warns=window.PORTAL_LOGS.filter(e=>e.level==='WARN');
-    const oks=window.PORTAL_LOGS.filter(e=>e.level==='OK');
-    console.log('═══ PORTAL LOG SUMMARY ═══');
-    console.log(`OK: ${oks.length} | WARN: ${warns.length} | ERROR: ${errs.length}`);
-    if(errs.length){console.error('ERRORS:');errs.forEach(e=>console.error(`  [${e.tag}] ${e.msg}`));}
-    if(warns.length){console.warn('WARNINGS:');warns.forEach(e=>console.warn(`  [${e.tag}] ${e.msg}`));}
-    return{ok:oks.length,warn:warns.length,error:errs.length,logs:window.PORTAL_LOGS};
-  }
-};
-
-/* ══════════════════════════════════════════════
-   SAFE RENDER WITH NO-DATA FALLBACK
-══════════════════════════════════════════════ */
-function safeRender(id,traces,layout,noDataMsg){
-  const el=document.getElementById(id);
-  if(!el){LOG.warn('RENDER',`#${id} not found`);return;}
-  const validTraces=(traces||[]).filter(t=>{
-    const hasData=(t.y&&t.y.some(v=>v!==null&&v!==undefined&&!isNaN(v)))||(t.r&&t.r.length)||(t.values&&t.values.length)||(t.z&&t.z.length);
-    return hasData;
-  });
-  if(!validTraces.length){
-    showNoData(id,noDataMsg||'Data not available','No data for selected period or companies');
-    LOG.warn('RENDER',`#${id} — no valid data, showing placeholder`);
-    return;
-  }
-  try{
-    Plotly.react(el,validTraces,{...layout,paper_bgcolor:'transparent',plot_bgcolor:'transparent',
-      font:{family:'Inter,sans-serif',color:'#334155'},margin:layout.margin||{t:30,r:20,b:50,l:50}},{responsive:true,displayModeBar:false});
-    LOG.ok('RENDER',`#${id} rendered (${validTraces.length} traces)`);
-  }catch(e){
-    showNoData(id,'Chart render error',e.message);
-    LOG.error('RENDER',`#${id} — ${e.message}`);
-  }
-}
-
-/* ══════════════════════════════════════════════
-   FY FILTER — wired to all charts
-══════════════════════════════════════════════ */
-function applyYearFilter(){
-  const from=document.getElementById('year-from').value;
-  const to=document.getElementById('year-to').value;
-  if(from>to){showToast('Period From must be ≤ Period To','warn');
-    document.getElementById('year-to').value=from;return;}
-  APP.yearFrom=from; APP.yearTo=to;
-  const badge=document.getElementById('year-range-badge');
-  if(badge) badge.textContent=from+'–'+to;
-  LOG.info('FILTER',`Year range: ${from}–${to}`);
-  APP.chartCache={};
-  const activePage=document.querySelector('.page.active');
-  if(activePage) renderCurrentPage(activePage.id.replace('page-',''));
-  showToast(`Filter applied: ${from}–${to}`,'info');
-}
-function getYearSlice(co){
-  if(!co) return {};
-  const from=APP.yearFrom||'FY2021', to=APP.yearTo||'FY2025';
-  const years=(co.years||[]).filter(y=>y>=from&&y<=to);
-  const idxs=(co.years||[]).reduce((a,y,i)=>(y>=from&&y<=to?[...a,i]:a),[]);
-  const slice=(arr)=>arr?idxs.map(i=>arr[i]??null):[];
-  return{...co,years,revenues:slice(co.revenues),ebitda:slice(co.ebitda),
-    netIncome:slice(co.netIncome),revGrowth:slice(co.revGrowth),eps:slice(co.eps),
-    netMargin:slice(co.netMargin),balance:co.balance?idxs.map(i=>co.balance[i]??null):undefined,
-    cashflow:co.cashflow?idxs.map(i=>co.cashflow[i]??null):undefined};
-}
-
-/* ══════════════════════════════════════════════
-   CUSTOMIZE DASHBOARD MODAL
-══════════════════════════════════════════════ */
-const DASH_MODULES=[
-  {id:'competitive',label:'Competitive Intelligence',icon:'🎯'},
-  {id:'market',label:'Market Intelligence',icon:'📈'},
-  {id:'sales',label:'Sales Intelligence',icon:'💼'},
-];
-let ACTIVE_DASH_MODULES=DASH_MODULES.map(m=>m.id);
-function openCustomizeModal(){
-  document.getElementById('customizeModal').style.display='flex';
-  const list=document.getElementById('customizeModuleList');
-  list.innerHTML=DASH_MODULES.map(m=>`
-    <label style="display:flex;align-items:center;gap:12px;padding:12px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-      <input type="checkbox" ${ACTIVE_DASH_MODULES.includes(m.id)?'checked':''} value="${m.id}" style="width:16px;height:16px;accent-color:#2563eb;">
-      <span style="font-size:16px;">${m.icon}</span>
-      <span style="font-size:13px;color:#1e293b;font-weight:500;">${m.label}</span>
-    </label>`).join('');
-}
-function closeCustomizeModal(){document.getElementById('customizeModal').style.display='none';}
-function saveCustomizeModal(){
-  ACTIVE_DASH_MODULES=Array.from(document.querySelectorAll('#customizeModuleList input:checked')).map(i=>i.value);
-  closeCustomizeModal();
-  showToast(`Dashboard showing ${ACTIVE_DASH_MODULES.length} module${ACTIVE_DASH_MODULES.length!==1?'s':''}`,'info');
-}
-
-/* ══════════════════════════════════════════════
-   COMPANIES TO TRACK — See All wired
-══════════════════════════════════════════════ */
-
-/* ══════════════════════════════════════════════
-   TREND LINE HELPER for bar charts
-══════════════════════════════════════════════ */
-function addTrendLine(traces,co,years,values){
-  if(!values||values.length<2) return;
-  const validPairs=years.map((y,i)=>({y,v:values[i]})).filter(p=>p.v!==null&&!isNaN(p.v));
-  if(validPairs.length<2) return;
-  const n=validPairs.length;
-  const sumX=validPairs.reduce((a,_,i)=>a+i,0);
-  const sumY=validPairs.reduce((a,p)=>a+(p.v||0),0);
-  const sumXY=validPairs.reduce((a,p,i)=>a+i*(p.v||0),0);
-  const sumX2=validPairs.reduce((a,_,i)=>a+i*i,0);
-  const slope=(n*sumXY-sumX*sumY)/(n*sumX2-sumX*sumX+1e-9);
-  const intercept=(sumY-slope*sumX)/n;
-  traces.push({type:'scatter',mode:'lines',name:co.name+' trend',
-    x:validPairs.map(p=>p.y),y:validPairs.map((_,i)=>+(intercept+slope*i).toFixed(2)),
-    line:{color:co.color,width:1.5,dash:'dot'},showlegend:false,hoverinfo:'skip'});
-}
-
-</script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
 <style>
 /* ================================================================
    COMPETEIQ v2.0 — WHITE/LIGHT THEME
@@ -1042,39 +587,6 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 #insights-year-chips .chip-filter.active,
 #co-insight-year-chips .chip-filter.active{background:#7c3aed;border-color:#7c3aed;}
 
-
-/* ── No-data placeholder ── */
-.no-data-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;
-  height:100%;min-height:160px;color:#94a3b8;font-size:13px;gap:8px;}
-.no-data-msg .no-data-icon{font-size:32px;opacity:.5;}
-.no-data-msg .no-data-text{font-weight:500;}
-.no-data-msg .no-data-sub{font-size:11.5px;opacity:.7;}
-
-/* ── Modal display helper ── */
-.modal-show{display:flex!important;}
-
-/* ── Chart sizing fixes ── */
-#chart-capability-heatmap{min-height:420px!important;}
-#chart-radar-overview{min-height:380px!important;}
-#chart-gartner{min-height:400px!important;}
-.chart-wrap{min-height:220px;}
-.chart-wrap.tall{min-height:340px;}
-.chart-wrap.xl{min-height:420px;}
-
-/* ── Trend chart type toggle ── */
-.trend-type-btn{padding:5px 12px;border:1.5px solid #e2e8f0;border-radius:6px;
-  background:#fff;font-size:11.5px;cursor:pointer;font-weight:500;color:#64748b;transition:all .15s;}
-.trend-type-btn.active{background:#2563eb;border-color:#2563eb;color:#fff;}
-
-/* ── Input wizard ── */
-#inputWizardOverlay.modal-show{display:flex!important;}
-
-/* ── Topbar configure btn ── */
-.configure-btn{display:flex;align-items:center;gap:5px;padding:6px 14px;border:1.5px solid #e2e8f0;
-  border-radius:8px;background:#fff;font-size:12px;font-weight:600;color:#334155;cursor:pointer;
-  transition:all .15s;}
-.configure-btn:hover{border-color:#2563eb;color:#2563eb;}
-
 </style>
 </head>
 <body>
@@ -1154,7 +666,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     <div class="filter-group">
       <div class="filter-label">Fiscal Year Range</div>
       <div class="year-range">
-        <span id="year-range-badge" style="font-size:11px;padding:3px 8px;background:#eff6ff;color:#2563eb;border-radius:10px;font-weight:600;">FY2021–FY2025</span> <select class="year-select" id="year-from" onchange="applyYearFilter()">
+        <select class="year-select" id="year-from" onchange="applyYearFilter()">
           <option>FY2021</option><option>FY2022</option>
           <option selected>FY2023</option><option>FY2024</option>
         </select>
@@ -1180,7 +692,6 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     </div>
     <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v3.0 · 2026-08-11 08:16</div>
     <div class="topbar-actions">
-      <button class="configure-btn" onclick="showInputWizard()">⚙ Configure</button>
       <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
       <button class="topbar-btn" onclick="exportPortal()">⬇ Export</button>
       <button class="topbar-btn primary" onclick="navigate('bench-overview')">🔍 Open Analysis</button>
@@ -1209,8 +720,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="dash-page-subtitle" id="dash-date-sub">Here&rsquo;s your competitive intelligence summary for today</div>
         </div>
         <div class="dash-page-actions">
-          <button class="topbar-btn" onclick="openExportPDF()">&#x1F4E4; Export PDF</button>
-          <button class="topbar-btn" onclick="showInputWizard()" style="background:#f0f9ff;border-color:#bae6fd;color:#0369a1;">⚙ Configure Analysis</button> <button class="topbar-btn primary" onclick="navigate('bench-overview')">&#x2696;&#xFE0F; Open Analysis</button>
+          <button class="topbar-btn" onclick="exportPortal()">&#x1F4E4; Export</button>
+          <button class="topbar-btn primary" onclick="navigate('bench-overview')">&#x2696;&#xFE0F; Open Analysis</button>
         </div>
       </div>
 
@@ -1319,7 +830,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <div class="dash-section">
           <div class="dash-section-header">
             <div class="dash-section-title">&#x1F3E2; Companies to Track</div>
-            <button class="btn-sm-dash btn-sm-dash-outline" onclick="openAllCompanies()">See All &#x2192;</button>
+            <button class="btn-sm-dash btn-sm-dash-outline" onclick="navigate('bench-overview')">See all &#x2192;</button>
           </div>
           <div id="companiesTrackContainer" style="display:flex;flex-direction:column;gap:8px;"></div>
         </div>
@@ -1415,17 +926,6 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <div class="sub-tab" onclick="setActiveTrendMetric('eps',this)">EPS</div>
       </div>
 
-      <!-- Chart Type Toggle for Trend -->
-      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;" id="trend-chart-type-bar">
-        <span style="font-size:11.5px;font-weight:600;color:#475569;align-self:center;margin-right:4px;">Chart type:</span>
-        <button class="trend-type-btn active" onclick="setTrendChartType('bar',this)">Bar</button>
-        <button class="trend-type-btn" onclick="setTrendChartType('line',this)" data-chart-type="line" data-type="chart-type:line">Line</button>
-        <button class="trend-type-btn" onclick="setTrendChartType('stacked',this)">Stacked Bar</button>
-        <button class="trend-type-btn" onclick="setTrendChartType('pie',this)">Pie</button>
-        <button class="trend-type-btn" onclick="setTrendChartType('donut',this)">Donut</button>
-        <button class="trend-type-btn" onclick="setTrendChartType('spider',this)">Spider</button>
-        <button class="trend-type-btn" onclick="setTrendChartType('bubble',this)">Bubble</button>
-      </div>
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header">
           <div><div class="card-title" id="trend-chart-title">Revenue Comparison</div><div class="card-subtitle" id="trend-chart-sub">All selected companies · Annual</div></div>
@@ -2123,625 +1623,636 @@ const VALIDATOR = (() => {
    Generated: 2026-08-11 10:33
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* __DATA_LAYER_START__ */
-/* ═══════════════════════════════════════════════════════════════════════════
-   CompeteIQ — DATA LAYER v3.0
-   Companies: Salesforce (base) | Microsoft | ServiceNow
-   Period:    FY2021 – FY2025
-   Generated: 2026-08-11
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-// ============================================================
-// CI Portal Data Layer — Google (Alphabet) vs Peers
-// Sector: AI-Powered Enterprise Software | FY21–FY25
-// Generated: 2026-08-11
-// ============================================================
+// CI Portal Data Layer — ServiceNow Base | FY21–FY25
+// Generated: 2026-08-11 | Sector: AI-Powered Enterprise Software
 
 const COMPANIES_DATA = {
 
-  // ── BASE COMPANY ─────────────────────────────────────────
-  'googl': {
-    identifier:    'googl',
-    name:          'Google (Alphabet)',
-    ticker:        'GOOGL',
-    exchange:      'NASDAQ',
-    color:         '#4285F4',
-    initials:      'GA',
+  'servicenow': {
+    identifier:    'servicenow',
+    name:          'ServiceNow',
+    ticker:        'NOW',
+    exchange:      'NYSE',
+    color:         '#00C853',
+    initials:      'SN',
     sector:        'AI-Powered Enterprise Software',
-    description:   'Alphabet is the parent company of Google, the world\'s leading AI-first technology company. Through Google Cloud, Workspace, and Gemini AI, Alphabet serves enterprises globally with infrastructure, productivity, and next-generation AI solutions. Google Cloud has become one of the fastest-growing hyperscale cloud platforms, underpinned by Tensor Processing Units and Gemini foundation models.',
-    founded:       1998,
-    employees:     '190,820',
-    CEO:           'Sundar Pichai',
-    HQ:            'Mountain View, CA',
-    website:       'abc.xyz',
-    latestRevenue: '$402.8B',
-    marketCap:     '~$3.0T',
-    rating:        9.4,
+    description:   'ServiceNow is the AI platform for business transformation, delivering digital workflows that connect people, functions, and systems enterprise-wide. With Now Assist and agentic AI at its core, ServiceNow automates work across IT, HR, Customer Service, Finance, and Security.',
+    founded:       2004,
+    employees:     '30,000+',
+    CEO:           'Bill McDermott',
+    HQ:            'Santa Clara, CA',
+    website:       'servicenow.com',
+    latestRevenue: '$13.3B',
+    marketCap:     '$145B',
+    rating:        9.2,
     kpis: [
-      { label:'Revenue FY25',    value:'$402.8B',  change:'+15%',  up:true  },
-      { label:'Net Income FY25', value:'$132.2B',  change:'+32%',  up:true  },
-      { label:'Op. Margin FY25', value:'33%',      change:'+0.3%', up:true  },
-      { label:'Market Cap',      value:'~$3.0T',   change:'+24%',  up:true  },
+      { label: 'Revenue FY25',   value: '$13.3B',  change: '+21%',  up: true  },
+      { label: 'FCF FY25',       value: '$4.6B',   change: '+34%',  up: true  },
+      { label: 'Net Margin FY25',value: '13.2%',   change: '+0.2%', up: true  },
+      { label: 'cRPO Growth',    value: '22%',     change: '+1%',   up: true  },
     ],
-    years:     ['FY21','FY22','FY23','FY24','FY25'],
-    revenues:  [257.64, 282.80, 307.39, 350.02, 402.84],
-    ebitda:    [91.15,  93.97, 101.86, 126.31, 149.05],
-    netIncome: [76.03,  59.97,  73.80, 100.12, 132.20],
-    revGrowth: [41.2,    9.8,    8.7,   13.9,   15.1],
-    eps:       [5.61,   4.56,   5.80,   8.04,  10.91],
-    netMargin: [29.5,   21.2,   24.0,   28.6,   32.8],
-    capScores: [9,9,8,9,8,7,9,9,8,9,7,9],
-    riskScores:{ regulatory:8, competitive:7, execution:4, technology:9, market:6 },
+    years:     ['FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
+    revenues:  [5.90,   7.25,   8.97,  10.98,  13.28],
+    ebitda:    [1.14,   1.15,   1.78,   2.48,   2.56],
+    netIncome: [0.23,   0.33,   1.73,   1.43,   1.75],
+    revGrowth: [30.5,   22.9,   23.8,   22.4,   20.9],
+    eps:       [0.23,   0.32,   1.68,   1.37,   1.67],
+    netMargin: [3.9,    4.5,   19.3,   13.0,   13.2],
+    capScores:  [9, 9, 8, 9, 8, 7, 9, 8, 9, 7, 8, 9],
+    riskScores: { regulatory: 3, competitive: 7, execution: 4, technology: 5, market: 4 },
     balance: [
-      {cash:139.6, totalAssets:359.3, totalDebt:14.8},
-      {cash:125.0, totalAssets:364.7, totalDebt:14.7},
-      {cash:110.9, totalAssets:402.4, totalDebt:13.3},
-      {cash:108.6, totalAssets:450.1, totalDebt:13.2},
-      {cash:117.5, totalAssets:511.0, totalDebt:12.9},
+      { cash: 3.30, totalAssets: 12.6, totalDebt: 2.21 },
+      { cash: 4.28, totalAssets: 15.3, totalDebt: 2.23 },
+      { cash: 4.88, totalAssets: 17.9, totalDebt: 2.28 },
+      { cash: 5.76, totalAssets: 20.4, totalDebt: 2.28 },
+      { cash: 6.28, totalAssets: 23.1, totalDebt: 2.40 },
     ],
     cashflow: [
-      {operatingCF:91.7,  capex:24.6, freeCF:67.1},
-      {operatingCF:91.5,  capex:31.5, freeCF:60.0},
-      {operatingCF:101.7, capex:32.3, freeCF:69.5},
-      {operatingCF:110.9, capex:52.6, freeCF:58.3},
-      {operatingCF:131.2, capex:75.0, freeCF:56.2},
+      { operatingCF: 2.19, capex: 0.39, freeCF: 1.80 },
+      { operatingCF: 2.72, capex: 0.55, freeCF: 2.17 },
+      { operatingCF: 3.40, capex: 0.69, freeCF: 2.70 },
+      { operatingCF: 4.27, capex: 0.85, freeCF: 3.42 },
+      { operatingCF: 5.44, capex: 0.87, freeCF: 4.58 },
     ],
     geographicData: [
-      { region:'Americas',   flag:'🌎', rev:'$212.6B', revNum:212.6, growth:'+16%', share:'53%', sharePct:53, offices:60, presence:'HQ', dev:'Core market' },
-      { region:'EMEA',       flag:'🌍', rev:'$108.3B', revNum:108.3, growth:'+14%', share:'27%', sharePct:27, offices:40, presence:'Major hub', dev:'Growing fast' },
-      { region:'Asia Pacific',flag:'🌏',rev:'$81.9B',  revNum:81.9,  growth:'+13%', share:'20%', sharePct:20, offices:30, presence:'Expanding', dev:'High potential' },
+      { region: 'North America', flag: '🌎', rev: '$7.8B',  revNum: 7.8,  growth: '+22%', share: '59%', sharePct: 59, offices: 12, presence: 'HQ', dev: 'Core enterprise IT market, largest customer base' },
+      { region: 'Europe',        flag: '🌍', rev: '$3.3B',  revNum: 3.3,  growth: '+20%', share: '25%', sharePct: 25, offices: 18, presence: 'Key', dev: 'Strong EMEA expansion, financial services and manufacturing focus' },
+      { region: 'Asia Pacific',  flag: '🌏', rev: '$1.9B',  revNum: 1.9,  growth: '+23%', share: '14%', sharePct: 14, offices: 10, presence: 'Growth', dev: 'Rapid expansion in Japan, Australia and ASEAN' },
+      { region: 'Rest of World', flag: '🌐', rev: '$0.3B',  revNum: 0.3,  growth: '+18%', share: '2%',  sharePct: 2,  offices: 5,  presence: 'Emerging', dev: 'MEA and LatAm expansion underway' },
     ],
     inorganic: [
-      { year:'2022', type:'Acquisition', target:'Mandiant',            value:'$5.4B',  rationale:'Cybersecurity & threat intelligence' },
-      { year:'2024', type:'Acquisition', target:'Wiz (announced)',     value:'$23.0B', rationale:'Cloud security platform' },
-      { year:'2025', type:'Acquisition', target:'Wiz (closed)',        value:'$32.0B', rationale:'Cloud-native security expansion' },
-      { year:'2023', type:'Investment',  target:'Anthropic',           value:'$300M',  rationale:'AI safety & frontier model investment' },
-      { year:'2024', type:'Investment',  target:'Anthropic (add-on)',  value:'$2.0B',  rationale:'Strategic AI partnership deepening' },
-      { year:'2021', type:'Acquisition', target:'Fitbit (integrated)', value:'$2.1B',  rationale:'Wearables & health data' },
+      { year: '2025', type: 'Acquisition', target: 'Moveworks',    value: '$2.85B',  rationale: 'AI-powered employee support & conversational AI' },
+      { year: '2025', type: 'Acquisition', target: 'Cuein',        value: '$N/A',    rationale: 'AI-native conversation data analysis platform' },
+      { year: '2025', type: 'Acquisition', target: 'Nuvolo',       value: '$N/A',    rationale: 'Connected Workplace, IWMS capabilities' },
+      { year: '2024', type: 'Acquisition', target: 'Raytion',      value: '$N/A',    rationale: 'Enterprise AI search and knowledge management' },
+      { year: '2023', type: 'Acquisition', target: 'G2K',          value: '$N/A',    rationale: 'Retail operations management platform' },
+      { year: '2022', type: 'Acquisition', target: 'Hitch Works',  value: '$N/A',    rationale: 'Skills intelligence and workforce planning' },
+      { year: '2021', type: 'Acquisition', target: 'Intellibot',   value: '$N/A',    rationale: 'RPA capabilities for workflow automation' },
     ],
     customerSegments: [
-      { name:'Enterprise Cloud', pct:38 },
-      { name:'Advertising',      pct:35 },
-      { name:'Workspace/SMB',    pct:15 },
-      { name:'Other Bets',       pct:12 },
+      { name: 'Enterprise (>$5B rev)', pct: 55 },
+      { name: 'Mid-Market',            pct: 30 },
+      { name: 'Government & Public',   pct: 15 },
     ],
     topProducts: [
-      { name:'Google Cloud',   share:28 },
-      { name:'Google Workspace',share:18 },
-      { name:'Gemini AI',      share:22 },
-      { name:'Search & Ads',   share:22 },
-      { name:'Other',          share:10 },
+      { name: 'IT Service Mgmt', share: 35 },
+      { name: 'Now Assist (AI)', share: 20 },
+      { name: 'Customer WF',     share: 18 },
+      { name: 'HR Service Del.',  share: 12 },
+      { name: 'Security Ops',    share: 15 },
     ],
     rndData: {
-      spend:[31.6, 39.5, 45.4, 49.6, 58.0],
-      areas:[ {name:'AI/ML',pct:40}, {name:'Cloud Infra',pct:25}, {name:'Security',pct:15}, {name:'Other',pct:20} ]
+      spend: [0.85, 1.10, 1.35, 1.60, 1.90],
+      areas: [
+        { name: 'Generative AI',    pct: 38 },
+        { name: 'Agentic AI',       pct: 25 },
+        { name: 'Automation/RPA',   pct: 20 },
+        { name: 'Platform & Infra', pct: 17 },
+      ],
     },
     insights: {
-      product:    'Google Cloud revenue surpassed $43B in FY25, growing 29% YoY. Gemini 2.0 Flash and Ultra models power enterprise AI workflows. Google Workspace now integrates Gemini natively across all SKUs. Now Assist competitor: Gemini for Google Workspace is the primary AI productivity play.',
-      market:     'Alphabet commands ~$3T market cap and leads AI infrastructure spending alongside Microsoft and Amazon. Google Cloud holds ~12% of the global cloud market. Gemini models compete directly with OpenAI GPT-4o and Anthropic Claude across enterprise seats.',
-      inorganic:  'The $32B Wiz acquisition (2025) is Alphabet\'s largest deal ever, transforming Google Cloud\'s security posture. Anthropic investments total >$2.3B. Mandiant (2022, $5.4B) anchors the Chronicle cybersecurity platform.',
-      customer:   'Fortune 100 customers including Walmart, Deutsche Bank, and major telcos run on GCP. Google Workspace has >3B users globally. Enterprise Gemini customers grew >300% YoY in FY25.',
-      financial:  'Alphabet crossed $400B in revenue in FY25, with net income of $132B (+32% YoY) — the highest absolute net income among the peer group. Google Cloud operating profit turned strongly positive at ~$3B in FY24 and accelerated in FY25.',
-      leadership: 'CEO Sundar Pichai leads an aggressive AI-first strategy. Google DeepMind (merged 2023) centralizes frontier AI research. CFO Anat Ashkenazi (joined 2024) drives capital discipline amid surging CapEx.',
-      regulatory: 'DOJ antitrust trial over search monopoly concluded 2024; remedy hearings ongoing in 2025. EU DMA compliance requires Search and Android changes. AI Act (EU) compliance measures underway.'
+      product:    'Now Assist (GenAI) launched 2023, growing to $600M+ ACV in 2025. Otto AI agents introduced for autonomous resolution. Agentic AI strategy deepened via Moveworks acquisition.',
+      market:     'ServiceNow positioned as the AI workflow operating system for the enterprise. Expanding into new verticals: Telecom, Financial Services, Healthcare. cRPO growing 22% YoY.',
+      inorganic:  'Over $3B deployed on AI acquisitions in 2025 alone. Moveworks ($2.85B) is largest deal; Cuein and Nuvolo add adjacent capabilities. Armis deal announced FY25 for security operations.',
+      customer:   '8,100+ enterprise customers with 20+ million-dollar ACV customers. Net expansion rate above 125%. Global 2000 penetration exceeds 85%.',
+      financial:  'Revenue CAGR of 22.5% over FY21-FY25. FCF margin expanded to 34.5% in FY25. Non-GAAP operating margin ~29%. GAAP profitability improving steadily.',
+      leadership: 'Bill McDermott (CEO since 2019) driving AI-first transformation. Strong insider alignment. 5-for-1 stock split approved in Q3 2025.',
+      regulatory: 'EU AI Act compliance investments. SOC2/ISO 27001 certified. ITAR and FedRAMP compliance for government workflows.',
     },
     insightYear: 'FY25',
     updates: [
-      { date:'2025-05', product:'Gemini 2.0 Ultra', title:'Enterprise Gemini Ultra GA', impact:'high', summary:'Gemini 2.0 Ultra generally available for Google Cloud enterprise customers, enabling long-context reasoning across documents and code.' },
-      { date:'2025-02', product:'Google Cloud',     title:'Wiz Acquisition Closed',    impact:'high', summary:'$32B acquisition of Wiz closed, adding cloud-native CNAPP security to Google Cloud portfolio.' },
-      { date:'2024-10', product:'NotebookLM',       title:'NotebookLM Enterprise GA',  impact:'medium',summary:'NotebookLM Enterprise launched, enabling AI-powered knowledge synthesis for enterprise teams.' },
-      { date:'2024-06', product:'Workspace',        title:'Gemini in Workspace GA',    impact:'high', summary:'Gemini AI features generally available across all Google Workspace Business and Enterprise tiers.' },
+      { date: '2025-11', product: 'Otto AI Agents',     title: 'Autonomous AI agents for enterprise workflows',  impact: 'high',   summary: 'ServiceNow launches Otto, a suite of autonomous AI agents capable of end-to-end resolution across IT, HR, and customer service with minimal human intervention.' },
+      { date: '2025-04', product: 'Moveworks Acq.',     title: 'Completes $2.85B Moveworks acquisition',         impact: 'high',   summary: 'Moveworks brings conversational AI for employee support, expanding Now Assist capabilities across 100+ enterprise apps.' },
+      { date: '2024-09', product: 'Now Assist',         title: 'Now Assist ACV crosses $300M milestone',         impact: 'high',   summary: 'GenAI product suite Now Assist reaches $300M ACV, demonstrating strong enterprise AI monetization.' },
+      { date: '2023-09', product: 'Now Assist GA',      title: 'Now Assist for ITSM and CSM generally available', impact: 'medium', summary: 'ServiceNow launches Now Assist powered by generative AI across core ITSM and CSM workflows.' },
     ],
   },
 
-  // ── PEER 1: SALESFORCE ────────────────────────────────────
-  'crm': {
-    identifier:    'crm',
+  'salesforce': {
+    identifier:    'salesforce',
     name:          'Salesforce',
     ticker:        'CRM',
     exchange:      'NYSE',
     color:         '#00A1E0',
     initials:      'SF',
     sector:        'AI-Powered Enterprise Software',
-    description:   'Salesforce is the world\'s leading CRM platform, serving enterprise customers with Sales Cloud, Service Cloud, Marketing Cloud, and its AI agent platform Agentforce. The company transformed enterprise software through its cloud-native SaaS model and continues to lead AI-powered CRM automation via Agentforce 2dx, helping companies automate front-office workflows end-to-end.',
+    description:   'Salesforce is the world\'s #1 CRM platform, helping companies connect with customers in a whole new way. Through its Customer 360 platform, Agentforce, and Data Cloud, Salesforce brings AI, data, and CRM together for every department.',
     founded:       1999,
-    employees:     '72,682',
+    employees:     '72,000',
     CEO:           'Marc Benioff',
     HQ:            'San Francisco, CA',
     website:       'salesforce.com',
     latestRevenue: '$37.9B',
-    marketCap:     '~$290B',
-    rating:        8.5,
+    marketCap:     '$195B',
+    rating:        8.8,
     kpis: [
-      { label:'Revenue FY25',    value:'$37.9B',   change:'+9%',   up:true  },
-      { label:'Net Income FY25', value:'$6.2B',    change:'+25%',  up:true  },
-      { label:'Op. Margin FY25', value:'19.1%',    change:'+3%',   up:true  },
-      { label:'Market Cap',      value:'~$290B',   change:'+12%',  up:true  },
+      { label: 'Revenue FY25',    value: '$37.9B', change: '+9%',  up: true  },
+      { label: 'FCF FY25',        value: '$12.4B', change: '+31%', up: true  },
+      { label: 'Op. Margin FY25', value: '19.0%',  change: '+4.6%',up: true  },
+      { label: 'Agentforce ACV',  value: '$1B+',   change: 'New',  up: true  },
     ],
-    years:     ['FY21','FY22','FY23','FY24','FY25'],
-    revenues:  [21.25, 26.49, 31.35, 34.86, 37.90],
-    ebitda:    [4.89,  5.43,  7.15,  8.97, 10.20],
-    netIncome: [4.07,  1.44,  0.21,  4.14,  6.20],
-    revGrowth: [24.3,  24.7,  18.4,  11.2,   8.7],
-    eps:       [4.38,  1.48,  0.21,  4.20,  6.36],
-    netMargin: [19.2,   5.4,   0.7,  11.9,  16.4],
-    capScores: [9,8,7,9,7,8,8,7,9,7,6,8],
-    riskScores:{ regulatory:3, competitive:8, execution:6, technology:7, market:5 },
+    years:     ['FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
+    revenues:  [21.25,  26.49,  31.35,  34.86,  37.90],
+    ebitda:    [3.05,   3.44,   3.78,   7.10,   9.20],
+    netIncome: [4.07,   1.44,   0.21,   4.14,   6.20],
+    revGrowth: [24.0,   24.7,   18.3,   11.2,    8.7],
+    eps:       [4.38,   1.48,   0.21,   4.20,   6.36],
+    netMargin: [19.2,    5.4,    0.7,   11.9,   16.4],
+    capScores:  [9, 8, 9, 8, 9, 8, 7, 9, 8, 8, 7, 9],
+    riskScores: { regulatory: 4, competitive: 8, execution: 5, technology: 6, market: 5 },
     balance: [
-      {cash:12.0, totalAssets:66.3, totalDebt:10.6},
-      {cash:10.5, totalAssets:98.8, totalDebt:10.6},
-      {cash:12.7, totalAssets:99.5, totalDebt:10.6},
-      {cash:17.8, totalAssets:99.8, totalDebt:8.4},
-      {cash:19.6, totalAssets:101.2,totalDebt:8.4},
+      { cash: 10.54, totalAssets: 61.0, totalDebt: 13.99 },
+      { cash: 10.54, totalAssets: 98.2, totalDebt: 13.99 },
+      { cash: 12.51, totalAssets: 99.8, totalDebt: 14.09 },
+      { cash: 14.19, totalAssets: 99.1, totalDebt: 12.59 },
+      { cash: 14.03, totalAssets: 97.6, totalDebt: 11.39 },
     ],
     cashflow: [
-      {operatingCF:4.8,  capex:0.7, freeCF:4.1},
-      {operatingCF:6.0,  capex:0.7, freeCF:5.3},
-      {operatingCF:7.1,  capex:0.6, freeCF:6.5},
-      {operatingCF:9.5,  capex:0.8, freeCF:8.7},
-      {operatingCF:11.4, capex:0.9, freeCF:10.5},
+      { operatingCF: 4.80, capex: 0.68, freeCF: 4.11 },
+      { operatingCF: 6.00, capex: 0.72, freeCF: 5.28 },
+      { operatingCF: 7.11, capex: 0.80, freeCF: 6.31 },
+      { operatingCF: 10.23, capex: 0.74, freeCF: 9.50 },
+      { operatingCF: 13.09, capex: 0.66, freeCF: 12.43 },
     ],
     geographicData: [
-      { region:'Americas',    flag:'🌎', rev:'$22.7B', revNum:22.7, growth:'+9%',  share:'60%', sharePct:60, offices:25, presence:'HQ', dev:'Core market' },
-      { region:'EMEA',        flag:'🌍', rev:'$10.8B', revNum:10.8, growth:'+10%', share:'29%', sharePct:29, offices:20, presence:'Major hub', dev:'Growing' },
-      { region:'Asia Pacific', flag:'🌏',rev:'$4.4B',  revNum:4.4,  growth:'+8%',  share:'11%', sharePct:11, offices:12, presence:'Established', dev:'Expanding' },
+      { region: 'Americas',      flag: '🌎', rev: '$25.1B', revNum: 25.1, growth: '+9%',  share: '66%', sharePct: 66, offices: 30, presence: 'HQ', dev: 'Core market, dominant CRM position' },
+      { region: 'Europe',        flag: '🌍', rev: '$8.3B',  revNum: 8.3,  growth: '+10%', share: '22%', sharePct: 22, offices: 22, presence: 'Key', dev: 'Strong financial services and retail presence' },
+      { region: 'Asia Pacific',  flag: '🌏', rev: '$4.5B',  revNum: 4.5,  growth: '+12%', share: '12%', sharePct: 12, offices: 15, presence: 'Growth', dev: 'Japan, Australia and Singapore growth hubs' },
     ],
     inorganic: [
-      { year:'2021', type:'Acquisition', target:'Slack',      value:'$27.7B', rationale:'Enterprise collaboration & messaging platform' },
-      { year:'2021', type:'Acquisition', target:'Tableau (integrated)', value:'$15.7B', rationale:'Data analytics and BI' },
-      { year:'2023', type:'Acquisition', target:'Proprio (AI)',value:'$0.8B', rationale:'AI-enhanced surgical and spatial computing' },
-      { year:'2024', type:'Partnership', target:'AWS',         value:'N/A',   rationale:'Expanded Agentforce integration on AWS infrastructure' },
+      { year: '2021', type: 'Acquisition', target: 'Slack',          value: '$27.7B', rationale: 'Collaboration and messaging platform integration' },
+      { year: '2023', type: 'Divestiture', target: 'MuleSoft/Tableau minority stakes', value: 'N/A', rationale: 'Portfolio optimization and focus' },
+      { year: '2024', type: 'Acquisition', target: 'Spiff',          value: '$419M',  rationale: 'Sales compensation management' },
+      { year: '2024', type: 'Acquisition', target: 'Zoomin',         value: '$N/A',   rationale: 'Knowledge management for customer service AI' },
+      { year: '2025', type: 'Acquisition', target: 'Own Company',    value: '$1.9B',  rationale: 'Data protection and management' },
     ],
     customerSegments: [
-      { name:'Sales Cloud',    pct:30 },
-      { name:'Service Cloud',  pct:28 },
-      { name:'Marketing Cloud',pct:18 },
-      { name:'Platform & Other',pct:24 },
+      { name: 'Enterprise',  pct: 50 },
+      { name: 'SMB/Mid-Mkt', pct: 35 },
+      { name: 'Public Sector', pct: 15 },
     ],
     topProducts: [
-      { name:'Sales Cloud',     share:30 },
-      { name:'Service Cloud',   share:28 },
-      { name:'Agentforce',      share:15 },
-      { name:'Slack',           share:14 },
-      { name:'MuleSoft',        share:13 },
+      { name: 'Sales Cloud',     share: 28 },
+      { name: 'Service Cloud',   share: 25 },
+      { name: 'Agentforce',      share: 12 },
+      { name: 'Platform/Slack',  share: 20 },
+      { name: 'Marketing Cloud', share: 15 },
     ],
     rndData: {
-      spend:[1.8, 2.4, 3.2, 3.8, 4.2],
-      areas:[ {name:'AI/Agentforce',pct:35}, {name:'CRM Platform',pct:30}, {name:'Integration',pct:20}, {name:'Other',pct:15} ]
+      spend: [1.99, 2.54, 3.01, 3.35, 3.60],
+      areas: [
+        { name: 'Agentforce AI', pct: 40 },
+        { name: 'Data Cloud',    pct: 25 },
+        { name: 'CRM Platform',  pct: 22 },
+        { name: 'Integration',   pct: 13 },
+      ],
     },
     insights: {
-      product:    'Agentforce 2dx (FY25) enables autonomous AI agents across sales, service, and marketing workflows. Slack AI launched as an AI-native collaboration layer. Einstein Copilot rebranded into Agentforce, gaining 5,000+ customers within 6 months of GA.',
-      market:     'Salesforce holds ~22% of global CRM market. Competition from Microsoft Dynamics 365 + Copilot intensifying. ServiceNow and Salesforce overlap increasingly in enterprise workflow automation.',
-      inorganic:  'The $27.7B Slack acquisition (2021) remains the biggest bet. MuleSoft and Tableau form the data+integration backbone. Future M&A likely targets vertical AI and data management.',
-      customer:   'Key customers: Amazon, Walmart, Toyota, T-Mobile, HSBC, Coca-Cola. Agentforce attracted 5,000 paid enterprise deals in FY25 Q4. Net retention rate >105%.',
-      financial:  'Revenue growth decelerated to 9% in FY25 as macro headwinds persist. However, free cash flow hit $10.5B (+21% YoY) and operating margins expanded 300bps. Buyback program returned $4.8B to shareholders in FY25.',
-      leadership: 'Co-CEO structure ended; Marc Benioff sole CEO. President and COO Brian Millham drives Agentforce go-to-market. CFO Amy Weaver succeeded by Robin Washington in 2024.',
-      regulatory: 'EU AI Act compliance for Agentforce underway. GDPR and US state privacy laws impact data handling. EU Digital Markets Act creates product bundling constraints in Europe.'
+      product:    'Agentforce launched 2024 as autonomous AI agent platform. Data Cloud reaching 40TB+ customer data. Einstein AI deeply embedded across all clouds. Slack integrated as AI action surface.',
+      market:     'Salesforce maintains #1 CRM share globally (~22%). Facing competitive pressure from Microsoft Dynamics and emerging AI-native CRMs. Agentforce positioned as next-gen growth driver.',
+      inorganic:  'Slack ($27.7B) remains transformational but integration challenged. Own Company ($1.9B) strengthens data resilience story. M&A strategy pivoting to AI bolt-ons vs mega-deals.',
+      customer:   '150,000+ customers globally. Net retention rate ~110%. Growing Agentforce paid deployments, targeting $1B+ ACV by FY26. Financial services and healthcare top verticals.',
+      financial:  'Revenue growth decelerated to 9% in FY25 as post-COVID normalization. Operating margins expanded sharply (+4.6pp) on cost discipline. FCF margin 33% — highest ever.',
+      leadership: 'Marc Benioff refocused on AI transformation; activist investors pushed margin improvement. Co-CEO structure dissolved; Benioff leading alone. Brian Millham as President.',
+      regulatory: 'GDPR compliance lead; EU data residency investments. FTC scrutiny on Slack-related data practices. California data privacy compliance investments.',
     },
     insightYear: 'FY25',
     updates: [
-      { date:'2025-03', product:'Agentforce 2dx', title:'Agentforce 2dx GA Launch', impact:'high', summary:'Next-gen autonomous AI agents with reasoning loops for enterprise CRM workflows.' },
-      { date:'2024-11', product:'Agentforce',     title:'Agentforce 1.0 Launch',    impact:'high', summary:'Agentforce launched at Dreamforce 2024 — AI agent platform with 10,000+ customer sign-ups.' },
-      { date:'2024-07', product:'Slack AI',       title:'Slack AI Generally Available', impact:'medium', summary:'Slack AI enables AI-powered channel summaries, search, and workflow automation.' },
+      { date: '2024-09', product: 'Agentforce',       title: 'Agentforce platform launched at Dreamforce 2024',   impact: 'high',   summary: 'Salesforce unveils Agentforce, a new platform for deploying autonomous AI agents across customer interactions, sales, and service workflows.' },
+      { date: '2025-03', product: 'Data Cloud',       title: 'Data Cloud reaches 40T+ records under management',  impact: 'high',   summary: 'Salesforce Data Cloud becomes the fastest-growing product in company history, now managing over 40 trillion customer records.' },
+      { date: '2025-01', product: 'Own Company Acq.', title: 'Acquires Own Company for $1.9B',                   impact: 'medium', summary: 'Acquisition strengthens data backup and management capabilities, critical for enterprise AI readiness.' },
     ],
   },
 
-  // ── PEER 2: SERVICENOW ────────────────────────────────────
-  'now': {
-    identifier:    'now',
-    name:          'ServiceNow',
-    ticker:        'NOW',
-    exchange:      'NYSE',
-    color:         '#62D84E',
-    initials:      'SN',
+  'alphabet': {
+    identifier:    'alphabet',
+    name:          'Google (Alphabet)',
+    ticker:        'GOOGL',
+    exchange:      'NASDAQ',
+    color:         '#4285F4',
+    initials:      'GO',
     sector:        'AI-Powered Enterprise Software',
-    description:   'ServiceNow is the leading enterprise workflow automation platform, connecting IT, operations, HR, and customer service on a single AI-powered platform. The Now Platform with Gemini-integrated Now Assist and the Otto AI agent framework enables enterprises to automate complex multi-step workflows. ServiceNow is the fastest-growing pure-play enterprise software company above $10B revenue.',
-    founded:       2004,
-    employees:     '26,000',
-    CEO:           'Bill McDermott',
-    HQ:            'Santa Clara, CA',
-    website:       'servicenow.com',
-    latestRevenue: '$13.3B',
-    marketCap:     '~$230B',
+    description:   'Alphabet is the parent of Google, the world\'s leading search, cloud, and AI company. Google Cloud is a top-3 hyperscaler; Vertex AI and Gemini power enterprise AI transformation. Alphabet also operates YouTube, Waymo, and DeepMind.',
+    founded:       1998,
+    employees:     '181,000',
+    CEO:           'Sundar Pichai',
+    HQ:            'Mountain View, CA',
+    website:       'abc.xyz',
+    latestRevenue: '$402.8B',
+    marketCap:     '$2.1T',
     rating:        9.0,
     kpis: [
-      { label:'Revenue FY25',    value:'$13.3B',   change:'+21%',  up:true  },
-      { label:'Sub Revenue FY25',value:'$12.8B',   change:'+22%',  up:true  },
-      { label:'Op. Margin FY25', value:'12.7%',    change:'+2%',   up:true  },
-      { label:'Market Cap',      value:'~$230B',   change:'+18%',  up:true  },
+      { label: 'Revenue FY25',     value: '$402.8B', change: '+15%',  up: true  },
+      { label: 'Net Income FY25',  value: '$132.2B', change: '+32%',  up: true  },
+      { label: 'Google Cloud FY25',value: '$43.2B',  change: '+28%',  up: true  },
+      { label: 'Op. Margin FY25',  value: '32.0%',   change: '+0.6%', up: true  },
     ],
-    years:     ['FY21','FY22','FY23','FY24','FY25'],
-    revenues:  [5.90,  7.25,  8.97, 10.98, 13.28],
-    ebitda:    [1.24,  1.62,  1.95,  2.41,  3.10],
-    netIncome: [0.23,  0.33,  1.71,  1.97,  2.23],
-    revGrowth: [31.4,  22.9,  23.7,  22.4,  21.0],
-    eps:       [1.10,  1.57,  8.26,  9.53, 10.80],
-    netMargin: [3.9,   4.6,  19.1,  17.9,  16.8],
-    capScores: [8,9,9,7,9,9,8,8,7,8,7,9],
-    riskScores:{ regulatory:3, competitive:6, execution:4, technology:8, market:4 },
+    years:     ['FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
+    revenues:  [257.64, 282.84, 307.39, 350.02, 402.84],
+    ebitda:    [93.50, 89.50, 98.00, 120.00, 150.00],
+    netIncome: [76.03,  59.97,  73.80, 100.12, 132.17],
+    revGrowth: [41.2,    9.8,    8.7,   13.9,   15.1],
+    eps:       [5.61,   4.56,   5.80,   8.05,  10.82],
+    netMargin: [29.5,   21.2,   24.0,   28.6,   32.8],
+    capScores:  [8, 7, 9, 9, 9, 8, 9, 7, 8, 8, 9, 8],
+    riskScores: { regulatory: 9, competitive: 7, execution: 4, technology: 3, market: 5 },
     balance: [
-      {cash:2.0, totalAssets:9.3,  totalDebt:1.5},
-      {cash:2.6, totalAssets:11.7, totalDebt:1.5},
-      {cash:3.5, totalAssets:14.3, totalDebt:1.5},
-      {cash:4.1, totalAssets:16.8, totalDebt:1.5},
-      {cash:5.2, totalAssets:19.6, totalDebt:1.5},
+      { cash: 139.65, totalAssets: 359.3, totalDebt: 26.21 },
+      { cash: 113.76, totalAssets: 359.3, totalDebt: 27.20 },
+      { cash: 110.92, totalAssets: 402.4, totalDebt: 24.33 },
+      { cash:  95.66, totalAssets: 450.5, totalDebt: 22.57 },
+      { cash: 126.84, totalAssets: 520.0, totalDebt: 59.29 },
     ],
     cashflow: [
-      {operatingCF:1.7,  capex:0.3, freeCF:1.4},
-      {operatingCF:2.3,  capex:0.4, freeCF:1.9},
-      {operatingCF:3.0,  capex:0.5, freeCF:2.5},
-      {operatingCF:3.6,  capex:0.6, freeCF:3.0},
-      {operatingCF:4.3,  capex:0.7, freeCF:3.6},
+      { operatingCF: 91.65, capex: 24.64, freeCF: 67.01 },
+      { operatingCF: 91.50, capex: 31.49, freeCF: 60.01 },
+      { operatingCF: 101.75, capex: 32.25, freeCF: 69.50 },
+      { operatingCF: 125.30, capex: 52.54, freeCF: 72.76 },
+      { operatingCF: 164.71, capex: 91.45, freeCF: 73.27 },
     ],
     geographicData: [
-      { region:'North America', flag:'🌎', rev:'$7.6B',  revNum:7.6,  growth:'+20%', share:'57%', sharePct:57, offices:15, presence:'HQ', dev:'Core market' },
-      { region:'EMEA',          flag:'🌍', rev:'$4.2B',  revNum:4.2,  growth:'+22%', share:'32%', sharePct:32, offices:18, presence:'Major hub', dev:'Growing' },
-      { region:'Asia Pacific',  flag:'🌏', rev:'$1.5B',  revNum:1.5,  growth:'+24%', share:'11%', sharePct:11, offices:8,  presence:'Expanding', dev:'High growth' },
+      { region: 'United States', flag: '🌎', rev: '$206.0B', revNum: 206.0, growth: '+15%', share: '51%', sharePct: 51, offices: 40, presence: 'HQ', dev: 'Core Search, YouTube, and Cloud revenue base' },
+      { region: 'EMEA',          flag: '🌍', rev: '$90.8B',  revNum: 90.8,  growth: '+14%', share: '22%', sharePct: 22, offices: 35, presence: 'Key', dev: 'Strong YouTube and Search monetization' },
+      { region: 'APAC',          flag: '🌏', rev: '$58.8B',  revNum: 58.8,  growth: '+16%', share: '15%', sharePct: 15, offices: 25, presence: 'Key', dev: 'Growth in cloud and digital advertising' },
+      { region: 'Other Americas', flag: '🌎', rev: '$47.2B', revNum: 47.2,  growth: '+12%', share: '12%', sharePct: 12, offices: 15, presence: 'Growth', dev: 'LatAm digital economy expansion' },
     ],
     inorganic: [
-      { year:'2025', type:'Acquisition', target:'Moveworks',  value:'$2.85B',rationale:'AI employee experience and enterprise copilot' },
-      { year:'2025', type:'Acquisition', target:'Logik.ai',   value:'$0.4B', rationale:'AI-powered CPQ (configure-price-quote)' },
-      { year:'2024', type:'Acquisition', target:'Mission Secure',value:'$0.2B',rationale:'OT/ICS cybersecurity' },
-      { year:'2025', type:'Acquisition', target:'Cuein AI',   value:'$0.1B', rationale:'Conversational AI analytics' },
-      { year:'2024', type:'Partnership', target:'Google Cloud',value:'N/A',  rationale:'Gemini AI integration in Now Platform' },
+      { year: '2025', type: 'Acquisition', target: 'Wiz',           value: '$32B',    rationale: 'Cloud security — largest Alphabet acquisition ever' },
+      { year: '2024', type: 'Acquisition', target: 'Cameyo',        value: '$N/A',    rationale: 'Virtual app delivery for Chrome Enterprise' },
+      { year: '2023', type: 'Acquisition', target: 'Alter',         value: '$N/A',    rationale: 'AI avatar and digital identity' },
+      { year: '2022', type: 'Acquisition', target: 'Mandiant',      value: '$5.4B',   rationale: 'Cybersecurity intelligence platform' },
+      { year: '2021', type: 'Acquisition', target: 'Fitbit closure', value: '$2.1B',  rationale: 'Wearables/health data integration' },
     ],
     customerSegments: [
-      { name:'ITSM/ITOM',        pct:35 },
-      { name:'Customer Workflows',pct:25 },
-      { name:'HR Service Delivery',pct:20 },
-      { name:'App Dev / Platform',pct:20 },
+      { name: 'Digital Advertising', pct: 60 },
+      { name: 'Cloud Enterprise',    pct: 22 },
+      { name: 'Consumer & Other',    pct: 18 },
     ],
     topProducts: [
-      { name:'Now Platform',     share:35 },
-      { name:'Now Assist / Otto',share:25 },
-      { name:'ITSM Pro',         share:20 },
-      { name:'HR Service Delivery',share:12 },
-      { name:'Other',            share:8  },
+      { name: 'Google Search',  share: 40 },
+      { name: 'Google Cloud',   share: 22 },
+      { name: 'YouTube',        share: 18 },
+      { name: 'Google Workspace', share: 12 },
+      { name: 'Other Bets',     share: 8  },
     ],
     rndData: {
-      spend:[1.1, 1.5, 1.8, 2.2, 2.8],
-      areas:[ {name:'AI/Now Assist',pct:40}, {name:'Platform',pct:30}, {name:'Security',pct:15}, {name:'Other',pct:15} ]
+      spend: [31.6, 39.5, 45.4, 49.1, 55.0],
+      areas: [
+        { name: 'Gemini/AI Research', pct: 42 },
+        { name: 'Cloud & Infra',      pct: 28 },
+        { name: 'Search & Ads',       pct: 18 },
+        { name: 'Other Bets',         pct: 12 },
+      ],
     },
     insights: {
-      product:    'Now Assist rebranded as Otto in FY25, combining workflow intelligence with Moveworks conversational AI. Now Platform integrates Google Gemini, Microsoft Azure OpenAI, and native LLMs. ACV from AI products crossed $600M in FY25.',
-      market:     'ServiceNow commands >65 NPS among enterprise IT buyers. The company competes directly with SAP in HR workflows, Salesforce in customer workflows, and Microsoft in ITSM. The $10B+ revenue threshold was crossed in FY24.',
-      inorganic:  'The $2.85B Moveworks acquisition (2025) is the largest in company history, adding an AI employee experience layer. Together with Logik.ai and Cuein AI, ServiceNow built a comprehensive agentic AI portfolio in 12 months.',
-      customer:   'Customers include Amazon, Walmart, Canadian Federal Government, 85% of Fortune 500. Average contract value >$2M. 1,000+ customers with >$1M ACV each. Net promoter score among the highest in enterprise SaaS.',
-      financial:  'ServiceNow crossed $13B in FY25 revenue with 21% growth. Free cash flow of $3.6B. Operating margin expansion driven by AI product mix and subscription leverage. Guidance implies $20B+ revenue target by FY27.',
-      leadership: 'CEO Bill McDermott (since 2019) drives enterprise AI positioning. CTO Amit Zavery leads platform architecture. COO Chirantan Desai drives product and engineering.',
-      regulatory: 'GDPR, FedRAMP High authorization for US government workflows. EU AI Act compliance investments underway. Data residency requirements being addressed across new regional data centers.'
+      product:    'Gemini 2.0 Ultra leads frontier AI. Google Cloud Vertex AI and Agent Builder enabling enterprise AI. NotebookLM and Workspace AI embedded. TPU v5 provides compute advantage.',
+      market:     'Google Cloud #3 hyperscaler growing 28% in FY25 to $43B. Search resilient despite AI threat narrative. Gemini integration across all Google products deepening stickiness.',
+      inorganic:  'Wiz acquisition ($32B) is largest in company history, transforming cloud security posture. Mandiant integration complete, driving Google Security Operations. AI lab acquisitions accelerating.',
+      customer:   'Google Workspace: 10M+ paying organizations. Google Cloud: 60%+ of Fortune 500. YouTube: 2.5B+ monthly active users. AI Overviews: 1.5B+ users.',
+      financial:  'FY25 net income grew 32% to $132B on strong Cloud and Search. Operating margin 32%. $91B capex investment in AI infrastructure in FY25. $85B+ buyback program.',
+      leadership: 'Sundar Pichai navigating antitrust and AI transition simultaneously. Demis Hassabis (DeepMind CEO) elevated to Chief Scientist. Strong bench of AI talent.',
+      regulatory: 'DOJ antitrust case on Search distribution (landmark). EU Digital Markets Act compliance. Multiple privacy investigations in Europe. FTC scrutiny on AI practices.',
     },
     insightYear: 'FY25',
     updates: [
-      { date:'2025-05', product:'Otto AI',        title:'Now Assist becomes Otto',         impact:'high',   summary:'ServiceNow rebrands and enhances its AI agent platform, combining Now Assist + Moveworks into Otto.' },
-      { date:'2025-01', product:'Moveworks',      title:'Moveworks Acquisition Closed',    impact:'high',   summary:'$2.85B acquisition adds conversational AI and enterprise copilot capabilities.' },
-      { date:'2024-09', product:'Now Platform',   title:'Xanadu Release — Gemini Integration', impact:'high', summary:'Now Platform Xanadu release integrates Google Gemini for multi-modal AI workflows.' },
+      { date: '2025-03', product: 'Wiz Acquisition', title: 'Completes $32B Wiz acquisition — largest ever',  impact: 'high', summary: 'Google Cloud acquires Wiz for $32B, bringing cloud-native security posture management to Vertex AI and GCP enterprise customers.' },
+      { date: '2025-01', product: 'Gemini 2.0',      title: 'Gemini 2.0 Ultra launched across enterprise',   impact: 'high', summary: 'Gemini 2.0 Ultra achieves best-in-class benchmarks, deployed across Workspace, Cloud, and Vertex AI platforms.' },
+      { date: '2024-06', product: 'AI Overviews',    title: 'AI Overviews rolled out to 1B+ Search users', impact: 'high', summary: 'Google integrates generative AI summaries into Search, reaching over 1 billion users within months of launch.' },
     ],
   },
 
-  // ── PEER 3: MICROSOFT ─────────────────────────────────────
-  'msft': {
-    identifier:    'msft',
+  'microsoft': {
+    identifier:    'microsoft',
     name:          'Microsoft',
     ticker:        'MSFT',
     exchange:      'NASDAQ',
     color:         '#00A4EF',
     initials:      'MS',
     sector:        'AI-Powered Enterprise Software',
-    description:   'Microsoft is the world\'s largest enterprise software company by revenue, operating Azure (the #2 cloud platform), Microsoft 365 Copilot, Dynamics 365, and GitHub. Through its $13B+ investment in OpenAI, Microsoft has embedded GPT-4o across its entire product stack via Copilot, redefining enterprise productivity. Azure surpassed $100B in annualized revenue in FY25.',
+    description:   'Microsoft is the world\'s largest software company, enabling digital transformation through Azure, Microsoft 365, Dynamics 365, and GitHub Copilot. With OpenAI partnership and Copilot embedded across all products, Microsoft leads enterprise AI adoption.',
     founded:       1975,
     employees:     '228,000',
     CEO:           'Satya Nadella',
     HQ:            'Redmond, WA',
     website:       'microsoft.com',
-    latestRevenue: '$279.0B',
-    marketCap:     '~$3.2T',
+    latestRevenue: '$281.7B',
+    marketCap:     '$3.7T',
     rating:        9.5,
     kpis: [
-      { label:'Revenue FY25',    value:'$279.0B',  change:'+12%',  up:true  },
-      { label:'Net Income FY25', value:'$101.8B',  change:'+16%',  up:true  },
-      { label:'Op. Margin FY25', value:'45.6%',    change:'+1%',   up:true  },
-      { label:'Market Cap',      value:'~$3.2T',   change:'+20%',  up:true  },
+      { label: 'Revenue FY25',    value: '$281.7B', change: '+15%',  up: true },
+      { label: 'Azure Revenue',   value: '$75B+',   change: '+35%',  up: true },
+      { label: 'Op. Margin FY25', value: '45.6%',   change: '+1pp',  up: true },
+      { label: 'Net Income FY25', value: '$101.8B', change: '+15%',  up: true },
     ],
-    years:     ['FY21','FY22','FY23','FY24','FY25'],
-    revenues:  [168.09, 198.27, 211.92, 245.12, 279.00],
-    ebitda:    [81.60,  97.84, 102.38, 130.39, 157.96],
+    years:     ['FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
+    revenues:  [168.09, 198.27, 211.92, 245.12, 281.72],
+    ebitda:    [99.5,  117.5,  126.6,  149.5,  175.0],
     netIncome: [61.27,  72.74,  72.36,  88.14, 101.83],
-    revGrowth: [17.5,   17.9,    6.9,   15.7,   13.8],
+    revGrowth: [17.5,   17.9,    6.9,   15.7,   14.9],
     eps:       [8.05,   9.65,   9.68,  11.80,  13.64],
-    netMargin: [36.5,   36.7,   34.1,   35.9,   36.5],
-    capScores: [10,9,9,10,8,9,9,9,9,8,8,10],
-    riskScores:{ regulatory:7, competitive:7, execution:3, technology:9, market:5 },
+    netMargin: [36.5,   36.7,   34.1,   35.9,   36.1],
+    capScores:  [9, 9, 9, 9, 9, 9, 9, 9, 9, 8, 9, 9],
+    riskScores: { regulatory: 7, competitive: 6, execution: 3, technology: 3, market: 4 },
     balance: [
-      {cash:130.3, totalAssets:333.8, totalDebt:50.1},
-      {cash:104.8, totalAssets:364.8, totalDebt:47.0},
-      {cash:111.3, totalAssets:411.9, totalDebt:47.0},
-      {cash:75.5,  totalAssets:512.2, totalDebt:79.4},
-      {cash:98.2,  totalAssets:555.0, totalDebt:68.0},
+      { cash: 130.3, totalAssets: 333.8, totalDebt: 50.1 },
+      { cash: 104.8, totalAssets: 364.8, totalDebt: 61.3 },
+      { cash: 111.3, totalAssets: 411.9, totalDebt: 59.9 },
+      { cash:  75.5, totalAssets: 512.2, totalDebt: 67.1 },
+      { cash:  94.6, totalAssets: 562.9, totalDebt: 60.6 },
     ],
     cashflow: [
-      {operatingCF:76.7,  capex:20.6, freeCF:56.1},
-      {operatingCF:89.0,  capex:23.9, freeCF:65.1},
-      {operatingCF:87.9,  capex:28.1, freeCF:59.8},
-      {operatingCF:118.5, capex:55.7, freeCF:62.8},
-      {operatingCF:135.0, capex:65.0, freeCF:70.0},
+      { operatingCF: 76.7, capex: 20.6, freeCF: 56.1 },
+      { operatingCF: 89.0, capex: 23.9, freeCF: 65.1 },
+      { operatingCF: 87.6, capex: 28.1, freeCF: 59.5 },
+      { operatingCF: 118.5, capex: 44.5, freeCF: 74.1 },
+      { operatingCF: 136.2, capex: 64.6, freeCF: 71.6 },
     ],
     geographicData: [
-      { region:'United States', flag:'🌎', rev:'$153.4B', revNum:153.4, growth:'+14%', share:'55%', sharePct:55, offices:50, presence:'HQ', dev:'Core market' },
-      { region:'EMEA',          flag:'🌍', rev:'$83.7B',  revNum:83.7,  growth:'+12%', share:'30%', sharePct:30, offices:35, presence:'Major hub', dev:'Key market' },
-      { region:'Asia Pacific',  flag:'🌏', rev:'$41.9B',  revNum:41.9,  growth:'+11%', share:'15%', sharePct:15, offices:20, presence:'Established', dev:'Growing' },
+      { region: 'United States', flag: '🌎', rev: '$156.5B', revNum: 156.5, growth: '+15%', share: '55%', sharePct: 55, offices: 35, presence: 'HQ', dev: 'Enterprise cloud and productivity dominance' },
+      { region: 'Europe',        flag: '🌍', rev: '$67.6B',  revNum: 67.6,  growth: '+14%', share: '24%', sharePct: 24, offices: 40, presence: 'Key', dev: 'Strong M365 and Azure enterprise penetration' },
+      { region: 'Asia Pacific',  flag: '🌏', rev: '$39.4B',  revNum: 39.4,  growth: '+16%', share: '14%', sharePct: 14, offices: 28, presence: 'Key', dev: 'Japan, India, ANZ cloud growth hubs' },
+      { region: 'Rest of World', flag: '🌐', rev: '$18.2B',  revNum: 18.2,  growth: '+12%', share: '7%',  sharePct: 7,  offices: 20, presence: 'Growth', dev: 'MEA and LatAm enterprise expansion' },
     ],
     inorganic: [
-      { year:'2021', type:'Acquisition', target:'Nuance Communications', value:'$19.7B', rationale:'Conversational AI and healthcare NLP' },
-      { year:'2022', type:'Acquisition', target:'Activision Blizzard (announced)', value:'$68.7B', rationale:'Gaming & consumer entertainment' },
-      { year:'2023', type:'Acquisition', target:'Activision Blizzard (closed)', value:'$68.7B', rationale:'Microsoft Gaming expansion' },
-      { year:'2023', type:'Investment',  target:'OpenAI',                value:'$13.0B', rationale:'Strategic AI model provider — Copilot foundation' },
-      { year:'2024', type:'Partnership', target:'Mistral AI',            value:'$0.15B', rationale:'European open-source AI diversification' },
+      { year: '2023', type: 'Acquisition', target: 'Activision Blizzard', value: '$68.7B',  rationale: 'Gaming content and mobile gaming expansion' },
+      { year: '2023', type: 'Investment',  target: 'OpenAI (extended)',    value: '$10B+',   rationale: 'Generative AI technology partnership' },
+      { year: '2022', type: 'Acquisition', target: 'Nuance',              value: '$19.7B',  rationale: 'Healthcare AI and conversational AI' },
+      { year: '2021', type: 'Acquisition', target: 'ZeniMax / Bethesda',  value: '$7.5B',   rationale: 'Gaming studios for Xbox Game Pass' },
+      { year: '2024', type: 'Partnership', target: 'Mistral AI',          value: '$N/A',    rationale: 'Azure AI model diversity and EU relations' },
     ],
     customerSegments: [
-      { name:'Intelligent Cloud', pct:38 },
-      { name:'Productivity & Business Processes', pct:35 },
-      { name:'More Personal Computing', pct:27 },
+      { name: 'Enterprise (M365/Azure)', pct: 60 },
+      { name: 'SMB (M365)',              pct: 25 },
+      { name: 'Consumer & Gaming',       pct: 15 },
     ],
     topProducts: [
-      { name:'Azure',            share:35 },
-      { name:'Microsoft 365',    share:28 },
-      { name:'Copilot',          share:15 },
-      { name:'Dynamics 365',     share:12 },
-      { name:'GitHub',           share:10 },
+      { name: 'Azure',         share: 35 },
+      { name: 'M365/Copilot',  share: 32 },
+      { name: 'Dynamics 365',  share: 12 },
+      { name: 'GitHub/DevOps', share: 11 },
+      { name: 'Gaming',        share: 10 },
     ],
     rndData: {
-      spend:[20.7, 24.5, 27.2, 29.5, 33.0],
-      areas:[ {name:'AI/Copilot',pct:40}, {name:'Azure/Cloud',pct:30}, {name:'Security',pct:15}, {name:'Other',pct:15} ]
+      spend: [20.7, 24.5, 27.2, 29.5, 33.7],
+      areas: [
+        { name: 'Azure AI/OpenAI', pct: 45 },
+        { name: 'M365/Copilot',    pct: 25 },
+        { name: 'Security',        pct: 18 },
+        { name: 'Gaming',          pct: 12 },
+      ],
     },
     insights: {
-      product:    'Microsoft 365 Copilot reached 30M+ monthly active users in FY25. Azure OpenAI Service is the largest enterprise AI API platform globally. Dynamics 365 Copilot integrates agents across sales, finance, and supply chain. GitHub Copilot has 1.8M+ paid subscribers.',
-      market:     'Microsoft leads enterprise software with ~$3.2T market cap. Azure holds ~24% of global cloud IaaS. Microsoft competes directly with all five peers: Cloud (vs Google), CRM (vs Salesforce), Workflows (vs ServiceNow), ERP (vs Oracle/SAP).',
-      inorganic:  'The $68.7B Activision deal closed Oct 2023 — largest tech acquisition ever. $19.7B Nuance acquisition powers Dragon AI in healthcare. $13B+ invested in OpenAI gives Microsoft the most advanced generative AI integration of any enterprise vendor.',
-      customer:   'Enterprise customers include Goldman Sachs, Boeing, Walgreens, and virtually every Fortune 500. M365 Copilot 30M+ MAU. Azure AI is used by 60% of Fortune 500 for AI workloads. 400M+ Microsoft 365 seats globally.',
-      financial:  'FY25 revenue of $279B with 45.6% operating margin — the highest among peers. Azure grew ~30% YoY. Net income $101.8B, free cash flow $70B. CapEx $65B driven by AI infrastructure investment.',
-      leadership: 'Satya Nadella (CEO since 2014) has transformed Microsoft into an AI-first company. President Brad Smith leads policy. EVP Amy Hood (CFO) drives disciplined capital allocation.',
-      regulatory: 'EU blocked / conditionally approved Activision deal, resolved via asset divestitures. EU AI Act compliance. Antitrust scrutiny on OpenAI exclusivity. DOJ Windows server investigations.'
+      product:    'Microsoft Copilot embedded across M365, GitHub, Dynamics, and Azure. 30M+ Copilot M365 MAU in FY25. Azure AI services growing 100%+ YoY. Copilot Studio for custom enterprise agents.',
+      market:     'Azure surpassed $75B annual run rate in FY25, #2 cloud behind AWS. M365 Copilot fastest enterprise AI product adoption ever. GitHub Copilot 1.8M+ paid subscribers.',
+      inorganic:  'Activision ($68.7B) transforms gaming business. OpenAI relationship deepens with $10B+ cumulative investment and Azure exclusivity. Nuance drives healthcare vertical AI.',
+      customer:   '345M+ Microsoft 365 commercial seats. Azure used by 95%+ of Fortune 500. Dynamics 365 growing 24% in FY25. Copilot adoption in 70% of Fortune 500.',
+      financial:  'Revenue CAGR 13.8% over FY21-FY25. Operating margin expanded to 45.6% — best in class. $64.6B capex in FY25 on AI infrastructure. $85B+ market cap buyback runway.',
+      leadership: 'Satya Nadella consistently ranked top CEO globally. Amy Hood (CFO) strong financial stewardship. Brad Smith navigating regulatory environment effectively.',
+      regulatory: 'CMA and EU reviewed Activision deal. OpenAI relationship under FTC/EC scrutiny. EU Digital Markets Act compliance. Cloud bundling investigations in Europe.',
     },
     insightYear: 'FY25',
     updates: [
-      { date:'2025-06', product:'Copilot',      title:'M365 Copilot 30M MAU Milestone', impact:'high',   summary:'Microsoft 365 Copilot surpassed 30M monthly active users, accelerating enterprise AI adoption.' },
-      { date:'2025-01', product:'Azure',        title:'Azure Tops $100B ARR',           impact:'high',   summary:'Microsoft Azure surpassed $100B in annualized revenue run rate, reinforcing #2 cloud position.' },
-      { date:'2024-07', product:'Copilot+',     title:'Copilot+ PCs Launch',            impact:'medium', summary:'New AI PC category launched with on-device Phi-3 models and Recall feature.' },
+      { date: '2025-04', product: 'Copilot Studio',   title: 'Copilot Studio agents deployed in 70% of Fortune 500', impact: 'high', summary: 'Microsoft Copilot Studio reaches 100,000+ custom agents deployed across enterprise customers, deepening workflow automation.' },
+      { date: '2025-01', product: 'Azure AI',         title: 'Azure AI services revenue surpasses $10B run rate',   impact: 'high', summary: 'Azure AI and OpenAI services combined cross $10B annual revenue run rate, driven by enterprise Copilot and API demand.' },
+      { date: '2024-10', product: 'M365 Copilot',     title: 'M365 Copilot reaches 1M+ daily active users',        impact: 'high', summary: 'Microsoft reports M365 Copilot daily active users passing 1 million milestone, with strong renewal rates.' },
     ],
   },
 
-  // ── PEER 4: ORACLE ────────────────────────────────────────
-  'orcl': {
-    identifier:    'orcl',
+  'oracle': {
+    identifier:    'oracle',
     name:          'Oracle',
     ticker:        'ORCL',
     exchange:      'NYSE',
     color:         '#F80000',
     initials:      'OR',
     sector:        'AI-Powered Enterprise Software',
-    description:   'Oracle is the world\'s largest database company and a rapidly growing enterprise cloud provider. Oracle Cloud Infrastructure (OCI) is one of the fastest-growing hyperscale clouds, with AI workloads driving GPU cluster demand. Oracle Fusion Cloud ERP, HCM, SCM, and the AI Agent Studio position Oracle as a full-stack enterprise AI provider across database, ERP, and cloud infrastructure.',
+    description:   'Oracle is a global technology company providing cloud infrastructure (OCI), database, and enterprise software solutions. Oracle Database 23ai and Oracle Cloud Infrastructure power mission-critical enterprise AI workloads, with strong momentum in the Stargate AI infrastructure partnership.',
     founded:       1977,
-    employees:     '164,000',
+    employees:     '159,000',
     CEO:           'Safra Catz',
     HQ:            'Austin, TX',
     website:       'oracle.com',
     latestRevenue: '$57.4B',
-    marketCap:     '~$480B',
+    marketCap:     '$420B',
     rating:        8.2,
     kpis: [
-      { label:'Revenue FY25',    value:'$57.4B',   change:'+12%',  up:true  },
-      { label:'Net Income FY25', value:'$12.4B',   change:'+18%',  up:true  },
-      { label:'Op. Margin FY25', value:'30.6%',    change:'+1%',   up:true  },
-      { label:'Market Cap',      value:'~$480B',   change:'+22%',  up:true  },
+      { label: 'Revenue FY25',   value: '$57.4B',  change: '+8%',   up: true  },
+      { label: 'Cloud Rev. FY25',value: '$25.0B',  change: '+24%',  up: true  },
+      { label: 'Op. Margin FY25',value: '30.8%',   change: '+1.8%', up: true  },
+      { label: 'OCI Growth',     value: '~51%',    change: 'Accel.',up: true  },
     ],
-    years:     ['FY21','FY22','FY23','FY24','FY25'],
+    years:     ['FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
     revenues:  [40.48, 42.44, 49.95, 52.96, 57.40],
-    ebitda:    [17.5,  18.2,  22.0,  23.8,  26.5],
-    netIncome: [13.75,  6.72,  8.50, 10.47, 12.40],
-    revGrowth: [4.0,   4.8,  17.7,   6.0,   8.4],
-    eps:       [4.67,  2.49,  3.15,  3.82,  4.34],
-    netMargin: [34.0,  15.8,  17.0,  19.8,  21.6],
-    capScores: [8,8,9,9,7,8,7,8,8,7,6,8],
-    riskScores:{ regulatory:4, competitive:7, execution:5, technology:7, market:5 },
+    ebitda:    [17.5,  18.8,  20.7,  22.5,  25.8],
+    netIncome: [13.75,  6.72,  8.50, 10.47, 12.44],
+    revGrowth: [4.0,    4.8,  17.7,   6.0,   8.4],
+    eps:       [4.67,  2.41,  3.07,  3.71,  4.34],
+    netMargin: [34.0,  15.8,  17.0,  19.8,  21.7],
+    capScores:  [8, 6, 9, 7, 7, 6, 7, 8, 7, 7, 6, 8],
+    riskScores: { regulatory: 4, competitive: 7, execution: 5, technology: 6, market: 5 },
     balance: [
-      {cash:10.3, totalAssets:131.1, totalDebt:87.7},
-      {cash:21.2, totalAssets:109.3, totalDebt:86.2},
-      {cash:9.9,  totalAssets:134.1, totalDebt:87.8},
-      {cash:10.5, totalAssets:140.8, totalDebt:88.5},
-      {cash:12.6, totalAssets:152.0, totalDebt:85.0},
+      { cash: 30.1, totalAssets: 131.1, totalDebt: 75.7 },
+      { cash: 21.9, totalAssets: 109.3, totalDebt: 75.9 },
+      { cash: 10.2, totalAssets: 134.1, totalDebt: 90.5 },
+      { cash: 10.7, totalAssets: 141.2, totalDebt: 93.1 },
+      { cash: 11.2, totalAssets: 167.0, totalDebt: 104.1 },
     ],
     cashflow: [
-      {operatingCF:15.9, capex:1.5, freeCF:14.4},
-      {operatingCF:15.4, capex:3.6, freeCF:11.8},
-      {operatingCF:17.6, capex:6.9, freeCF:10.7},
-      {operatingCF:18.5, capex:9.5, freeCF:9.0},
-      {operatingCF:20.8, capex:14.0,freeCF:6.8},
+      { operatingCF: 15.9, capex: 1.7, freeCF: 14.2 },
+      { operatingCF:  9.5, capex: 4.5, freeCF:  5.0 },
+      { operatingCF: 17.2, capex: 8.7, freeCF:  8.5 },
+      { operatingCF: 18.7, capex: 6.9, freeCF: 11.8 },
+      { operatingCF: 20.8, capex: 21.2, freeCF: -0.4 },
     ],
     geographicData: [
-      { region:'Americas',    flag:'🌎', rev:'$32.1B', revNum:32.1, growth:'+10%', share:'56%', sharePct:56, offices:30, presence:'HQ', dev:'Core market' },
-      { region:'EMEA',        flag:'🌍', rev:'$16.6B', revNum:16.6, growth:'+12%', share:'29%', sharePct:29, offices:22, presence:'Major hub', dev:'Key market' },
-      { region:'Asia Pacific', flag:'🌏',rev:'$8.7B',  revNum:8.7,  growth:'+9%',  share:'15%', sharePct:15, offices:12, presence:'Established', dev:'Stable' },
+      { region: 'Americas',      flag: '🌎', rev: '$32.7B', revNum: 32.7, growth: '+9%',  share: '57%', sharePct: 57, offices: 25, presence: 'HQ', dev: 'Database and cloud infrastructure dominant' },
+      { region: 'Europe',        flag: '🌍', rev: '$14.4B', revNum: 14.4, growth: '+8%',  share: '25%', sharePct: 25, offices: 20, presence: 'Key', dev: 'Strong financial services and telecom verticals' },
+      { region: 'Asia Pacific',  flag: '🌏', rev: '$10.3B', revNum: 10.3, growth: '+10%', share: '18%', sharePct: 18, offices: 15, presence: 'Growth', dev: 'Japan and India database strongholds, OCI growth' },
     ],
     inorganic: [
-      { year:'2022', type:'Acquisition', target:'Cerner',          value:'$28.3B', rationale:'Healthcare IT and EMR market entry' },
-      { year:'2023', type:'Partnership', target:'Microsoft (AI)',  value:'N/A',    rationale:'Oracle Database on Azure / AI co-sell' },
-      { year:'2024', type:'Expansion',   target:'OCI AI Regions',  value:'N/A',    rationale:'100+ OCI cloud regions by 2025 target' },
-      { year:'2025', type:'Partnership', target:'OpenAI',          value:'N/A',    rationale:'Stargate Project AI data center buildout' },
+      { year: '2022', type: 'Acquisition', target: 'Cerner',         value: '$28.3B', rationale: 'Healthcare IT — EHR and clinical data platform' },
+      { year: '2025', type: 'Partnership', target: 'Stargate',       value: '$500B',  rationale: 'US AI infrastructure consortium with OpenAI & SoftBank' },
+      { year: '2024', type: 'Partnership', target: 'Microsoft Azure', value: 'N/A',   rationale: 'Multi-cloud database — Oracle Database on Azure' },
+      { year: '2024', type: 'Partnership', target: 'Google Cloud',   value: 'N/A',   rationale: 'OCI interconnect with Google Cloud' },
+      { year: '2023', type: 'Acquisition', target: 'Ampere Computing (stake)', value: 'N/A', rationale: 'Arm-based cloud computing chips for OCI' },
     ],
     customerSegments: [
-      { name:'Cloud Services & License Support', pct:55 },
-      { name:'Cloud License & On-Premise',       pct:25 },
-      { name:'Hardware',                          pct:10 },
-      { name:'Services',                          pct:10 },
+      { name: 'Enterprise DB & Apps', pct: 50 },
+      { name: 'Cloud Infrastructure', pct: 30 },
+      { name: 'Healthcare (Cerner)',  pct: 20 },
     ],
     topProducts: [
-      { name:'Oracle Database',   share:30 },
-      { name:'OCI',               share:28 },
-      { name:'Fusion Cloud ERP',  share:22 },
-      { name:'Cerner/Health',     share:12 },
-      { name:'NetSuite',          share:8  },
+      { name: 'Oracle Database 23ai', share: 35 },
+      { name: 'OCI (IaaS)',           share: 28 },
+      { name: 'Oracle Fusion Apps',   share: 20 },
+      { name: 'Cerner/Health',        share: 12 },
+      { name: 'NetSuite',             share: 5  },
     ],
     rndData: {
-      spend:[6.0, 7.2, 8.1, 9.0, 10.2],
-      areas:[ {name:'AI Agent Studio',pct:30}, {name:'Database/OCI',pct:35}, {name:'ERP/Fusion',pct:20}, {name:'Other',pct:15} ]
+      spend: [6.0, 7.2, 8.6, 9.0, 9.5],
+      areas: [
+        { name: 'Database AI (23ai)', pct: 35 },
+        { name: 'OCI Platform',       pct: 30 },
+        { name: 'Fusion Apps AI',     pct: 22 },
+        { name: 'Healthcare AI',      pct: 13 },
+      ],
     },
     insights: {
-      product:    'Oracle AI Agent Studio (FY25) enables no-code AI agent creation for Fusion Cloud apps. OCI GenAI Service supports Llama, Cohere, and custom models. Oracle Database 23ai adds native vector search. Cerner/Oracle Health powers AI-driven clinical workflows.',
-      market:     'Oracle holds ~45% global market share in relational database. OCI grew ~50% YoY in FY25 — the fastest among hyperscalers. The Stargate Project partnership with OpenAI and SoftBank positions Oracle as a critical AI infrastructure provider.',
-      inorganic:  'The $28.3B Cerner acquisition (2022) transformed Oracle into the largest healthcare IT vendor. OCI expansion to 100+ regions is largely organic. The Stargate AI infrastructure partnership involves $500B+ committed over 4 years.',
-      customer:   'Key customers: US DoD (via JEDI successor), Zoom, Uber, Verizon. Cerner serves 1,000+ US hospitals. OCI GPU clusters hosted by OpenAI, NVIDIA, and major AI labs. Net revenue retention >120%.',
-      financial:  'FY25 revenue $57.4B (+8.4%). OCI driven revenue acceleration. Operating margin ~30%. High debt ($85B) reflects aggressive acquisition financing. Free cash flow $6.8B with CapEx ramping for AI infrastructure.',
-      leadership: 'Safra Catz (CEO), Larry Ellison (Founder/CTO) remains deeply involved in product vision. OCI and AI strategy led directly by Ellison. President of Technology Clay Magouyrk drives OCI roadmap.',
-      regulatory: 'HIPAA compliance for Cerner/Oracle Health. DOD clearance for OCI Government Cloud. EU data sovereignty requirements for EMEA deployments. CFIUS reviews for international OCI expansions.'
+      product:    'Oracle Database 23ai with built-in vector search and AI capabilities. OCI Supercluster for AI training. Fusion Cloud Apps gaining share vs SAP/Workday. NetSuite #1 cloud ERP for mid-market.',
+      market:     'OCI growing ~51% in FY25, driven by AI compute demand. Stargate consortium positions Oracle as key US AI infrastructure partner. Database cloud migration accelerating.',
+      inorganic:  'Cerner ($28.3B) is transformational for healthcare vertical — largest Oracle acquisition. Stargate ($500B plan) is ecosystem partnership not acquisition. Multi-cloud database strategy with Azure and Google.',
+      customer:   '430,000+ customers globally. Cerner serves 5,500+ healthcare organizations. OCI backlog $130B+ in FY25. Large enterprise renewals near 100% retention.',
+      financial:  'Revenue grew 8.4% in FY25, accelerating cloud mix. Non-GAAP EPS $5.90. FY25 capex $21B — significant OCI expansion investment. Net debt elevated at $93B.',
+      leadership: 'Safra Catz as CEO focusing on cloud transformation. Larry Ellison as Chairman and CTO driving technical vision. Strong AI narrative around Stargate.',
+      regulatory: 'DoD JEDI cloud legacy. FedRAMP authorized for OCI. EU data sovereignty investments. Healthcare data compliance under HIPAA via Cerner.',
     },
     insightYear: 'FY25',
     updates: [
-      { date:'2025-03', product:'Stargate',        title:'Stargate Project Launched',       impact:'high',   summary:'Oracle joins OpenAI and SoftBank in $500B Stargate AI infrastructure project.' },
-      { date:'2025-01', product:'OCI',             title:'OCI Surpasses 100 Cloud Regions', impact:'medium', summary:'Oracle Cloud Infrastructure reaches 100+ global regions, surpassing AWS and Azure in region count.' },
-      { date:'2024-09', product:'Database 23ai',   title:'Oracle Database 23ai GA',         impact:'high',   summary:'Oracle Database 23ai introduces native vector search, AI Vector Search API, and JSON Relational Duality.' },
+      { date: '2025-01', product: 'Stargate',          title: 'Oracle joins $500B Stargate AI infrastructure project',  impact: 'high', summary: 'Oracle, OpenAI, and SoftBank announce Stargate, a $500B US AI infrastructure initiative with Oracle providing OCI compute.' },
+      { date: '2025-03', product: 'Database 23ai',     title: 'Oracle Database 23ai vector capabilities broadly available', impact: 'high', summary: 'Oracle DB 23ai with native AI Vector Search enables enterprises to run RAG and AI apps on existing database infrastructure.' },
+      { date: '2024-09', product: 'Multi-cloud DB',    title: 'Oracle Database available on Azure and Google Cloud',   impact: 'medium', summary: 'Oracle expands multi-cloud database partnerships, allowing customers to run Oracle DB natively on Azure and GCP.' },
     ],
   },
 
-  // ── PEER 5: SAP ───────────────────────────────────────────
   'sap': {
     identifier:    'sap',
     name:          'SAP',
     ticker:        'SAP',
     exchange:      'NYSE',
-    color:         '#0070F2',
-    initials:      'SP',
+    color:         '#0066CC',
+    initials:      'SA',
     sector:        'AI-Powered Enterprise Software',
-    description:   'SAP is the world\'s leading ERP vendor and the largest enterprise application software company in Europe. Through Business AI and the Joule AI assistant embedded across S/4HANA Cloud, SAP SuccessFactors, Ariba, and Concur, SAP is transforming enterprise business processes. Cloud revenue crossed €21B in FY25 with 23% YoY growth, and the cloud backlog of €22.9B provides strong revenue visibility.',
+    description:   'SAP is the world\'s leading provider of enterprise application software, helping companies of all sizes run better. SAP S/4HANA Cloud and Business AI powered by Joule are accelerating the enterprise cloud transformation across 440,000+ customers in 180+ countries.',
     founded:       1972,
-    employees:     '105,000',
+    employees:     '107,000',
     CEO:           'Christian Klein',
     HQ:            'Walldorf, Germany',
     website:       'sap.com',
-    latestRevenue: '$42.8B',
-    marketCap:     '~$300B',
-    rating:        8.0,
+    latestRevenue: '$36.8B (€)',
+    marketCap:     '$265B',
+    rating:        8.5,
     kpis: [
-      { label:'Revenue FY25',       value:'$42.8B',   change:'+20%',  up:true  },
-      { label:'Cloud Revenue FY25', value:'$25.4B',   change:'+23%',  up:true  },
-      { label:'EBITDA FY25',        value:'$12.4B',   change:'+22%',  up:true  },
-      { label:'Cloud Backlog',      value:'€22.9B',   change:'+28%',  up:true  },
+      { label: 'Revenue FY25',       value: '€36.8B',  change: '+8%',   up: true  },
+      { label: 'Cloud Rev. FY25',    value: '€21.0B',  change: '+27%',  up: true  },
+      { label: 'Cloud Backlog FY25', value: '€63.3B',  change: '+40%',  up: true  },
+      { label: 'Joule Coverage',     value: '80%+',    change: 'tasks', up: true  },
     ],
-    years:     ['FY21','FY22','FY23','FY24','FY25'],
-    revenues:  [30.8,  30.2,  33.6,  35.6,  42.8],
-    ebitda:    [9.71,  8.62,  10.24, 10.12, 12.36],
-    netIncome: [5.22,  2.04,  6.64,  3.38,  8.29],
-    revGrowth: [1.8,  -2.0,  11.3,   6.0,  20.2],
-    eps:       [4.58,  1.80,  5.63,  2.87,  7.23],
-    netMargin: [16.9,   6.8,  19.8,   9.5,  19.4],
-    capScores: [8,7,9,8,8,8,7,8,7,7,7,8],
-    riskScores:{ regulatory:4, competitive:6, execution:6, technology:7, market:4 },
+    years:     ['FY21', 'FY22', 'FY23', 'FY24', 'FY25'],
+    revenues:  [26.95, 29.52, 31.21, 34.18, 36.80],
+    ebitda:    [8.50,  7.90,  8.10,  6.50,  11.90],
+    netIncome: [5.26,  2.28,  6.14,  3.12,   7.16],
+    revGrowth: [-1.4,   9.5,   5.7,   9.5,    7.7],
+    eps:       [4.46,  1.94,  5.20,  2.65,   6.10],
+    netMargin: [25.3,  10.4,  19.4,   9.1,   19.5],
+    capScores:  [8, 7, 9, 8, 7, 7, 8, 7, 8, 7, 7, 8],
+    riskScores: { regulatory: 4, competitive: 6, execution: 6, technology: 6, market: 4 },
     balance: [
-      {cash:7.0,  totalAssets:56.3, totalDebt:13.5},
-      {cash:6.7,  totalAssets:57.2, totalDebt:12.8},
-      {cash:8.4,  totalAssets:60.1, totalDebt:12.2},
-      {cash:9.5,  totalAssets:63.8, totalDebt:11.6},
-      {cash:11.2, totalAssets:68.5, totalDebt:11.0},
+      { cash: 11.66, totalAssets: 60.8, totalDebt: 15.57 },
+      { cash:  9.86, totalAssets: 60.2, totalDebt: 14.36 },
+      { cash: 11.47, totalAssets: 63.1, totalDebt:  9.68 },
+      { cash: 11.24, totalAssets: 65.5, totalDebt: 11.45 },
+      { cash:  9.77, totalAssets: 68.0, totalDebt:  8.07 },
     ],
     cashflow: [
-      {operatingCF:6.0, capex:1.1, freeCF:4.9},
-      {operatingCF:5.5, capex:1.2, freeCF:4.3},
-      {operatingCF:7.2, capex:1.3, freeCF:5.9},
-      {operatingCF:8.1, capex:1.4, freeCF:6.7},
-      {operatingCF:9.8, capex:1.5, freeCF:8.3},
+      { operatingCF: 3.36, capex: null,  freeCF: 3.36 },
+      { operatingCF: 2.57, capex: null,  freeCF: 2.57 },
+      { operatingCF: 6.25, capex: 0.79,  freeCF: 5.46 },
+      { operatingCF: 5.21, capex: 0.80,  freeCF: 4.41 },
+      { operatingCF: 9.16, capex: 0.74,  freeCF: 8.42 },
     ],
     geographicData: [
-      { region:'EMEA',        flag:'🌍', rev:'$20.4B', revNum:20.4, growth:'+19%', share:'48%', sharePct:48, offices:40, presence:'HQ', dev:'Core market' },
-      { region:'Americas',    flag:'🌎', rev:'$16.7B', revNum:16.7, growth:'+22%', share:'39%', sharePct:39, offices:25, presence:'Major hub', dev:'Growing fast' },
-      { region:'Asia Pacific', flag:'🌏',rev:'$5.7B',  revNum:5.7,  growth:'+17%', share:'13%', sharePct:13, offices:18, presence:'Established', dev:'Stable' },
+      { region: 'Europe',           flag: '🌍', rev: '€18.0B', revNum: 18.0, growth: '+8%',  share: '49%', sharePct: 49, offices: 50, presence: 'HQ', dev: 'European ERP dominance, strong public sector presence' },
+      { region: 'Americas',         flag: '🌎', rev: '€12.7B', revNum: 12.7, growth: '+9%',  share: '34%', sharePct: 34, offices: 25, presence: 'Key', dev: 'US Fortune 500 S/4HANA cloud migrations' },
+      { region: 'Asia Pacific & Japan', flag: '🌏', rev: '€6.1B', revNum: 6.1, growth: '+8%', share: '17%', sharePct: 17, offices: 20, presence: 'Growth', dev: 'Japan, China, India enterprise application growth' },
     ],
     inorganic: [
-      { year:'2021', type:'Acquisition', target:'Signavio',   value:'$1.2B',  rationale:'Business process intelligence and mining' },
-      { year:'2022', type:'Divestiture', target:'Qualtrics (partial IPO)', value:'$15B IPO', rationale:'Experience management spin-off' },
-      { year:'2023', type:'Acquisition', target:'LeanIX',     value:'$1.0B',  rationale:'Enterprise architecture management' },
-      { year:'2024', type:'Acquisition', target:'WalkMe',     value:'$1.5B',  rationale:'Digital adoption platform for S/4HANA migration' },
-      { year:'2024', type:'Divestiture', target:'Qualtrics (full sale)', value:'$12.5B', rationale:'Focus on core ERP cloud transformation' },
+      { year: '2023', type: 'Acquisition', target: 'LeanIX',     value: '$1.3B',  rationale: 'Enterprise architecture management for cloud transformation' },
+      { year: '2023', type: 'Acquisition', target: 'Taulia',     value: '$N/A',   rationale: 'Working capital and supply chain finance' },
+      { year: '2024', type: 'Acquisition', target: 'WalkMe',     value: '$1.5B',  rationale: 'Digital adoption and workflow guidance platform' },
+      { year: '2021', type: 'Divestiture', target: 'Qualtrics spin-off', value: '$12.5B', rationale: 'IPO of experience management subsidiary' },
+      { year: '2024', type: 'Divestiture', target: 'Qualtrics re-acquisition by Silver Lake', value: '$12.5B', rationale: 'Return to private, simplify SAP portfolio' },
     ],
     customerSegments: [
-      { name:'S/4HANA Cloud ERP',  pct:38 },
-      { name:'HCM/SuccessFactors', pct:22 },
-      { name:'Ariba/Procurement',  pct:20 },
-      { name:'Concur/Travel',      pct:12 },
-      { name:'Other',              pct:8  },
+      { name: 'Enterprise (S/4HANA)', pct: 55 },
+      { name: 'Mid-Market (Rise)',     pct: 30 },
+      { name: 'SME (Business One)',    pct: 15 },
     ],
     topProducts: [
-      { name:'S/4HANA Cloud',      share:38 },
-      { name:'Joule AI',           share:20 },
-      { name:'SuccessFactors',     share:20 },
-      { name:'Ariba',              share:14 },
-      { name:'Business Technology Platform', share:8 },
+      { name: 'S/4HANA Cloud',  share: 38 },
+      { name: 'SuccessFactors', share: 18 },
+      { name: 'Ariba/Procure',  share: 16 },
+      { name: 'Joule AI',       share: 14 },
+      { name: 'Business Network', share: 14 },
     ],
     rndData: {
-      spend:[3.4, 3.8, 4.2, 4.8, 5.5],
-      areas:[ {name:'Business AI/Joule',pct:35}, {name:'S/4HANA',pct:30}, {name:'BTP Platform',pct:20}, {name:'Other',pct:15} ]
+      spend: [3.80, 4.00, 4.30, 4.80, 5.20],
+      areas: [
+        { name: 'Joule/Business AI', pct: 40 },
+        { name: 'S/4HANA Cloud',     pct: 30 },
+        { name: 'BTP Platform',      pct: 18 },
+        { name: 'Industry Clouds',   pct: 12 },
+      ],
     },
     insights: {
-      product:    'Joule AI assistant (launched 2023) is embedded across S/4HANA, SuccessFactors, Ariba, and Concur — covering 80% of SAP task flows by FY25. Business AI features shipped in 100+ SAP solutions. RISE with SAP accelerating cloud ERP migration for 25,000+ customers.',
-      market:     'SAP holds ~30% of global ERP market. Cloud transformation gaining velocity — cloud revenue mix now 59% of total. Cloud backlog of €22.9B provides 12+ months of revenue visibility. SAP competes with Oracle in ERP and Microsoft/Workday in HCM.',
-      inorganic:  'WalkMe ($1.5B, 2024) adds digital adoption across SAP and non-SAP systems. LeanIX ($1B, 2023) enables enterprise architecture for cloud migration planning. Qualtrics divested (2024) for $12.5B, sharpening ERP/cloud focus.',
-      customer:   'SAP serves 99 of the 100 largest companies globally. 27,000+ S/4HANA Cloud customers. RISE with SAP adoption accelerating — 4,000+ customers migrated. Key enterprises: BMW, Unilever, Volkswagen, Nestlé.',
-      financial:  'FY25 revenue $42.8B (+20%). Cloud revenue €21B (+23%). Free cash flow $8.3B. Net income $8.3B benefiting from Qualtrics sale. FY26 guidance: cloud revenue €29-30B, reflecting continued SaaS tailwind.',
-      leadership: 'CEO Christian Klein driving cloud-first transformation. CFO Dominik Asam oversees disciplined capital allocation post-Qualtrics. CTO Juergen Mueller leads AI product strategy.',
-      regulatory: 'EU data sovereignty for GDPR compliance. EU AI Act Joule embedded AI disclosure requirements. FedRAMP authorization for US government customers. Strong German regulators (BaFin-adjacent) oversight.'
+      product:    'Joule AI copilot integrated across SAP portfolio covering 80%+ of tasks. RISE with SAP and GROW with SAP accelerating cloud migrations. SAP BTP as integration and extension platform for AI agents.',
+      market:     'SAP cloud backlog €63.3B (+40%) is forward revenue visibility indicator. Cloud revenue €21B in FY25 (+27%). S/4HANA cloud now exceeds on-premise in new bookings.',
+      inorganic:  'WalkMe ($1.5B) driving digital adoption for SAP implementations. LeanIX strengthens enterprise architecture practice. Qualtrics divestiture allows portfolio focus on core ERP/AI.',
+      customer:   '440,000+ customers in 180+ countries. S/4HANA customer base: 28,000+ live. SAP Business Network: $6T+ transactions annually. Top 100 global companies: 99% use SAP.',
+      financial:  'Cloud revenue mix reached 57% in FY25, up from 32% in FY21. Restructuring charges in FY24 depressed margins; FY25 recovery strong. FCF €8.4B in FY25.',
+      leadership: 'Christian Klein (CEO since 2020) driving cloud-first transformation. Focus on AI monetization through Joule and Business AI products. Headcount restructuring 2024 accelerating cloud margins.',
+      regulatory: 'GDPR compliance leader with EU data residency. Sustainability reporting (CSRD) solutions launched. Sovereign cloud for government clients in Germany and EU.',
     },
     insightYear: 'FY25',
     updates: [
-      { date:'2025-04', product:'Joule AI',    title:'Joule Covers 80% of SAP Task Flows', impact:'high',   summary:'SAP Joule AI assistant now embedded across 80% of SAP workflows, serving as primary AI interface.' },
-      { date:'2024-09', product:'WalkMe',      title:'WalkMe Acquisition Closed $1.5B',   impact:'medium', summary:'WalkMe integration adds digital adoption analytics to accelerate S/4HANA cloud migrations.' },
-      { date:'2024-06', product:'Qualtrics',   title:'Qualtrics Full Sale Completed',      impact:'medium', summary:'SAP completes divestiture of Qualtrics for $12.5B to Silver Lake, sharpening focus on core ERP AI.' },
+      { date: '2025-01', product: 'Joule AI',       title: 'Joule AI agents cover 80%+ of most-used SAP tasks',    impact: 'high',   summary: 'SAP Joule copilot expanded to cover over 80% of the most frequently used SAP tasks, with agentic capabilities across HR, Finance, and Procurement.' },
+      { date: '2024-08', product: 'WalkMe Acq.',    title: 'SAP completes $1.5B WalkMe acquisition',               impact: 'medium', summary: 'WalkMe acquired to improve user adoption of SAP systems, enabling AI-guided workflows and reducing implementation friction.' },
+      { date: '2024-01', product: 'RISE with SAP',  title: 'RISE with SAP S/4HANA cloud migrations accelerate',    impact: 'high',   summary: 'SAP reports 28,000+ customers live on S/4HANA with RISE packaging driving 40%+ cloud backlog growth.' },
     ],
   },
 
-}; // end COMPANIES_DATA
+};
 
-// ── MARKET EVENTS ─────────────────────────────────────────
+// ─── Market Events ────────────────────────────────────────────────────────────
 const MARKET_EVENTS = [
-  { id:'e1', category:'AI',          company:'googl',    date:'Feb 2025',  title:'Gemini 2.0 Ultra Enterprise GA',     headline:'Google launches Gemini 2.0 Ultra for enterprise cloud customers',     summary:'Gemini 2.0 Ultra goes generally available on Google Cloud, offering best-in-class long-context reasoning for enterprise workflows.', tags:['Gemini','AI','Google Cloud'] },
-  { id:'e2', category:'M&A',         company:'googl',    date:'Feb 2025',  title:'Wiz Acquisition Closed at $32B',      headline:'Alphabet closes landmark $32B Wiz security acquisition',             summary:'Wiz acquisition transforms Google Cloud security portfolio with cloud-native CNAPP capabilities.', tags:['Wiz','M&A','Security','Google Cloud'] },
-  { id:'e3', category:'AI',          company:'crm',      date:'Mar 2025',  title:'Agentforce 2dx GA Launch',           headline:'Salesforce Agentforce 2dx enables autonomous enterprise AI agents',    summary:'Agentforce 2dx brings reasoning-loop AI agents to CRM, service, and marketing workflows for enterprise customers.', tags:['Agentforce','AI','CRM'] },
-  { id:'e4', category:'M&A',         company:'now',      date:'Jan 2025',  title:'ServiceNow Acquires Moveworks $2.85B', headline:'ServiceNow closes $2.85B Moveworks deal for AI employee experience', summary:'Moveworks conversational AI integrated into Now Platform as core AI employee experience layer.', tags:['Moveworks','M&A','AI','Now Platform'] },
-  { id:'e5', category:'AI',          company:'msft',     date:'Jun 2025',  title:'M365 Copilot Reaches 30M MAU',       headline:'Microsoft 365 Copilot surpasses 30 million monthly active users',     summary:'Enterprise AI adoption milestone as Copilot becomes the leading enterprise AI productivity tool globally.', tags:['Copilot','AI','Microsoft 365'] },
-  { id:'e6', category:'Expansion',   company:'orcl',     date:'Mar 2025',  title:'Stargate Project Launch — Oracle',   headline:'Oracle joins $500B Stargate AI infrastructure project',             summary:'Oracle Cloud Infrastructure selected as primary compute provider for OpenAI Stargate, the largest AI infrastructure buildout in history.', tags:['Stargate','OCI','AI Infrastructure'] },
-  { id:'e7', category:'AI',          company:'sap',      date:'Apr 2025',  title:'SAP Joule Covers 80% of SAP Flows', headline:'SAP Joule AI assistant embedded in 80% of enterprise workflows',     summary:'SAP Business AI milestone: Joule now covers 80% of SAP task flows across S/4HANA, SuccessFactors, Ariba and Concur.', tags:['Joule','AI','S/4HANA','Business AI'] },
-  { id:'e8', category:'Earnings',    company:'googl',    date:'Feb 2025',  title:'Alphabet FY25: $402.8B Revenue',     headline:'Alphabet posts record $402.8B revenue, net income $132.2B',         summary:'Alphabet\'s FY25 results mark a new high — Google Cloud accelerating at 29% YoY, Gemini enterprise deployments surging 300%.', tags:['Earnings','Revenue','Google Cloud'] },
-  { id:'e9', category:'M&A',         company:'sap',      date:'Jun 2024',  title:'SAP Divests Qualtrics for $12.5B',  headline:'SAP sells Qualtrics to Silver Lake, focuses on core ERP AI',         summary:'SAP completes $12.5B Qualtrics sale, sharpening strategic focus on cloud ERP transformation and Business AI.', tags:['Qualtrics','Divestiture','SAP','Cloud ERP'] },
-  { id:'e10',category:'Product',     company:'orcl',     date:'Sep 2024',  title:'Oracle Database 23ai GA',           headline:'Oracle Database 23ai brings native vector search to enterprise data',summary:'Oracle Database 23ai enables vector embeddings natively, positioning Oracle as AI-ready enterprise data platform.', tags:['Database 23ai','AI','Oracle','Vector Search'] },
-  { id:'e11',category:'Expansion',   company:'msft',     date:'Jan 2025',  title:'Azure Surpasses $100B ARR',          headline:'Microsoft Azure crosses $100B in annualized revenue run rate',       summary:'Azure milestone reinforces Microsoft\'s #2 cloud position and AI infrastructure leadership with OpenAI exclusivity.', tags:['Azure','Cloud','Milestone'] },
-  { id:'e12',category:'Partnership', company:'now',      date:'Sep 2024',  title:'ServiceNow Xanadu — Gemini Integration', headline:'ServiceNow Xanadu release integrates Google Gemini AI',        summary:'Now Platform Xanadu release brings multi-modal Gemini AI to enterprise workflow automation.', tags:['Gemini','Partnership','Now Platform','Google'] },
+  { id: 'e1', category: 'AI',          company: 'servicenow', date: 'Apr 2025',  title: 'ServiceNow Completes Moveworks Acquisition',         headline: '$2.85B Moveworks deal closed, expanding Now Assist conversational AI',                                  summary: 'ServiceNow closes its largest AI acquisition, bringing Moveworks conversational AI platform to expand Now Assist across 100+ enterprise applications.',                              tags: ['M&A', 'AI', 'Now Assist'] },
+  { id: 'e2', category: 'AI',          company: 'salesforce',  date: 'Sep 2024',  title: 'Salesforce Launches Agentforce at Dreamforce',        headline: 'Autonomous AI agents platform unveiled for enterprise CRM and workflows',                                 summary: 'Salesforce introduces Agentforce at Dreamforce 2024, enabling enterprises to deploy autonomous AI agents across sales, service, and marketing workflows.',                        tags: ['AI', 'Product', 'Agentforce'] },
+  { id: 'e3', category: 'M&A',         company: 'alphabet',   date: 'Mar 2025',  title: 'Google Completes $32B Wiz Acquisition',               headline: 'Largest Alphabet acquisition transforms cloud security landscape',                                       summary: 'Google Cloud acquires Wiz for $32 billion, the largest acquisition in Alphabet history, bringing cloud-native security posture management to the Google Cloud Platform.',        tags: ['M&A', 'Cloud', 'Security'] },
+  { id: 'e4', category: 'AI',          company: 'microsoft',  date: 'Apr 2025',  title: 'M365 Copilot Reaches 30M+ Monthly Active Users',      headline: 'Microsoft Copilot becomes fastest-growing enterprise software product ever',                               summary: 'Microsoft reports M365 Copilot monthly active users surpassing 30 million, with deployment in 70% of Fortune 500 companies and $10B+ Azure AI run rate.',                       tags: ['AI', 'Copilot', 'Azure'] },
+  { id: 'e5', category: 'Partnership', company: 'oracle',     date: 'Jan 2025',  title: 'Oracle Joins $500B Stargate AI Infrastructure Project', headline: 'Oracle, OpenAI, and SoftBank announce landmark US AI infrastructure investment',                          summary: 'Oracle Corporation joins the Stargate Project, a $500B US AI infrastructure initiative, providing OCI compute for OpenAI workloads and accelerating enterprise AI deployment.',  tags: ['Partnership', 'AI', 'OCI'] },
+  { id: 'e6', category: 'AI',          company: 'sap',        date: 'Jan 2025',  title: 'SAP Joule AI Agents Cover 80%+ of Enterprise Tasks',  headline: 'SAP Joule copilot reaches enterprise-wide task automation milestone',                                     summary: 'SAP announces Joule AI copilot now covers over 80% of the most frequently used SAP tasks with agentic capabilities, driving cloud backlog to €63B.',                           tags: ['AI', 'Joule', 'Automation'] },
+  { id: 'e7', category: 'Earnings',    company: 'servicenow', date: 'Jan 2026',  title: 'ServiceNow FY25 Revenue Hits $13.3B, +21% YoY',      headline: 'ServiceNow beats guidance with strong Now Assist AI monetization',                                        summary: 'ServiceNow reports FY25 full-year revenue of $13.28B, +20.9% YoY. FCF margin 34.5%, Now Assist ACV crosses $600M. Q4 cRPO +22%.',                                             tags: ['Earnings', 'AI', 'Growth'] },
+  { id: 'e8', category: 'Expansion',   company: 'microsoft',  date: 'Jun 2025',  title: 'Azure Surpasses $75B Annual Revenue Run Rate',         headline: 'Microsoft Azure crosses landmark milestone driven by AI and enterprise cloud',                              summary: 'Microsoft announces Azure exceeded $75B in annual revenue during FY25, with AI services growing 100%+ YoY and Intelligent Cloud segment reaching $106B.',                       tags: ['Cloud', 'Azure', 'Growth'] },
+  { id: 'e9', category: 'AI',          company: 'alphabet',   date: 'Jan 2025',  title: 'Gemini 2.0 Ultra Achieves Top AI Benchmark Results',  headline: 'Google DeepMind Gemini 2.0 leads across enterprise reasoning benchmarks',                                   summary: 'Alphabet releases Gemini 2.0 Ultra achieving state-of-the-art results across coding, reasoning, and multimodal benchmarks, deployed across Workspace and Cloud.',              tags: ['AI', 'Gemini', 'Research'] },
+  { id: 'e10', category: 'Product',    company: 'oracle',     date: 'Mar 2025',  title: 'Oracle Database 23ai Vector Search Broadly Available', headline: 'Native AI vector search enables enterprise RAG on existing Oracle infrastructure',                          summary: 'Oracle makes Database 23ai with native AI Vector Search broadly available, enabling enterprises to run retrieval-augmented generation directly on their existing database.',     tags: ['AI', 'Database', 'Product'] },
 ];
 
-// ── BENCHMARK FEATURES ────────────────────────────────────
+// ─── Benchmark Feature Dimensions ─────────────────────────────────────────────
 const BENCH_FEATURES = [
-  'Generative AI / LLM Platform',
-  'Enterprise Cloud Infrastructure',
-  'Agentic AI / Copilot',
-  'Enterprise Workflow Automation',
-  'CRM / Customer Experience',
-  'ERP / Finance & HR',
+  'AI/GenAI Platform Depth',
+  'Workflow Automation',
+  'Cloud Infrastructure Scale',
+  'Enterprise Integration',
+  'Customer Experience AI',
+  'Data & Analytics',
   'Security & Compliance',
-  'Data & Analytics Platform',
-  'Developer / API Platform',
-  'Vertical Industry Solutions',
-  'Partner / ISV Ecosystem',
-  'Global Support & SLA',
+  'Marketplace & Ecosystem',
+  'Vertical Industry Coverage',
+  'Developer Platform',
+  'Global Partner Network',
+  'Low-Code / No-Code',
 ];
 
-// ── PEERS ─────────────────────────────────────────────────
-const BENCH_PEERS = ['crm', 'now', 'msft', 'orcl', 'sap'];
+// ─── Benchmark Peers ──────────────────────────────────────────────────────────
+const BENCH_PEERS = ['servicenow', 'salesforce', 'alphabet', 'microsoft', 'oracle', 'sap'];
 
-// ── COLORS ────────────────────────────────────────────────
+// ─── Benchmark Colors ─────────────────────────────────────────────────────────
 const BENCH_COLORS = {
-  'googl': '#4285F4',
-  'crm':   '#00A1E0',
-  'now':   '#62D84E',
-  'msft':  '#00A4EF',
-  'orcl':  '#F80000',
-  'sap':   '#0070F2',
+  servicenow: '#00C853',
+  salesforce: '#00A1E0',
+  alphabet:   '#4285F4',
+  microsoft:  '#00A4EF',
+  oracle:     '#F80000',
+  sap:        '#0066CC',
 };
 
 /* end COMPANIES_DATA */
@@ -2826,7 +2337,10 @@ const BENCH_CUST = {
   enterprise:     { salesforce: 72,     microsoft: 62,     servicenow: 72   },
   midmarket:      { salesforce: 31,     microsoft: 24,     servicenow: 22   }
 };
-/* __DATA_LAYER_END__ */
+
+
+
+/* ═══════════════════════════════════════════════════════════════
    APPLICATION STATE
    ═══════════════════════════════════════════════════════════════ */
 const APP = {
@@ -2960,7 +2474,11 @@ function toggleCompanyChip(id, el) {
 }
 function selectAllCompanies(){APP.selectedCompanies=[...BENCH_PEERS];document.querySelectorAll('.company-chip').forEach(c=>{c.classList.add('selected');const ck=c.querySelector('.chip-check');if(ck)ck.style.display='';});APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
 function clearAllCompanies(){APP.selectedCompanies=[BENCH_PEERS[0]];document.querySelectorAll('.company-chip').forEach(c=>{if(c.dataset.id!==BENCH_PEERS[0]){c.classList.remove('selected');const ck=c.querySelector('.chip-check');if(ck)ck.style.display='none';}});APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
-/* applyYearFilter replaced below */
+function applyYearFilter(){APP.yearFrom=document.getElementById('year-from').value;APP.yearTo=document.getElementById('year-to').value;const stEl=document.getElementById('topbar-subtitle');if(stEl)stEl.textContent=(PAGE_META[APP.currentPage]?.subtitle||'')+' · '+APP.yearFrom+'–'+APP.yearTo;APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE CHART DISPATCHER
+   ═══════════════════════════════════════════════════════════════ */
 function renderPageCharts(pageId) {
   LOG.info('RENDER',`renderPageCharts → ${pageId}`);
   try {
@@ -3127,7 +2645,32 @@ function renderProfileCards() {
 /* ═══════════════════════════════════════════════════════════════
    TREND ANALYSIS
    ═══════════════════════════════════════════════════════════════ */
-/* renderTrendMainChart replaced below */
+function renderTrendMainChart(period) {
+  const metric=APP.activeTabMap['trend-metric']||'revenue';
+  const metaMap={
+    revenue:{key:'revenues',label:'Revenue ($B)',title:'Revenue Comparison'},
+    ebitda:{key:'ebitda',label:'EBITDA ($B)',title:'EBITDA Comparison'},
+    netIncome:{key:'netIncome',label:'Net Income ($B)',title:'Net Income Comparison'},
+    ebitdaMargin:{key:'ebitda',label:'EBITDA Margin (%)',title:'EBITDA Margin',derived:true,base:'revenues'},
+    netMargin:{key:'netMargin',label:'Net Margin (%)',title:'Net Margin (%)'},
+    revGrowth:{key:'revGrowth',label:'Rev. Growth (%)',title:'Revenue Growth (%)'},
+    eps:{key:'eps',label:'EPS ($)',title:'EPS Comparison'}
+  };
+  const m=metaMap[metric]||metaMap.revenue;
+  const titleEl=document.getElementById('trend-chart-title'); if(titleEl) titleEl.textContent=m.title;
+  const subEl=document.getElementById('trend-chart-sub'); if(subEl) subEl.textContent='All selected companies · '+(period==='annual'?'Annual':'Quarterly');
+  const traces=APP.selectedCompanies.map(id=>{
+    const co=getYearSlice(COMPANIES_DATA[id]); let y=co[m.key]||[];
+    if(m.derived&&m.base){const base=co[m.base]||[];y=y.map((v,i)=>base[i]?(v/base[i]*100):0);}
+    return{type:'scatter',mode:'lines+markers',name:co.name,x:co.years,y,
+      line:{color:co.color,width:2.5},marker:{size:7,color:co.color,symbol:'circle'}};
+  });
+  safeRender('chart-trend-main',traces,{...PL(340),
+    xaxis:{title:{text:'Fiscal Year',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
+    yaxis:{title:{text:m.label,font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
+    legend:{orientation:'h',y:-0.18}});
+}
+
 function renderTrendSupportingCharts() {
   // Tech Trends & Drivers bubble — shown ONCE on page load under the main chart area
   const bubbles=APP.selectedCompanies.map(id=>{
@@ -3163,7 +2706,17 @@ function renderTrendCharts(period) {
   // Supporting charts (Tech Bubble, Rev/Cap) are in collapsible section
   // They render on user demand via toggleAdditionalAnalysis() — not on page load
 }
-/* setActiveTrendMetric replaced below */
+function setActiveTrendMetric(metric,el){
+  document.querySelectorAll('#trend-metric-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  APP.activeTabMap['trend-metric']=metric;
+  // Only update the main trend chart — do NOT re-render tech bubble / rev cap
+  renderTrendMainChart(APP.activeTabMap['trend-period']||'annual');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CAPABILITY MATRIX
+   ═══════════════════════════════════════════════════════════════ */
 function renderCapabilityCharts() {
   LOG.info('RENDER','Capability');
   const dims=BENCH_FEATURES; const cos=APP.selectedCompanies;
@@ -3660,12 +3213,35 @@ function closeProductDetail(){const p=document.getElementById('product-detail-po
    ═══════════════════════════════════════════════════════════════ */
 function setToggle(gId,el,val){document.querySelectorAll(`#${gId} .toggle-opt`).forEach(o=>o.classList.remove('active'));el.classList.add('active');APP.activeTabMap[gId]=val;}
 function refreshData(){LOG.info('ACTION','Refresh');APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
-/* exportPortal → see openExportPDF below */
+function exportPortal(){LOG.info('ACTION','Export');alert('Export requires server-side processing in the live portal.');}
+function editProfileAttrs(){alert('Opens attribute editor in the live portal.');}
+function editCompanyAttrs(){alert('Opens company attribute editor in the live portal.');}
+function addCapabilityMetric(){alert('Opens dialog to add a new capability dimension.');}
+function removeCapabilityMetric(){alert('Opens dialog to remove a capability dimension.');}
+function addCustomerMetric(){alert('Opens dialog to add a customer metric.');}
+function removeCustomerMetric(){alert('Opens dialog to remove a customer metric.');}
+function downloadTrendChart(){LOG.info('ACTION','Download trend chart');}
+
+/* ═══════════════════════════════════════════════════════════════
+   ADDITIONAL ANALYSIS TOGGLE
+   ═══════════════════════════════════════════════════════════════ */
+function toggleAdditionalAnalysis() {
+  const section = document.getElementById('additional-analysis-section');
+  const btn = document.getElementById('additional-analysis-btn');
+  if(!section || !btn) return;
+  const isHidden = section.style.display === 'none' || section.style.display === '';
+  section.style.display = isHidden ? 'block' : 'none';
+  btn.textContent = isHidden ? '▲ Hide' : '▼ Show';
+  // Render supporting charts when section first becomes visible
+  if(isHidden && (!APP.chartsRendered.has('chart-tech-bubble') || !APP.chartsRendered.has('chart-rev-per-cap'))) {
+    setTimeout(renderTrendSupportingCharts, 80);
+  }
+}
 
 /* ═══════════════════════════════════════════════════════════════
    BOOT
    ═══════════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded',function(){ LOG.info('STARTUP','Portal v5.0 initialising');
+document.addEventListener('DOMContentLoaded',function(){
   LOG.info('INIT','=== CompeteIQ Portal v2.0 (Light) Starting ===');
   const vRes=VALIDATOR.run();
   LOG.info('INIT',`Validation: ${vRes.passed}/${vRes.total} passed`);
@@ -3911,7 +3487,17 @@ function filterNewsEvents(cat, el){
 }
 
 /* ── viewAllEvents — expand events panel ── */
-/* viewAllEvents replaced below */
+function viewAllEvents(){
+  LOG.info('ACTION','View All Events');
+  // Navigate to Insights & Risks page for full event list
+  navigate('bench-insights');
+  showToast('Showing all market events in Insights & Risks','info');
+}
+
+/* ── filterEvents alias (for backward compat) ── */
+window.filterEvents = filterNewsEvents;
+
+/* ── setActiveCompany — set which company is highlighted ── */
 function setActiveCompany(id){
   APP.currentCompany=id;
   navigate('company', id);
@@ -4370,197 +3956,6 @@ LOG.info('PATCH','All interaction fixes loaded ✓');
     <div style="display:flex;gap:10px;justify-content:flex-end;">
       <button class="customize-close" onclick="closeCustomizeModal()">Cancel</button>
       <button class="topbar-btn primary" onclick="saveCustomize()">Save Layout</button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ════ INPUT WIZARD MODAL ════ -->
-<div id="inputWizardOverlay" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:9000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:16px;width:560px;max-width:96vw;box-shadow:0 24px 60px rgba(0,0,0,.22);overflow:hidden;">
-    <div style="background:linear-gradient(135deg,#1e3a5f,#2563eb);padding:22px 28px 18px;color:#fff;">
-      <div style="font-size:18px;font-weight:700;margin-bottom:4px;">🔬 Configure Analysis</div>
-      <div style="font-size:12.5px;opacity:.85;">Set your universe, period and focus — or use defaults</div>
-    </div>
-    <div style="padding:22px 28px;">
-      <div style="display:grid;gap:16px;">
-
-        <div>
-          <label style="font-size:11.5px;font-weight:600;color:#475569;display:block;margin-bottom:5px;">BASE COMPANY <span style="color:#94a3b8;font-weight:400;">(primary subject)</span></label>
-          <input id="wiz-base" type="text" placeholder="e.g. Microsoft" value="Microsoft"
-            style="width:100%;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;box-sizing:border-box;outline:none;"
-            onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'"/>
-        </div>
-
-        <div>
-          <label style="font-size:11.5px;font-weight:600;color:#475569;display:block;margin-bottom:5px;">PEER COMPANIES <span style="color:#94a3b8;font-weight:400;">(1–5, comma-separated)</span></label>
-          <input id="wiz-peers" type="text" placeholder="e.g. Salesforce, ServiceNow, Google"
-            value="Salesforce, ServiceNow, Google (Alphabet), Oracle, SAP"
-            style="width:100%;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;box-sizing:border-box;outline:none;"
-            onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'"/>
-        </div>
-
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-          <div>
-            <label style="font-size:11.5px;font-weight:600;color:#475569;display:block;margin-bottom:5px;">PERIOD FROM</label>
-            <select id="wiz-from" style="width:100%;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;outline:none;">
-              <option>FY2019</option><option>FY2020</option><option selected>FY2021</option>
-              <option>FY2022</option><option>FY2023</option><option>FY2024</option>
-            </select>
-          </div>
-          <div>
-            <label style="font-size:11.5px;font-weight:600;color:#475569;display:block;margin-bottom:5px;">PERIOD TO</label>
-            <select id="wiz-to" style="width:100%;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;outline:none;">
-              <option>FY2022</option><option>FY2023</option><option>FY2024</option>
-              <option selected>FY2025</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label style="font-size:11.5px;font-weight:600;color:#475569;display:block;margin-bottom:5px;">SECTOR</label>
-          <input id="wiz-sector" type="text" placeholder="e.g. AI-Powered Enterprise Software"
-            value="AI-Powered Enterprise Software"
-            style="width:100%;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;box-sizing:border-box;outline:none;"
-            onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'"/>
-        </div>
-
-        <div>
-          <label style="font-size:11.5px;font-weight:600;color:#475569;display:block;margin-bottom:5px;">GEOGRAPHY FOCUS <span style="color:#94a3b8;font-weight:400;">(optional)</span></label>
-          <select id="wiz-geo" style="width:100%;padding:8px 12px;border:1.5px solid #e2e8f0;border-radius:8px;font-size:13px;background:#fff;outline:none;">
-            <option selected>Global</option><option>North America</option><option>Europe</option>
-            <option>Asia-Pacific</option><option>Emerging Markets</option>
-          </select>
-        </div>
-
-      </div>
-
-      <div style="display:flex;gap:10px;margin-top:22px;">
-        <button onclick="applyWizardDefaults()" style="flex:0 0 auto;padding:9px 16px;border:1.5px solid #cbd5e1;border-radius:8px;background:#f8fafc;font-size:12.5px;font-weight:600;color:#475569;cursor:pointer;">↺ Reset Defaults</button>
-        <button onclick="closeInputWizard()" style="flex:1;padding:9px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:13px;color:#64748b;cursor:pointer;">Cancel</button>
-        <button onclick="applyWizardInputs()" style="flex:2;padding:9px;border:none;border-radius:8px;background:linear-gradient(135deg,#1e3a5f,#2563eb);color:#fff;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:.3px;">Apply &amp; Refresh Portal →</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ════ VIEW ALL EVENTS MODAL ════ -->
-<div id="allEventsOverlay" onclick="if(event.target===this)closeAllEvents()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:8000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;width:760px;max-width:96vw;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);">
-    <div style="padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:15px;font-weight:700;color:#1e293b;">📰 All Market Events</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:2px;">Complete event feed across your tracked universe</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <div id="allEventsChips" style="display:flex;gap:6px;flex-wrap:wrap;"></div>
-        <button onclick="closeAllEvents()" style="width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:16px;cursor:pointer;color:#64748b;">✕</button>
-      </div>
-    </div>
-    <div id="allEventsBody" style="overflow-y:auto;padding:16px 22px;display:flex;flex-direction:column;gap:10px;"></div>
-  </div>
-</div>
-
-<!-- ════ SEE ALL COMPANIES MODAL ════ -->
-<div id="allCompaniesOverlay" onclick="if(event.target===this)closeAllCompanies()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:8000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;width:820px;max-width:96vw;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);">
-    <div style="padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:15px;font-weight:700;color:#1e293b;">🏢 All Tracked Companies</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:2px;">Full universe — base company and all peers</div>
-      </div>
-      <button onclick="closeAllCompanies()" style="width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:16px;cursor:pointer;color:#64748b;">✕</button>
-    </div>
-    <div id="allCompaniesBody" style="overflow-y:auto;padding:18px 22px;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;"></div>
-  </div>
-</div>
-
-<!-- ════ EDIT PROFILE ATTRIBUTES MODAL ════ -->
-<div id="editAttrsOverlay" onclick="if(event.target===this)closeEditAttrs()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:8000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;width:520px;max-width:96vw;max-height:88vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.2);">
-    <div style="padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:15px;font-weight:700;color:#1e293b;">✎ Edit Profile Attributes</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:2px;">Choose which attributes to show in Company Profile Summary</div>
-      </div>
-      <button onclick="closeEditAttrs()" style="width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:16px;cursor:pointer;color:#64748b;">✕</button>
-    </div>
-    <div id="editAttrsBody" style="overflow-y:auto;padding:18px 22px;"></div>
-    <div style="padding:14px 22px;border-top:1px solid #e2e8f0;display:flex;gap:10px;">
-      <button onclick="closeEditAttrs()" style="flex:1;padding:9px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:13px;color:#64748b;cursor:pointer;">Cancel</button>
-      <button onclick="applyProfileAttrs()" style="flex:2;padding:9px;border:none;border-radius:8px;background:#2563eb;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Apply</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════ CUSTOMIZE DASHBOARD MODAL ════ -->
-<div id="customizeModal" onclick="if(event.target===this)closeCustomizeModal()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:8000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;width:480px;max-width:96vw;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden;">
-    <div style="padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
-      <div style="font-size:15px;font-weight:700;color:#1e293b;">⚙ Customize Dashboard</div>
-      <button onclick="closeCustomizeModal()" style="width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:16px;cursor:pointer;color:#64748b;">✕</button>
-    </div>
-    <div style="padding:18px 22px;">
-      <div style="font-size:12.5px;color:#64748b;margin-bottom:14px;">Toggle intelligence modules visible on your dashboard:</div>
-      <div id="customizeModuleList" style="display:flex;flex-direction:column;gap:10px;"></div>
-    </div>
-    <div style="padding:14px 22px;border-top:1px solid #e2e8f0;display:flex;gap:10px;">
-      <button onclick="closeCustomizeModal()" style="flex:1;padding:9px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:13px;color:#64748b;cursor:pointer;">Cancel</button>
-      <button onclick="saveCustomizeModal()" style="flex:2;padding:9px;border:none;border-radius:8px;background:#2563eb;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">Save Layout</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════ PDF EXPORT MODAL ════ -->
-<div id="exportPDFOverlay" onclick="if(event.target===this)closeExportPDF()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:8000;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:14px;width:500px;max-width:96vw;box-shadow:0 20px 60px rgba(0,0,0,.2);overflow:hidden;">
-    <div style="padding:18px 22px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;justify-content:space-between;">
-      <div>
-        <div style="font-size:15px;font-weight:700;color:#1e293b;">📄 Export Report</div>
-        <div style="font-size:12px;color:#94a3b8;margin-top:2px;">Select components to include in your PDF export</div>
-      </div>
-      <button onclick="closeExportPDF()" style="width:32px;height:32px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:16px;cursor:pointer;color:#64748b;">✕</button>
-    </div>
-    <div style="padding:18px 22px;">
-      <div style="display:flex;flex-direction:column;gap:10px;" id="exportSectionsList">
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="executive" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Executive Overview</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="trend" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Trend Analysis</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="capability" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Capability Matrix</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="geographic" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Geographic Presence</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="inorganic" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Inorganic Strategy</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="customers" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Customers &amp; Partners</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="insights" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Insights &amp; Risks</span>
-        </label>
-        <label style="display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid #e2e8f0;border-radius:8px;cursor:pointer;">
-          <input type="checkbox" checked value="company" style="width:16px;height:16px;accent-color:#2563eb;">
-          <span style="font-size:13px;color:#1e293b;font-weight:500;">Company Profiles</span>
-        </label>
-      </div>
-    </div>
-    <div style="padding:14px 22px;border-top:1px solid #e2e8f0;display:flex;gap:10px;">
-      <button onclick="closeExportPDF()" style="flex:1;padding:9px;border:1.5px solid #e2e8f0;border-radius:8px;background:#fff;font-size:13px;color:#64748b;cursor:pointer;">Cancel</button>
-      <button onclick="runExportPDF()" style="flex:2;padding:9px;border:none;border-radius:8px;background:#2563eb;color:#fff;font-size:13px;font-weight:700;cursor:pointer;">📄 Export PDF</button>
     </div>
   </div>
 </div>
