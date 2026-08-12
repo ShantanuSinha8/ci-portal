@@ -607,25 +607,25 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
   <!-- Primary Navigation -->
   <div class="nav-section">
     <div class="nav-section-label">Main</div>
-    <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
+    <div class="nav-item active" data-page="dashboard" data-nav="dashboard">
       <span class="nav-icon">⊞</span>Dashboard
     </div>
     <!-- Competitive Intelligence with submenu -->
-    <div class="nav-item" id="nav-ci" onclick="var s=document.getElementById('ci-submenu');document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active');});this.classList.add('active');if(s){s.classList.add('open');}navigate('bench-overview');">
+    <div class="nav-item" id="nav-ci" data-nav="bench-overview" data-submenu="ci-submenu">
       <span class="nav-icon">🔍</span>Competitive Intelligence
       <span class="nav-badge" id="ci-badge">8</span>
     </div>
     <div class="nav-submenu" id="ci-submenu">
-      <div class="nav-sub-item" onclick="navigate('bench-overview')">Executive Overview</div>
-      <div class="nav-sub-item" onclick="navigate('bench-trend')">Trend Analysis</div>
-      <div class="nav-sub-item" onclick="navigate('bench-capability')">Capability Matrix</div>
-      <div class="nav-sub-item" onclick="navigate('bench-geo')">Geographic Presence</div>
-      <div class="nav-sub-item" onclick="navigate('bench-inorganic')">Inorganic Strategy</div>
-      <div class="nav-sub-item" onclick="navigate('bench-customers')">Customers & Partners</div>
-      <div class="nav-sub-item" onclick="navigate('bench-insights')">Insights & Risks</div>
-      <div class="nav-sub-item" onclick="navigate('bench-recommendations')">Recommendations</div>
+      <div class="nav-sub-item" data-nav="bench-overview">Executive Overview</div>
+      <div class="nav-sub-item" data-nav="bench-trend">Trend Analysis</div>
+      <div class="nav-sub-item" data-nav="bench-capability">Capability Matrix</div>
+      <div class="nav-sub-item" data-nav="bench-geo">Geographic Presence</div>
+      <div class="nav-sub-item" data-nav="bench-inorganic">Inorganic Strategy</div>
+      <div class="nav-sub-item" data-nav="bench-customers">Customers & Partners</div>
+      <div class="nav-sub-item" data-nav="bench-insights">Insights & Risks</div>
+      <div class="nav-sub-item" data-nav="bench-recommendations">Recommendations</div>
     </div>
-    <div class="nav-item" id="nav-mi" onclick="toggleSubmenu('mi-submenu',this)">
+    <div class="nav-item" id="nav-mi" data-submenu="mi-submenu">
       <span class="nav-icon">📊</span>Market Intelligence
     </div>
     <div class="nav-submenu" id="mi-submenu">
@@ -633,7 +633,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="nav-sub-item">Trend Radar</div>
       <div class="nav-sub-item">TAM/SAM/SOM</div>
     </div>
-    <div class="nav-item" id="nav-si" onclick="toggleSubmenu('si-submenu',this)">
+    <div class="nav-item" id="nav-si" data-submenu="si-submenu">
       <span class="nav-icon">💼</span>Sales Intelligence
     </div>
     <div class="nav-submenu" id="si-submenu">
@@ -3623,6 +3623,28 @@ document.addEventListener('DOMContentLoaded',function(){
   initSidebar();
   var ciSub=document.getElementById('ci-submenu');var ciNav=document.getElementById('nav-ci');
   if(ciSub){ciSub.classList.add('open');}if(ciNav){ciNav.classList.add('active');}
+  // ── Wire ALL data-nav and data-submenu elements via addEventListener (CSP-safe)
+  document.querySelectorAll('[data-nav]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      var pageId = el.getAttribute('data-nav');
+      var subId = el.getAttribute('data-submenu');
+      document.querySelectorAll('.nav-item,.nav-sub-item').forEach(function(n){n.classList.remove('active');});
+      el.classList.add('active');
+      if(subId){
+        var sub = document.getElementById(subId);
+        if(sub) sub.classList.add('open');
+      }
+      if(pageId) navigate(pageId);
+    });
+  });
+  document.querySelectorAll('[data-submenu]:not([data-nav])').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.stopPropagation();
+      var subId = el.getAttribute('data-submenu');
+      toggleSubmenu(subId, el);
+    });
+  });
   navigate('dashboard');
   LOG.ok('INIT','=== Portal ready ===');
 });
