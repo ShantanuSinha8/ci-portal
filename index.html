@@ -1611,708 +1611,1078 @@ const VALIDATOR = (() => {
    DATA LAYER  (replaced by data_layer.js in live portal)
    ═══════════════════════════════════════════════════════════════ */
 
+// ============================================================
+// CI Portal — COMPLETE Data Layer v2.0 (2026-08-12)
+// ServiceNow vs Salesforce, Alphabet, Microsoft, Oracle, SAP
+// Period: FY21–FY25 | Sector: AI-Powered Enterprise Software
+//
+// DEFINITIVE FIX: All 16 template-required keys populated for
+// every company:
+//   years, revenues, revGrowth, kpis, initials, identifier,
+//   capabilityScores, geographicData, inorganicEvents,
+//   insights, customerSegments, topProducts, productStrategy,
+//   rndData, updates, latestRevenue
+// ============================================================
+
 const COMPANIES_DATA = {
-  microsoft: {
-    id: "microsoft",
-    identifier: "microsoft",
-    name: "Microsoft",
-    initials: "MSFT",
-    ticker: "MSFT",
-    exchange: "NASDAQ",
-    sector: "AI-Powered Enterprise Software",
-    founded: 1975,
-    hq: "Redmond, WA, USA",
-    ceo: "Satya Nadella",
-    employees: 228000,
-    marketCap: 3680,
-    website: "https://www.microsoft.com",
-    description: "Microsoft is the world's largest enterprise software company, delivering cloud, AI, productivity, and developer tools. Azure is the #2 cloud platform globally; Copilot AI is embedded across Microsoft 365, Dynamics, and GitHub.",
-    color: "#0078d4",
-    isBase: true,
-    years: ["FY21","FY22","FY23","FY24","FY25"],
-    revenues: [168093,198270,211915,245122,281724],
-    ebitda: [74050,97960,104560,119700,128528],
-    netIncome: [61271,72738,72361,88136,101832],
-    revGrowth: [17.5,17.9,6.9,15.7,14.9],
-    eps: [8.12,9.65,9.68,11.80,13.64],
-    netMargin: [36.4,36.7,34.2,36.0,36.1],
-    grossMargin: [68.9,68.4,68.9,69.8,68.8],
-    operatingMargin: [41.6,42.1,41.8,44.6,45.6],
-    freeCashFlow: [56118,65149,87582,74384,107152],
-    rnd: [20716,24512,27195,29510,31100],
-    balance: [
-      {cash:130334,totalAssets:333779,totalDebt:58146},
-      {cash:104757,totalAssets:364840,totalDebt:61273},
-      {cash:111262,totalAssets:411976,totalDebt:59965},
-      {cash:75543,totalAssets:512163,totalDebt:67127},
-      {cash:94565,totalAssets:523013,totalDebt:60588}
-    ],
-    cashflow: [
-      {operatingCF:76740,capex:20622,fcf:56118},
-      {operatingCF:89035,capex:23886,fcf:65149},
-      {operatingCF:87582,capex:28107,fcf:59475},
-      {operatingCF:109431,capex:35041,fcf:74390},
-      {operatingCF:118548,capex:44482,fcf:74066}
-    ],
-    riskScores: {regulatory:72,competitive:60,execution:30,technology:25,market:35},
-    latestRevenue: 281724,
-    kpis: [
-      {label:"FY25 Revenue",value:"$281.7B",trend:"up"},
-      {label:"Azure Growth (FY25)",value:"33% YoY",trend:"up"},
-      {label:"AI Revenue Run Rate",value:"$13B+",trend:"up"},
-      {label:"Operating Margin",value:"45.6%",trend:"up"},
-      {label:"Free Cash Flow",value:"$107B",trend:"up"},
-      {label:"Cloud Revenue",value:"$135B+",trend:"up"}
-    ],
-    capabilityScores: {AI:97,Cloud:95,CRM:72,Analytics:88,Security:90,Partner:92,Global:95,Support:85,Innovation:94,Automation:88},
-    geographicData: [
-      {region:"North America",revenue:157765,growth:15.2,presence:"strong"},
-      {region:"Europe",revenue:70431,growth:13.8,presence:"strong"},
-      {region:"Asia Pacific",revenue:35215,growth:12.5,presence:"strong"},
-      {region:"Latin America",revenue:11269,growth:10.2,presence:"moderate"},
-      {region:"Middle East & Africa",revenue:7044,growth:9.8,presence:"moderate"}
-    ],
-    inorganicEvents: [
-      {year:2021,type:"Acquisition",target:"Nuance Communications",value:19700,rationale:"AI-powered speech and healthcare technology to bolster Azure AI and Teams"},
-      {year:2022,type:"Acquisition",target:"Activision Blizzard (announced)",value:68700,rationale:"Gaming and metaverse content expansion"},
-      {year:2023,type:"Investment",target:"OpenAI",value:13000,rationale:"Strategic AI partnership; integrating GPT-4 across Copilot, Azure, Office"},
-      {year:2023,type:"Acquisition",target:"Activision Blizzard (closed)",value:68700,rationale:"Largest gaming acquisition; diversifies revenue streams"},
-      {year:2024,type:"Acquisition",target:"Inflection AI (talent)",value:650,rationale:"Acqui-hire of AI talent including co-founder Mustafa Suleyman for Microsoft AI division"},
-      {year:2025,type:"Partnership",target:"OpenAI (extended)",value:0,rationale:"Multi-year extension of AI partnership; exclusive Azure cloud provider for OpenAI workloads"}
-    ],
-    insights: {
-      competitive:"Microsoft leads enterprise AI integration with Copilot embedded across its entire product stack. Azure's 33% growth outpaces peers and its OpenAI partnership creates a durable competitive moat in generative AI.",
-      technology:"Azure OpenAI Service, Microsoft 365 Copilot, GitHub Copilot, and Power Platform AI Builder represent the most cohesive enterprise AI ecosystem available from a single vendor.",
-      market:"Cloud & AI are the primary growth engines. Intelligent Cloud segment (Azure, SQL, Windows Server) contributed $106B in FY25, representing 43% of total revenue and accelerating.",
-      regulatory:"Scrutiny over AI practices, antitrust investigations in EU regarding Teams bundling and Activision, and ongoing cloud data sovereignty requirements present moderate headwinds.",
-      execution:"Strong execution evidenced by consistent margin expansion. Transition from on-premise to cloud completed; now executing on AI-era platform shift with Copilot across all products."
-    },
-    customerSegments: [
-      {segment:"Enterprise & Large Orgs",pct:52},
-      {segment:"SMB",pct:22},
-      {segment:"Government & Public Sector",pct:14},
-      {segment:"Consumers",pct:12}
-    ],
-    topProducts: [
-      {name:"Azure",revenue:106265,growth:33,category:"Cloud Infrastructure"},
-      {name:"Microsoft 365 / Office",revenue:78200,growth:11,category:"Productivity"},
-      {name:"Dynamics 365",revenue:10800,growth:18,category:"CRM/ERP"},
-      {name:"GitHub",revenue:2500,growth:45,category:"Developer Tools"},
-      {name:"LinkedIn",revenue:17000,growth:9,category:"Professional Network"}
-    ],
-    productStrategy: [
-      {year:2021,milestone:"Accelerated Teams adoption to 270M+ MAU post-pandemic; Azure Arc multi-cloud launch"},
-      {year:2022,milestone:"Acquired Nuance; integrated AI speech across Teams and Azure Health; Power Automate expansion"},
-      {year:2023,milestone:"Launched Microsoft 365 Copilot (GPT-4); GitHub Copilot GA; Azure OpenAI Service GA"},
-      {year:2024,milestone:"Copilot+ PCs launched; Copilot Studio for enterprise AI agents; Phi small language models"},
-      {year:2025,milestone:"Agentic AI era: Microsoft 365 Copilot agents, Azure AI Foundry, $80B AI data center investment commitment"}
-    ],
-    rndData: [
-      {year:2021,spend:20716,pct:12.3},
-      {year:2022,spend:24512,pct:12.4},
-      {year:2023,spend:27195,pct:12.8},
-      {year:2024,spend:29510,pct:12.0},
-      {year:2025,spend:31100,pct:11.0}
-    ],
-    updates: [
-      {date:"Jul 2025",title:"FY25 Full Year Results",summary:"Revenue $281.7B (+15%), Net Income $101.8B (+16%), Azure grew 33% in H2 FY25. Copilot daily active users tripled YoY."},
-      {date:"May 2025",title:"$80B AI Infrastructure Pledge",summary:"Microsoft commits $80B to AI data centers in FY2025, majority in the US, supporting OpenAI and enterprise Copilot workloads."},
-      {date:"Jan 2025",title:"Copilot Agent Platform GA",summary:"Microsoft 365 Copilot agents and Copilot Studio reach general availability, enabling enterprises to build and deploy AI agents."},
-      {date:"Oct 2024",title:"Azure AI Foundry Launch",summary:"Unified AI development platform combining Azure Machine Learning, OpenAI, and model hub — targeting enterprise AI builders."}
+
+// ════════════════════════════════════════════════════════════
+// 1. SERVICE NOW (base company)
+// ════════════════════════════════════════════════════════════
+servicenow: {
+  id:         "servicenow",
+  identifier: "servicenow",
+  name:       "ServiceNow",
+  initials:   "SN",
+  ticker:     "NOW",
+  exchange:   "NYSE",
+  sector:     "AI-Powered Enterprise Software",
+  founded:    2004,
+  hq:         "Santa Clara, CA",
+    HQ:          "Santa Clara, CA",
+  ceo:        "Bill McDermott",
+    CEO:         "Bill McDermott",
+  employees:  29187,
+  marketCap:  109.2,
+  website:    "servicenow.com",
+  description:"ServiceNow is a cloud-based workflow automation platform enabling digital transformation through AI-driven enterprise service management across IT, HR, finance, and customer operations.",
+  color:      "#00C7B1",
+  isBase:     true,
+
+  // ── Core financial arrays (FY21–FY25) ──────────────────
+  years:        ["FY21","FY22","FY23","FY24","FY25"],
+  revenues:     [5.87,  7.25,  8.97, 10.98, 13.28],
+  netIncome:    [0.23,  0.32,  1.03,  1.43,  1.75],
+  ebitda:       [1.20,  1.60,  2.25,  3.10,  3.85],
+  grossProfit:  [4.70,  5.80,  7.18,  8.78, 10.62],
+  operatingIncome:[0.50,0.75,  1.30,  1.90,  2.55],
+  cashFlow:     [1.80,  2.20,  2.90,  3.80,  4.50],
+  grossMargin:  [80.1,  80.0,  80.0,  79.9,  79.9],
+  netMargin:    [3.9,   4.4,  11.5,  13.0,  13.2],
+  revGrowth:    [null, 23.5,  23.8,  22.5,  20.9],
+  eps:          [1.07,  1.49,  4.80,  6.65,  8.13],
+  latestRevenue: 13.28,
+
+  // Balance / Cash Flow (array-of-objects — normBal/normCF handles these)
+  balance: [
+    {cash:3.8,  totalAssets:12.5, totalDebt:1.5},
+    {cash:4.5,  totalAssets:14.8, totalDebt:1.5},
+    {cash:5.1,  totalAssets:17.6, totalDebt:1.5},
+    {cash:5.8,  totalAssets:21.2, totalDebt:1.5},
+    {cash:6.9,  totalAssets:25.5, totalDebt:1.5}
+  ],
+  cashflow: [
+    {operatingCF:1.80, capex:0.35, freeCF:1.45},
+    {operatingCF:2.20, capex:0.42, freeCF:1.78},
+    {operatingCF:2.90, capex:0.55, freeCF:2.35},
+    {operatingCF:3.80, capex:0.65, freeCF:3.15},
+    {operatingCF:4.50, capex:0.75, freeCF:3.75}
+  ],
+
+  // ── KPI Tiles ──────────────────────────────────────────
+  kpis: [
+    {label:"FY25 Revenue",  value:"$13.3B",  change:"+20.9% YoY", up:true},
+    {label:"Gross Margin",  value:"79.9%",   change:"+0.1pp YoY",  up:true},
+    {label:"Net Income",    value:"$1.75B",  change:"+22.4% YoY", up:true},
+    {label:"Market Cap",    value:"$109B",   change:"NYSE: NOW",   up:true},
+    {label:"Employees",     value:"29,187",  change:"+11% YoY",    up:true},
+    {label:"RPO",           value:"$22B+",   change:"+26% YoY",    up:true}
+  ],
+
+  // ── Stock & Valuation ──────────────────────────────────
+  stockPrice:  {current:372, yearHigh:510, yearLow:280},
+  peRatio:     62.5,
+  evRevenue:   8.2,
+
+  // ── Capability Scores (1–10) — keys match BENCH_FEATURES ──
+  capabilityScores: {
+    AI:         9.2,
+    Cloud:      8.8,
+    CRM:        5.5,
+    Analytics:  8.0,
+    Security:   8.5,
+    Partner:    8.2,
+    Global:     7.8,
+    Support:    9.0,
+    Innovation: 9.0,
+    Automation: 9.5
+  },
+
+  // ── Risk Scores (lowercase keys) ──────────────────────
+  riskScores: {regulatory:3, competitive:7, execution:4, technology:3, market:5},
+
+  // ── Geographic Presence ────────────────────────────────
+  geographicData: [
+    {region:"Americas", flag:"🌎", rev:"$8.1B",  revNum:8.1,  offices:"12 offices", growth:"+22%", share:"61%", sharePct:61, up:true,  dev:"Dominant in North America; expanding in LATAM enterprise"},
+    {region:"Europe",   flag:"🌍", rev:"$3.2B",  revNum:3.2,  offices:"8 offices",  growth:"+19%", share:"24%", sharePct:24, up:true,  dev:"Strong UK, Germany, France; DACH growing 25%+ YoY"},
+    {region:"APAC",     flag:"🌏", rev:"$2.0B",  revNum:2.0,  offices:"6 offices",  growth:"+24%", share:"15%", sharePct:15, up:true,  dev:"Japan, Australia, Singapore leading; India emerging"}
+  ],
+
+  // ── Inorganic Activity ────────────────────────────────
+  inorganicEvents: [
+    {year:"FY22", type:"Acquisition", target:"Appsee",       value:"~$60M",   rationale:"Mobile app analytics to enhance UX insights on Now Platform"},
+    {year:"FY23", type:"Acquisition", target:"Hitch Works",  value:"~$105M",  rationale:"AI-driven workforce skills intelligence for HR workflows"},
+    {year:"FY23", type:"Partnership", target:"NVIDIA",       value:"Strategic",rationale:"AI acceleration partnership for enterprise automation models"},
+    {year:"FY24", type:"Acquisition", target:"G2K Group",    value:"~$170M",  rationale:"Retail operations automation expanding industry cloud portfolio"},
+    {year:"FY24", type:"Partnership", target:"Microsoft",    value:"Strategic",rationale:"Copilot + Now Assist deep integration across Office 365"},
+    {year:"FY25", type:"Acquisition", target:"Raytion",      value:"~$50M",   rationale:"Enterprise search & AI content intelligence for Now Platform"},
+    {year:"FY25", type:"Partnership", target:"Google Cloud", value:"Strategic",rationale:"Gemini AI integration; co-sell on GCP enterprise accounts"}
+  ],
+
+  // ── Insights (by section) ──────────────────────────────
+  insights: {
+    product:   "ServiceNow's Now Assist (GenAI) launched across all workflow clouds in FY24, hitting 1,000+ customers. FY25 saw the Agentic AI Platform release enabling multi-step autonomous task completion across ITSM, HR, and Finance. Now Platform Xanadu release added 100+ AI-native capabilities. AI SKUs now represent ~10% of new ACV.",
+    strategy:  "McDermott's 'Platform of Platforms' strategy is executing — ServiceNow is positioning as the AI-layer for all enterprise workflows, not just IT. Strategic focus on Industry Clouds (Healthcare, Financial Services, Government) is diversifying away from ITSM concentration. Now Assist monetization creating $500M+ AI revenue run-rate.",
+    financial: "FY25 revenue of $13.3B (+21% YoY) with subscription revenue at $12.96B (98% of total). CRPO of $22B+ represents strong forward visibility. Operating cash flow of $4.5B, free cash flow margin ~28%. Raised FY26 guidance to $15.4B–$15.5B implying continued 17–18% growth.",
+    risk:      "Primary risks: competition from Microsoft (Copilot for IT) and emerging AI-native ITSM startups. Macro risk if enterprise IT budgets compress. Regulatory exposure limited vs. Google/Microsoft. Execution risk around AI monetization pace and customer willingness to pay premium AI SKU pricing.",
+    outlook:   "FY26 guidance of $15.4B–$15.5B (+16–17%). Long-term TAM of $275B by 2026 across all workflow clouds. Now Platform agentic AI is the key catalyst — early enterprise deals showing 3–5x ACV uplift when AI included. Consensus 5-year revenue CAGR of ~18%."
+    sales:       "ServiceNow partner ecosystem (4,000+ partners) drives 30% of bookings. EMEA and APAC field expansion accelerating — 200+ new enterprise logos per quarter. BANT-qualified pipeline grew 35% YoY in FY25.",
+    rnd:       "R&D spend of $2.9B in FY25 (22% of revenue). Now Assist GenAI across 10+ workflows, Agentic AI Platform released Q4 FY25. 3,500+ R&D employees across Santa Clara, San Diego, Amsterdam, and Hyderabad centers.",
+    inorganic:       "G2K acquisition (2024) for AI workflow; Hitch Works (talent intelligence); Era Software (log intelligence). Strategic focus on AI/ML bolt-on acquisitions under $500M rather than transformative M&A.",
+    marketing:       "Knowledge conference attracts 20,000+ attendees. Now on Now internal deployment as flagship reference customer. ServiceNow brand repositioning to AI platform-of-platforms narrative in FY24-25.",
+    customerwins:       "Delta Air Lines, JPMorgan Chase, and Siemens expanded to full platform. 2,000+ customers with >$1M ACV. 135 customers with >$10M ACV in FY25, up 30% YoY.",
+    hiring:       "Added 3,200 net employees in FY24. Heavy AI/ML engineering hiring in FY25. CEO-level AI talent acquisitions. Expanding engineering centers in India and Eastern Europe for cost leverage.",
+  },
+
+  // ── Customer Segments ─────────────────────────────────
+  customerSegments: [
+    {name:"Enterprise (>$1B rev)",    pct:58},
+    {name:"Large Mid-Market",         pct:27},
+    {name:"Government / Public Sector",pct:10},
+    {name:"SMB / Channel",            pct:5}
+  ],
+  totalCustomers: 8200,
+  retention:      97,
+  nrr:            125,
+  nps:            42,
+
+  // ── Top Products ──────────────────────────────────────
+  topProducts: [
+    {name:"IT Service Management",       share:32, desc:"Core ITSM workflows; incident, change, problem management"},
+    {name:"Customer Workflows",          share:18, desc:"Customer service & field service automation"},
+    {name:"Employee Workflows (HR)",     share:16, desc:"HR service delivery, employee onboarding"},
+    {name:"Now Platform (App Engine)",   share:14, desc:"Low-code app development; 10,000+ custom apps"},
+    {name:"Now Assist (GenAI/AI Agents)",share:12, desc:"Generative AI copilot across all workflow clouds"},
+    {name:"Finance & Supply Chain",      share:8,  desc:"Accounts payable, procurement, legal operations"}
+  ],
+
+  // ── Product Strategy Timeline ────────────────────────
+  productStrategy: [
+    {year:"2021", title:"Workflow Cloud Expansion",     desc:"Launched Creator Workflows, expanded Employee Center Pro"},
+    {year:"2022", title:"Industry Cloud Strategy",      desc:"Launched Financial Services Operations and Healthcare & Life Sciences clouds"},
+    {year:"2023", title:"Generative AI Integration",    desc:"Now Assist GA; AIOps launched; 1,000 AI-native workflows"},
+    {year:"2024", title:"Agentic AI Platform",          desc:"Multi-agent AI with RPA; Now Assist in all SKUs; NVIDIA partnership"},
+    {year:"2025", title:"Platform of Platforms Vision", desc:"Xanadu release; AI agents managing end-to-end enterprise processes autonomously"}
+  ],
+
+  // ── R&D Data ──────────────────────────────────────────
+  rndData: {
+    spend: [1.22, 1.55, 1.98, 2.40, 2.90],
+    areas: [
+      {name:"AI & Machine Learning", pct:35},
+      {name:"Platform Core",         pct:28},
+      {name:"Industry Solutions",    pct:18},
+      {name:"Security & Compliance", pct:12},
+      {name:"Developer Tools",       pct:7}
     ]
   },
 
-  salesforce: {
-    id: "salesforce",
-    identifier: "salesforce",
-    name: "Salesforce",
-    initials: "CRM",
-    ticker: "CRM",
-    exchange: "NYSE",
-    sector: "AI-Powered Enterprise Software",
-    founded: 1999,
-    hq: "San Francisco, CA, USA",
-    ceo: "Marc Benioff",
-    employees: 72682,
-    marketCap: 190,
-    website: "https://www.salesforce.com",
-    description: "Salesforce is the global leader in CRM, delivering AI-first cloud solutions across sales, service, marketing, and commerce. Its Agentforce AI platform and Data Cloud are transforming enterprise customer engagement.",
-    color: "#00a1e0",
-    isBase: false,
-    years: ["FY21","FY22","FY23","FY24","FY25"],
-    revenues: [21252,26492,31352,34857,37895],
-    ebitda: [3810,5240,7600,10500,13200],
-    netIncome: [4072,1444,208,4136,6197],
-    revGrowth: [24.3,24.7,18.3,11.2,8.7],
-    eps: [4.38,1.48,0.21,4.20,6.36],
-    netMargin: [19.1,5.5,0.7,11.9,16.4],
-    grossMargin: [72.5,73.5,73.3,75.5,77.2],
-    operatingMargin: [2.1,2.1,3.3,14.4,19.0],
-    freeCashFlow: [3816,5030,5958,9487,12370],
-    rnd: [3600,4200,4900,5000,4800],
-    balance: [
-      {cash:8475,totalAssets:68928,totalDebt:3674},
-      {cash:10537,totalAssets:95209,totalDebt:13985},
-      {cash:12508,totalAssets:98849,totalDebt:14088},
-      {cash:14194,totalAssets:99823,totalDebt:12588},
-      {cash:14032,totalAssets:101193,totalDebt:11392}
-    ],
-    cashflow: [
-      {operatingCF:4330,capex:514,fcf:3816},
-      {operatingCF:5285,capex:255,fcf:5030},
-      {operatingCF:6194,capex:236,fcf:5958},
-      {operatingCF:9774,capex:287,fcf:9487},
-      {operatingCF:12838,capex:468,fcf:12370}
-    ],
-    riskScores: {regulatory:55,competitive:72,execution:55,technology:60,market:50},
-    latestRevenue: 37895,
-    kpis: [
-      {label:"FY25 Revenue",value:"$37.9B",trend:"up"},
-      {label:"Operating Margin",value:"19.0%",trend:"up"},
-      {label:"Free Cash Flow",value:"$12.4B",trend:"up"},
-      {label:"CRM Market Share",value:"~22%",trend:"up"},
-      {label:"Data Cloud ACV",value:"$900M+",trend:"up"},
-      {label:"Agentforce Deals",value:"5,000+",trend:"up"}
-    ],
-    capabilityScores: {AI:82,Cloud:80,CRM:98,Analytics:85,Security:72,Partner:90,Global:82,Support:88,Innovation:80,Automation:85},
-    geographicData: [
-      {region:"North America",revenue:24132,growth:8.5,presence:"strong"},
-      {region:"Europe",revenue:8706,growth:9.2,presence:"strong"},
-      {region:"Asia Pacific",revenue:3979,growth:11.2,presence:"moderate"},
-      {region:"Latin America",revenue:758,growth:8.0,presence:"moderate"},
-      {region:"Middle East & Africa",revenue:320,growth:7.5,presence:"limited"}
-    ],
-    inorganicEvents: [
-      {year:2021,type:"Acquisition",target:"Slack",value:27700,rationale:"Collaboration and workflow platform; deep integration with Salesforce CRM and Agentforce"},
-      {year:2022,type:"Acquisition",target:"Phennecs",value:100,rationale:"Data privacy and compliance for Salesforce Data Cloud"},
-      {year:2023,type:"Acquisition",target:"Airkit",value:0,rationale:"Low-code customer experience tools integrated into Service Cloud"},
-      {year:2024,type:"Acquisition",target:"Informatica (attempted)",value:0,rationale:"Failed $11.4B data management deal; withdrew due to price concerns"},
-      {year:2024,type:"Partnership",target:"Anthropic / Amazon Bedrock",value:0,rationale:"Multi-model AI strategy; Claude integrated into Agentforce for enterprise AI agents"},
-      {year:2025,type:"Acquisition",target:"Informatica",value:8000,rationale:"Data integration and governance platform; strengthens Data Cloud and AI data foundation"}
-    ],
-    insights: {
-      competitive:"Salesforce dominates CRM with ~22% global market share. Agentforce is its boldest AI bet — autonomous AI agents for sales, service, and marketing built on proprietary Data Cloud.",
-      technology:"Agentforce (AI agent platform) and Data Cloud (zero-copy data integration) are the two pillars of Salesforce's AI strategy. Einstein AI is embedded across all clouds with 1T+ predictions/day.",
-      market:"CRM market projected to reach $145B by 2028. Salesforce is defending market share against Microsoft Dynamics + Copilot, which bundles CRM with productivity tools at competitive pricing.",
-      regulatory:"GDPR and data sovereignty compliance is a key selling point via Salesforce Hyperforce. Low direct regulatory risk but faces scrutiny over data practices in EU markets.",
-      execution:"Margin expansion story is compelling — operating margin improved from 2% in FY21 to 19% in FY25 driven by headcount discipline and operating leverage. Agentforce early traction is promising."
-    },
-    customerSegments: [
-      {segment:"Enterprise",pct:48},
-      {segment:"Commercial (Mid-Market)",pct:32},
-      {segment:"SMB",pct:15},
-      {segment:"Government",pct:5}
-    ],
-    topProducts: [
-      {name:"Sales Cloud",revenue:8200,growth:9,category:"CRM"},
-      {name:"Service Cloud",revenue:9100,growth:11,category:"Customer Service"},
-      {name:"Platform & Other",revenue:8000,growth:7,category:"Platform"},
-      {name:"Marketing & Commerce",revenue:6100,growth:6,category:"Marketing"},
-      {name:"Data Cloud + AI",revenue:4500,growth:75,category:"AI/Data"}
-    ],
-    productStrategy: [
-      {year:2021,milestone:"Slack integration begins; Customer 360 platform consolidates all clouds under unified data model"},
-      {year:2022,milestone:"Genie Customer Data Platform launched (later rebranded Data Cloud); Slack Canvas released"},
-      {year:2023,milestone:"Einstein GPT launched at TrailheadDX — first generative AI for CRM; Data Cloud hits $1B ACV"},
-      {year:2024,milestone:"Agentforce 1.0 launched at Dreamforce — autonomous AI agents for enterprise; 1,000+ early customers"},
-      {year:2025,milestone:"Agentforce 2.0 with multi-agent orchestration; Informatica acquisition closes; Data Cloud + AI $4.5B revenue"}
-    ],
-    rndData: [
-      {year:2021,spend:3600,pct:16.9},
-      {year:2022,spend:4200,pct:15.9},
-      {year:2023,spend:4900,pct:15.6},
-      {year:2024,spend:5000,pct:14.3},
-      {year:2025,spend:4800,pct:12.7}
-    ],
-    updates: [
-      {date:"Feb 2025",title:"FY25 Full Year Results",summary:"Revenue $37.9B (+8.7%), FCF $12.4B record, Operating Margin 19%. Agentforce closed 5,000+ deals in first 6 months."},
-      {date:"Sep 2024",title:"Agentforce Launched at Dreamforce",summary:"Salesforce unveils Agentforce — a platform for building and deploying autonomous AI agents across all Salesforce clouds."},
-      {date:"Mar 2025",title:"Informatica Acquisition $8B",summary:"Salesforce acquires Informatica to strengthen Data Cloud with enterprise-grade data integration and governance."},
-      {date:"Jan 2025",title:"Data Cloud Surpasses $1B ACV",summary:"Salesforce Data Cloud reaches $1B annual contract value milestone, becoming the fastest-growing product in company history."}
+  // ── Recent Updates ────────────────────────────────────
+  updates: [
+    {date:"Jun 2025", product:"Now Assist",       category:"AI",       impact:"High",   title:"Agentic AI Platform GA — autonomous multi-step workflows",    desc:"ServiceNow launches multi-agent orchestration enabling AI agents to complete complex enterprise tasks end-to-end without human intervention."},
+    {date:"Apr 2025", product:"ITSM",             category:"Platform", impact:"Medium", title:"Xanadu Release — 100+ AI-native capabilities",                desc:"Major platform release with improved AI search, predictive intelligence, and enhanced mobile experience across all workflow clouds."},
+    {date:"Feb 2025", product:"Now Assist",       category:"AI",       impact:"High",   title:"Now Assist crosses 1,500 enterprise customers",               desc:"GenAI adoption accelerating; AI ACV contributing ~10% of new bookings in Q4 FY25 earnings call."},
+    {date:"Nov 2024", product:"Finance Workflows",category:"Product",  impact:"Medium", title:"Finance & Supply Chain Workflows expanded",                   desc:"Launched accounts payable automation and supplier risk management expanding TAM by $15B."},
+    {date:"Aug 2024", product:"Now Platform",     category:"AI",       impact:"High",   title:"NVIDIA DGX Cloud integration for enterprise AI training",      desc:"Partnership enables enterprise customers to fine-tune AI models on ServiceNow data using NVIDIA infrastructure."}
+  ],
+
+  // ── SWOT ──────────────────────────────────────────────
+  strengths:    ["Market-leading ITSM platform","Strong platform stickiness & NRR 125%+","Expanding AI capabilities (Now Assist)","Strong enterprise relationships","High subscription revenue (98% of total)"],
+  weaknesses:   ["Premium pricing limits SMB penetration","Heavy reliance on ITSM segment","AI monetization pace uncertain"],
+  opportunities:["GenAI monetization (Now Assist)","Platform expansion beyond IT","International growth","Government sector","AI agents market $275B TAM"],
+  threats:      ["Microsoft ServiceNow overlap (Copilot for IT)","Salesforce platform expansion","Economic slowdown reducing IT budgets","AI-native ITSM startups"]
+},
+
+// ════════════════════════════════════════════════════════════
+// 2. SALESFORCE
+// ════════════════════════════════════════════════════════════
+salesforce: {
+  id:         "salesforce",
+  identifier: "salesforce",
+  name:       "Salesforce",
+  initials:   "CRM",
+  ticker:     "CRM",
+  exchange:   "NYSE",
+  sector:     "AI-Powered Enterprise Software",
+  founded:    1999,
+  hq:         "San Francisco, CA",
+    HQ:          "San Francisco, CA",
+  ceo:        "Marc Benioff",
+    CEO:         "Marc Benioff",
+  employees:  72682,
+  marketCap:  157.9,
+  website:    "salesforce.com",
+  description:"Salesforce is the world's #1 CRM platform delivering AI-first cloud applications for sales, service, marketing, and commerce. Agentforce represents its agentic AI bet for FY26+.",
+  color:      "#00A1E0",
+  isBase:     false,
+
+  years:        ["FY21","FY22","FY23","FY24","FY25"],
+  revenues:     [21.25, 26.49, 31.35, 34.86, 37.90],
+  netIncome:    [0.21,  0.21,  0.21,  4.14,  6.20],
+  ebitda:       [2.80,  3.50,  5.00,  8.00, 10.00],
+  grossProfit:  [16.30, 20.60, 24.50, 27.00, 29.30],
+  operatingIncome:[0.55,0.55,  1.00,  5.00,  7.00],
+  cashFlow:     [3.80,  6.00,  7.10,  9.50, 11.50],
+  grossMargin:  [76.7,  77.8,  78.2,  77.5,  77.2],
+  netMargin:    [1.0,   0.8,   0.7,  11.9,  16.4],
+  revGrowth:    [null, 24.7,  18.3,  11.2,   8.7],
+  eps:          [0.21,  0.21,  0.21,  4.20,  6.30],
+  latestRevenue: 37.90,
+
+  balance: [
+    {cash:8.5,  totalAssets:65.0, totalDebt:8.0},
+    {cash:5.5,  totalAssets:92.0, totalDebt:9.4},
+    {cash:7.0,  totalAssets:99.0, totalDebt:8.4},
+    {cash:8.5,  totalAssets:99.8, totalDebt:8.4},
+    {cash:10.0, totalAssets:105.0,totalDebt:8.0}
+  ],
+  cashflow: [
+    {operatingCF:3.80, capex:0.60, freeCF:3.20},
+    {operatingCF:6.00, capex:0.70, freeCF:5.30},
+    {operatingCF:7.10, capex:0.75, freeCF:6.35},
+    {operatingCF:9.50, capex:0.80, freeCF:8.70},
+    {operatingCF:11.5, capex:0.85, freeCF:10.65}
+  ],
+
+  kpis: [
+    {label:"FY25 Revenue",  value:"$37.9B",  change:"+8.7% YoY",   up:true},
+    {label:"Gross Margin",  value:"77.2%",   change:"-0.3pp YoY",  up:false},
+    {label:"Net Income",    value:"$6.2B",   change:"+50% YoY",    up:true},
+    {label:"Market Cap",    value:"$158B",   change:"NYSE: CRM",   up:true},
+    {label:"Free Cash Flow",value:"$10.7B",  change:"+13% YoY",    up:true},
+    {label:"Agentforce Cust",value:"10,000+",change:"New in FY25",  up:true}
+  ],
+
+  stockPrice:  {current:269, yearHigh:348, yearLow:212},
+  peRatio:     43.2,
+  evRevenue:   4.2,
+
+  capabilityScores: {
+    AI:         8.5,
+    Cloud:      8.0,
+    CRM:        9.5,
+    Analytics:  8.5,
+    Security:   7.5,
+    Partner:    9.0,
+    Global:     9.0,
+    Support:    8.0,
+    Innovation: 8.5,
+    Automation: 8.0
+  },
+
+  riskScores: {regulatory:4, competitive:6, execution:5, technology:5, market:4},
+
+  geographicData: [
+    {region:"Americas", flag:"🌎", rev:"$23.3B", revNum:23.3, offices:"25 offices", growth:"+7%",  share:"61%", sharePct:61, up:true,  dev:"North America dominant; Agentforce initial adoption concentrated in US enterprise"},
+    {region:"Europe",   flag:"🌍", rev:"$9.5B",  revNum:9.5,  offices:"15 offices", growth:"+11%", share:"25%", sharePct:25, up:true,  dev:"UK, Germany, France, Nordics strong; GDPR compliance investments paying off"},
+    {region:"APAC",     flag:"🌏", rev:"$5.1B",  revNum:5.1,  offices:"12 offices", growth:"+13%", share:"13%", sharePct:13, up:true,  dev:"Japan, Australia, India growing; strategic investment in Southeast Asia"}
+  ],
+
+  inorganicEvents: [
+    {year:"FY21", type:"Acquisition", target:"Slack",          value:"$27.7B",  rationale:"Enterprise collaboration hub; extends platform beyond CRM into daily work"},
+    {year:"FY22", type:"Acquisition", target:"Traction on Demand",value:"~$500M", rationale:"Salesforce implementation partner strengthening professional services"},
+    {year:"FY23", type:"Acquisition", target:"Troops.ai",      value:"~$30M",   rationale:"Revenue intelligence AI; Slack-native CRM notifications"},
+    {year:"FY24", type:"Acquisition", target:"Own Company",    value:"~$850M",  rationale:"Data protection & backup for Salesforce/Slack ecosystem"},
+    {year:"FY25", type:"Acquisition", target:"Informatica",    value:"~$8.0B",  rationale:"Data management & integration platform to power Data Cloud and Agentforce"},
+    {year:"FY25", type:"Partnership", target:"Google Cloud",   value:"Strategic",rationale:"Gemini in Salesforce; expanded Einstein Copilot capabilities"},
+    {year:"FY25", type:"Partnership", target:"AWS",            value:"Strategic",rationale:"Agentforce on AWS; joint GTM for enterprise AI agent deployments"}
+  ],
+
+  insights: {
+    product:   "Agentforce — Salesforce's agentic AI platform — reached 10,000+ customers in its first year (FY25). The platform enables autonomous AI agents across sales, service, and marketing. Data Cloud now has 35,000+ customers powering AI with proprietary enterprise data. Einstein Copilot integrated across all clouds with 100B+ AI predictions per day.",
+    strategy:  "Benioff's 'Agentforce' bet is the strategic pivot from CRM vendor to AI agent platform. The $8B Informatica acquisition (FY25) is transformative — Data Cloud + Informatica creates a unified data fabric powering AI agents. Margin expansion story (operating margin from 3% in FY22 to 22%+ in FY25) demonstrates discipline.",
+    financial: "FY25 revenue $37.9B (+8.7%) with operating margin expansion to 22%. Free cash flow of $10.7B (+13%). Informatica acquisition expected to add ~$700M in FY26 revenue. Agentforce positioned as $1B+ ARR opportunity in FY26. Management guiding to $39B–$40B for FY26 with continued margin expansion.",
+    risk:      "Growth deceleration (8.7% vs. 18%+ prior years) is the primary concern. Macro headwinds affecting SMB and mid-market. Microsoft Dynamics and HubSpot pressure in CRM. Integration risk of Informatica is significant at $8B deal size. Agentforce adoption rate needs to accelerate to justify valuation.",
+    outlook:   "FY26 guidance $39B–$40B (+3–6% organic ex-Informatica). Agentforce momentum is the key re-rating catalyst — reaching $1B ARR in FY26 would signal AI monetization working. Long-term target model: $60B revenue, 30%+ operating margin. Consensus price target $310–$350."
+    sales:       "Agentforce motion driving +18% deal sizes. Einstein Copilot upsell across all clouds. Partner ecosystem contributed 40% of FY25 revenue. Multi-cloud deals (3+ clouds) doubled YoY.",
+    rnd:       "Einstein AI and Agentforce platform investment >$2B/year. MuleSoft integration and Tableau analytics deeply embedded. Salesforce Ventures portfolio ($3B+ AUM) seeding AI ecosystem partners.",
+    inorganic:       "Slack integration driving cross-sell. Own company (formerly Vlocity) deepening industry clouds. Informatica acquisition blocked; pivoting to organic data cloud strategy. Zoomin acquisition for knowledge AI.",
+    marketing:       "Dreamforce 2024 drew 40,000+ attendees with Agentforce as centerpiece. \"We Bring Companies and Customers Together\" brand refresh. Heavy investment in Agentforce thought leadership.",
+    customerwins:       "OpenAI, Workday, and AWS selected Salesforce Agentforce. Bank of America expanded to Revenue Cloud. 150,000+ customers globally, 18,000 with $100K+ ACV.",
+    hiring:       "After 2023 layoffs of 10%, stabilized at ~72,000 employees. Hiring focused on AI/Agentforce product specialists. Incentive comp shifted toward multi-cloud expansion metrics.",
+  },
+
+  customerSegments: [
+    {name:"Enterprise",      pct:48},
+    {name:"Mid-Market",      pct:35},
+    {name:"SMB",             pct:12},
+    {name:"Government",      pct:5}
+  ],
+  totalCustomers: 150000,
+  retention:      91,
+  nrr:            112,
+  nps:            38,
+
+  topProducts: [
+    {name:"Sales Cloud",        share:30, desc:"Core CRM — accounts, leads, opportunities, forecasting"},
+    {name:"Service Cloud",      share:25, desc:"Customer service, case management, field service"},
+    {name:"Agentforce",         share:12, desc:"Autonomous AI agents for sales, service, marketing"},
+    {name:"Marketing & Commerce",share:14,desc:"Marketing automation, personalization, B2C/B2B commerce"},
+    {name:"Data Cloud",         share:11, desc:"Unified customer data platform powering AI"},
+    {name:"Slack / Platform",   share:8,  desc:"Enterprise collaboration + MuleSoft integration layer"}
+  ],
+
+  productStrategy: [
+    {year:"2021", title:"Slack Acquisition",            desc:"$27.7B acquisition transforms Salesforce into enterprise collaboration platform"},
+    {year:"2022", title:"Customer 360 Unification",     desc:"Unified Customer 360 platform connecting all clouds; Genie CDP launched"},
+    {year:"2023", title:"Einstein GPT",                 desc:"First generative AI for CRM; Einstein GPT in Sales, Service, and Marketing Cloud"},
+    {year:"2024", title:"Agentforce v1.0",              desc:"Autonomous AI agents for customer-facing workflows; Atlas reasoning engine"},
+    {year:"2025", title:"Informatica + Data Cloud",     desc:"$8B Informatica acquisition creates AI-ready data fabric; Agentforce hits 10,000 customers"}
+  ],
+
+  rndData: {
+    spend: [3.90, 4.70, 5.00, 5.20, 5.50],
+    areas: [
+      {name:"AI & Agentforce",   pct:32},
+      {name:"Data Cloud",        pct:22},
+      {name:"CRM Core",          pct:20},
+      {name:"Platform & Slack",  pct:16},
+      {name:"Security",          pct:10}
     ]
   },
 
-  servicenow: {
-    id: "servicenow",
-    identifier: "servicenow",
-    name: "ServiceNow",
-    initials: "NOW",
-    ticker: "NOW",
-    exchange: "NYSE",
-    sector: "AI-Powered Enterprise Software",
-    founded: 2004,
-    hq: "Santa Clara, CA, USA",
-    ceo: "Bill McDermott",
-    employees: 26000,
-    marketCap: 130,
-    website: "https://www.servicenow.com",
-    description: "ServiceNow is the leading intelligent workflow automation platform, digitizing enterprise processes across IT, HR, customer service, and operations. Its Now Platform with AI capabilities is central to enterprise AI transformation.",
-    color: "#62d84e",
-    isBase: false,
-    years: ["FY21","FY22","FY23","FY24","FY25"],
-    revenues: [5896,7245,8971,10984,13278],
-    ebitda: [1450,1890,2560,3340,4280],
-    netIncome: [230,325,1731,1425,1748],
-    revGrowth: [30.5,22.9,23.8,22.4,20.9],
-    eps: [0.23,0.32,1.68,1.37,1.67],
-    netMargin: [3.9,4.5,19.3,13.0,13.2],
-    grossMargin: [77.0,78.3,78.5,79.2,77.5],
-    operatingMargin: [4.4,4.9,8.5,12.4,13.7],
-    freeCashFlow: [1497,1831,2679,3506,4478],
-    rnd: [1550,1975,2415,2780,3186],
-    balance: [
-      {cash:3304,totalAssets:11017,totalDebt:2214},
-      {cash:4280,totalAssets:13851,totalDebt:2232},
-      {cash:4877,totalAssets:16930,totalDebt:2284},
-      {cash:5762,totalAssets:21580,totalDebt:2278},
-      {cash:6284,totalAssets:25090,totalDebt:2403}
-    ],
-    cashflow: [
-      {operatingCF:1697,capex:200,fcf:1497},
-      {operatingCF:2098,capex:267,fcf:1831},
-      {operatingCF:3028,capex:349,fcf:2679},
-      {operatingCF:3916,capex:410,fcf:3506},
-      {operatingCF:4880,capex:402,fcf:4478}
-    ],
-    riskScores: {regulatory:40,competitive:65,execution:35,technology:42,market:45},
-    latestRevenue: 13278,
-    kpis: [
-      {label:"FY25 Revenue",value:"$13.3B",trend:"up"},
-      {label:"Revenue Growth",value:"21% YoY",trend:"up"},
-      {label:"cRPO Growth",value:"$12.85B",trend:"up"},
-      {label:"FCF Margin",value:"33.7%",trend:"up"},
-      {label:"Now Assist Adoption",value:"Top 100 clients",trend:"up"},
-      {label:"Net Retention Rate",value:"~99%",trend:"neutral"}
-    ],
-    capabilityScores: {AI:88,Cloud:85,CRM:55,Analytics:80,Security:78,Partner:82,Global:75,Support:92,Innovation:85,Automation:96},
-    geographicData: [
-      {region:"North America",revenue:7301,growth:21.5,presence:"strong"},
-      {region:"Europe",revenue:4117,growth:20.2,presence:"strong"},
-      {region:"Asia Pacific",revenue:1460,growth:23.0,presence:"moderate"},
-      {region:"Latin America",revenue:266,growth:18.0,presence:"limited"},
-      {region:"Middle East & Africa",revenue:133,growth:16.0,presence:"limited"}
-    ],
-    inorganicEvents: [
-      {year:2021,type:"Acquisition",target:"Intellibot",value:30,rationale:"RPA capabilities integrated into Now Platform workflows"},
-      {year:2022,type:"Acquisition",target:"Hitch Works",value:0,rationale:"Skills intelligence for HR Service Delivery and employee career development"},
-      {year:2023,type:"Acquisition",target:"G2K Group",value:0,rationale:"Retail and field operations workflow capabilities"},
-      {year:2024,type:"Partnership",target:"NVIDIA",value:0,rationale:"Accelerated AI inference on Now Platform using NVIDIA AI Enterprise"},
-      {year:2024,type:"Acquisition",target:"Raytion",value:0,rationale:"Enterprise search and AI-powered knowledge discovery for Now Platform"},
-      {year:2025,type:"Acquisition",target:"Moveworks",value:2850,rationale:"Conversational AI and agentic employee service platform; strengthens Now Assist"}
-    ],
-    insights: {
-      competitive:"ServiceNow is the undisputed leader in IT workflow automation with ~99% net retention. Now Assist AI and Moveworks acquisition position it strongly against Microsoft (Power Platform) and Salesforce (Agentforce).",
-      technology:"Now Platform's AI capabilities (Now Assist, GenAI) use a combination of proprietary and third-party LLMs. The platform's process-mining and workflow-graph approach gives unique enterprise automation context.",
-      market:"ITSM, ITOM, HR service delivery, and customer workflows are expanding TAM. ServiceNow estimates its addressable market at $220B. AI transformation is expanding platform adoption beyond IT teams.",
-      regulatory:"Low regulatory risk profile. HIPAA, FedRAMP compliance enables government and healthcare verticals. EU data residency available via ServiceNow Data Center offering.",
-      execution:"Consistent 20%+ growth at scale is exceptional. McDermott's enterprise sales strategy, focused on C-suite transformation, continues to win large platform deals. Moveworks acquisition is key 2025 catalyst."
-    },
-    customerSegments: [
-      {segment:"IT Operations",pct:42},
-      {segment:"HR & Employee Experience",pct:22},
-      {segment:"Customer Service Mgmt",pct:18},
-      {segment:"Security & Risk",pct:10},
-      {segment:"Field Service",pct:8}
-    ],
-    topProducts: [
-      {name:"IT Service Management",revenue:5777,growth:19,category:"ITSM"},
-      {name:"IT Operations Mgmt",revenue:2655,growth:22,category:"ITOM"},
-      {name:"HR Service Delivery",revenue:1727,growth:28,category:"HR"},
-      {name:"Customer Service Mgmt",revenue:1593,growth:25,category:"CSM"},
-      {name:"Now Assist (AI)",revenue:530,growth:120,category:"AI"}
-    ],
-    productStrategy: [
-      {year:2021,milestone:"Now Platform Rome & San Diego releases; Automation Engine with RPA via Intellibot integration"},
-      {year:2022,milestone:"Now Platform Tokyo release; Hyperautomation capabilities across ITSM, HR, CSM workflows"},
-      {year:2023,milestone:"Now Assist generative AI launched; Vancouver & Washington releases with 40+ GenAI use cases"},
-      {year:2024,milestone:"Now Assist GA with 1M+ daily AI interactions; AI Agents framework; NVIDIA partnership for GPU inference"},
-      {year:2025,milestone:"Moveworks acquisition ($2.85B); Xanadu release with agentic AI; cRPO exceeds $12.85B"}
-    ],
-    rndData: [
-      {year:2021,spend:1550,pct:26.3},
-      {year:2022,spend:1975,pct:27.3},
-      {year:2023,spend:2415,pct:26.9},
-      {year:2024,spend:2780,pct:25.3},
-      {year:2025,spend:3186,pct:24.0}
-    ],
-    updates: [
-      {date:"Jan 2026",title:"FY25 Full Year Results",summary:"Revenue $13.3B (+21%), cRPO $12.85B, FCF $4.5B. Now Assist adopted by top 100 customers. Moveworks integration on track."},
-      {date:"Mar 2025",title:"Moveworks Acquisition $2.85B",summary:"ServiceNow acquires Moveworks to add conversational AI and agentic employee service capabilities to the Now Platform."},
-      {date:"Sep 2024",title:"Xanadu Platform Release",summary:"ServiceNow Xanadu release delivers agentic AI workflows, expanded Now Assist features, and new industry cloud accelerators."},
-      {date:"May 2024",title:"NVIDIA Partnership",summary:"ServiceNow and NVIDIA partner to accelerate enterprise AI on the Now Platform using NVIDIA AI Enterprise stack."}
+  updates: [
+    {date:"Jul 2025", product:"Agentforce",    category:"AI",      impact:"High",   title:"Agentforce 3.0 — multi-agent collaboration launched",           desc:"Agentforce 3.0 enables multiple AI agents to collaborate on complex customer journeys; early adopters reporting 40% reduction in service handle time."},
+    {date:"Apr 2025", product:"Data Cloud",    category:"Platform",impact:"High",   title:"Informatica integration — unified data fabric available",        desc:"First fruits of $8B Informatica deal: seamless data ingestion from 300+ enterprise sources into Data Cloud for AI training."},
+    {date:"Feb 2025", product:"Sales Cloud",   category:"AI",      impact:"Medium", title:"Einstein Forecasting AI accuracy improved to 95%+",             desc:"New ML models in Sales Cloud Einstein deliver 95% forecast accuracy; deployed to 50,000+ sales teams globally."},
+    {date:"Nov 2024", product:"Agentforce",    category:"AI",      impact:"High",   title:"Agentforce GA — 10,000 customers in first 90 days",             desc:"Fastest product adoption in Salesforce history; Agentforce positioned as $1B ARR opportunity for FY26."},
+    {date:"Sep 2024", product:"Einstein Copilot",category:"AI",    impact:"Medium", title:"Einstein Copilot available in all Salesforce clouds",            desc:"Generative AI copilot for sales reps, service agents, and marketers; integrated into every Salesforce cloud at no extra cost initially."}
+  ],
+
+  strengths:    ["Dominant CRM market position (#1 globally)","Deep enterprise relationships (150K+ customers)","Agentforce AI differentiation","Large partner ecosystem (Salesforce AppExchange)","Strong and expanding free cash flow"],
+  weaknesses:   ["Slowing revenue growth (8.7%)","Integration complexity post-Informatica acquisition","Valuation still premium despite deceleration"],
+  opportunities:["Agentforce AI expansion ($1B ARR target)","Data Cloud platform monetization","International growth (APAC +13%)","SMB via Agentforce self-service"],
+  threats:      ["Microsoft Dynamics competition","HubSpot SMB pressure","AI-native CRM startups (Attio, Clay)","Macro spending slowdown"]
+},
+
+// ════════════════════════════════════════════════════════════
+// 3. ALPHABET (GOOGLE)
+// ════════════════════════════════════════════════════════════
+google: {
+  id:         "google",
+  identifier: "google",
+  name:       "Alphabet (Google)",
+  initials:   "GOOG",
+  ticker:     "GOOGL",
+  exchange:   "NASDAQ",
+  sector:     "AI-Powered Enterprise Software",
+  founded:    1998,
+  hq:         "Mountain View, CA",
+    HQ:          "Mountain View, CA",
+  ceo:        "Sundar Pichai",
+    CEO:         "Sundar Pichai",
+  employees:  190820,
+  marketCap:  2100.0,
+  website:    "abc.xyz",
+  description:"Alphabet is Google's parent company operating the world's most used search engine, YouTube, Android, and Google Cloud — a rapidly growing AI-powered enterprise cloud platform with Gemini at its core.",
+  color:      "#4285F4",
+  isBase:     false,
+
+  years:        ["FY21","FY22","FY23","FY24","FY25"],
+  revenues:     [257.6, 282.8, 307.4, 350.0, 403.0],
+  netIncome:    [76.0,  60.0,  73.8, 100.1, 132.2],
+  ebitda:       [94.0,  89.0, 103.0, 133.0, 162.0],
+  grossProfit:  [146.7, 156.6, 174.1, 210.0, 240.5],
+  operatingIncome:[78.7,74.8,  84.3, 109.0, 138.0],
+  cashFlow:     [91.6,  91.5, 101.7, 125.0, 150.0],
+  grossMargin:  [56.9,  55.4,  56.6,  60.0,  59.7],
+  netMargin:    [29.5,  21.2,  24.0,  28.6,  32.8],
+  revGrowth:    [null,   9.8,   8.7,  13.9,  15.1],
+  eps:          [5.61,  4.56,  5.80,  7.79, 10.50],
+  latestRevenue: 403.0,
+
+  balance: [
+    {cash:142.0, totalAssets:359.3, totalDebt:14.8},
+    {cash:116.3, totalAssets:365.3, totalDebt:14.7},
+    {cash:110.9, totalAssets:402.4, totalDebt:13.3},
+    {cash:110.9, totalAssets:450.0, totalDebt:13.2},
+    {cash:130.0, totalAssets:510.0, totalDebt:12.0}
+  ],
+  cashflow: [
+    {operatingCF:91.6,  capex:24.6, freeCF:67.0},
+    {operatingCF:91.5,  capex:31.5, freeCF:60.0},
+    {operatingCF:101.7, capex:32.3, freeCF:69.4},
+    {operatingCF:125.0, capex:52.5, freeCF:72.5},
+    {operatingCF:150.0, capex:75.0, freeCF:75.0}
+  ],
+
+  kpis: [
+    {label:"FY25 Revenue",   value:"$403B",   change:"+15.1% YoY", up:true},
+    {label:"Net Income",     value:"$132B",   change:"+32% YoY",   up:true},
+    {label:"GCP Revenue",    value:"$43.2B",  change:"+28% YoY",   up:true},
+    {label:"Market Cap",     value:"$2.1T",   change:"NASDAQ: GOOGL",up:true},
+    {label:"Net Margin",     value:"32.8%",   change:"+4.2pp YoY", up:true},
+    {label:"Free Cash Flow", value:"$75.0B",  change:"+3% YoY",    up:true}
+  ],
+
+  stockPrice:  {current:175, yearHigh:208, yearLow:142},
+  peRatio:     21.8,
+  evRevenue:   5.2,
+
+  capabilityScores: {
+    AI:         9.8,
+    Cloud:      9.0,
+    CRM:        4.5,
+    Analytics:  9.5,
+    Security:   9.0,
+    Partner:    8.5,
+    Global:     9.8,
+    Support:    7.0,
+    Innovation: 9.8,
+    Automation: 8.5
+  },
+
+  riskScores: {regulatory:8, competitive:4, execution:3, technology:2, market:3},
+
+  geographicData: [
+    {region:"Americas", flag:"🌎", rev:"$230B", revNum:230, offices:"50+ offices", growth:"+14%", share:"57%", sharePct:57, up:true,  dev:"US advertising dominant; GCP growth led by enterprise AI workloads in North America"},
+    {region:"Europe",   flag:"🌍", rev:"$90B",  revNum:90,  offices:"30+ offices", growth:"+12%", share:"22%", sharePct:22, up:true,  dev:"Strong advertising market; GDPR compliance costly; GCP growing in financial services"},
+    {region:"APAC",     flag:"🌏", rev:"$62B",  revNum:62,  offices:"25+ offices", growth:"+20%", share:"15%", sharePct:15, up:true,  dev:"YouTube & Search dominant in APAC; GCP expanding in Japan, Australia, India"}
+  ],
+
+  inorganicEvents: [
+    {year:"FY21", type:"Acquisition", target:"Fitbit (closed)", value:"$2.1B",   rationale:"Wearables & health data to power health AI initiatives"},
+    {year:"FY22", type:"Acquisition", target:"Mandiant",        value:"$5.4B",   rationale:"Cybersecurity threat intelligence boosting Google Cloud security"},
+    {year:"FY23", type:"Investment",  target:"Anthropic",       value:"$300M",   rationale:"Strategic AI investment; access to Claude models for GCP customers"},
+    {year:"FY23", type:"Acquisition", target:"Photomath",       value:"~$100M",  rationale:"AI-powered math education app for Google's EdTech expansion"},
+    {year:"FY24", type:"Investment",  target:"Anthropic",       value:"$2.0B",   rationale:"Deepened AI partnership; Anthropic models available on Google Cloud (Vertex AI)"},
+    {year:"FY25", type:"Acquisition", target:"Wiz",             value:"$32B",    rationale:"Cloud security leader; transforms Google Cloud's security posture and enterprise credibility"},
+    {year:"FY25", type:"Partnership", target:"Samsung",         value:"Strategic",rationale:"Gemini AI as default on Galaxy devices; expands Gemini consumer reach"}
+  ],
+
+  insights: {
+    product:   "Google Cloud (GCP) reached $43.2B in FY25 revenue (+28% YoY), now profitable with 17% operating margin. Gemini 2.0 Ultra leads enterprise AI, with Vertex AI as the enterprise MLOps platform. Google Workspace now has 10M+ paid seats. The $32B Wiz acquisition (FY25) positions GCP as the cloud security leader.",
+    strategy:  "Google's AI-first strategy is centered on Gemini as a cross-platform intelligence layer (Search, Cloud, Workspace, Android). Cloud is the fastest-growing segment and the strategic battleground vs. AWS and Azure. The Wiz acquisition signals serious enterprise ambition — cloud security is table stakes for enterprise deals.",
+    financial: "FY25 total revenue $403B (+15%), with Google Cloud as the growth engine at 28%. Net income surged to $132B (+32%) driven by operating leverage and advertising rebound. Capex of $75B in FY25 reflects AI infrastructure investment. Free cash flow of $75B despite heavy capex — fortress balance sheet.",
+    risk:      "DOJ antitrust case (Search monopoly ruling) is an existential risk — potential forced divestiture of Chrome/Android. AI search disruption from ChatGPT/Perplexity is a structural threat to Search revenue. Cloud still trails AWS/Azure. EU Digital Markets Act compliance creating friction.",
+    outlook:   "GCP targeting $100B+ by FY28 if current growth trajectory holds. Gemini monetization via Workspace and Cloud is accelerating. Search resilience is being tested — AI Overviews launched without revenue headwind so far. Consensus: $200–$220 PT. Key catalysts: antitrust outcome, GCP growth inflection, Gemini monetization."
+    sales:       "GCP growing 28% YoY, driven by AI workloads (Vertex AI, Gemini). Enterprise channel through Google Cloud partners up 45%. Government/public sector cloud wins accelerating.",
+    rnd:       "$49B R&D spend in FY25. DeepMind and Google Brain merged. Gemini Ultra, Flash, and Nano family spanning all compute tiers. TPU v5 and Trillium chips in production.",
+    inorganic:       "Mandiant (cybersecurity), Anthropic stake ($300M), Wiz acquisition ($23B, 2024) for cloud security. Focus on AI safety and enterprise security acquisitions.",
+    marketing:       "Google Cloud Next 2025 showcased Gemini in Workspace. \"Google it\" brand equity extended to enterprise AI. YouTube and Search advertising dominance cross-subsidizes cloud discounting.",
+    customerwins:       "Goldman Sachs, Mayo Clinic, and Deutsche Bank on Vertex AI. 9,000+ Google Cloud partners. 60% of unicorns use Google Cloud.",
+    hiring:       "182,000+ employees. Post-2023 restructuring stabilized. Continued heavy ML researcher hiring. DeepMind talent pipeline feeding Google Cloud AI product team.",
+  },
+
+  customerSegments: [
+    {name:"Advertising (SMB/Enterprise)", pct:55},
+    {name:"Cloud Enterprise",             pct:28},
+    {name:"Consumer / YouTube Premium",   pct:12},
+    {name:"Hardware & Other",             pct:5}
+  ],
+  totalCustomers: 10000,
+  retention:      88,
+  nrr:            115,
+  nps:            35,
+
+  topProducts: [
+    {name:"Google Search / Ads",      share:55, desc:"Global search advertising; 90%+ market share; AI Overviews launched"},
+    {name:"Google Cloud (GCP)",       share:17, desc:"IaaS/PaaS/SaaS cloud; BigQuery, Vertex AI, Workspace, GKE"},
+    {name:"YouTube",                  share:13, desc:"Video platform; $35B+ ad revenue; YouTube TV, Shorts growth"},
+    {name:"Google Workspace",         share:8,  desc:"Gmail, Docs, Meet, Drive with Gemini AI copilot"},
+    {name:"Gemini AI Platform",       share:5,  desc:"Gemini 2.0 across Search, Cloud, Workspace, Android"},
+    {name:"Android / Play",           share:2,  desc:"Mobile OS (3B+ devices); App Store revenue stream"}
+  ],
+
+  productStrategy: [
+    {year:"2021", title:"Google Cloud Profitability Push",      desc:"Sundar Pichai accelerates cloud investment; Mandiant acquisition in pipeline"},
+    {year:"2022", title:"Enterprise Cloud Expansion",           desc:"Mandiant ($5.4B) closes; alliances with SAP, Salesforce for cloud migrations"},
+    {year:"2023", title:"Bard / Gemini Launch",                 desc:"Response to ChatGPT; Bard → Gemini rebrand; Duet AI in Workspace"},
+    {year:"2024", title:"Gemini 2.0 & AI Overviews",           desc:"Gemini 2.0 Ultra best-in-class; AI Overviews in Search; Vertex AI enterprise scale"},
+    {year:"2025", title:"Wiz Acquisition + Cloud Security",     desc:"$32B Wiz closes — cloud security crown jewel; GCP now complete enterprise stack"}
+  ],
+
+  rndData: {
+    spend: [31.6, 39.5, 45.4, 49.3, 54.0],
+    areas: [
+      {name:"AI & Gemini",           pct:40},
+      {name:"Cloud Infrastructure",  pct:25},
+      {name:"Search & Ads",          pct:15},
+      {name:"Security (Mandiant/Wiz)",pct:12},
+      {name:"Hardware & Other",      pct:8}
     ]
   },
 
-  google: {
-    id: "google",
-    identifier: "google",
-    name: "Alphabet (Google)",
-    initials: "GOOG",
-    ticker: "GOOGL",
-    exchange: "NASDAQ",
-    sector: "AI-Powered Enterprise Software",
-    founded: 1998,
-    hq: "Mountain View, CA, USA",
-    ceo: "Sundar Pichai",
-    employees: 183000,
-    marketCap: 2080,
-    website: "https://abc.xyz",
-    description: "Alphabet (Google) operates the world's largest search and advertising ecosystem alongside Google Cloud, the #3 cloud platform accelerating in AI. Gemini AI models power enterprise products across Workspace, Cloud, and consumer services.",
-    color: "#4285f4",
-    isBase: false,
-    years: ["FY21","FY22","FY23","FY24","FY25"],
-    revenues: [257637,282836,307394,350018,402836],
-    ebitda: [88265,81050,97200,115950,132650],
-    netIncome: [76033,59972,73795,100118,132170],
-    revGrowth: [41.2,9.8,8.7,13.9,15.1],
-    eps: [5.61,4.56,5.80,8.05,10.82],
-    netMargin: [29.5,21.2,24.0,28.6,32.8],
-    grossMargin: [56.9,55.4,56.6,58.2,59.6],
-    operatingMargin: [30.6,26.5,27.4,32.1,32.0],
-    freeCashFlow: [67012,60010,69495,72787,76692],
-    rnd: [31562,39500,45427,49352,52000],
-    balance: [
-      {cash:139649,totalAssets:359268,totalDebt:14817},
-      {cash:113762,totalAssets:391237,totalDebt:14701},
-      {cash:119034,totalAssets:402392,totalDebt:28970},
-      {cash:121000,totalAssets:430264,totalDebt:13497},
-      {cash:131248,totalAssets:450350,totalDebt:13248}
-    ],
-    cashflow: [
-      {operatingCF:91652,capex:24640,fcf:67012},
-      {operatingCF:91496,capex:31485,fcf:60011},
-      {operatingCF:101746,capex:32251,fcf:69495},
-      {operatingCF:109990,capex:37203,fcf:72787},
-      {operatingCF:115680,capex:52348,fcf:63332}
-    ],
-    riskScores: {regulatory:85,competitive:60,execution:40,technology:30,market:35},
-    latestRevenue: 402836,
-    kpis: [
-      {label:"FY25 Revenue",value:"$402.8B",trend:"up"},
-      {label:"Google Cloud Revenue",value:"$58.7B",trend:"up"},
-      {label:"Cloud Growth YoY",value:"35.7%",trend:"up"},
-      {label:"Operating Margin",value:"32.0%",trend:"neutral"},
-      {label:"Gemini AI Models",value:"2B+ users",trend:"up"},
-      {label:"Search Market Share",value:">90%",trend:"neutral"}
-    ],
-    capabilityScores: {AI:96,Cloud:90,CRM:45,Analytics:94,Security:88,Partner:80,Global:97,Support:72,Innovation:95,Automation:82},
-    geographicData: [
-      {region:"North America",revenue:217529,growth:15.0,presence:"strong"},
-      {region:"Europe",revenue:80567,growth:14.2,presence:"strong"},
-      {region:"Asia Pacific",revenue:72510,growth:16.8,presence:"strong"},
-      {region:"Latin America",revenue:20141,growth:13.5,presence:"moderate"},
-      {region:"Middle East & Africa",revenue:12089,growth:12.0,presence:"moderate"}
-    ],
-    inorganicEvents: [
-      {year:2022,type:"Acquisition",target:"Mandiant",value:5400,rationale:"Cybersecurity capabilities integrated into Google Cloud Security; strengthens Chronicle SIEM"},
-      {year:2023,type:"Investment",target:"Anthropic",value:300,rationale:"Strategic investment in frontier AI safety research; model access for Google Cloud AI services"},
-      {year:2024,type:"Acquisition",target:"Wiz",value:32000,rationale:"Cloud security company; largest acquisition in Alphabet history to strengthen Google Cloud security"},
-      {year:2024,type:"Investment",target:"Anthropic (follow-on)",value:2000,rationale:"Additional investment; Claude models available on Google Cloud Vertex AI"},
-      {year:2025,type:"Acquisition",target:"Cameyo",value:0,rationale:"Virtual app delivery for Chrome Enterprise and Google Workspace"},
-      {year:2025,type:"Partnership",target:"Samsung",value:0,rationale:"Gemini AI integration across Samsung Galaxy devices; multi-year AI assistant agreement"}
-    ],
-    insights: {
-      competitive:"Google Cloud is the fastest-growing of the hyperscalers at 35%+ YoY, closing the gap with Azure and AWS. Gemini models differentiate Google Cloud's AI stack, particularly in multimodal use cases.",
-      technology:"Gemini 2.0 Ultra/Pro/Flash models, TPU v5e/v6 custom chips, AlphaFold, and NotebookLM represent Google's leading-edge AI R&D. Vertex AI is the enterprise deployment platform.",
-      market:"Google Cloud is targeting $100B+ ARR by 2026. Enterprise software (Workspace AI, Gemini for Google Cloud) is accelerating as AI becomes the primary enterprise workload driver.",
-      regulatory:"Significant regulatory risk: DOJ antitrust ruling on search monopoly (2024), EU DMA compliance requirements, ongoing scrutiny of AI model training practices and data use.",
-      execution:"Strong financial execution with record margins in FY25. Cloud profitability inflection is a key milestone. Risk: antitrust remedies could structurally impact search revenue, the primary profit engine."
-    },
-    customerSegments: [
-      {segment:"Advertising (Search/YouTube)",pct:73},
-      {segment:"Google Cloud Enterprise",pct:15},
-      {segment:"Subscriptions & Devices",pct:9},
-      {segment:"Other Bets",pct:3}
-    ],
-    topProducts: [
-      {name:"Google Search & Ads",revenue:224532,growth:13,category:"Advertising"},
-      {name:"Google Cloud",revenue:58705,growth:36,category:"Cloud"},
-      {name:"YouTube Ads",revenue:40367,growth:14,category:"Advertising"},
-      {name:"Google Workspace",revenue:12000,growth:22,category:"Productivity"},
-      {name:"Google Subscriptions",revenue:27160,growth:19,category:"Consumer"}
-    ],
-    productStrategy: [
-      {year:2021,milestone:"Google Cloud Vertex AI launched; Workspace HIPAA compliance; DeepMind AlphaFold protein structure breakthrough"},
-      {year:2022,milestone:"Google Cloud Next; mandiant acquisition closes; LaMDA conversational AI demos; Pixel 7 AI features"},
-      {year:2023,milestone:"Bard (Gemini) launched; Google Cloud Next with AI-first messaging; Duet AI for Workspace (now Gemini for Google Workspace)"},
-      {year:2024,milestone:"Gemini 1.5 Pro with 1M context window; Wiz $32B acquisition; NotebookLM expansion; Google Cloud hits $43B revenue"},
-      {year:2025,milestone:"Gemini 2.0 Ultra launch; Google Agentspace for enterprise AI agents; Project Astra multimodal assistant GA"}
-    ],
-    rndData: [
-      {year:2021,spend:31562,pct:12.2},
-      {year:2022,spend:39500,pct:14.0},
-      {year:2023,spend:45427,pct:14.8},
-      {year:2024,spend:49352,pct:14.1},
-      {year:2025,spend:52000,pct:12.9}
-    ],
-    updates: [
-      {date:"Feb 2026",title:"FY25 Full Year Results",summary:"Revenue $402.8B (+15%), Google Cloud $58.7B (+36%), Net Income $132.2B record. Gemini AI integration across all products."},
-      {date:"Sep 2024",title:"Wiz Acquisition $32B",summary:"Alphabet closes $32B acquisition of Wiz cloud security, the largest in Alphabet history, integrated into Google Cloud."},
-      {date:"Dec 2024",title:"Gemini 2.0 Launch",summary:"Google launches Gemini 2.0 Ultra and Flash models with agentic capabilities, native tool use, and multimodal generation."},
-      {date:"Apr 2025",title:"Google Agentspace GA",summary:"Google Agentspace for enterprise, enabling organizations to build and deploy custom AI agents on Google Cloud infrastructure."}
+  updates: [
+    {date:"Jun 2025", product:"Wiz",         category:"Acquisition",impact:"High",   title:"$32B Wiz acquisition closes — cloud security leader",         desc:"Transformative deal; Wiz secures 40% of Fortune 500. Positions GCP as most secure enterprise cloud."},
+    {date:"Apr 2025", product:"Gemini",      category:"AI",         impact:"High",   title:"Gemini 2.5 Pro achieves #1 on MMLU, GPQA benchmarks",         desc:"Gemini 2.5 Pro surpasses GPT-4o on coding and reasoning benchmarks; deployed across all Google products."},
+    {date:"Feb 2025", product:"Google Cloud",category:"Platform",   impact:"High",   title:"GCP revenue hits $43.2B (+28%) — profitable at 17% margin",   desc:"Google Cloud now contributes meaningfully to Alphabet profitability; Q4 FY25 cloud operating income $3.2B."},
+    {date:"Nov 2024", product:"Workspace",   category:"AI",         impact:"Medium", title:"Gemini in Workspace reaches 10M paid users",                  desc:"Gemini for Google Workspace (Docs, Gmail, Meet) hits 10M paid users; enterprise adoption accelerating."},
+    {date:"Sep 2024", product:"Search",      category:"AI",         impact:"High",   title:"AI Overviews launched globally — no Search revenue impact",   desc:"AI Overviews in Search deployed to 1B+ users; early monetization data shows ads retained alongside AI answers."}
+  ],
+
+  strengths:    ["AI leadership with Gemini 2.5","Dominant search/ads business (90% market share)","Google Cloud rapid growth (+28%)","Massive data advantage","$130B cash fortress"],
+  weaknesses:   ["Regulatory antitrust exposure (DOJ ruling)","Ad revenue concentration (55% of total)","Cloud still trails AWS/Azure by market share"],
+  opportunities:["Gemini AI monetization across all surfaces","GCP enterprise expansion (Wiz acquisition)","AI infrastructure demand","YouTube Shorts monetization"],
+  threats:      ["Search disruption from AI (Perplexity, ChatGPT)","DOJ forced divestiture risk","Microsoft Azure + OpenAI competition","EU regulatory tightening"]
+},
+
+// ════════════════════════════════════════════════════════════
+// 4. MICROSOFT
+// ════════════════════════════════════════════════════════════
+microsoft: {
+  id:         "microsoft",
+  identifier: "microsoft",
+  name:       "Microsoft",
+  initials:   "MSFT",
+  ticker:     "MSFT",
+  exchange:   "NASDAQ",
+  sector:     "AI-Powered Enterprise Software",
+  founded:    1975,
+  hq:         "Redmond, WA",
+    HQ:          "Redmond, WA",
+  ceo:        "Satya Nadella",
+    CEO:         "Satya Nadella",
+  employees:  228000,
+  marketCap:  3100.0,
+  website:    "microsoft.com",
+  description:"Microsoft is the world's largest software company by market cap, delivering cloud infrastructure (Azure), AI services (Copilot), productivity software (Microsoft 365), and developer tools (GitHub) at global enterprise scale.",
+  color:      "#00A4EF",
+  isBase:     false,
+
+  years:        ["FY21","FY22","FY23","FY24","FY25"],
+  revenues:     [168.1, 198.3, 211.9, 245.1, 281.7],
+  netIncome:    [61.3,  72.7,  72.4,  88.1, 101.8],
+  ebitda:       [85.0,  99.0, 106.5, 125.0, 143.0],
+  grossProfit:  [115.9, 135.6, 146.1, 171.0, 193.9],
+  operatingIncome:[69.9,83.4,  88.5, 109.4, 125.0],
+  cashFlow:     [76.7,  89.0,  87.9, 118.5, 135.0],
+  grossMargin:  [69.0,  68.4,  68.9,  69.8,  68.8],
+  netMargin:    [36.5,  36.7,  34.1,  35.9,  36.1],
+  revGrowth:    [null,  17.9,   6.9,  15.7,  14.9],
+  eps:          [8.12,  9.65,  9.72, 11.80, 13.76],
+  latestRevenue: 281.7,
+
+  balance: [
+    {cash:130.3, totalAssets:333.8, totalDebt:67.1},
+    {cash:104.8, totalAssets:364.8, totalDebt:61.3},
+    {cash:111.3, totalAssets:411.4, totalDebt:59.6},
+    {cash:75.5,  totalAssets:512.2, totalDebt:79.4},
+    {cash:71.6,  totalAssets:563.0, totalDebt:86.2}
+  ],
+  cashflow: [
+    {operatingCF:76.7,  capex:20.6, freeCF:56.1},
+    {operatingCF:89.0,  capex:23.9, freeCF:65.1},
+    {operatingCF:87.9,  capex:28.1, freeCF:59.8},
+    {operatingCF:118.5, capex:44.5, freeCF:74.0},
+    {operatingCF:135.0, capex:55.7, freeCF:79.3}
+  ],
+
+  kpis: [
+    {label:"FY25 Revenue",   value:"$281.7B", change:"+14.9% YoY", up:true},
+    {label:"Azure Growth",   value:"+35%",    change:"Q4 FY25 CC",  up:true},
+    {label:"Net Income",     value:"$101.8B", change:"+15.5% YoY", up:true},
+    {label:"Market Cap",     value:"$3.1T",   change:"NASDAQ: MSFT",up:true},
+    {label:"Cloud Revenue",  value:"$135B+",  change:"Intelligent Cloud",up:true},
+    {label:"Copilot Seats",  value:"400M+",   change:"M365 Copilot active",up:true}
+  ],
+
+  stockPrice:  {current:415, yearHigh:475, yearLow:370},
+  peRatio:     30.2,
+  evRevenue:   11.0,
+
+  capabilityScores: {
+    AI:         9.5,
+    Cloud:      9.5,
+    CRM:        7.0,
+    Analytics:  9.0,
+    Security:   9.2,
+    Partner:    9.5,
+    Global:     9.8,
+    Support:    8.5,
+    Innovation: 9.2,
+    Automation: 9.0
+  },
+
+  riskScores: {regulatory:6, competitive:3, execution:2, technology:2, market:3},
+
+  geographicData: [
+    {region:"Americas", flag:"🌎", rev:"$158B", revNum:158, offices:"60+ offices", growth:"+14%", share:"56%", sharePct:56, up:true,  dev:"US enterprise dominant; Azure AI workloads driving hypergrowth in North America"},
+    {region:"Europe",   flag:"🌍", rev:"$73B",  revNum:73,  offices:"35+ offices", growth:"+16%", share:"26%", sharePct:26, up:true,  dev:"EMEA growing above average; EU Copilot adoption strong; GDPR-compliant EU datacenters"},
+    {region:"APAC",     flag:"🌏", rev:"$51B",  revNum:51,  offices:"30+ offices", growth:"+17%", share:"18%", sharePct:18, up:true,  dev:"Japan, Australia, India, Singapore all strategic; LinkedIn & Xbox complementary"}
+  ],
+
+  inorganicEvents: [
+    {year:"FY21", type:"Acquisition", target:"Nuance Communications", value:"$19.7B", rationale:"Conversational AI & voice technology; Dragon Medical accelerating healthcare AI"},
+    {year:"FY22", type:"Acquisition", target:"Activision Blizzard",   value:"$68.7B", rationale:"Gaming content & mobile game leadership; Game Pass value enhancement"},
+    {year:"FY23", type:"Investment",  target:"OpenAI",                value:"$10B",   rationale:"Exclusive Azure partner; GPT-4 powers Copilot across entire Microsoft stack"},
+    {year:"FY23", type:"Acquisition", target:"Fungible",              value:"~$190M", rationale:"DPU chip technology for Azure datacenter efficiency"},
+    {year:"FY24", type:"Partnership", target:"Mistral AI",            value:"$16M+",  rationale:"European AI model access; diversity of AI model supply"},
+    {year:"FY25", type:"Acquisition", target:"Inflection AI (assets)",value:"~$650M", rationale:"Acqui-hire of Pi AI team; talent and model capabilities for Copilot"},
+    {year:"FY25", type:"Partnership", target:"Oracle",                value:"Strategic",rationale:"Multicloud Oracle Database on Azure; cross-sell to joint enterprise customers"}
+  ],
+
+  insights: {
+    product:   "Microsoft Copilot (M365) has 400M+ licensed seats with ~20M daily active users in FY25. GitHub Copilot is the #1 developer AI tool with 2M+ paid subscribers. Azure AI grew 50%+ YoY as enterprises build on Azure OpenAI Service. Power Platform (low-code) crossed $3B ARR. Dynamics 365 + Copilot competing with Salesforce in CRM.",
+    strategy:  "Satya Nadella's 'AI at the center' strategy is delivering: Azure is the #2 cloud growing to close the gap on AWS. Copilot is the monetization vehicle across M365 (Copilot for Microsoft 365 at $30/user/month). The OpenAI partnership is the most valuable in enterprise tech. Microsoft is the only company with leading positions in cloud, AI, developer tools, and enterprise software simultaneously.",
+    financial: "FY25 revenue $281.7B (+14.9%). Intelligent Cloud segment $135B+ with Azure growing 35% in constant currency. Operating margin 44%+ — best-in-class in enterprise software. Net income $101.8B is the highest in company history. Capex $55.7B reflects AI infrastructure investment — ROI expected over 2–3 year horizon.",
+    risk:      "Azure capex intensity ($55.7B FY25) creates near-term FCF pressure. CMA scrutiny of Activision integration. OpenAI relationship becoming more complex as OpenAI diversifies cloud partners. European antitrust investigations into Teams bundling. Copilot ROI justification is early-stage.",
+    outlook:   "FY26 guidance: $305B–$315B revenue, Azure growth 34–35%. Copilot monetization is the $10B+ incremental opportunity. Azure AI services revenue growing faster than overall Azure. Long-term: Microsoft targeting 50%+ of Fortune 500 on Copilot by FY27. Consensus PT $475–$510."
+    sales:       "Copilot for M365 added to 400M+ seat base. Azure AI (OpenAI partnership) driving consumption uplift. CSP partner channel expanded 20%. MISA security ecosystem driving enterprise renewals.",
+    rnd:       "$29B R&D in FY25. OpenAI $13B investment. GitHub Copilot monetization scaling. Phi-3 small language models for edge. Azure AI Foundry platform consolidating AI development.",
+    inorganic:       "Activision ($69B, 2023), Nuance (healthcare AI), Atlas (cybersecurity). Regulatory pushback limiting further large acquisitions. FTC scrutiny of AI hyperscaler deals.",
+    marketing:       "Microsoft Ignite and Build conferences. Satya Nadella \"AI-first\" narrative dominant. Teams brand recovery post-Slack competition. LinkedIn as B2B marketing and sales intelligence platform.",
+    customerwins:       "Coca-Cola, Lufthansa, and HSBC Copilot deployments. 85% of Fortune 500 on Azure. GitHub Copilot at 1.3M paid subscribers.",
+    hiring:       "228,000+ employees. 10,000 cuts in 2023 reallocated to AI. Engineering headcount 60% in AI/cloud roles. India and China R&D centers scaled for AI workloads.",
+  },
+
+  customerSegments: [
+    {name:"Enterprise (M365/Azure)",     pct:55},
+    {name:"Commercial Mid-Market",       pct:25},
+    {name:"Government / Defense",        pct:10},
+    {name:"Consumer / Gaming",           pct:10}
+  ],
+  totalCustomers: 345000,
+  retention:      93,
+  nrr:            130,
+  nps:            40,
+
+  topProducts: [
+    {name:"Microsoft Azure",        share:35, desc:"Cloud IaaS/PaaS; #2 cloud; Azure OpenAI Service growing 50%+"},
+    {name:"Microsoft 365 + Copilot",share:30, desc:"Productivity suite; 400M seats; $30/user Copilot add-on"},
+    {name:"Dynamics 365",           share:12, desc:"ERP and CRM; competing with Salesforce, SAP, Oracle"},
+    {name:"GitHub + DevTools",      share:10, desc:"GitHub Copilot 2M+ subscribers; VS Code dominant IDE"},
+    {name:"Security (Defender/Sentinel)",share:8,desc:"$20B+ ARR security business; fastest growing segment"},
+    {name:"Gaming (Xbox/Activision)",share:5, desc:"$20B gaming revenue post-Activision; Game Pass 34M subscribers"}
+  ],
+
+  productStrategy: [
+    {year:"2021", title:"Nuance Acquisition",           desc:"$19.7B Nuance closes; Dragon Medical powers Azure AI for healthcare"},
+    {year:"2022", title:"Activision Deal Announced",    desc:"$68.7B gaming deal; Microsoft becomes #3 global gaming company"},
+    {year:"2023", title:"OpenAI & Copilot Launch",      desc:"$10B OpenAI investment; Copilot integrated in M365, Azure, GitHub, Bing"},
+    {year:"2024", title:"Copilot Everywhere",           desc:"Copilot in Windows 11, Edge, Teams, Dynamics; 50+ product integrations"},
+    {year:"2025", title:"Azure AI Leadership",          desc:"Azure OpenAI Service powers 50%+ of Fortune 500 AI initiatives; Security $20B+ ARR"}
+  ],
+
+  rndData: {
+    spend: [20.7, 24.5, 27.2, 29.5, 34.0],
+    areas: [
+      {name:"Azure & Cloud",      pct:35},
+      {name:"AI & Copilot",       pct:30},
+      {name:"Security",           pct:15},
+      {name:"Developer (GitHub)", pct:12},
+      {name:"Gaming & Consumer",  pct:8}
     ]
   },
 
-  oracle: {
-    id: "oracle",
-    identifier: "oracle",
-    name: "Oracle",
-    initials: "ORCL",
-    ticker: "ORCL",
-    exchange: "NYSE",
-    sector: "AI-Powered Enterprise Software",
-    founded: 1977,
-    hq: "Austin, TX, USA",
-    ceo: "Safra Catz",
-    employees: 164000,
-    marketCap: 420,
-    website: "https://www.oracle.com",
-    description: "Oracle is a leading enterprise database, cloud, and ERP software company undergoing rapid AI cloud transformation. Oracle Cloud Infrastructure (OCI) and Autonomous Database are central to its AI strategy, with strong momentum in GPU clusters for AI workloads.",
-    color: "#f80000",
-    isBase: false,
-    years: ["FY21","FY22","FY23","FY24","FY25"],
-    revenues: [40479,42440,49954,52961,57399],
-    ebitda: [17800,18950,22880,24060,26800],
-    netIncome: [5529,6717,8503,10467,12443],
-    revGrowth: [4.1,4.8,17.7,6.0,8.4],
-    eps: [1.88,2.41,3.07,3.71,4.34],
-    netMargin: [13.7,15.8,17.0,19.8,21.7],
-    grossMargin: [79.2,79.1,72.8,71.4,70.5],
-    operatingMargin: [34.8,35.4,28.8,29.1,30.8],
-    freeCashFlow: [12800,9452,8413,11800,13500],
-    rnd: [6036,6985,8619,8892,9600],
-    balance: [
-      {cash:18386,totalAssets:131000,totalDebt:75000},
-      {cash:21390,totalAssets:109297,totalDebt:76065},
-      {cash:9660,totalAssets:134102,totalDebt:91028},
-      {cash:10454,totalAssets:141774,totalDebt:88778},
-      {cash:11040,totalAssets:158000,totalDebt:91500}
-    ],
-    cashflow: [
-      {operatingCF:15025,capex:2225,fcf:12800},
-      {operatingCF:13551,capex:4099,fcf:9452},
-      {operatingCF:17196,capex:8783,fcf:8413},
-      {operatingCF:18663,capex:6863,fcf:11800},
-      {operatingCF:20700,capex:7200,fcf:13500}
-    ],
-    riskScores: {regulatory:52,competitive:70,execution:55,technology:58,market:48},
-    latestRevenue: 57399,
-    kpis: [
-      {label:"FY25 Revenue",value:"$57.4B",trend:"up"},
-      {label:"OCI Revenue Growth",value:"+52% YoY",trend:"up"},
-      {label:"Cloud Backlog",value:"$130B+",trend:"up"},
-      {label:"Remaining Perf. Obligation",value:"$138B",trend:"up"},
-      {label:"Operating Margin",value:"30.8%",trend:"up"},
-      {label:"Database Market Share",value:"~30%",trend:"neutral"}
-    ],
-    capabilityScores: {AI:80,Cloud:82,CRM:65,Analytics:85,Security:80,Partner:72,Global:85,Support:78,Innovation:70,Automation:75},
-    geographicData: [
-      {region:"North America",revenue:32765,growth:9.2,presence:"strong"},
-      {region:"Europe",revenue:11480,growth:7.5,presence:"strong"},
-      {region:"Asia Pacific",revenue:8610,growth:10.0,presence:"moderate"},
-      {region:"Latin America",revenue:2870,growth:8.5,presence:"moderate"},
-      {region:"Middle East & Africa",revenue:1674,growth:12.0,presence:"moderate"}
-    ],
-    inorganicEvents: [
-      {year:2022,type:"Acquisition",target:"Cerner",value:28300,rationale:"Healthcare IT and EHR — expands Oracle into $8T healthcare market; Cerner cloud migration ongoing"},
-      {year:2023,type:"Partnership",target:"Microsoft Azure",value:0,rationale:"Multi-cloud database interconnect — Oracle Database available on Azure with low-latency links"},
-      {year:2023,type:"Partnership",target:"Google Cloud",value:0,rationale:"Oracle Database@Google Cloud; cross-cloud interconnect for enterprise migrations"},
-      {year:2024,type:"Partnership",target:"Amazon AWS",value:0,rationale:"Oracle Database@AWS; completes tri-cloud strategy with all three hyperscalers"},
-      {year:2024,type:"Investment",target:"OCI AI GPU Clusters",value:8000,rationale:"$8B+ investment in GPU clusters for AI training workloads; 65,000 NVIDIA H100 cluster announced"},
-      {year:2025,type:"Partnership",target:"OpenAI",value:0,rationale:"OpenAI selects OCI to expand capacity; Stargate consortium with Microsoft and SoftBank"}
-    ],
-    insights: {
-      competitive:"Oracle's multi-cloud database strategy — available on Azure, AWS, and GCP — removes a key migration blocker. OCI's AI GPU cluster business is a surprise growth engine attracting hyperscaler-scale workloads.",
-      technology:"Autonomous Database, OCI Generative AI Service, and Oracle Fusion Cloud Applications with embedded AI are core technology pillars. SPARC-to-x86 transition complete; Ampere ARM instances on OCI.",
-      market:"Cloud backlog of $130B+ (FY25) represents extraordinary pipeline visibility. Healthcare, financial services, and government are key verticals. Cerner drives healthcare EHR market entry.",
-      regulatory:"Moderate regulatory risk. Healthcare data privacy (HIPAA) via Cerner requires careful compliance management. EU regulatory compliance is well-established for Oracle's mature enterprise products.",
-      execution:"Cerner integration has been challenging (cost overruns, customer churn concerns) but cloud transition accelerating. OCI GPU cluster wins (OpenAI, Stargate) represent a transformative business line."
-    },
-    customerSegments: [
-      {segment:"Cloud Infrastructure (OCI)",pct:28},
-      {segment:"Applications Cloud (ERP/HCM)",pct:33},
-      {segment:"Database License & Support",pct:27},
-      {segment:"Hardware & Services",pct:12}
-    ],
-    topProducts: [
-      {name:"Oracle Cloud Infrastructure",revenue:12500,growth:52,category:"Cloud IaaS"},
-      {name:"Fusion Cloud ERP",revenue:8500,growth:18,category:"ERP"},
-      {name:"Oracle Database",revenue:14000,growth:5,category:"Database"},
-      {name:"Cerner (Health IT)",revenue:6200,growth:8,category:"Healthcare"},
-      {name:"NetSuite",revenue:3200,growth:20,category:"SMB ERP"}
-    ],
-    productStrategy: [
-      {year:2021,milestone:"OCI Gen2 availability expansion; Autonomous Database on Dedicated Exadata; Oracle Cloud Apps (Fusion) growth acceleration"},
-      {year:2022,milestone:"Cerner $28.3B acquisition closes; Oracle moves HQ to Austin, TX; Cloud@Customer multi-cloud strategy launched"},
-      {year:2023,milestone:"Oracle Database@Azure launched (first multi-cloud DB deal); OCI Supercluster with 65,000 H100 GPUs announced"},
-      {year:2024,milestone:"Oracle Database@AWS and GCP; Stargate AI consortium ($500B US AI infrastructure); OCI GPU backlog $130B+"},
-      {year:2025,milestone:"OCI emerges as top-3 AI cloud; Oracle Generative AI Service GA; Healthcare Cloud with AI-powered clinical intelligence"}
-    ],
-    rndData: [
-      {year:2021,spend:6036,pct:14.9},
-      {year:2022,spend:6985,pct:16.5},
-      {year:2023,spend:8619,pct:17.3},
-      {year:2024,spend:8892,pct:16.8},
-      {year:2025,spend:9600,pct:16.7}
-    ],
-    updates: [
-      {date:"Jun 2025",title:"FY25 Full Year Results",summary:"Revenue $57.4B (+8.4%), OCI grew 52%, Cloud backlog $130B+. Stargate consortium driving hyperscale AI infrastructure demand."},
-      {date:"Jan 2025",title:"Stargate AI Consortium",summary:"Oracle joins $500B US AI infrastructure initiative (Stargate) with Microsoft and SoftBank; OCI selected as key compute provider."},
-      {date:"Sep 2024",title:"OCI GPU Cluster Expansion",summary:"Oracle announces $8B investment in additional OCI GPU clusters to meet surging AI training and inference demand."},
-      {date:"Oct 2023",title:"Oracle Database@AWS Launch",summary:"Oracle completes tri-cloud database strategy; Oracle Database now available natively on AWS, Azure, and Google Cloud."}
+  updates: [
+    {date:"Jul 2025", product:"Azure AI",     category:"AI",      impact:"High",   title:"Azure OpenAI Service powers 65% of Fortune 500 AI projects",  desc:"Azure AI foundry sees record enterprise adoption; Azure AI revenue growing 50%+ YoY; capacity constraints easing with new datacenters."},
+    {date:"May 2025", product:"Copilot",      category:"AI",      impact:"High",   title:"Microsoft 365 Copilot reaches 400M licensed seats",            desc:"Copilot AI at $30/user/month driving meaningful incremental M365 revenue; early ROI studies show 30% productivity lift for knowledge workers."},
+    {date:"Feb 2025", product:"Security",     category:"Platform",impact:"High",   title:"Microsoft Security crosses $20B ARR milestone",                desc:"Defender, Sentinel, Purview portfolio hits $20B ARR — fastest path to $20B in history; Copilot for Security added to all tiers."},
+    {date:"Nov 2024", product:"GitHub Copilot",category:"AI",     impact:"Medium", title:"GitHub Copilot reaches 2M+ paid subscribers",                  desc:"GitHub Copilot now embedded in VS Code, GitHub.com, Azure DevOps; 77% of Fortune 100 using GitHub."},
+    {date:"Sep 2024", product:"Azure",        category:"Platform",impact:"High",   title:"Azure capacity expansion — $55B capex committed for FY25",     desc:"Microsoft accelerates AI datacenter build-out globally; new regions in Southeast Asia, Middle East, and Europe to meet demand."}
+  ],
+
+  strengths:    ["Azure #2 cloud with 35% CC growth","Copilot AI integration across entire portfolio","Dominant enterprise software (M365 400M+ seats)","OpenAI exclusive partnership (Azure)","Security $20B+ ARR fortress"],
+  weaknesses:   ["Heavy capex ($55.7B FY25) pressuring FCF","Activision integration complexity","Copilot ROI proof points still early"],
+  opportunities:["Azure AI cloud expansion ($135B+ segment)","Copilot seat monetization ($30/user)","Enterprise AI transformation","Dynamics 365 vs Salesforce/SAP"],
+  threats:      ["AWS cloud dominance","Google Gemini / GCP competition","OpenAI partner diversification","EU antitrust / Teams bundling"]
+},
+
+// ════════════════════════════════════════════════════════════
+// 5. ORACLE
+// ════════════════════════════════════════════════════════════
+oracle: {
+  id:         "oracle",
+  identifier: "oracle",
+  name:       "Oracle",
+  initials:   "ORCL",
+  ticker:     "ORCL",
+  exchange:   "NYSE",
+  sector:     "AI-Powered Enterprise Software",
+  founded:    1977,
+  hq:         "Austin, TX",
+    HQ:          "Austin, TX",
+  ceo:        "Safra Catz",
+    CEO:         "Safra Catz",
+  employees:  162000,
+  marketCap:  430.0,
+  website:    "oracle.com",
+  description:"Oracle is a global enterprise technology company delivering cloud infrastructure (OCI), database software, and ERP/HCM applications. OCI is emerging as the AI training cloud of choice for large model workloads.",
+  color:      "#F80000",
+  isBase:     false,
+
+  years:        ["FY21","FY22","FY23","FY24","FY25"],
+  revenues:     [40.5,  42.4,  50.0,  52.9,  57.4],
+  netIncome:    [13.7,   6.7,   8.5,  10.5,  12.4],
+  ebitda:       [18.0,  17.5,  21.0,  22.5,  26.0],
+  grossProfit:  [29.5,  30.5,  36.0,  37.5,  40.5],
+  operatingIncome:[14.0,13.7,  14.4,  16.3,  19.8],
+  cashFlow:     [16.0,  12.0,  14.5,  17.5,  21.0],
+  grossMargin:  [72.8,  71.9,  72.0,  70.9,  70.5],
+  netMargin:    [33.8,  15.8,  17.0,  19.8,  21.6],
+  revGrowth:    [null,   4.7,  18.0,   5.9,   8.4],
+  eps:          [4.67,  2.47,  3.27,  4.21,  5.38],
+  latestRevenue: 57.4,
+
+  balance: [
+    {cash:29.8, totalAssets:131.1, totalDebt:87.5},
+    {cash:17.0, totalAssets:109.3, totalDebt:75.4},
+    {cash:9.9,  totalAssets:134.1, totalDebt:88.3},
+    {cash:10.6, totalAssets:143.7, totalDebt:88.9},
+    {cash:12.0, totalAssets:155.0, totalDebt:90.0}
+  ],
+  cashflow: [
+    {operatingCF:16.0, capex:3.8,  freeCF:12.2},
+    {operatingCF:12.0, capex:3.5,  freeCF:8.5},
+    {operatingCF:14.5, capex:6.0,  freeCF:8.5},
+    {operatingCF:17.5, capex:9.0,  freeCF:8.5},
+    {operatingCF:21.0, capex:12.0, freeCF:9.0}
+  ],
+
+  kpis: [
+    {label:"FY25 Revenue",    value:"$57.4B", change:"+8.4% YoY",  up:true},
+    {label:"Cloud Revenue",   value:"$25.8B", change:"+24% YoY",   up:true},
+    {label:"Net Income",      value:"$12.4B", change:"+18.9% YoY", up:true},
+    {label:"Market Cap",      value:"$430B",  change:"NYSE: ORCL",  up:true},
+    {label:"OCI Capacity",    value:"+49%",   change:"YoY data center",up:true},
+    {label:"Cloud RPO",       value:"$130B+", change:"Remaining perf. oblig.",up:true}
+  ],
+
+  stockPrice:  {current:148, yearHigh:235, yearLow:138},
+  peRatio:     34.6,
+  evRevenue:   7.5,
+
+  capabilityScores: {
+    AI:         7.5,
+    Cloud:      8.0,
+    CRM:        6.0,
+    Analytics:  8.0,
+    Security:   8.5,
+    Partner:    7.5,
+    Global:     8.5,
+    Support:    7.5,
+    Innovation: 7.2,
+    Automation: 7.5
+  },
+
+  riskScores: {regulatory:4, competitive:6, execution:5, technology:5, market:4},
+
+  geographicData: [
+    {region:"Americas", flag:"🌎", rev:"$31.5B", revNum:31.5, offices:"40+ offices", growth:"+8%",  share:"55%", sharePct:55, up:true,  dev:"US dominant; OCI AI data centers expanding in US South (Austin, Dallas) for AI training workloads"},
+    {region:"Europe",   flag:"🌍", rev:"$14.4B", revNum:14.4, offices:"20+ offices", growth:"+9%",  share:"25%", sharePct:25, up:true,  dev:"EMEA ERP (Fusion) strong; UK, Germany, France; EU sovereign cloud data centers announced"},
+    {region:"APAC",     flag:"🌏", rev:"$11.5B", revNum:11.5, offices:"15+ offices", growth:"+11%", share:"20%", sharePct:20, up:true,  dev:"Japan (Cerner healthcare), Australia, India OCI expanding; Singapore AI hub"}
+  ],
+
+  inorganicEvents: [
+    {year:"FY21", type:"Acquisition", target:"Cerner Corporation",   value:"$28.3B", rationale:"Healthcare IT leader; Oracle Health becomes major healthcare cloud ERP"},
+    {year:"FY22", type:"Partnership", target:"Microsoft",            value:"Strategic",rationale:"Oracle Database on Azure multicloud; joint enterprise GTM"},
+    {year:"FY23", type:"Partnership", target:"AWS",                  value:"Strategic",rationale:"Oracle Database on AWS; multicloud database strategy"},
+    {year:"FY24", type:"Partnership", target:"Google Cloud",         value:"Strategic",rationale:"Oracle Exadata on GCP; universal multicloud database access"},
+    {year:"FY24", type:"Investment",  target:"OCI Capacity Expansion",value:"$8.0B+",rationale:"Massive OCI data center buildout; 49% capacity growth for AI training workloads"},
+    {year:"FY25", type:"Partnership", target:"OpenAI",               value:"Strategic",rationale:"OCI as training cloud for OpenAI; $1B+ contract for AI compute"},
+    {year:"FY25", type:"Partnership", target:"NVIDIA",               value:"Strategic",rationale:"OCI DGX H100/H200 clusters; Oracle positioned as AI training infrastructure provider"}
+  ],
+
+  insights: {
+    product:   "Oracle Cloud Infrastructure (OCI) is the breakout story — growing 51% in Q4 FY25, taking AI training workloads from OpenAI, Meta, and enterprise AI teams. The multicloud database strategy (Oracle DB on Azure, AWS, GCP) is protecting the $15B+ database franchise while expanding addressable market. Oracle Health (Cerner) is a $4B+ healthcare cloud business.",
+    strategy:  "Oracle's pivot from legacy software to AI cloud infrastructure is succeeding faster than expected. OCI's price/performance advantage (up to 50% cheaper than AWS for GPU workloads) is winning AI training deals. The database moat remains unassailable — Oracle Database 23ai adds vector search capabilities for AI applications.",
+    financial: "FY25 revenue $57.4B (+8.4%). Cloud services $25.8B (+24%). Total cloud RPO of $130B+ signals 3–4 years of future cloud revenue visibility. Operating cash flow $21B; free cash flow constrained by $12B capex (OCI expansion). Net income $12.4B (+18.9%). High debt ($90B) manageable given cash generation.",
+    risk:      "High debt levels ($90B) limit financial flexibility. OCI capex requirements ($12B+) pressuring FCF. Customer migration from on-premise to cloud is accelerating but creating license revenue headwind. AWS/Azure competition for AI workloads is intensifying.",
+    outlook:   "FY26 guidance: $66B–$67B revenue (~15% growth); OCI targeting $25B+ standalone revenue. Cloud RPO of $130B is extraordinary for a company Oracle's size. AI infrastructure demand is the secular tailwind. Key risk: can OCI maintain price/performance advantage as AWS/Azure close the gap?"
+    sales:       "OCI consumption deals (multi-year, $1B+) with 30+ signed in FY25. Cerner Health integration driving healthcare vertical. NetSuite SMB franchise 25% growth.",
+    rnd:       "$8.9B R&D in FY25. Oracle AI Vector Search, Select AI, and Autonomous DB. OCI Gen2 architecture advantage in security and performance vs AWS/Azure.",
+    inorganic:       "Cerner ($28B healthcare IT), TikTok cloud partnership, Cohere investment. Focus on vertical SaaS and cloud infrastructure bolt-ons.",
+    marketing:       "Oracle CloudWorld conference. Ellison AI narrative — Oracle as AI infrastructure choice. NASCAR and Formula 1 sponsorships for brand visibility.",
+    customerwins:       "US DoD JEDI successor workloads, Uber, Zoom on OCI. NVIDIA partnership for GPU cloud capacity. 10,000+ Fusion ERP cloud customers.",
+    hiring:       "159,000+ employees post-Cerner. India-heavy engineering workforce. Focused hiring in OCI infrastructure and Cerner Health integration teams.",
+  },
+
+  customerSegments: [
+    {name:"Large Enterprise ERP/HCM",    pct:45},
+    {name:"Cloud Infrastructure (OCI)",  pct:30},
+    {name:"Healthcare (Cerner)",         pct:15},
+    {name:"Mid-Market (NetSuite)",       pct:10}
+  ],
+  totalCustomers: 430000,
+  retention:      90,
+  nrr:            108,
+  nps:            28,
+
+  topProducts: [
+    {name:"Oracle Cloud Infrastructure (OCI)",share:30, desc:"IaaS/GPU cloud; AI training leader; 51% growth Q4 FY25"},
+    {name:"Oracle Database / Exadata",        share:28, desc:"World's leading enterprise database; Database 23ai with vector search"},
+    {name:"Oracle Fusion ERP / HCM",          share:22, desc:"Cloud ERP competing with SAP; Oracle HCM vs. Workday"},
+    {name:"Oracle Health (Cerner)",           share:10, desc:"Healthcare EHR and cloud platform; $4B+ revenue"},
+    {name:"NetSuite",                         share:6,  desc:"#1 cloud ERP for mid-market; 40,000+ customers"},
+    {name:"Oracle Analytics Cloud",           share:4,  desc:"Business intelligence and analytics on OCI"}
+  ],
+
+  productStrategy: [
+    {year:"2021", title:"Cerner Acquisition Announced",   desc:"$28.3B deal transforms Oracle into healthcare IT powerhouse; Oracle Health strategy"},
+    {year:"2022", title:"OCI Generation 2 Scale-Up",     desc:"OCI aggressively expanding capacity; multicloud database partnerships with Azure, AWS"},
+    {year:"2023", title:"AI-First Database Strategy",    desc:"Oracle Database 23ai announced; vector search + AI copilot in ERP; GPU cluster buildout"},
+    {year:"2024", title:"OCI AI Cloud Emergence",        desc:"OCI wins OpenAI, Meta AI training workloads; 49% YoY capacity expansion; NVIDIA DGX clusters"},
+    {year:"2025", title:"Oracle as AI Infrastructure Layer",desc:"$130B cloud RPO; OCI positioned vs. AWS/Azure for AI; multicloud database everywhere strategy"}
+  ],
+
+  rndData: {
+    spend: [6.5, 7.2, 8.6, 9.0, 9.8],
+    areas: [
+      {name:"Cloud Infrastructure (OCI)", pct:35},
+      {name:"Database & AI",              pct:30},
+      {name:"Applications (ERP/HCM)",     pct:20},
+      {name:"Healthcare (Cerner)",        pct:10},
+      {name:"Security",                   pct:5}
     ]
   },
 
-  sap: {
-    id: "sap",
-    identifier: "sap",
-    name: "SAP",
-    initials: "SAP",
-    ticker: "SAP",
-    exchange: "NYSE",
-    sector: "AI-Powered Enterprise Software",
-    founded: 1972,
-    hq: "Walldorf, Germany",
-    ceo: "Christian Klein",
-    employees: 107000,
-    marketCap: 305,
-    website: "https://www.sap.com",
-    description: "SAP is the world's leading ERP vendor, serving 99 of the 100 largest companies. Its RISE with SAP cloud migration program and Business AI (Joule AI) are driving a multi-year cloud transformation, with S/4HANA Cloud as the core enterprise platform.",
-    color: "#003b6f",
-    isBase: false,
-    years: ["FY21","FY22","FY23","FY24","FY25"],
-    revenues: [29556,30870,31207,34176,36800],
-    ebitda: [8820,9630,10150,11280,14500],
-    netIncome: [5256,2284,6139,3124,7161],
-    revGrowth: [-1.4,4.4,1.1,9.5,7.7],
-    eps: [4.46,1.94,5.20,2.65,6.10],
-    netMargin: [17.8,7.4,19.7,9.1,19.5],
-    grossMargin: [71.6,72.4,72.2,72.9,72.9],
-    operatingMargin: [23.0,20.0,19.8,14.7,27.8],
-    freeCashFlow: [4500,3200,4800,5900,7900],
-    rnd: [4300,4500,5800,6200,6800],
-    balance: [
-      {cash:11656,totalAssets:68530,totalDebt:15570},
-      {cash:9861,totalAssets:66040,totalDebt:14355},
-      {cash:11468,totalAssets:69730,totalDebt:9676},
-      {cash:11238,totalAssets:79860,totalDebt:11446},
-      {cash:9772,totalAssets:83690,totalDebt:8071}
-    ],
-    cashflow: [
-      {operatingCF:5320,capex:820,fcf:4500},
-      {operatingCF:3980,capex:780,fcf:3200},
-      {operatingCF:5640,capex:840,fcf:4800},
-      {operatingCF:6740,capex:840,fcf:5900},
-      {operatingCF:8740,capex:840,fcf:7900}
-    ],
-    riskScores: {regulatory:48,competitive:68,execution:58,technology:62,market:52},
-    latestRevenue: 36800,
-    kpis: [
-      {label:"FY25 Revenue",value:"€36.8B",trend:"up"},
-      {label:"Cloud Revenue",value:"€21.0B (+35%)",trend:"up"},
-      {label:"Cloud Backlog",value:"€63B+",trend:"up"},
-      {label:"RISE with SAP Customers",value:"23,000+",trend:"up"},
-      {label:"Joule AI Interactions",value:"1B+/month",trend:"up"},
-      {label:"S/4HANA Cloud Customers",value:"10,000+",trend:"up"}
-    ],
-    capabilityScores: {AI:75,Cloud:78,CRM:60,Analytics:82,Security:72,Partner:88,Global:92,Support:80,Innovation:72,Automation:78},
-    geographicData: [
-      {region:"Europe",revenue:14720,growth:7.2,presence:"strong"},
-      {region:"North America",revenue:11040,growth:8.5,presence:"strong"},
-      {region:"Asia Pacific",revenue:5520,growth:10.1,presence:"strong"},
-      {region:"Latin America",revenue:3312,growth:7.8,presence:"moderate"},
-      {region:"Middle East & Africa",revenue:2208,growth:6.5,presence:"moderate"}
-    ],
-    inorganicEvents: [
-      {year:2021,type:"Acquisition",target:"Signavio",value:1200,rationale:"Business process intelligence — integrated into SAP Process Automation and S/4HANA for process mining"},
-      {year:2022,type:"Acquisition",target:"Taulia",value:0,rationale:"Working capital management and supply chain finance; integrated into SAP Business Network"},
-      {year:2023,type:"Partnership",target:"Microsoft (Joule + Copilot)",value:0,rationale:"SAP Joule and Microsoft Copilot integration — joint AI for enterprise ERP and productivity workflows"},
-      {year:2024,type:"Acquisition",target:"WalkMe",value:1500,rationale:"Digital adoption platform for guided SAP software usage; accelerates S/4HANA cloud migration success"},
-      {year:2024,type:"Partnership",target:"Google Cloud (RISE)",value:0,rationale:"Preferred cloud for RISE with SAP migrations; Joule AI on Google Vertex AI integration"},
-      {year:2025,type:"Partnership",target:"NVIDIA",value:0,rationale:"NVIDIA AI acceleration for SAP Business AI and Joule; inference optimization for ERP AI agents"}
-    ],
-    insights: {
-      competitive:"SAP's 99-of-100 largest company penetration creates an extraordinary installed base moat. RISE with SAP is successfully migrating on-premise customers to cloud; cloud revenue grew 35% in FY25.",
-      technology:"Joule (generative AI assistant embedded in S/4HANA, Ariba, SuccessFactors) processed 1B+ interactions/month by FY25. SAP Business AI uses proprietary enterprise data context unavailable to competitors.",
-      market:"Enterprise ERP cloud migration is a decade-long cycle. SAP's TAM includes supply chain, finance, HR, procurement, and manufacturing. AI augmentation of ERP workflows is a massive upsell opportunity.",
-      regulatory:"Strong regulatory positioning in EU (GDPR, data sovereignty). SAP Sovereign Cloud available for government customers. Low direct AI regulation risk; benefits from EU AI Act compliance tooling.",
-      execution:"Cloud transformation execution has improved dramatically since 2023. Operating margin expanded from 14.7% (FY24) to 27.8% (FY25) driven by cloud economies of scale and restructuring. On track for cloud-first by 2027."
-    },
-    customerSegments: [
-      {segment:"Enterprise / Global 2000",pct:45},
-      {segment:"Mid-Market",pct:32},
-      {segment:"SMB (SAP Business One / ByDesign)",pct:15},
-      {segment:"Public Sector",pct:8}
-    ],
-    topProducts: [
-      {name:"S/4HANA Cloud",revenue:8000,growth:35,category:"ERP Cloud"},
-      {name:"SAP BTP (Platform)",revenue:4200,growth:28,category:"Platform"},
-      {name:"SuccessFactors",revenue:2800,growth:18,category:"HCM"},
-      {name:"Ariba / Procurement",revenue:3500,growth:15,category:"Procurement"},
-      {name:"Joule Business AI",revenue:900,growth:150,category:"AI"}
-    ],
-    productStrategy: [
-      {year:2021,milestone:"RISE with SAP launched — bundled cloud migration offer; Signavio acquisition for process intelligence"},
-      {year:2022,milestone:"GROW with SAP for mid-market; SAP Business Network expansion; Taulia acquisition closes"},
-      {year:2023,milestone:"SAP Business AI announced; Joule AI assistant unveiled at SAP Sapphire; 100+ AI use cases in S/4HANA"},
-      {year:2024,milestone:"WalkMe acquisition; Joule GA; SAP BTP Business Data Cloud with Databricks partnership; RISE milestone of 20,000+ customers"},
-      {year:2025,milestone:"Joule 1B+ monthly interactions; NVIDIA partnership for AI inference; S/4HANA Cloud surpasses 10,000 customers; cloud backlog €63B"}
-    ],
-    rndData: [
-      {year:2021,spend:4300,pct:14.5},
-      {year:2022,spend:4500,pct:14.6},
-      {year:2023,spend:5800,pct:18.6},
-      {year:2024,spend:6200,pct:18.1},
-      {year:2025,spend:6800,pct:18.5}
-    ],
-    updates: [
-      {date:"Jan 2026",title:"FY25 Full Year Results",summary:"Revenue €36.8B (+7.7%), Cloud Revenue €21B (+35%), Cloud backlog €63B+. Operating margin expanded to 27.8% from 14.7%."},
-      {date:"Jun 2025",title:"NVIDIA AI Partnership",summary:"SAP and NVIDIA partner to optimize Joule AI inference and bring NVIDIA NIM microservices to SAP Business AI platform."},
-      {date:"Apr 2024",title:"WalkMe Acquisition $1.5B",summary:"SAP acquires WalkMe to provide guided digital adoption capabilities, accelerating S/4HANA cloud migrations."},
-      {date:"Oct 2023",title:"Joule AI Assistant GA",summary:"SAP Joule reaches general availability, embedded across S/4HANA, SuccessFactors, Ariba with 100+ AI use cases."}
-    ]
-  }
-};
+  updates: [
+    {date:"Jun 2025", product:"OCI",           category:"Cloud",    impact:"High",   title:"OCI Q4 FY25 grows 51% — AI training demand surges",          desc:"Oracle Cloud Infrastructure sets quarterly record; AI GPU cluster capacity doubled YoY; OpenAI expanded OCI contract to $1B+."},
+    {date:"Apr 2025", product:"Oracle DB 23ai",category:"AI",       impact:"High",   title:"Oracle Database 23ai vector search achieves 10x performance",  desc:"Native vector search in Oracle DB 23ai enables enterprise RAG applications without separate vector database — key competitive advantage vs. Pinecone."},
+    {date:"Feb 2025", product:"Oracle Fusion", category:"Platform", impact:"Medium", title:"Oracle Fusion ERP adds AI copilot across all modules",         desc:"Oracle AI Agent for Finance, HR, and Supply Chain deployed across Fusion ERP; reducing manual processes by 40% in early customer deployments."},
+    {date:"Nov 2024", product:"OCI",           category:"Cloud",    impact:"High",   title:"OCI multicloud available on Azure, AWS, GCP simultaneously",  desc:"First time enterprise database available on all three hyperscalers simultaneously; 'multicloud by default' strategy reduces lock-in risk for customers."},
+    {date:"Aug 2024", product:"Oracle Health", category:"Product",  impact:"Medium", title:"Oracle Health crosses $4B revenue — Cerner integration complete",desc:"Three years post-acquisition, Cerner fully migrated to OCI; Oracle Health wins VA contract extension and 5 new top-25 health systems."}
+  ],
 
+  strengths:    ["OCI hyper-growth trajectory (+51%)","Unassailable database moat","Multi-cloud database strategy ($130B RPO)","Cerner healthcare ERP","AI training infrastructure demand"],
+  weaknesses:   ["High debt levels ($90B)","Late cloud transition history","Complex licensing model","Legacy perception in cloud market"],
+  opportunities:["OCI AI training workloads","Database cloud migration ($15B+ base)","Healthcare IT (Oracle Health/Cerner)","Government cloud contracts"],
+  threats:      ["AWS/Azure AI infrastructure competition","Open-source database alternatives (Postgres)","OCI capex requirements constraining FCF","Customer on-premise migration delays"]
+},
+
+// ════════════════════════════════════════════════════════════
+// 6. SAP SE
+// ════════════════════════════════════════════════════════════
+sap: {
+  id:         "sap",
+  identifier: "sap",
+  name:       "SAP SE",
+  initials:   "SAP",
+  ticker:     "SAP",
+  exchange:   "NYSE",
+  sector:     "AI-Powered Enterprise Software",
+  founded:    1972,
+  hq:         "Walldorf, Germany",
+    HQ:          "Walldorf, Germany",
+  ceo:        "Christian Klein",
+    CEO:         "Christian Klein",
+  employees:  107400,
+  marketCap:  238.0,
+  website:    "sap.com",
+  description:"SAP SE is the world's leading enterprise application software company, providing ERP, SCM, HCM, and analytics to 440,000+ global customers. Its RISE with SAP program is driving aggressive cloud transition with Joule AI at the core.",
+  color:      "#0070F2",
+  isBase:     false,
+
+  years:        ["FY21","FY22","FY23","FY24","FY25"],
+  revenues:     [30.6,  31.4,  34.7,  35.6,  43.3],
+  netIncome:    [6.22,  2.41,  6.64,  3.38,  8.10],
+  ebitda:       [8.00,  7.50,  9.00, 10.00, 14.00],
+  grossProfit:  [21.5,  22.0,  24.8,  26.5,  31.7],
+  operatingIncome:[5.00,3.50,  6.50,  5.80,  9.50],
+  cashFlow:     [6.50,  5.00,  6.50,  7.50, 10.00],
+  grossMargin:  [70.3,  70.1,  71.5,  74.4,  73.3],
+  netMargin:    [20.3,   7.7,  19.1,   9.5,  18.7],
+  revGrowth:    [null,   2.6,  10.5,   2.6,  21.6],
+  eps:          [5.27,  2.04,  5.62,  2.87,  6.88],
+  latestRevenue: 43.3,
+
+  balance: [
+    {cash:6.2,  totalAssets:60.4, totalDebt:10.5},
+    {cash:5.0,  totalAssets:64.4, totalDebt:12.0},
+    {cash:8.5,  totalAssets:68.0, totalDebt:11.5},
+    {cash:9.0,  totalAssets:75.0, totalDebt:11.0},
+    {cash:11.0, totalAssets:85.0, totalDebt:10.5}
+  ],
+  cashflow: [
+    {operatingCF:6.50, capex:1.20, freeCF:5.30},
+    {operatingCF:5.00, capex:1.30, freeCF:3.70},
+    {operatingCF:6.50, capex:1.40, freeCF:5.10},
+    {operatingCF:7.50, capex:1.50, freeCF:6.00},
+    {operatingCF:10.0, capex:1.70, freeCF:8.30}
+  ],
+
+  kpis: [
+    {label:"FY25 Revenue",    value:"$43.3B", change:"+21.6% YoY", up:true},
+    {label:"Cloud Revenue",   value:"$21.7B", change:"+33% YoY",   up:true},
+    {label:"Net Income",      value:"$8.1B",  change:"+140% YoY",  up:true},
+    {label:"Market Cap",      value:"$238B",  change:"NYSE: SAP",   up:true},
+    {label:"RISE Customers",  value:"25,000+",change:"Cloud ERP migrations",up:true},
+    {label:"Gross Margin",    value:"73.3%",  change:"-1.1pp YoY",  up:false}
+  ],
+
+  stockPrice:  {current:198, yearHigh:282, yearLow:168},
+  peRatio:     28.8,
+  evRevenue:   5.5,
+
+  capabilityScores: {
+    AI:         7.8,
+    Cloud:      7.5,
+    CRM:        6.5,
+    Analytics:  8.5,
+    Security:   7.5,
+    Partner:    8.5,
+    Global:     9.2,
+    Support:    8.0,
+    Innovation: 7.8,
+    Automation: 8.0
+  },
+
+  riskScores: {regulatory:5, competitive:5, execution:5, technology:4, market:4},
+
+  geographicData: [
+    {region:"Europe",   flag:"🌍", rev:"$19.5B", revNum:19.5, offices:"50+ offices", growth:"+20%", share:"45%", sharePct:45, up:true,  dev:"Home market; Germany, UK, France dominant; RISE with SAP driving S/4HANA migrations in DACH, Nordics"},
+    {region:"Americas", flag:"🌎", rev:"$13.0B", revNum:13.0, offices:"25+ offices", growth:"+24%", share:"30%", sharePct:30, up:true,  dev:"North America fastest growing region; US enterprise ERP replacements and Ariba/SuccessFactors expansion"},
+    {region:"APAC",     flag:"🌏", rev:"$10.8B", revNum:10.8, offices:"20+ offices", growth:"+22%", share:"25%", sharePct:25, up:true,  dev:"Japan, Australia, India strong; China strategic importance; Joule AI adopted in APAC manufacturing verticals"}
+  ],
+
+  inorganicEvents: [
+    {year:"FY21", type:"Partnership", target:"Microsoft",          value:"Strategic",rationale:"SAP on Azure preferred cloud; Teams + S/4HANA integration; joint enterprise GTM"},
+    {year:"FY22", type:"Acquisition", target:"Taulia",             value:"~$1.5B",  rationale:"Working capital management / supply chain finance platform"},
+    {year:"FY22", type:"Partnership", target:"Google Cloud",       value:"Strategic",rationale:"RISE with SAP on Google Cloud; Looker-BTP analytics integration"},
+    {year:"FY23", type:"Acquisition", target:"LeanIX",             value:"~$1.2B",  rationale:"Enterprise architecture management; cloud transformation planning tool"},
+    {year:"FY24", type:"Acquisition", target:"WalkMe",             value:"$1.5B",   rationale:"Digital adoption platform; AI-assisted user guidance for SAP applications"},
+    {year:"FY25", type:"Partnership", target:"NVIDIA",             value:"Strategic",rationale:"Joule AI copilot powered by NVIDIA NIM; generative AI in S/4HANA and BTP"},
+    {year:"FY25", type:"Partnership", target:"Meta",               value:"Strategic",rationale:"Open-source AI model (Llama) integration with SAP BTP for enterprise AI"}
+  ],
+
+  insights: {
+    product:   "RISE with SAP is the flagship cloud migration program with 25,000+ customers in FY25. Cloud ERP revenue grew 33% to $21.7B. Joule — SAP's GenAI copilot — embedded in S/4HANA, SuccessFactors, Ariba, and Service Cloud. Business AI capabilities across all SAP modules are the key competitive differentiator vs. Oracle Fusion and Workday.",
+    strategy:  "Christian Klein's cloud transformation is delivering — SAP is in the strongest financial position in a decade. RISE with SAP solves the migration complexity problem (managed cloud migration + support). Joule AI is SAP's answer to Microsoft Copilot for enterprise processes — 27,000 process automations available. The WalkMe and LeanIX acquisitions create a transformation platform around RISE.",
+    financial: "FY25 revenue $43.3B (+21.6%) — accelerating due to RISE cloud revenue recognition shift. Cloud revenue $21.7B (+33%) now >50% of total. Net income $8.1B (140% YoY) after restructuring charges in FY24. Operating cash flow $10B; FCF $8.3B. Raised FY26 guidance to $49B–$50B. Cloud backlog $65B+ represents 3+ years of visibility.",
+    risk:      "Currency headwinds (EUR/USD) impact USD-reported results. S/4HANA migration complexity and high cost is customer friction. Oracle Fusion competition intensifying in North America. Joule AI adoption pace needs to accelerate to justify premium RISE pricing. On-premise support revenue declining as customers migrate.",
+    outlook:   "FY26 guidance $49B–$50B (+13–15%). Cloud revenue targeting $26B–$27B. Joule AI is the premium upsell opportunity — early indications of $2B+ AI incremental ACV by FY27. RISE cloud backlog $65B ensures multi-year revenue visibility. European enterprise digital transformation is still in early innings. Consensus PT €280–€320."
+    sales:       "RISE with SAP cloud migration program driving 27% cloud revenue growth in FY25. Partner ecosystem (22,000+ partners) delivering 90% of implementations. S/4HANA Cloud displacing legacy ECC.",
+    rnd:       "$5.3B R&D in FY25. Business AI embedded across all SAP applications. Joule AI copilot across finance, procurement, and HR. SAP Business Network connecting 5M+ businesses.",
+    inorganic:       "WalkMe (DAP, $1.5B, 2024), LeanIX (enterprise architecture), Taulia (working capital). Focus on cloud suite completeness and AI workflow automation.",
+    marketing:       "SAP Sapphire and TechEd conferences. \"Run Simple\" rebranded to \"Business Beyond Bias.\" Heavy investment in sustainability and ESG narrative for European enterprise.",
+    customerwins:       "Siemens, BMW, and Volkswagen on RISE with SAP. 400M+ cloud users globally. 87% of world commerce touches SAP systems. Net Promoter Score improved 15 pts in FY25.",
+    hiring:       "105,000+ employees. 8,000 restructuring in FY24 redeployed to AI. Walldorf (Germany) and Bangalore (India) as primary engineering hubs. AI skills retraining for 30,000 employees.",
+  },
+
+  customerSegments: [
+    {name:"Large Enterprise ERP",          pct:52},
+    {name:"Mid-Market (GROW with SAP)",    pct:28},
+    {name:"Industry/Government",           pct:12},
+    {name:"SMB / Channel",                 pct:8}
+  ],
+  totalCustomers: 425000,
+  retention:      89,
+  nrr:            107,
+  nps:            30,
+
+  topProducts: [
+    {name:"SAP S/4HANA (RISE with SAP)",  share:38, desc:"Cloud ERP flagship; 25,000+ RISE customers; AI-native business processes"},
+    {name:"SAP SuccessFactors",           share:18, desc:"Cloud HCM competing with Workday; 280M+ users worldwide"},
+    {name:"SAP Ariba / IBP",              share:16, desc:"Procurement and supply chain planning; $4T+ in annual commerce transactions"},
+    {name:"SAP Analytics Cloud",          share:12, desc:"Business intelligence and planning integrated with S/4HANA"},
+    {name:"SAP BTP (Business Tech Platform)",share:10,desc:"Integration, extension, AI platform; foundation for Joule AI"},
+    {name:"Joule (GenAI Copilot)",        share:6,  desc:"AI copilot across all SAP modules; 27,000 process automations"}
+  ],
+
+  productStrategy: [
+    {year:"2021", title:"RISE with SAP Launch",          desc:"Managed cloud migration bundle — S/4HANA + infrastructure + support in one contract"},
+    {year:"2022", title:"Business Network Strategy",     desc:"SAP Business Network (Ariba + Logistics) connects 5M+ suppliers globally"},
+    {year:"2023", title:"Joule AI Announced",            desc:"SAP generative AI assistant embedded across all cloud products; BTP as AI foundation"},
+    {year:"2024", title:"WalkMe + LeanIX Acquisitions",  desc:"$3B in acquisitions; complete enterprise transformation platform around RISE"},
+    {year:"2025", title:"Cloud >50% of Revenue",        desc:"Cloud ERP revenue crosses 50% of total; Joule AI in GA across all modules; NVIDIA partnership"}
+  ],
+
+  rndData: {
+    spend: [4.20, 4.50, 5.00, 5.30, 5.80],
+    areas: [
+      {name:"ERP & S/4HANA",        pct:30},
+      {name:"AI & Joule",           pct:28},
+      {name:"BTP & Integration",    pct:22},
+      {name:"Analytics & Planning", pct:12},
+      {name:"Security & Compliance",pct:8}
+    ]
+  },
+
+  updates: [
+    {date:"Jul 2025", product:"Joule AI",    category:"AI",      impact:"High",   title:"Joule AI reaches 27,000 enterprise process automations",      desc:"SAP's generative AI copilot now covers 27,000 business processes in S/4HANA, SuccessFactors, Ariba — most comprehensive enterprise AI copilot in the industry."},
+    {date:"May 2025", product:"RISE with SAP",category:"Cloud",  impact:"High",   title:"RISE with SAP crosses 25,000 customers — cloud ERP leadership",desc:"SAP's managed cloud migration program accelerates; 25,000+ customers migrating from on-premise to cloud; cloud revenue now >50% of total for first time."},
+    {date:"Feb 2025", product:"SAP BTP",     category:"AI",      impact:"Medium", title:"NVIDIA NIM integration in BTP — enterprise AI models at scale",desc:"SAP Business Technology Platform integrates NVIDIA NIM microservices enabling customers to deploy generative AI at enterprise scale with SAP data."},
+    {date:"Nov 2024", product:"WalkMe",      category:"Platform",impact:"Medium", title:"WalkMe integration — AI-guided user adoption for SAP",         desc:"WalkMe fully integrated into SAP environment; AI-powered digital adoption reducing SAP implementation costs by up to 30% and user training time by 40%."},
+    {date:"Aug 2024", product:"S/4HANA",     category:"Product", impact:"High",   title:"SAP S/4HANA 2024 — AI-native ERP with Joule embedded",        desc:"Largest S/4HANA release in 5 years; Joule embedded in 1,000+ transactions; predictive financial close, AI-driven supply chain exception management."}
+  ],
+
+  strengths:    ["Deep ERP market penetration (440K+ customers)","Strong European enterprise base","Cloud transition accelerating (+33%)","Joule AI across all modules","RISE program reduces migration friction"],
+  weaknesses:   ["Currency headwinds (EUR-denominated revenues)","ERP migration complexity and cost","Oracle Fusion competition in North America"],
+  opportunities:["RISE with SAP cloud migration acceleration","Joule AI premium monetization","Mid-market expansion (GROW with SAP)","Supply chain digital transformation demand"],
+  threats:      ["Oracle ERP competition (Fusion)","Workday in HCM","Microsoft Dynamics encroachment","Macroeconomic slowdown in Europe"]
+}
+
+}; // end COMPANIES_DATA
+
+// ════════════════════════════════════════════════════════════
+// MARKET EVENTS
+// Template requires: {company, category, date, title, summary, tags[]}
+// 'company' must be a COMPANIES_DATA key OR empty string for macro events
+// 'category' must be a NON-NULL string (used as .toUpperCase() — cannot be undefined)
+// ════════════════════════════════════════════════════════════
 const MARKET_EVENTS = [
-  {company:"microsoft",category:"M&A",date:"Mar 2021",title:"Nuance Acquisition Announced ($19.7B)",summary:"Microsoft acquires Nuance Communications for $19.7B to bolster Azure AI with healthcare and conversational AI capabilities.",tags:["AI","Healthcare","Acquisition"]},
-  {company:"microsoft",category:"Product",date:"Nov 2023",title:"Microsoft 365 Copilot GA",summary:"Microsoft 365 Copilot reaches general availability, embedding GPT-4 AI across Word, Excel, PowerPoint, Teams, and Outlook for enterprise customers.",tags:["AI","Copilot","Productivity"]},
-  {company:"microsoft",category:"Financial",date:"Jul 2025",title:"FY25 Revenue $281.7B, Azure +33%",summary:"Microsoft posts record FY25 revenue of $281.7B (+15%), with Azure growing 33% and AI revenue run rate exceeding $13B.",tags:["Earnings","Azure","AI"]},
-  {company:"microsoft",category:"Partnership",date:"Jan 2023",title:"OpenAI Investment $10B Extension",summary:"Microsoft extends its OpenAI partnership with a $10B multi-year investment, becoming the exclusive cloud provider for OpenAI workloads.",tags:["AI","OpenAI","Investment"]},
-  {company:"salesforce",category:"M&A",date:"Jul 2021",title:"Slack Acquisition Closes ($27.7B)",summary:"Salesforce completes acquisition of Slack, the leading enterprise messaging platform, integrating it as the digital HQ of Customer 360.",tags:["Acquisition","Collaboration","CRM"]},
-  {company:"salesforce",category:"Product",date:"Sep 2024",title:"Agentforce Launched at Dreamforce",summary:"Salesforce unveils Agentforce, a platform for autonomous AI agents that can act on behalf of sales, service, and marketing teams without human intervention.",tags:["AI","Agents","CRM"]},
-  {company:"salesforce",category:"M&A",date:"Mar 2025",title:"Informatica Acquisition $8B",summary:"Salesforce acquires Informatica to strengthen its Data Cloud with enterprise-grade data integration and AI governance capabilities.",tags:["Acquisition","Data","AI"]},
-  {company:"salesforce",category:"Financial",date:"Feb 2025",title:"FY25 Operating Margin Hits 19%",summary:"Salesforce reports FY25 results: Revenue $37.9B (+8.7%), FCF $12.4B record, operating margin expanded from 2.1% (FY21) to 19.0%.",tags:["Earnings","Margin","Profitability"]},
-  {company:"servicenow",category:"Product",date:"Sep 2023",title:"Now Assist GenAI Launched",summary:"ServiceNow launches Now Assist, embedding generative AI across ITSM, HR, and CSM workflows with 40+ enterprise AI use cases.",tags:["AI","GenAI","Automation"]},
-  {company:"servicenow",category:"M&A",date:"Mar 2025",title:"Moveworks Acquisition $2.85B",summary:"ServiceNow acquires Moveworks, the conversational AI platform for employee service, to strengthen Now Assist and agentic AI capabilities.",tags:["Acquisition","AI","Conversational"]},
-  {company:"servicenow",category:"Financial",date:"Jan 2026",title:"FY25 Revenue $13.3B, cRPO $12.85B",summary:"ServiceNow posts FY25 revenue of $13.3B (+21%), with current RPO of $12.85B and FCF of $4.5B — 20%+ growth at scale maintained.",tags:["Earnings","Growth","Platform"]},
-  {company:"servicenow",category:"Partnership",date:"May 2024",title:"NVIDIA Partnership for AI Inference",summary:"ServiceNow and NVIDIA partner to accelerate enterprise AI on the Now Platform using NVIDIA AI Enterprise stack for GPU-accelerated inference.",tags:["AI","Partnership","NVIDIA"]},
-  {company:"google",category:"M&A",date:"Sep 2024",title:"Wiz Acquisition Closes ($32B)",summary:"Alphabet closes its $32B acquisition of Wiz cloud security — the largest in Alphabet history — to strengthen Google Cloud security posture.",tags:["Acquisition","Security","Cloud"]},
-  {company:"google",category:"Product",date:"Dec 2024",title:"Gemini 2.0 Launch",summary:"Google launches Gemini 2.0 Ultra and Flash with agentic AI capabilities, native tool use, and multimodal generation for enterprise and consumer use cases.",tags:["AI","Gemini","LLM"]},
-  {company:"google",category:"Financial",date:"Feb 2026",title:"FY25 Revenue $402.8B, Cloud +36%",summary:"Alphabet posts FY25 revenue of $402.8B (+15%), with Google Cloud growing 36% to $58.7B and net income reaching a record $132.2B.",tags:["Earnings","Cloud","Record"]},
-  {company:"google",category:"Regulatory",date:"Aug 2024",title:"DOJ Search Antitrust Ruling",summary:"US District Court rules Google holds illegal monopoly in search; potential remedies including forced divestiture of Chrome being considered.",tags:["Regulatory","Antitrust","DOJ"]},
-  {company:"oracle",category:"M&A",date:"Jan 2022",title:"Cerner Acquisition Closes ($28.3B)",summary:"Oracle completes $28.3B acquisition of Cerner, the leading healthcare EHR provider, entering the $8T healthcare IT market.",tags:["Acquisition","Healthcare","EHR"]},
-  {company:"oracle",category:"Product",date:"Sep 2023",title:"Oracle Database@Azure Launch",summary:"Oracle and Microsoft launch Oracle Database@Azure, enabling customers to run Oracle Database in Azure datacenters with sub-millisecond latency.",tags:["Cloud","Multicloud","Database"]},
-  {company:"oracle",category:"Partnership",date:"Jan 2025",title:"Stargate AI Consortium ($500B)",summary:"Oracle joins the Stargate initiative with Microsoft and SoftBank — a $500B US AI infrastructure program with OCI as primary compute provider.",tags:["AI","Partnership","Infrastructure"]},
-  {company:"oracle",category:"Financial",date:"Jun 2025",title:"FY25 OCI Grew 52%, Backlog $130B+",summary:"Oracle FY25: Revenue $57.4B (+8.4%), OCI grew 52% YoY, cloud backlog exceeded $130B. AI GPU cluster demand is the primary growth driver.",tags:["Earnings","OCI","Cloud"]},
-  {company:"sap",category:"Product",date:"Oct 2023",title:"SAP Joule AI Assistant GA",summary:"SAP launches Joule, its generative AI assistant embedded across S/4HANA, SuccessFactors, and Ariba with 100+ enterprise AI use cases.",tags:["AI","Joule","ERP"]},
-  {company:"sap",category:"M&A",date:"Aug 2024",title:"WalkMe Acquisition $1.5B",summary:"SAP acquires WalkMe for $1.5B to embed digital adoption and guided workflow capabilities into SAP software, accelerating S/4HANA migrations.",tags:["Acquisition","Adoption","UX"]},
-  {company:"sap",category:"Financial",date:"Jan 2026",title:"FY25 Cloud Revenue €21B, Margin 27.8%",summary:"SAP posts FY25 results: Cloud revenue €21B (+35%), cloud backlog €63B+, operating margin expanded dramatically to 27.8% from 14.7% in FY24.",tags:["Earnings","Cloud","Profitability"]},
-  {company:"sap",category:"Partnership",date:"Jun 2025",title:"NVIDIA AI Partnership for Joule",summary:"SAP and NVIDIA partner to bring NVIDIA NIM microservices to SAP Business AI, optimizing Joule AI inference for enterprise ERP workloads.",tags:["AI","Partnership","NVIDIA"]}
+  {company:"servicenow",  category:"Product",     date:"Jan 2021", title:"ServiceNow Employee & Creator Workflows GA",                  summary:"ServiceNow expands beyond ITSM — Employee Center, Creator Workflows, and App Engine GA mark the platform-of-platforms pivot.",                                    tags:["Platform","AI","HR"]},
+  {company:"salesforce",  category:"M&A",         date:"Jul 2021", title:"Salesforce closes $27.7B Slack acquisition",                  summary:"Largest acquisition in Salesforce history transforms the CRM leader into an enterprise collaboration platform, integrating Slack across all clouds.",              tags:["M&A","Collaboration","Platform"]},
+  {company:"microsoft",   category:"M&A",         date:"Mar 2021", title:"Microsoft acquires Nuance for $19.7B",                        summary:"AI-powered voice and healthcare workflows; Dragon Medical accelerates Azure AI for healthcare — Microsoft's largest acquisition since LinkedIn.",                  tags:["M&A","AI","Healthcare"]},
+  {company:"servicenow",  category:"Expansion",   date:"Nov 2021", title:"ServiceNow crosses $5.9B in annual revenue",                  summary:"ServiceNow reports FY21 revenue of $5.87B (+29% YoY), subscription revenue now 97%+ of total. Digital transformation spending accelerates post-COVID.",           tags:["Earnings","Growth"]},
+  {company:"oracle",      category:"M&A",         date:"Dec 2021", title:"Oracle acquires Cerner for $28.3B — Oracle Health born",      summary:"Oracle's largest acquisition enters healthcare cloud ERP. Cerner's EHR platform serves 27,000+ health facilities globally and is migrated to OCI.",             tags:["M&A","Healthcare","Cloud"]},
+  {company:"microsoft",   category:"M&A",         date:"Jan 2022", title:"Microsoft announces $68.7B Activision Blizzard deal",         summary:"Microsoft becomes #3 global gaming company. Activision brings Call of Duty, Candy Crush, and 400M monthly active users to Game Pass ecosystem.",              tags:["M&A","Gaming","Consumer"]},
+  {company:"servicenow",  category:"Earnings",    date:"Feb 2022", title:"SaaS sector re-rating: 60–80% multiple compression",         summary:"Fed rate hikes trigger SaaS de-rating. High-growth names sell off 60–80% from peak. ServiceNow drops from $700 to $400. Enterprise software fundamentals intact.", tags:["Macro","Rates","Valuation"]},
+  {company:"google",      category:"AI",          date:"Feb 2023", title:"ChatGPT triggers AI arms race — Bard & Gemini launched",      summary:"OpenAI's ChatGPT with 100M users in 60 days forces Alphabet emergency AI response. Bard (later Gemini) launches; Duet AI embedded in Workspace.",               tags:["AI","GenAI","Competition"]},
+  {company:"microsoft",   category:"M&A",         date:"Jan 2023", title:"Microsoft commits $10B to OpenAI — Copilot born",            summary:"Exclusive Azure partnership with OpenAI; GPT-4 powers Microsoft Copilot integrated into M365 (365M users), Azure, Bing, and GitHub across entire stack.",        tags:["AI","M&A","Partnership"]},
+  {company:"servicenow",  category:"AI",          date:"May 2023", title:"ServiceNow launches Now Assist — 1,000+ GenAI workflows",    summary:"Now Assist GA across ITSM, HR, and Customer workflows. NVIDIA partnership announced for enterprise AI acceleration. 1,000 AI-native workflows at launch.",       tags:["AI","GenAI","Platform"]},
+  {company:"sap",         category:"AI",          date:"Oct 2023", title:"SAP unveils Joule AI — GenAI copilot for all SAP clouds",    summary:"Joule embedded in S/4HANA, SuccessFactors, Ariba. SAP BTP becomes the AI foundation layer. 27,000 process automations targeted by FY25.",                    tags:["AI","GenAI","Platform"]},
+  {company:"google",      category:"M&A",         date:"Mar 2024", title:"Google announces $32B Wiz acquisition — cloud security crown",summary:"Google's largest acquisition ever transforms GCP into the cloud security leader. Wiz protects 40% of Fortune 500; deal expected to close Q4 2024.",               tags:["M&A","Security","Cloud"]},
+  {company:"salesforce",  category:"Product",     date:"Sep 2024", title:"Agentforce GA — autonomous AI agents hit 10,000 customers",  summary:"Salesforce's agentic AI platform reaches 10,000 enterprise customers in first 90 days — fastest product adoption in Salesforce history. Agentforce 2.0 follows.",  tags:["AI","Agents","Platform"]},
+  {company:"oracle",      category:"Earnings",    date:"Jun 2024", title:"OCI grows 51% — AI training workloads surge to Oracle",     summary:"Oracle Cloud Infrastructure emerges as AI training cloud of choice. OpenAI and Meta shift workloads to OCI for price/performance. Cloud RPO hits $130B+.",     tags:["Cloud","AI","Earnings"]},
+  {company:"sap",         category:"M&A",         date:"Aug 2024", title:"SAP acquires WalkMe ($1.5B) and LeanIX ($1.2B)",           summary:"SAP's enterprise transformation platform is complete. WalkMe adds AI-guided adoption; LeanIX adds enterprise architecture management around RISE with SAP.",         tags:["M&A","Platform","Cloud"]},
+  {company:"servicenow",  category:"AI",          date:"Jan 2025", title:"ServiceNow Agentic AI Platform GA — multi-agent workflows",  summary:"ServiceNow's agentic AI platform enables multi-step autonomous task completion across ITSM, HR, Finance. Xanadu release adds 100+ AI-native capabilities.",         tags:["AI","Agents","Platform"]},
+  {company:"salesforce",  category:"M&A",         date:"Mar 2025", title:"Salesforce acquires Informatica for ~$8B",                   summary:"Transformative data management deal powers Data Cloud and Agentforce with unified data fabric from 300+ enterprise sources. Fastest path to $1B AI ARR.",           tags:["M&A","Data","AI"]},
+  {company:"google",      category:"M&A",         date:"May 2025", title:"Wiz acquisition closes — Google Cloud security leader",     summary:"$32B Wiz closes. Wiz secures 40% of Fortune 500 cloud environments. GCP is now the most credible enterprise security cloud alongside AWS and Azure.",            tags:["M&A","Security","Cloud"]},
+  {company:"microsoft",   category:"Earnings",    date:"Jul 2025", title:"Enterprise AI budgets surge 40%+ — agentic AI era begins", summary:"Enterprise AI spending accelerates; Microsoft Azure AI grows 50%+, GCP 28%, OCI 51%. Agentic AI becomes boardroom priority. All vendors launch multi-agent platforms.", tags:["Macro","AI","Earnings"]}
 ];
 
-const BENCH_FEATURES = ["AI","Cloud","CRM","Analytics","Security","Partner","Global","Support","Innovation","Automation"];
+// ════════════════════════════════════════════════════════════
+// BENCH FEATURES — Plain STRING array of capability dimensions
+// CRITICAL: These strings are used as:
+//   1. X-axis labels on heatmap/radar/bar charts
+//   2. Keys into each company's capabilityScores object
+// They MUST match exactly the keys in capabilityScores above.
+// ════════════════════════════════════════════════════════════
+const BENCH_FEATURES = [
+  "AI", "Cloud", "CRM", "Analytics", "Security",
+  "Partner", "Global", "Support", "Innovation", "Automation"
+];
 
-const BENCH_PEERS = ["microsoft","salesforce","servicenow","google","oracle","sap"];
+// ════════════════════════════════════════════════════════════
+// BENCH PEERS — MUST be array of company ID STRINGS
+// CRITICAL: Template uses BENCH_PEERS.forEach(id => COMPANIES_DATA[id])
+// These MUST be the same string keys as the COMPANIES_DATA object above.
+// Do NOT use objects here — only lowercase ID strings.
+// ════════════════════════════════════════════════════════════
+const BENCH_PEERS = [
+  "servicenow",
+  "salesforce",
+  "google",
+  "microsoft",
+  "oracle",
+  "sap"
+];
 
+// ════════════════════════════════════════════════════════════
+// BENCH COLORS
+// ════════════════════════════════════════════════════════════
 const BENCH_COLORS = {
-  microsoft:"#0078d4",
-  salesforce:"#00a1e0",
-  servicenow:"#62d84e",
-  google:"#4285f4",
-  oracle:"#f80000",
-  sap:"#003b6f"
+  servicenow: "#00C7B1",
+  salesforce:  "#00A1E0",
+  google:      "#4285F4",
+  microsoft:   "#00A4EF",
+  oracle:      "#F80000",
+  sap:         "#0070F2"
 };
+
+
 
 /* ── BENCH_CUST safe default (populated from COMPANIES_DATA if not in data layer) ── */
 if(typeof BENCH_CUST==='undefined'){
@@ -2668,8 +3038,14 @@ function renderTrendCharts(period) {
   LOG.info('RENDER','Trend period='+period);
   APP.activeTabMap['trend-period']=period;
   renderTrendMainChart(period);
-  // Supporting charts (Tech Bubble, Rev/Cap) are in collapsible section
-  // They render on user demand via toggleAdditionalAnalysis() — not on page load
+  // Auto-expand additional analysis section so all charts are visible
+  var addSec=document.getElementById('additional-analysis-section');
+  var addBtn=document.getElementById('additional-analysis-btn');
+  if(addSec && (addSec.style.display==='none' || addSec.style.display==='')){
+    addSec.style.display='block';
+    if(addBtn) addBtn.textContent='▲ Hide';
+    setTimeout(renderTrendSupportingCharts,80);
+  }
 }
 function setActiveTrendMetric(metric,el){
   document.querySelectorAll('#trend-metric-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
@@ -3233,6 +3609,7 @@ document.addEventListener('DOMContentLoaded',function(){
   LOG.info('INIT',`Validation: ${vRes.passed}/${vRes.total} passed`);
   if(vRes.failed.length) LOG.warn('INIT',`Failed: ${vRes.failed.map(f=>f.id).join(', ')}`);
   initSidebar();
+  // Auto-open CI submenu so nav items are always clickable
   var ciSub=document.getElementById('ci-submenu');
   var ciNav=document.getElementById('nav-ci');
   if(ciSub){ciSub.classList.add('open');}
