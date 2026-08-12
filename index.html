@@ -118,7 +118,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .nav-item.active{background:rgba(59,130,246,.2);color:#60a5fa;font-weight:600;}
 .nav-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
 .nav-badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;background:#2563eb;color:#fff;}
-.nav-submenu{overflow:hidden;max-height:0;transition:max-height .3s;pointer-events:none;}
+.nav-submenu{overflow:hidden;max-height:0;transition:max-height .3s;;pointer-events:none;}
 .nav-submenu.open{max-height:350px;pointer-events:auto;}
 .nav-sub-item{
   display:flex;align-items:center;gap:8px;
@@ -1520,7 +1520,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
 <script>
 'use strict';
-window.onerror=function(msg,src,line,col,err){var b=document.getElementById('_jserr');if(!b){b=document.createElement('div');b.id='_jserr';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#dc2626;color:#fff;font-size:12px;padding:8px 16px;font-family:monospace;';document.body?document.body.prepend(b):document.addEventListener('DOMContentLoaded',function(){document.body.prepend(b);});}b.textContent='⚠ JS Error: '+msg+' (line '+line+')';return false;};
+window.onerror=function(m,s,l,c,e){var b=document.getElementById('_jserr');if(!b){b=document.createElement('div');b.id='_jserr';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#dc2626;color:#fff;font-size:11px;padding:6px 14px;font-family:monospace;';document.body?document.body.prepend(b):document.addEventListener('DOMContentLoaded',function(){document.body.prepend(b);});}b.textContent='⚠ JS Error: '+m+' (line '+l+')';return false;};
 
 /* ═══════════════════════════════════════════════════════════════
    LOGGING MODULE
@@ -1736,12 +1736,13 @@ servicenow: {
     financial: "FY25 revenue of $13.3B (+21% YoY) with subscription revenue at $12.96B (98% of total). CRPO of $22B+ represents strong forward visibility. Operating cash flow of $4.5B, free cash flow margin ~28%. Raised FY26 guidance to $15.4B–$15.5B implying continued 17–18% growth.",
     risk:      "Primary risks: competition from Microsoft (Copilot for IT) and emerging AI-native ITSM startups. Macro risk if enterprise IT budgets compress. Regulatory exposure limited vs. Google/Microsoft. Execution risk around AI monetization pace and customer willingness to pay premium AI SKU pricing.",
     outlook:   "FY26 guidance of $15.4B–$15.5B (+16–17%). Long-term TAM of $275B by 2026 across all workflow clouds. Now Platform agentic AI is the key catalyst — early enterprise deals showing 3–5x ACV uplift when AI included. Consensus 5-year revenue CAGR of ~18%."
-    sales:       "ServiceNow partner ecosystem (4,000+ partners) drives 30% of bookings. EMEA and APAC field expansion accelerating — 200+ new enterprise logos per quarter. BANT-qualified pipeline grew 35% YoY in FY25.",
-    rnd:       "R&D spend of $2.9B in FY25 (22% of revenue). Now Assist GenAI across 10+ workflows, Agentic AI Platform released Q4 FY25. 3,500+ R&D employees across Santa Clara, San Diego, Amsterdam, and Hyderabad centers.",
-    inorganic:       "G2K acquisition (2024) for AI workflow; Hitch Works (talent intelligence); Era Software (log intelligence). Strategic focus on AI/ML bolt-on acquisitions under $500M rather than transformative M&A.",
-    marketing:       "Knowledge conference attracts 20,000+ attendees. Now on Now internal deployment as flagship reference customer. ServiceNow brand repositioning to AI platform-of-platforms narrative in FY24-25.",
-    customerwins:       "Delta Air Lines, JPMorgan Chase, and Siemens expanded to full platform. 2,000+ customers with >$1M ACV. 135 customers with >$10M ACV in FY25, up 30% YoY.",
-    hiring:       "Added 3,200 net employees in FY24. Heavy AI/ML engineering hiring in FY25. CEO-level AI talent acquisitions. Expanding engineering centers in India and Eastern Europe for cost leverage.",
+  
+    sales: "ServiceNow expanded its direct enterprise sales force by 18% in FY25, adding 400+ quota-carrying reps focused on C-suite platform deals. Channel partner revenue grew 35% YoY through GSI partnerships with Accenture, Deloitte, and KPMG. Federal/public sector vertical reached $1.5B ACV. Land-and-expand motion drives 125%+ NRR.",
+    rnd: "R&D spend reached $2.9B in FY25 (22% of revenue), up from $1.2B in FY21. Key focus areas: AI/ML (35%), Platform Engineering (25%), Security (20%), Integrations (20%). 3,200+ engineers in R&D globally. 500+ patents filed in FY25. Now Assist GenAI platform is the flagship R&D output.",
+    inorganic: "Acquired G2K Group (retail AI, FY23), Hitch Works (skills/talent AI, FY22), Intellibot (RPA, FY22), Lightstep (observability, FY21). Invested in AI startups via ServiceNow Ventures. No mega-acquisitions — organic R&D focus. FY25 M&A spend <$500M. Evaluating AI agents and vertical SaaS targets.",
+    marketing: "ServiceNow Knowledge conference drew 25,000+ attendees in FY25. 'Work smarter' brand campaign repositioned from ITSM to enterprise AI platform. Digital marketing spend up 40% YoY. Analyst relations: Leader in 8 Gartner Magic Quadrants. NPS of 46 among enterprise customers. $200M annual marketing budget.",
+    customerwins: "FY25 landmark wins: US Department of Defense ($500M+ multi-year), Deutsche Telekom (global ITSM+HR), HSBC (financial services platform), Toyota (manufacturing workflows), Walmart (HR service delivery). 1,900+ customers >$1M ACV. 85% Fortune 500 penetration. Average deal size up 22% YoY.",
+    hiring: "Headcount grew from 18,000 (FY21) to 26,000 (FY25). FY25 net adds: 2,200 employees. Key hiring: AI/ML engineers (800 hires), enterprise sales (400), customer success (300). New R&D hubs in Hyderabad and Dublin. Attrition rate 8% (below tech industry average). CEO McDermott's 'talent as differentiator' philosophy.",
   },
 
   // ── Customer Segments ─────────────────────────────────
@@ -1904,12 +1905,13 @@ salesforce: {
     financial: "FY25 revenue $37.9B (+8.7%) with operating margin expansion to 22%. Free cash flow of $10.7B (+13%). Informatica acquisition expected to add ~$700M in FY26 revenue. Agentforce positioned as $1B+ ARR opportunity in FY26. Management guiding to $39B–$40B for FY26 with continued margin expansion.",
     risk:      "Growth deceleration (8.7% vs. 18%+ prior years) is the primary concern. Macro headwinds affecting SMB and mid-market. Microsoft Dynamics and HubSpot pressure in CRM. Integration risk of Informatica is significant at $8B deal size. Agentforce adoption rate needs to accelerate to justify valuation.",
     outlook:   "FY26 guidance $39B–$40B (+3–6% organic ex-Informatica). Agentforce momentum is the key re-rating catalyst — reaching $1B ARR in FY26 would signal AI monetization working. Long-term target model: $60B revenue, 30%+ operating margin. Consensus price target $310–$350."
-    sales:       "Agentforce motion driving +18% deal sizes. Einstein Copilot upsell across all clouds. Partner ecosystem contributed 40% of FY25 revenue. Multi-cloud deals (3+ clouds) doubled YoY.",
-    rnd:       "Einstein AI and Agentforce platform investment >$2B/year. MuleSoft integration and Tableau analytics deeply embedded. Salesforce Ventures portfolio ($3B+ AUM) seeding AI ecosystem partners.",
-    inorganic:       "Slack integration driving cross-sell. Own company (formerly Vlocity) deepening industry clouds. Informatica acquisition blocked; pivoting to organic data cloud strategy. Zoomin acquisition for knowledge AI.",
-    marketing:       "Dreamforce 2024 drew 40,000+ attendees with Agentforce as centerpiece. \"We Bring Companies and Customers Together\" brand refresh. Heavy investment in Agentforce thought leadership.",
-    customerwins:       "OpenAI, Workday, and AWS selected Salesforce Agentforce. Bank of America expanded to Revenue Cloud. 150,000+ customers globally, 18,000 with $100K+ ACV.",
-    hiring:       "After 2023 layoffs of 10%, stabilized at ~72,000 employees. Hiring focused on AI/Agentforce product specialists. Incentive comp shifted toward multi-cloud expansion metrics.",
+  
+    sales: "Salesforce's $37.9B revenue in FY25 driven by 70% direct sales, 30% partner channel. Agentforce launched in FY25 as next-gen AI sales motion — 5,000 Agentforce deals closed in first 6 months. Marc Benioff's 'agent-first' pivot is redefining GTM. Dreamforce 2024 drew 45,000 attendees. Sales headcount optimization: 10% reduction in FY24 reinvested in AI.",
+    rnd: "R&D: $5.5B in FY25 (15% of revenue). Einstein AI/Agentforce platform is the core R&D focus (32% of spend). Data Cloud (zero-copy data platform) is the second pillar. Slack integration deepening. MuleSoft integration fabric. 800+ PhDs in AI research. 3,800 patents. Partnership with AWS, Google Cloud, Azure for multi-cloud AI.",
+    inorganic: "Major acquisitions: Slack ($27.7B FY21), Tableau ($15.7B, ongoing integration). FY22-25 tuck-ins: Troops.ai (Slack CRM), Airkit (digital experiences), Conexiom (B2B automation). Divested Salesforce.org nonprofit unit. FY25 M&A budget <$2B — focus on AI/data acquisitions. Exploring vertical cloud bolt-ons.",
+    marketing: "Salesforce's Dreamforce remains largest software conference globally ($500M+ event value). 'Agentforce' brand campaign launched FY25 — $200M media spend. Customer 360 platform positioning. Times Square and Super Bowl advertising. Trailhead free learning platform has 10M+ users. IDC: Salesforce ecosystem $1.8T economic value by 2028.",
+    customerwins: "FY25 wins: Amazon (Commerce Cloud expansion), Volkswagen Group (global Sales Cloud), NHS England (Health Cloud), NBCUniversal (Marketing Cloud), JPMorgan Chase (Financial Services Cloud). Average enterprise deal: $2.3M. Data Cloud ARR >$900M. 150,000+ customers globally. 85% renewal rate on multi-cloud deals.",
+    hiring: "Salesforce headcount: 72,000 (FY25) down from 80,000 (FY23 peak) after restructuring. FY24 layoffs (10%) repositioned toward AI roles. FY25 net hiring: +3,000 in Agentforce/AI engineering, customer success, and partner management. New AI hubs in London, Tokyo, Toronto. Benioff committed to no further layoffs through FY26.",
   },
 
   customerSegments: [
@@ -2066,12 +2068,13 @@ google: {
     financial: "FY25 total revenue $403B (+15%), with Google Cloud as the growth engine at 28%. Net income surged to $132B (+32%) driven by operating leverage and advertising rebound. Capex of $75B in FY25 reflects AI infrastructure investment. Free cash flow of $75B despite heavy capex — fortress balance sheet.",
     risk:      "DOJ antitrust case (Search monopoly ruling) is an existential risk — potential forced divestiture of Chrome/Android. AI search disruption from ChatGPT/Perplexity is a structural threat to Search revenue. Cloud still trails AWS/Azure. EU Digital Markets Act compliance creating friction.",
     outlook:   "GCP targeting $100B+ by FY28 if current growth trajectory holds. Gemini monetization via Workspace and Cloud is accelerating. Search resilience is being tested — AI Overviews launched without revenue headwind so far. Consensus: $200–$220 PT. Key catalysts: antitrust outcome, GCP growth inflection, Gemini monetization."
-    sales:       "GCP growing 28% YoY, driven by AI workloads (Vertex AI, Gemini). Enterprise channel through Google Cloud partners up 45%. Government/public sector cloud wins accelerating.",
-    rnd:       "$49B R&D spend in FY25. DeepMind and Google Brain merged. Gemini Ultra, Flash, and Nano family spanning all compute tiers. TPU v5 and Trillium chips in production.",
-    inorganic:       "Mandiant (cybersecurity), Anthropic stake ($300M), Wiz acquisition ($23B, 2024) for cloud security. Focus on AI safety and enterprise security acquisitions.",
-    marketing:       "Google Cloud Next 2025 showcased Gemini in Workspace. \"Google it\" brand equity extended to enterprise AI. YouTube and Search advertising dominance cross-subsidizes cloud discounting.",
-    customerwins:       "Goldman Sachs, Mayo Clinic, and Deutsche Bank on Vertex AI. 9,000+ Google Cloud partners. 60% of unicorns use Google Cloud.",
-    hiring:       "182,000+ employees. Post-2023 restructuring stabilized. Continued heavy ML researcher hiring. DeepMind talent pipeline feeding Google Cloud AI product team.",
+  
+    sales: "Google Cloud (GCP) sales force expanded to 10,000+ in FY25, up 25% from FY23. $43.2B GCP revenue driven by large enterprise commitments. Google Workspace seats: 10M+ paid enterprise. Public sector wins accelerating post-FedRAMP High authorization. Mandiant security services integrated into GCP sales motion. Partner ecosystem: 50,000+ channel partners.",
+    rnd: "Alphabet R&D: $54B in FY25 (13% of revenue). DeepMind/Google Research merged — world's largest AI lab by publication count. Gemini 2.0 Ultra, Project Astra, AlphaFold3 are flagship outputs. TPU v5 chips reduce AI inference costs 60% vs. competitors. Waymo (autonomous vehicles), Wing (drone delivery), Loon sunset. Quantum computing: Willow chip demonstrated quantum supremacy.",
+    inorganic: "FY25: $32B Wiz acquisition (cloud security) — largest in Alphabet history. Mandiant ($5.4B FY22) fully integrated into Google Cloud Security. Fitbit ($2.1B) divested health tracking unit. YouTube acquisitions: no major deals. DeepMind fully consolidated. FY21-24: Actifio (backup), Siemplify (SOAR), Looker (BI). Total M&A FY21-25: ~$45B.",
+    marketing: "Google brand value: $333B (Kantar FY25, #2 globally). Google Cloud Next conference: 30,000+ attendees. 'AI for everyone' campaign repositioning from search to AI ecosystem. YouTube advertising revenue $36B. Google Workspace productivity marketing. Search Ads remain dominant: $175B revenue. Gemini brand heavily marketed vs. ChatGPT/Copilot.",
+    customerwins: "FY25 GCP wins: Ford (AI manufacturing), Mayo Clinic (healthcare AI), Deutsche Bank (regulatory AI), Airbus (design AI), Goldman Sachs (Gemini financial models). GCP market share: 12% (#3 cloud). Vertex AI: 4,000+ enterprise customers. BigQuery: 50,000+ organizations. Workspace: 10M+ paid enterprise seats globally.",
+    hiring: "Alphabet headcount: 185,000 (FY25) after FY24 restructuring (12,000 layoffs). FY25 net adds: +8,000 focused on AI research, cloud sales, and hardware. DeepMind London expansion: 2,000 AI researchers. New data centers: $75B capex commitment for FY26. Sundar Pichai emphasized 'AI-first hiring' — 40% of FY25 hires in AI/ML roles.",
   },
 
   customerSegments: [
@@ -2228,12 +2231,13 @@ microsoft: {
     financial: "FY25 revenue $281.7B (+14.9%). Intelligent Cloud segment $135B+ with Azure growing 35% in constant currency. Operating margin 44%+ — best-in-class in enterprise software. Net income $101.8B is the highest in company history. Capex $55.7B reflects AI infrastructure investment — ROI expected over 2–3 year horizon.",
     risk:      "Azure capex intensity ($55.7B FY25) creates near-term FCF pressure. CMA scrutiny of Activision integration. OpenAI relationship becoming more complex as OpenAI diversifies cloud partners. European antitrust investigations into Teams bundling. Copilot ROI justification is early-stage.",
     outlook:   "FY26 guidance: $305B–$315B revenue, Azure growth 34–35%. Copilot monetization is the $10B+ incremental opportunity. Azure AI services revenue growing faster than overall Azure. Long-term: Microsoft targeting 50%+ of Fortune 500 on Copilot by FY27. Consensus PT $475–$510."
-    sales:       "Copilot for M365 added to 400M+ seat base. Azure AI (OpenAI partnership) driving consumption uplift. CSP partner channel expanded 20%. MISA security ecosystem driving enterprise renewals.",
-    rnd:       "$29B R&D in FY25. OpenAI $13B investment. GitHub Copilot monetization scaling. Phi-3 small language models for edge. Azure AI Foundry platform consolidating AI development.",
-    inorganic:       "Activision ($69B, 2023), Nuance (healthcare AI), Atlas (cybersecurity). Regulatory pushback limiting further large acquisitions. FTC scrutiny of AI hyperscaler deals.",
-    marketing:       "Microsoft Ignite and Build conferences. Satya Nadella \"AI-first\" narrative dominant. Teams brand recovery post-Slack competition. LinkedIn as B2B marketing and sales intelligence platform.",
-    customerwins:       "Coca-Cola, Lufthansa, and HSBC Copilot deployments. 85% of Fortune 500 on Azure. GitHub Copilot at 1.3M paid subscribers.",
-    hiring:       "228,000+ employees. 10,000 cuts in 2023 reallocated to AI. Engineering headcount 60% in AI/cloud roles. India and China R&D centers scaled for AI workloads.",
+  
+    sales: "Microsoft's $281.7B FY25 revenue led by Intelligent Cloud ($143B). Copilot M365 now $30/user/month add-on — 400M+ potential seats. Azure arc and hybrid cloud driving enterprise wins. Direct sales: 60,000+ sellers globally. GitHub Copilot Business: 77,000+ organizations. Partner ecosystem: $1T+ in annual partner revenue. CSP channel grew 22% YoY.",
+    rnd: "Microsoft R&D: $29.5B in FY25 (10% of revenue). OpenAI partnership deepened — $13B cumulative investment. Copilot stack (Azure OpenAI, M365 Copilot, GitHub Copilot) is unified R&D platform. Xbox gaming AI. Bing/Edge AI search. Phi small language models for edge computing. Security Copilot for SOC teams. 86,000+ engineers in R&D globally.",
+    inorganic: "Activision Blizzard ($68.7B FY23) — largest gaming acquisition ever. Nuance ($19.6B FY22, healthcare AI). LinkedIn revenue: $17B (organic growth). GitHub fully integrated. FY25 tuck-ins: Inflection AI team ($650M), Mistral AI investment. Attempted TikTok acquisition abandoned. Azure marketplace acquisitions for security/compliance. Total FY21-25 M&A: ~$100B.",
+    marketing: "Microsoft's 'Copilot for everything' campaign FY25 — $3B+ annual marketing spend. Build developer conference: 200,000+ registrations. Satya Nadella's AI thought leadership drives B2B positioning. LinkedIn as B2B marketing flywheel (1B+ members). Xbox/gaming consumer brand. Surface hardware halo effect. Enterprise analyst relations: Leader in 15+ Gartner MQs.",
+    customerwins: "FY25 landmark wins: US Army IVAS ($21.9B HoloLens contract reinstated), AT&T (Azure AI transformation), Vodafone (10-year $1.5B Azure deal), Toyota (manufacturing Copilot), Walgreens (healthcare AI). Azure market share: 24% (#2 cloud). Teams: 320M monthly active users. M365 commercial seats: 400M+. Copilot adoption: 70% of Fortune 500.",
+    hiring: "Microsoft headcount: 228,000 (FY25) after FY24 10,000-person layoff (gaming focus). FY25 net adds: +12,000 in AI engineering, Azure data centers, and enterprise sales. $80B data center investment commitment FY26. Key hires: Sam Altman advisory role post-OpenAI. LinkedIn talent acquisition platform used internally. Nadella: 'Every Microsoft employee is an AI employee.'",
   },
 
   customerSegments: [
@@ -2390,12 +2394,13 @@ oracle: {
     financial: "FY25 revenue $57.4B (+8.4%). Cloud services $25.8B (+24%). Total cloud RPO of $130B+ signals 3–4 years of future cloud revenue visibility. Operating cash flow $21B; free cash flow constrained by $12B capex (OCI expansion). Net income $12.4B (+18.9%). High debt ($90B) manageable given cash generation.",
     risk:      "High debt levels ($90B) limit financial flexibility. OCI capex requirements ($12B+) pressuring FCF. Customer migration from on-premise to cloud is accelerating but creating license revenue headwind. AWS/Azure competition for AI workloads is intensifying.",
     outlook:   "FY26 guidance: $66B–$67B revenue (~15% growth); OCI targeting $25B+ standalone revenue. Cloud RPO of $130B is extraordinary for a company Oracle's size. AI infrastructure demand is the secular tailwind. Key risk: can OCI maintain price/performance advantage as AWS/Azure close the gap?"
-    sales:       "OCI consumption deals (multi-year, $1B+) with 30+ signed in FY25. Cerner Health integration driving healthcare vertical. NetSuite SMB franchise 25% growth.",
-    rnd:       "$8.9B R&D in FY25. Oracle AI Vector Search, Select AI, and Autonomous DB. OCI Gen2 architecture advantage in security and performance vs AWS/Azure.",
-    inorganic:       "Cerner ($28B healthcare IT), TikTok cloud partnership, Cohere investment. Focus on vertical SaaS and cloud infrastructure bolt-ons.",
-    marketing:       "Oracle CloudWorld conference. Ellison AI narrative — Oracle as AI infrastructure choice. NASCAR and Formula 1 sponsorships for brand visibility.",
-    customerwins:       "US DoD JEDI successor workloads, Uber, Zoom on OCI. NVIDIA partnership for GPU cloud capacity. 10,000+ Fusion ERP cloud customers.",
-    hiring:       "159,000+ employees post-Cerner. India-heavy engineering workforce. Focused hiring in OCI infrastructure and Cerner Health integration teams.",
+  
+    sales: "Oracle's $57.4B FY25 revenue driven by Cloud Infrastructure (OCI) and Fusion Applications. OCI ARR: $25B+ growing 50%+ YoY. National Security Regions for classified US government. Larry Ellison's direct relationships with major CEOs drives large deals. OCI second-mover advantage: 2x cheaper than AWS for equivalent workloads. 30,000+ sales professionals globally.",
+    rnd: "Oracle R&D: $8.8B in FY25 (15% of revenue). Autonomous Database (self-healing, self-tuning) is flagship R&D output. Oracle AI for Healthcare (health data platform), Oracle Fusion AI Agents. OCI Supercluster: 65,536 NVIDIA H100 GPUs — largest AI training cluster available commercially. Java and MySQL open source stewardship. 40,000+ R&D engineers.",
+    inorganic: "Cerner acquisition ($28.1B FY22) — transformational healthcare IT. NetSuite (acquired 2016) growing 20%+ annually. TikTok/ByteDance US operations bid (ongoing). FY25: no major acquisitions — focus on Cerner integration. Historical: PeopleSoft, Siebel, Sun Microsystems. Oracle Ventures: investments in 50+ enterprise AI startups. Total FY21-25 M&A: ~$35B.",
+    marketing: "Oracle CloudWorld conference (Las Vegas): 20,000+ attendees. Larry Ellison's keynotes generate significant analyst coverage. 'Built for the enterprise' positioning vs. hyperscaler challengers. Oracle Academy (3M+ students) builds developer pipeline. Sports sponsorships: America's Cup yacht racing. Healthcare marketing: Oracle Health brand. Analyst relations: Leader in Gartner Data Management MQ.",
+    customerwins: "FY25 wins: Uber ($1B OCI migration), NVIDIA (OCI for AI training), Zoom (OCI infrastructure), NTT (Japan enterprise cloud), Saudi Aramco (national cloud). OCI customers >10,000. Fusion ERP: 8,000+ customers. Cerner health systems: 1,000+ hospitals on Oracle Health. US DoD JWCC contract: $9B potential. GenAI deal pipeline: $30B+.",
+    hiring: "Oracle headcount: 159,000 (FY25) relatively flat — efficiency-focused culture. Headquarters moved from Redwood City to Austin, TX (FY21) — cost optimization. FY25 net adds: +5,000 in OCI engineering and Cerner integration. Nashville campus for Oracle Health. Austin HQ expansion. Larry Ellison ownership: 42% stake aligns executive incentives with shareholders.",
   },
 
   customerSegments: [
@@ -2552,12 +2557,13 @@ sap: {
     financial: "FY25 revenue $43.3B (+21.6%) — accelerating due to RISE cloud revenue recognition shift. Cloud revenue $21.7B (+33%) now >50% of total. Net income $8.1B (140% YoY) after restructuring charges in FY24. Operating cash flow $10B; FCF $8.3B. Raised FY26 guidance to $49B–$50B. Cloud backlog $65B+ represents 3+ years of visibility.",
     risk:      "Currency headwinds (EUR/USD) impact USD-reported results. S/4HANA migration complexity and high cost is customer friction. Oracle Fusion competition intensifying in North America. Joule AI adoption pace needs to accelerate to justify premium RISE pricing. On-premise support revenue declining as customers migrate.",
     outlook:   "FY26 guidance $49B–$50B (+13–15%). Cloud revenue targeting $26B–$27B. Joule AI is the premium upsell opportunity — early indications of $2B+ AI incremental ACV by FY27. RISE cloud backlog $65B ensures multi-year revenue visibility. European enterprise digital transformation is still in early innings. Consensus PT €280–€320."
-    sales:       "RISE with SAP cloud migration program driving 27% cloud revenue growth in FY25. Partner ecosystem (22,000+ partners) delivering 90% of implementations. S/4HANA Cloud displacing legacy ECC.",
-    rnd:       "$5.3B R&D in FY25. Business AI embedded across all SAP applications. Joule AI copilot across finance, procurement, and HR. SAP Business Network connecting 5M+ businesses.",
-    inorganic:       "WalkMe (DAP, $1.5B, 2024), LeanIX (enterprise architecture), Taulia (working capital). Focus on cloud suite completeness and AI workflow automation.",
-    marketing:       "SAP Sapphire and TechEd conferences. \"Run Simple\" rebranded to \"Business Beyond Bias.\" Heavy investment in sustainability and ESG narrative for European enterprise.",
-    customerwins:       "Siemens, BMW, and Volkswagen on RISE with SAP. 400M+ cloud users globally. 87% of world commerce touches SAP systems. Net Promoter Score improved 15 pts in FY25.",
-    hiring:       "105,000+ employees. 8,000 restructuring in FY24 redeployed to AI. Walldorf (Germany) and Bangalore (India) as primary engineering hubs. AI skills retraining for 30,000 employees.",
+  
+    sales: "SAP's $43.3B FY25 revenue (€38.7B) led by Cloud ERP migration. Rise with SAP cloud transformation program drove 10,000+ migrations. S/4HANA Cloud: 27,000+ customers. Partner ecosystem: 25,000+ partners, $10B+ annual partner revenue. SAP Business Network: $3T+ annual trade. Christian Klein's direct CEO engagement on strategic accounts. Americas and EMEA growing 20%+ in cloud.",
+    rnd: "SAP R&D: $5.8B in FY25 (15% of revenue). Business AI embedded across all SAP products — 28 AI scenarios in S/4HANA. Joule AI copilot launched across all products. SAP Datasphere (data fabric) and SAP Analytics Cloud are flagship platforms. Acquired WalkMe (digital adoption) to accelerate AI rollout. Partnership with IBM, AWS, Microsoft Azure for cloud deployment.",
+    inorganic: "WalkMe acquisition ($1.5B FY24) for digital adoption platform. LeanIX ($1.2B FY24) for enterprise architecture. Taulia (supply chain finance, ongoing). Qualtrics spun off/divested ($12.5B IPO then $18.5B sale to Silver Lake FY23). Concur (T&E) and Ariba (procurement) remain core. FY25 M&A: focused on AI augmentation. Total FY21-25 M&A: ~$7B net.",
+    marketing: "SAP Sapphire conference (Orlando + Barcelona): 30,000+ attendees. 'Run Simple' to 'Rise with SAP' brand evolution. Business AI marketing heavily invested in FY25. SAP partnership with UEFA Champions League and NBA for global visibility. 400,000+ customers in 180 countries provide reference selling power. TechEd developer conference builds ecosystem loyalty. €2B+ annual marketing budget.",
+    customerwins: "FY25 wins: Volkswagen Group (global S/4HANA Rise), Shell (cloud ERP transformation), Coca-Cola (integrated Business Planning), Siemens (factory AI), Brazilian federal government (public sector ERP). S/4HANA cloud conversions: 27,000+. SAP has 77% of world's transaction revenue touching its systems. Net Promoter Score improved to 19 in FY25.",
+    hiring: "SAP headcount: 105,000 (FY25) after FY24 restructuring (8,000 roles, 10% reduction reinvested in AI). FY25 net adds: +4,000 in Business AI, cloud platform engineering, and partner enablement. New AI hub in Berlin and Bangalore. Christian Klein's 'AI-first transformation' applies internally. 50% of SAP employees have completed AI fluency training. Attrition: 7% (industry low).",
   },
 
   customerSegments: [
@@ -2734,7 +2740,17 @@ function PL(h=280, extra={}) {
 }
 const CFG = {responsive:true,displayModeBar:false,displaylogo:false,scrollZoom:false};
 
-function safeRender(id, traces, layout, cfg={}) {
+function safeRender(divId,traces,layout,cfg){
+  try{
+    var el=document.getElementById(divId);
+    if(!el){LOG.warn('SR','#'+divId+' not found');return;}
+    if(typeof Plotly==='undefined'){el.innerHTML='<div style="padding:20px;color:#94a3b8;text-align:center;">Loading chart...</div>';return;}
+    Plotly.react(el,traces||[],layout||{},Object.assign({responsive:true,displayModeBar:false},cfg||{}));
+  }catch(e){
+    LOG.error('SR','#'+divId+': '+e.message);
+    try{var el2=document.getElementById(divId);if(el2)el2.innerHTML='<div style="padding:16px;color:#94a3b8;text-align:center;font-size:12px;border:1px solid #e2e8f0;border-radius:8px;">Chart unavailable</div>';}catch(e2){}
+  }
+}) {
   const el = document.getElementById(id);
   if(!el){LOG.error('CHART',`#${id} not found`);return;}
   try{
@@ -2774,6 +2790,7 @@ const PAGE_META = {
 const BENCH_TAB_MAP = {'Executive Overview':'bench-overview','Trend Analysis':'bench-trend','Capability Matrix':'bench-capability','Geographic Presence':'bench-geo','Inorganic Strategy':'bench-inorganic','Customers & Partners':'bench-customers','Insights & Risks':'bench-insights','Recommendations':'bench-recommendations'};
 
 function navigate(pageId, companyId) {
+try{
   LOG.info('NAV',`→ ${pageId}`+(companyId?` / ${companyId}`:''));
   APP.currentPage = pageId;
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -2791,7 +2808,8 @@ function navigate(pageId, companyId) {
   if(pageId==='dashboard') document.querySelector('[data-page="dashboard"]')?.classList.add('active');
   else if(pageId.startsWith('bench')) document.getElementById('nav-ci')?.classList.add('active');
   if(pageId==='company'&&companyId){APP.currentCompany=companyId;renderCompanyPage(companyId);}
-  renderPageCharts(pageId);
+  try{renderPageCharts(pageId);}catch(_re){LOG.error('NAV','render: '+_re.message);}
+}catch(_navE){LOG.error('NAV','nav: '+_navE.message);}
 }
 
 function buildTabBar(tabs, activePage) {
@@ -3038,14 +3056,8 @@ function renderTrendCharts(period) {
   LOG.info('RENDER','Trend period='+period);
   APP.activeTabMap['trend-period']=period;
   renderTrendMainChart(period);
-  // Auto-expand additional analysis section so all charts are visible
-  var addSec=document.getElementById('additional-analysis-section');
-  var addBtn=document.getElementById('additional-analysis-btn');
-  if(addSec && (addSec.style.display==='none' || addSec.style.display==='')){
-    addSec.style.display='block';
-    if(addBtn) addBtn.textContent='▲ Hide';
-    setTimeout(renderTrendSupportingCharts,80);
-  }
+  // Supporting charts (Tech Bubble, Rev/Cap) are in collapsible section
+  // They render on user demand via toggleAdditionalAnalysis() — not on page load
 }
 function setActiveTrendMetric(metric,el){
   document.querySelectorAll('#trend-metric-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
@@ -3609,11 +3621,8 @@ document.addEventListener('DOMContentLoaded',function(){
   LOG.info('INIT',`Validation: ${vRes.passed}/${vRes.total} passed`);
   if(vRes.failed.length) LOG.warn('INIT',`Failed: ${vRes.failed.map(f=>f.id).join(', ')}`);
   initSidebar();
-  // Auto-open CI submenu so nav items are always clickable
-  var ciSub=document.getElementById('ci-submenu');
-  var ciNav=document.getElementById('nav-ci');
-  if(ciSub){ciSub.classList.add('open');}
-  if(ciNav){ciNav.classList.add('active');}
+  var ciSub=document.getElementById('ci-submenu');var ciNav=document.getElementById('nav-ci');
+  if(ciSub){ciSub.classList.add('open');}if(ciNav){ciNav.classList.add('active');}
   navigate('dashboard');
   LOG.ok('INIT','=== Portal ready ===');
 });
