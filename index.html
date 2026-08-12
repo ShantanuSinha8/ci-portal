@@ -2568,33 +2568,38 @@ sap: {
 
 // ════════════════════════════════════════════════════════════
 // MARKET EVENTS
+// Template requires: {company, category, date, title, summary, tags[]}
+// 'company' must be a COMPANIES_DATA key OR empty string for macro events
+// 'category' must be a NON-NULL string (used as .toUpperCase() — cannot be undefined)
 // ════════════════════════════════════════════════════════════
 const MARKET_EVENTS = [
-  {year:"FY21", company:"servicenow",  event:"ServiceNow launches Employee Workflows; Creator Workflows GA — platform expansion beyond IT", type:"product"},
-  {year:"FY21", company:"salesforce",  event:"Salesforce completes $27.7B Slack acquisition — extends platform to enterprise collaboration", type:"deal"},
-  {year:"FY21", company:"microsoft",   event:"Microsoft acquires Nuance for $19.7B — AI-powered voice and healthcare workflows", type:"deal"},
-  {year:"FY21", company:"macro",       event:"COVID-19 digital transformation boom drives record cloud SaaS spending across all vendors", type:"macro"},
-  {year:"FY22", company:"oracle",      event:"Oracle acquires Cerner for $28.3B — enters healthcare cloud ERP as Oracle Health", type:"deal"},
-  {year:"FY22", company:"microsoft",   event:"Microsoft announces $68.7B Activision Blizzard acquisition — gaming strategy expands", type:"deal"},
-  {year:"FY22", company:"macro",       event:"Fed rate hikes: SaaS multiple compression — high-growth names de-rate 60–80% from peak valuations", type:"macro"},
-  {year:"FY23", company:"google",      event:"ChatGPT (OpenAI) triggers AI arms race; Bard/Gemini launched; Duet AI in Workspace", type:"tech"},
-  {year:"FY23", company:"microsoft",   event:"Microsoft announces $10B OpenAI investment; Copilot integrated into M365, Azure, Bing, GitHub", type:"deal"},
-  {year:"FY23", company:"servicenow",  event:"ServiceNow launches Now Assist (GenAI) — 1,000+ AI workflows; NVidia partnership announced", type:"product"},
-  {year:"FY23", company:"sap",         event:"SAP unveils Joule AI assistant; BTP becomes AI platform foundation for all SAP clouds", type:"product"},
-  {year:"FY24", company:"google",      event:"Google launches Gemini 2.0; AI Overviews in Search globally; Wiz acquisition announced ($32B)", type:"deal"},
-  {year:"FY24", company:"salesforce",  event:"Salesforce Agentforce GA — autonomous AI agents; 10,000 customers in first 90 days", type:"product"},
-  {year:"FY24", company:"oracle",      event:"OCI emerges as AI training cloud of choice; OpenAI/Meta workloads shift to OCI; 51% OCI growth", type:"product"},
-  {year:"FY24", company:"sap",         event:"SAP acquires WalkMe ($1.5B) and LeanIX ($1.2B) — complete enterprise transformation platform", type:"deal"},
-  {year:"FY25", company:"servicenow",  event:"ServiceNow Agentic AI Platform GA — multi-agent autonomous enterprise workflows at scale", type:"product"},
-  {year:"FY25", company:"salesforce",  event:"Salesforce acquires Informatica for ~$8B — AI-ready data fabric for Agentforce and Data Cloud", type:"deal"},
-  {year:"FY25", company:"google",      event:"Wiz acquisition closes ($32B) — Google Cloud becomes cloud security leader for enterprises", type:"deal"},
-  {year:"FY25", company:"macro",       event:"Enterprise AI budgets surge 40%+ YoY; agentic AI becomes boardroom priority across all industries", type:"macro"}
+  {company:"servicenow",  category:"Product",     date:"Jan 2021", title:"ServiceNow Employee & Creator Workflows GA",                  summary:"ServiceNow expands beyond ITSM — Employee Center, Creator Workflows, and App Engine GA mark the platform-of-platforms pivot.",                                    tags:["Platform","AI","HR"]},
+  {company:"salesforce",  category:"M&A",         date:"Jul 2021", title:"Salesforce closes $27.7B Slack acquisition",                  summary:"Largest acquisition in Salesforce history transforms the CRM leader into an enterprise collaboration platform, integrating Slack across all clouds.",              tags:["M&A","Collaboration","Platform"]},
+  {company:"microsoft",   category:"M&A",         date:"Mar 2021", title:"Microsoft acquires Nuance for $19.7B",                        summary:"AI-powered voice and healthcare workflows; Dragon Medical accelerates Azure AI for healthcare — Microsoft's largest acquisition since LinkedIn.",                  tags:["M&A","AI","Healthcare"]},
+  {company:"servicenow",  category:"Expansion",   date:"Nov 2021", title:"ServiceNow crosses $5.9B in annual revenue",                  summary:"ServiceNow reports FY21 revenue of $5.87B (+29% YoY), subscription revenue now 97%+ of total. Digital transformation spending accelerates post-COVID.",           tags:["Earnings","Growth"]},
+  {company:"oracle",      category:"M&A",         date:"Dec 2021", title:"Oracle acquires Cerner for $28.3B — Oracle Health born",      summary:"Oracle's largest acquisition enters healthcare cloud ERP. Cerner's EHR platform serves 27,000+ health facilities globally and is migrated to OCI.",             tags:["M&A","Healthcare","Cloud"]},
+  {company:"microsoft",   category:"M&A",         date:"Jan 2022", title:"Microsoft announces $68.7B Activision Blizzard deal",         summary:"Microsoft becomes #3 global gaming company. Activision brings Call of Duty, Candy Crush, and 400M monthly active users to Game Pass ecosystem.",              tags:["M&A","Gaming","Consumer"]},
+  {company:"servicenow",  category:"Earnings",    date:"Feb 2022", title:"SaaS sector re-rating: 60–80% multiple compression",         summary:"Fed rate hikes trigger SaaS de-rating. High-growth names sell off 60–80% from peak. ServiceNow drops from $700 to $400. Enterprise software fundamentals intact.", tags:["Macro","Rates","Valuation"]},
+  {company:"google",      category:"AI",          date:"Feb 2023", title:"ChatGPT triggers AI arms race — Bard & Gemini launched",      summary:"OpenAI's ChatGPT with 100M users in 60 days forces Alphabet emergency AI response. Bard (later Gemini) launches; Duet AI embedded in Workspace.",               tags:["AI","GenAI","Competition"]},
+  {company:"microsoft",   category:"M&A",         date:"Jan 2023", title:"Microsoft commits $10B to OpenAI — Copilot born",            summary:"Exclusive Azure partnership with OpenAI; GPT-4 powers Microsoft Copilot integrated into M365 (365M users), Azure, Bing, and GitHub across entire stack.",        tags:["AI","M&A","Partnership"]},
+  {company:"servicenow",  category:"AI",          date:"May 2023", title:"ServiceNow launches Now Assist — 1,000+ GenAI workflows",    summary:"Now Assist GA across ITSM, HR, and Customer workflows. NVIDIA partnership announced for enterprise AI acceleration. 1,000 AI-native workflows at launch.",       tags:["AI","GenAI","Platform"]},
+  {company:"sap",         category:"AI",          date:"Oct 2023", title:"SAP unveils Joule AI — GenAI copilot for all SAP clouds",    summary:"Joule embedded in S/4HANA, SuccessFactors, Ariba. SAP BTP becomes the AI foundation layer. 27,000 process automations targeted by FY25.",                    tags:["AI","GenAI","Platform"]},
+  {company:"google",      category:"M&A",         date:"Mar 2024", title:"Google announces $32B Wiz acquisition — cloud security crown",summary:"Google's largest acquisition ever transforms GCP into the cloud security leader. Wiz protects 40% of Fortune 500; deal expected to close Q4 2024.",               tags:["M&A","Security","Cloud"]},
+  {company:"salesforce",  category:"Product",     date:"Sep 2024", title:"Agentforce GA — autonomous AI agents hit 10,000 customers",  summary:"Salesforce's agentic AI platform reaches 10,000 enterprise customers in first 90 days — fastest product adoption in Salesforce history. Agentforce 2.0 follows.",  tags:["AI","Agents","Platform"]},
+  {company:"oracle",      category:"Earnings",    date:"Jun 2024", title:"OCI grows 51% — AI training workloads surge to Oracle",     summary:"Oracle Cloud Infrastructure emerges as AI training cloud of choice. OpenAI and Meta shift workloads to OCI for price/performance. Cloud RPO hits $130B+.",     tags:["Cloud","AI","Earnings"]},
+  {company:"sap",         category:"M&A",         date:"Aug 2024", title:"SAP acquires WalkMe ($1.5B) and LeanIX ($1.2B)",           summary:"SAP's enterprise transformation platform is complete. WalkMe adds AI-guided adoption; LeanIX adds enterprise architecture management around RISE with SAP.",         tags:["M&A","Platform","Cloud"]},
+  {company:"servicenow",  category:"AI",          date:"Jan 2025", title:"ServiceNow Agentic AI Platform GA — multi-agent workflows",  summary:"ServiceNow's agentic AI platform enables multi-step autonomous task completion across ITSM, HR, Finance. Xanadu release adds 100+ AI-native capabilities.",         tags:["AI","Agents","Platform"]},
+  {company:"salesforce",  category:"M&A",         date:"Mar 2025", title:"Salesforce acquires Informatica for ~$8B",                   summary:"Transformative data management deal powers Data Cloud and Agentforce with unified data fabric from 300+ enterprise sources. Fastest path to $1B AI ARR.",           tags:["M&A","Data","AI"]},
+  {company:"google",      category:"M&A",         date:"May 2025", title:"Wiz acquisition closes — Google Cloud security leader",     summary:"$32B Wiz closes. Wiz secures 40% of Fortune 500 cloud environments. GCP is now the most credible enterprise security cloud alongside AWS and Azure.",            tags:["M&A","Security","Cloud"]},
+  {company:"microsoft",   category:"Earnings",    date:"Jul 2025", title:"Enterprise AI budgets surge 40%+ — agentic AI era begins", summary:"Enterprise AI spending accelerates; Microsoft Azure AI grows 50%+, GCP 28%, OCI 51%. Agentic AI becomes boardroom priority. All vendors launch multi-agent platforms.", tags:["Macro","AI","Earnings"]}
 ];
 
 // ════════════════════════════════════════════════════════════
-// BENCH FEATURES — String array of capability dimensions
-// (These are used as both chart axis labels AND as keys into
-//  each company's capabilityScores object — must match exactly)
+// BENCH FEATURES — Plain STRING array of capability dimensions
+// CRITICAL: These strings are used as:
+//   1. X-axis labels on heatmap/radar/bar charts
+//   2. Keys into each company's capabilityScores object
+// They MUST match exactly the keys in capabilityScores above.
 // ════════════════════════════════════════════════════════════
 const BENCH_FEATURES = [
   "AI", "Cloud", "CRM", "Analytics", "Security",
@@ -2602,15 +2607,18 @@ const BENCH_FEATURES = [
 ];
 
 // ════════════════════════════════════════════════════════════
-// BENCH PEERS — Valuation & performance table
+// BENCH PEERS — MUST be array of company ID STRINGS
+// CRITICAL: Template uses BENCH_PEERS.forEach(id => COMPANIES_DATA[id])
+// These MUST be the same string keys as the COMPANIES_DATA object above.
+// Do NOT use objects here — only lowercase ID strings.
 // ════════════════════════════════════════════════════════════
 const BENCH_PEERS = [
-  {company:"ServiceNow", ticker:"NOW",   revenueGrowth:20.9, grossMargin:79.9, ebitdaMargin:29.0, evRevenue:8.2,  peRatio:62.5, marketCap:109.2},
-  {company:"Salesforce",  ticker:"CRM",  revenueGrowth:8.7,  grossMargin:77.2, ebitdaMargin:26.4, evRevenue:4.2,  peRatio:43.2, marketCap:157.9},
-  {company:"Alphabet",    ticker:"GOOGL",revenueGrowth:15.1, grossMargin:59.7, ebitdaMargin:40.2, evRevenue:5.2,  peRatio:21.8, marketCap:2100.0},
-  {company:"Microsoft",   ticker:"MSFT", revenueGrowth:14.9, grossMargin:68.8, ebitdaMargin:50.8, evRevenue:11.0, peRatio:30.2, marketCap:3100.0},
-  {company:"Oracle",      ticker:"ORCL", revenueGrowth:8.4,  grossMargin:70.5, ebitdaMargin:45.3, evRevenue:7.5,  peRatio:34.6, marketCap:430.0},
-  {company:"SAP",         ticker:"SAP",  revenueGrowth:21.6, grossMargin:73.3, ebitdaMargin:32.3, evRevenue:5.5,  peRatio:28.8, marketCap:238.0}
+  "servicenow",
+  "salesforce",
+  "google",
+  "microsoft",
+  "oracle",
+  "sap"
 ];
 
 // ════════════════════════════════════════════════════════════
