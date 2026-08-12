@@ -659,8 +659,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <!-- Populated by JS -->
       </div>
       <div class="chip-actions">
-        <button class="chip-btn" onclick="selectAllCompanies()">+ Add</button>
-        <button class="chip-btn" onclick="clearAllCompanies()">− Remove</button>
+        <button class="chip-btn" data-action="selectAllCompanies()">+ Add</button>
+        <button class="chip-btn" data-action="clearAllCompanies()">− Remove</button>
       </div>
     </div>
     <div class="filter-group">
@@ -699,10 +699,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     </div>
     <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v5.0</div>
     <div class="topbar-actions">
-      <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
-      <button class="topbar-btn" onclick="exportPortal()">⬇ Export</button>
-      <button class="topbar-btn primary" onclick="navigate('bench-overview')">🔍 Open Analysis</button>
-      <button class="topbar-btn" onclick="toggleLog()" title="Toggle debug log">⚙ Log</button>
+      <button class="topbar-btn" data-action="refreshData()">↻ Refresh</button>
+      <button class="topbar-btn" data-action="exportPortal()">⬇ Export</button>
+      <button class="topbar-btn primary" data-action="navigate('bench-overview')">🔍 Open Analysis</button>
+      <button class="topbar-btn" data-action="toggleLog()" title="Toggle debug log">⚙ Log</button>
     </div>
   </div>
 
@@ -727,8 +727,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="dash-page-subtitle" id="dash-date-sub">Here&rsquo;s your competitive intelligence summary for today</div>
         </div>
         <div class="dash-page-actions">
-          <button class="topbar-btn" onclick="exportPortal()">&#x1F4E4; Export</button>
-          <button class="topbar-btn primary" onclick="navigate('bench-overview')">&#x2696;&#xFE0F; Open Analysis</button>
+          <button class="topbar-btn" data-action="exportPortal()">&#x1F4E4; Export</button>
+          <button class="topbar-btn primary" data-action="navigate('bench-overview')">&#x2696;&#xFE0F; Open Analysis</button>
         </div>
       </div>
 
@@ -768,10 +768,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="dash-section">
         <div class="dash-section-header">
           <div class="dash-section-title">&#x1F4CC; Your Intelligence Module</div>
-          <button class="btn-sm-dash btn-sm-dash-outline" onclick="openCustomizeModal()">&#x2699; Customize</button>
+          <button class="btn-sm-dash btn-sm-dash-outline" data-action="openCustomizeModal()">&#x2699; Customize</button>
         </div>
         <div class="dash-grid-3">
-          <div class="dash-module-card" style="border-top:3px solid #2563eb;" onclick="openIntelDD('competitive')">
+          <div class="dash-module-card" style="border-top:3px solid #2563eb;" data-action="openIntelDD('competitive')">
             <div style="font-size:26px;margin-bottom:10px;">&#x1F3AF;</div>
             <div class="dash-module-title">Competitive Intelligence</div>
             <div class="dash-module-desc">Track product launches, pricing moves, and strategic pivots across your competitor universe in real time.</div>
@@ -783,9 +783,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
               <div class="dash-stat-box"><div class="dash-stat-label">Coverage</div><div class="dash-stat-val" id="dash-co-count">3 cos</div></div>
               <div class="dash-stat-box"><div class="dash-stat-label">Insights</div><div class="dash-stat-val">147</div></div>
             </div>
-            <button class="dash-module-btn primary" onclick="event.stopPropagation();navigate('bench-overview')">Open Competitive Intelligence &#x2192;</button>
+            <button class="dash-module-btn primary" data-action="event.stopPropagation();navigate('bench-overview')">Open Competitive Intelligence &#x2192;</button>
           </div>
-          <div class="dash-module-card" style="border-top:3px solid #7c3aed;" onclick="openIntelDD('market')">
+          <div class="dash-module-card" style="border-top:3px solid #7c3aed;" data-action="openIntelDD('market')">
             <div style="font-size:26px;margin-bottom:10px;">&#x1F4C8;</div>
             <div class="dash-module-title">Market Intelligence</div>
             <div class="dash-module-desc">Monitor industry trends, analyst reports, regulatory developments, and macro signals shaping your market.</div>
@@ -797,9 +797,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
               <div class="dash-stat-box"><div class="dash-stat-label">TAM Est.</div><div class="dash-stat-val">$180B</div></div>
               <div class="dash-stat-box"><div class="dash-stat-label">CAGR</div><div class="dash-stat-val">7.8%</div></div>
             </div>
-            <button class="dash-module-btn ghost" onclick="event.stopPropagation();openIntelDD('market')">Open Market Intelligence &#x2192;</button>
+            <button class="dash-module-btn ghost" data-action="event.stopPropagation();openIntelDD('market')">Open Market Intelligence &#x2192;</button>
           </div>
-          <div class="dash-module-card" style="border-top:3px solid #059669;" onclick="openIntelDD('sales')">
+          <div class="dash-module-card" style="border-top:3px solid #059669;" data-action="openIntelDD('sales')">
             <div style="font-size:26px;margin-bottom:10px;">&#x1F4BC;</div>
             <div class="dash-module-title">Sales Intelligence</div>
             <div class="dash-module-desc">Identify buyer signals, track deal activity, and surface prospect intelligence to accelerate pipeline growth.</div>
@@ -811,7 +811,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
               <div class="dash-stat-box"><div class="dash-stat-label">Prospects</div><div class="dash-stat-val">24</div></div>
               <div class="dash-stat-box"><div class="dash-stat-label">Win signals</div><div class="dash-stat-val">7</div></div>
             </div>
-            <button class="dash-module-btn ghost" onclick="event.stopPropagation();openIntelDD('sales')">Open Sales Intelligence &#x2192;</button>
+            <button class="dash-module-btn ghost" data-action="event.stopPropagation();openIntelDD('sales')">Open Sales Intelligence &#x2192;</button>
           </div>
         </div>
       </div>
@@ -821,23 +821,23 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <div class="dash-section">
           <div class="dash-section-header">
             <div class="dash-section-title">&#x1F4F0; Recent Market Events</div>
-            <button class="btn-sm-dash btn-sm-dash-outline" onclick="viewAllEvents()">View All &#x2192;</button>
+            <button class="btn-sm-dash btn-sm-dash-outline" data-action="viewAllEvents()">View All &#x2192;</button>
           </div>
           <div id="news-event-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
-            <div class="chip-filter active" onclick="filterNewsEvents('all',this)">All</div>
-            <div class="chip-filter" onclick="filterNewsEvents('M&A',this)">M&amp;A</div>
-            <div class="chip-filter" onclick="filterNewsEvents('Product',this)">Product</div>
-            <div class="chip-filter" onclick="filterNewsEvents('AI',this)">AI</div>
-            <div class="chip-filter" onclick="filterNewsEvents('Partnership',this)">Partnerships</div>
-            <div class="chip-filter" onclick="filterNewsEvents('Earnings',this)">Earnings</div>
-            <div class="chip-filter" onclick="filterNewsEvents('Expansion',this)">Expansion</div>
+            <div class="chip-filter active" data-action="filterNewsEvents('all',this)">All</div>
+            <div class="chip-filter" data-action="filterNewsEvents('M&A',this)">M&amp;A</div>
+            <div class="chip-filter" data-action="filterNewsEvents('Product',this)">Product</div>
+            <div class="chip-filter" data-action="filterNewsEvents('AI',this)">AI</div>
+            <div class="chip-filter" data-action="filterNewsEvents('Partnership',this)">Partnerships</div>
+            <div class="chip-filter" data-action="filterNewsEvents('Earnings',this)">Earnings</div>
+            <div class="chip-filter" data-action="filterNewsEvents('Expansion',this)">Expansion</div>
           </div>
           <div id="marketEventsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
         </div>
         <div class="dash-section">
           <div class="dash-section-header">
             <div class="dash-section-title">&#x1F3E2; Companies to Track</div>
-            <button class="btn-sm-dash btn-sm-dash-outline" onclick="navigate('bench-overview')">See all &#x2192;</button>
+            <button class="btn-sm-dash btn-sm-dash-outline" data-action="navigate('bench-overview')">See all &#x2192;</button>
           </div>
           <div id="companiesTrackContainer" style="display:flex;flex-direction:column;gap:8px;"></div>
         </div>
@@ -856,8 +856,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         </div>
         <div class="topbar-actions">
           <div class="toggle-group" id="overview-toggle">
-            <div class="toggle-opt active" onclick="setToggle('overview-toggle',this,'annual')">Annual</div>
-            <div class="toggle-opt" onclick="setToggle('overview-toggle',this,'quarterly')">Quarterly</div>
+            <div class="toggle-opt active" data-action="setToggle('overview-toggle',this,'annual')">Annual</div>
+            <div class="toggle-opt" data-action="setToggle('overview-toggle',this,'quarterly')">Quarterly</div>
           </div>
         </div>
       </div>
@@ -897,7 +897,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- Company Profile Summary Cards -->
       <div class="section-header">
         <div class="section-title" style="font-size:14px;">Company Profile Summary</div>
-        <button class="topbar-btn" style="font-size:10.5px;padding:3px 10px;" onclick="editProfileAttrs()">✎ Edit Attributes</button>
+        <button class="topbar-btn" style="font-size:10.5px;padding:3px 10px;" data-action="editProfileAttrs()">✎ Edit Attributes</button>
       </div>
       <div id="overview-profile-cards" class="grid-3">
         <!-- Populated by JS — each card has financial overview box below attributes -->
@@ -916,28 +916,28 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         </div>
         <div class="topbar-actions">
           <div class="toggle-group" id="trend-period-toggle">
-            <div class="toggle-opt active" onclick="setToggle('trend-period-toggle',this,'annual');renderTrendMainChart('annual')">Annual</div>
-            <div class="toggle-opt" onclick="setToggle('trend-period-toggle',this,'quarterly');renderTrendMainChart('quarterly')">Quarterly</div>
+            <div class="toggle-opt active" data-action="setToggle('trend-period-toggle',this,'annual');renderTrendMainChart('annual')">Annual</div>
+            <div class="toggle-opt" data-action="setToggle('trend-period-toggle',this,'quarterly');renderTrendMainChart('quarterly')">Quarterly</div>
           </div>
         </div>
       </div>
 
       <!-- Financial Metric Tabs -->
       <div class="sub-tab-bar" id="trend-metric-tabs">
-        <div class="sub-tab active" onclick="setActiveTrendMetric('revenue',this)">Revenue</div>
-        <div class="sub-tab" onclick="setActiveTrendMetric('ebitda',this)">EBITDA</div>
-        <div class="sub-tab" onclick="setActiveTrendMetric('netIncome',this)">Net Income</div>
-        <div class="sub-tab" onclick="setActiveTrendMetric('ebitdaMargin',this)">EBITDA Margin</div>
-        <div class="sub-tab" onclick="setActiveTrendMetric('netMargin',this)">Net Margin</div>
-        <div class="sub-tab" onclick="setActiveTrendMetric('revGrowth',this)">Rev. Growth</div>
-        <div class="sub-tab" onclick="setActiveTrendMetric('eps',this)">EPS</div>
+        <div class="sub-tab active" data-action="setActiveTrendMetric('revenue',this)">Revenue</div>
+        <div class="sub-tab" data-action="setActiveTrendMetric('ebitda',this)">EBITDA</div>
+        <div class="sub-tab" data-action="setActiveTrendMetric('netIncome',this)">Net Income</div>
+        <div class="sub-tab" data-action="setActiveTrendMetric('ebitdaMargin',this)">EBITDA Margin</div>
+        <div class="sub-tab" data-action="setActiveTrendMetric('netMargin',this)">Net Margin</div>
+        <div class="sub-tab" data-action="setActiveTrendMetric('revGrowth',this)">Rev. Growth</div>
+        <div class="sub-tab" data-action="setActiveTrendMetric('eps',this)">EPS</div>
       </div>
 
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header">
           <div><div class="card-title" id="trend-chart-title">Revenue Comparison</div><div class="card-subtitle" id="trend-chart-sub">All selected companies · Annual</div></div>
           <div class="card-actions">
-            <button class="topbar-btn" onclick="downloadTrendChart()" style="font-size:10.5px;padding:3px 8px;">⬇ Download</button>
+            <button class="topbar-btn" data-action="downloadTrendChart()" style="font-size:10.5px;padding:3px 8px;">⬇ Download</button>
           </div>
         </div>
         <div class="chart-wrap tall" id="chart-trend-main"></div>
@@ -947,7 +947,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div style="margin-top:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
           <div style="font-size:13px;font-weight:600;color:#334155;">Additional Contextual Analysis</div>
-          <button class="topbar-btn" onclick="toggleAdditionalAnalysis()" id="additional-analysis-btn" style="font-size:11px;padding:4px 12px;">▼ Show</button>
+          <button class="topbar-btn" data-action="toggleAdditionalAnalysis()" id="additional-analysis-btn" style="font-size:11px;padding:4px 12px;">▼ Show</button>
         </div>
         <div id="additional-analysis-section" style="display:none;">
           <div class="grid-2">
@@ -979,8 +979,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="section-desc">12-dimension benchmarking heatmap — click a company name to toggle highlight</div>
         </div>
         <div class="topbar-actions">
-          <button class="topbar-btn" onclick="addCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
-          <button class="topbar-btn" onclick="removeCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
+          <button class="topbar-btn" data-action="addCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
+          <button class="topbar-btn" data-action="removeCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
         </div>
       </div>
       <div class="card" style="margin-bottom:16px;">
@@ -1013,10 +1013,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       </div>
       <!-- Geo Sub-Tabs -->
       <div class="sub-tab-bar">
-        <div class="sub-tab active" onclick="setGeoSubTab('geo-presence',this)">Geographic Presence</div>
-        <div class="sub-tab" onclick="setGeoSubTab('geo-revenue',this)">Revenue by Region</div>
-        <div class="sub-tab" onclick="setGeoSubTab('geo-marketshare',this)">Market Share by Region</div>
-        <div class="sub-tab" onclick="setGeoSubTab('geo-breakdown',this)">Regional Breakdown</div>
+        <div class="sub-tab active" data-action="setGeoSubTab('geo-presence',this)">Geographic Presence</div>
+        <div class="sub-tab" data-action="setGeoSubTab('geo-revenue',this)">Revenue by Region</div>
+        <div class="sub-tab" data-action="setGeoSubTab('geo-marketshare',this)">Market Share by Region</div>
+        <div class="sub-tab" data-action="setGeoSubTab('geo-breakdown',this)">Regional Breakdown</div>
       </div>
       <div id="geo-presence-panel">
         <div class="grid-2">
@@ -1093,10 +1093,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="card-title">Inorganic Developments</div>
           <div class="card-actions">
             <div class="chip-filter-row" style="margin-bottom:0;gap:4px;">
-              <div class="chip-filter active" onclick="filterDeals('all',this)">All</div>
-              <div class="chip-filter" onclick="filterDeals('acquisition',this)">Acquisitions</div>
-              <div class="chip-filter" onclick="filterDeals('investment',this)">Investments</div>
-              <div class="chip-filter" onclick="filterDeals('divestment',this)">Divestments</div>
+              <div class="chip-filter active" data-action="filterDeals('all',this)">All</div>
+              <div class="chip-filter" data-action="filterDeals('acquisition',this)">Acquisitions</div>
+              <div class="chip-filter" data-action="filterDeals('investment',this)">Investments</div>
+              <div class="chip-filter" data-action="filterDeals('divestment',this)">Divestments</div>
             </div>
           </div>
         </div>
@@ -1118,8 +1118,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="section-desc">Customer base benchmarking, partner ecosystem, and retention metrics</div>
         </div>
         <div class="topbar-actions">
-          <button class="topbar-btn" onclick="addCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
-          <button class="topbar-btn" onclick="removeCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
+          <button class="topbar-btn" data-action="addCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
+          <button class="topbar-btn" data-action="removeCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
         </div>
       </div>
       <!-- Peer click selector -->
@@ -1165,22 +1165,22 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       </div>
 
       <div class="sub-tab-bar" id="insights-subtabs">
-        <div class="sub-tab active" onclick="setInsightSubTab('product',this)">Product</div>
-        <div class="sub-tab" onclick="setInsightSubTab('sales',this)">Sales & Distribution</div>
-        <div class="sub-tab" onclick="setInsightSubTab('rnd',this)">R&D / Innovation</div>
-        <div class="sub-tab" onclick="setInsightSubTab('inorganic',this)">Inorganic</div>
-        <div class="sub-tab" onclick="setInsightSubTab('marketing',this)">Marketing</div>
-        <div class="sub-tab" onclick="setInsightSubTab('customerwins',this)">Customer Wins</div>
-        <div class="sub-tab" onclick="setInsightSubTab('hiring',this)">Hiring</div>
+        <div class="sub-tab active" data-action="setInsightSubTab('product',this)">Product</div>
+        <div class="sub-tab" data-action="setInsightSubTab('sales',this)">Sales & Distribution</div>
+        <div class="sub-tab" data-action="setInsightSubTab('rnd',this)">R&D / Innovation</div>
+        <div class="sub-tab" data-action="setInsightSubTab('inorganic',this)">Inorganic</div>
+        <div class="sub-tab" data-action="setInsightSubTab('marketing',this)">Marketing</div>
+        <div class="sub-tab" data-action="setInsightSubTab('customerwins',this)">Customer Wins</div>
+        <div class="sub-tab" data-action="setInsightSubTab('hiring',this)">Hiring</div>
       </div>
 
       <!-- Year filter chips -->
       <div class="chip-filter-row" id="insights-year-chips">
-        <div class="chip-filter active" onclick="filterInsightYear('all',this)">All Years</div>
-        <div class="chip-filter" onclick="filterInsightYear('2025',this)">2025</div>
-        <div class="chip-filter" onclick="filterInsightYear('2024',this)">2024</div>
-        <div class="chip-filter" onclick="filterInsightYear('2023',this)">2023</div>
-        <div class="chip-filter" onclick="filterInsightYear('2022',this)">2022</div>
+        <div class="chip-filter active" data-action="filterInsightYear('all',this)">All Years</div>
+        <div class="chip-filter" data-action="filterInsightYear('2025',this)">2025</div>
+        <div class="chip-filter" data-action="filterInsightYear('2024',this)">2024</div>
+        <div class="chip-filter" data-action="filterInsightYear('2023',this)">2023</div>
+        <div class="chip-filter" data-action="filterInsightYear('2022',this)">2022</div>
       </div>
 
       <div class="grid-2" style="margin-bottom:16px;">
@@ -1247,18 +1247,18 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div id="company-page-sub" style="font-size:12px;color:var(--text-muted);margin-top:2px;"></div>
         </div>
         <div id="company-page-kpis" style="display:flex;gap:16px;"></div>
-        <button class="topbar-btn primary" onclick="navigate('bench-overview')">← Back to Benchmark</button>
+        <button class="topbar-btn primary" data-action="navigate('bench-overview')">← Back to Benchmark</button>
       </div>
 
       <!-- Company main tab bar -->
       <div class="sub-tab-bar" id="company-main-tabs" style="margin-bottom:0;border-bottom:1px solid var(--border);">
-        <div class="sub-tab active" onclick="setCompanyTab('overview',this)">Overview</div>
-        <div class="sub-tab" onclick="setCompanyTab('insights',this)">Insights</div>
-        <div class="sub-tab" onclick="setCompanyTab('products',this)">Products</div>
-        <div class="sub-tab" onclick="setCompanyTab('financials',this)">Financials</div>
-        <div class="sub-tab" onclick="setCompanyTab('geo',this)">Geographic</div>
-        <div class="sub-tab" onclick="setCompanyTab('innovation',this)">Innovation</div>
-        <div class="sub-tab" onclick="setCompanyTab('customers',this)">Customers</div>
+        <div class="sub-tab active" data-action="setCompanyTab('overview',this)">Overview</div>
+        <div class="sub-tab" data-action="setCompanyTab('insights',this)">Insights</div>
+        <div class="sub-tab" data-action="setCompanyTab('products',this)">Products</div>
+        <div class="sub-tab" data-action="setCompanyTab('financials',this)">Financials</div>
+        <div class="sub-tab" data-action="setCompanyTab('geo',this)">Geographic</div>
+        <div class="sub-tab" data-action="setCompanyTab('innovation',this)">Innovation</div>
+        <div class="sub-tab" data-action="setCompanyTab('customers',this)">Customers</div>
       </div>
 
       <!-- ── COMPANY: OVERVIEW ── -->
@@ -1267,7 +1267,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="card">
             <div class="card-header">
               <div class="card-title">Company Profile</div>
-              <button class="topbar-btn" onclick="editCompanyAttrs()" style="font-size:10.5px;padding:3px 8px;">✎ Edit</button>
+              <button class="topbar-btn" data-action="editCompanyAttrs()" style="font-size:10.5px;padding:3px 8px;">✎ Edit</button>
             </div>
             <div id="co-profile-attrs" class="attr-table"></div>
           </div>
@@ -1294,9 +1294,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
                 <div class="card-subtitle" id="fin-snap-subtitle">Annual revenue trend</div>
               </div>
               <div style="display:flex;gap:5px;">
-                <button class="topbar-btn" id="fin-snap-btn-revenue" style="font-size:10px;padding:2px 8px;background:#2563eb;color:#fff;border-color:#2563eb;" onclick="switchFinSnap('revenue')">Rev</button>
-                <button class="topbar-btn" id="fin-snap-btn-ebitda"  style="font-size:10px;padding:2px 8px;" onclick="switchFinSnap('ebitda')">EBITDA</button>
-                <button class="topbar-btn" id="fin-snap-btn-netIncome" style="font-size:10px;padding:2px 8px;" onclick="switchFinSnap('netIncome')">Net Inc</button>
+                <button class="topbar-btn" id="fin-snap-btn-revenue" style="font-size:10px;padding:2px 8px;background:#2563eb;color:#fff;border-color:#2563eb;" data-action="switchFinSnap('revenue')">Rev</button>
+                <button class="topbar-btn" id="fin-snap-btn-ebitda"  style="font-size:10px;padding:2px 8px;" data-action="switchFinSnap('ebitda')">EBITDA</button>
+                <button class="topbar-btn" id="fin-snap-btn-netIncome" style="font-size:10px;padding:2px 8px;" data-action="switchFinSnap('netIncome')">Net Inc</button>
               </div>
             </div>
             <div class="chart-wrap" id="chart-co-fin-snap"></div>
@@ -1311,20 +1311,20 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: INSIGHTS ── -->
       <div id="co-tab-insights" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" onclick="setCoInsightSub('product',this)">Product</div>
-          <div class="sub-tab" onclick="setCoInsightSub('sales',this)">Sales & Distribution</div>
-          <div class="sub-tab" onclick="setCoInsightSub('rnd',this)">R&D / Innovation</div>
-          <div class="sub-tab" onclick="setCoInsightSub('inorganic',this)">Inorganic</div>
-          <div class="sub-tab" onclick="setCoInsightSub('marketing',this)">Marketing</div>
-          <div class="sub-tab" onclick="setCoInsightSub('customerwins',this)">Customer Wins</div>
-          <div class="sub-tab" onclick="setCoInsightSub('hiring',this)">Hiring</div>
+          <div class="sub-tab active" data-action="setCoInsightSub('product',this)">Product</div>
+          <div class="sub-tab" data-action="setCoInsightSub('sales',this)">Sales & Distribution</div>
+          <div class="sub-tab" data-action="setCoInsightSub('rnd',this)">R&D / Innovation</div>
+          <div class="sub-tab" data-action="setCoInsightSub('inorganic',this)">Inorganic</div>
+          <div class="sub-tab" data-action="setCoInsightSub('marketing',this)">Marketing</div>
+          <div class="sub-tab" data-action="setCoInsightSub('customerwins',this)">Customer Wins</div>
+          <div class="sub-tab" data-action="setCoInsightSub('hiring',this)">Hiring</div>
         </div>
         <div class="chip-filter-row" id="co-insights-year-chips">
           <div class="chip-filter active">All Years</div>
-          <div class="chip-filter" onclick="filterCoInsightYear('2025',this)">2025</div>
-          <div class="chip-filter" onclick="filterCoInsightYear('2024',this)">2024</div>
-          <div class="chip-filter" onclick="filterCoInsightYear('2023',this)">2023</div>
-          <div class="chip-filter" onclick="filterCoInsightYear('2022',this)">2022</div>
+          <div class="chip-filter" data-action="filterCoInsightYear('2025',this)">2025</div>
+          <div class="chip-filter" data-action="filterCoInsightYear('2024',this)">2024</div>
+          <div class="chip-filter" data-action="filterCoInsightYear('2023',this)">2023</div>
+          <div class="chip-filter" data-action="filterCoInsightYear('2022',this)">2022</div>
         </div>
         <div id="co-insights-feed"></div>
       </div>
@@ -1332,11 +1332,11 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: PRODUCTS ── -->
       <div id="co-tab-products" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" onclick="setProductTab('strategy',this)">Product Strategy</div>
-          <div class="sub-tab" onclick="setProductTab('timeline',this)">Launch Timeline</div>
-          <div class="sub-tab" onclick="setProductTab('portfolio',this)">Product Portfolio</div>
-          <div class="sub-tab" onclick="setProductTab('matrix',this)">Portfolio Matrix</div>
-          <div class="sub-tab" onclick="setProductTab('updates',this)">Updates & Launches</div>
+          <div class="sub-tab active" data-action="setProductTab('strategy',this)">Product Strategy</div>
+          <div class="sub-tab" data-action="setProductTab('timeline',this)">Launch Timeline</div>
+          <div class="sub-tab" data-action="setProductTab('portfolio',this)">Product Portfolio</div>
+          <div class="sub-tab" data-action="setProductTab('matrix',this)">Portfolio Matrix</div>
+          <div class="sub-tab" data-action="setProductTab('updates',this)">Updates & Launches</div>
         </div>
         <!-- Product Strategy -->
         <div id="product-tab-strategy">
@@ -1369,7 +1369,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div id="product-detail-popup" style="display:none;" class="card" style="margin-top:12px;">
             <div class="card-header">
               <div class="card-title" id="pd-popup-title"></div>
-              <button onclick="closeProductDetail()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;">✕</button>
+              <button data-action="closeProductDetail()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;">✕</button>
             </div>
             <div id="pd-popup-body"></div>
           </div>
@@ -1403,14 +1403,14 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div id="co-tab-financials" style="display:none;padding-top:16px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <div class="sub-tab-bar" style="margin-bottom:0;">
-            <div class="sub-tab active" onclick="setFinancialSection('summary',this)">Summary</div>
-            <div class="sub-tab" onclick="setFinancialSection('income',this)">Income Statement</div>
-            <div class="sub-tab" onclick="setFinancialSection('balance',this)">Balance Sheet</div>
-            <div class="sub-tab" onclick="setFinancialSection('cashflow',this)">Cash Flow</div>
+            <div class="sub-tab active" data-action="setFinancialSection('summary',this)">Summary</div>
+            <div class="sub-tab" data-action="setFinancialSection('income',this)">Income Statement</div>
+            <div class="sub-tab" data-action="setFinancialSection('balance',this)">Balance Sheet</div>
+            <div class="sub-tab" data-action="setFinancialSection('cashflow',this)">Cash Flow</div>
           </div>
           <div class="toggle-group" id="fin-period-toggle">
-            <div class="toggle-opt active" onclick="setToggle('fin-period-toggle',this,'annual')">Annual</div>
-            <div class="toggle-opt" onclick="setToggle('fin-period-toggle',this,'quarterly')">Quarterly</div>
+            <div class="toggle-opt active" data-action="setToggle('fin-period-toggle',this,'annual')">Annual</div>
+            <div class="toggle-opt" data-action="setToggle('fin-period-toggle',this,'quarterly')">Quarterly</div>
           </div>
         </div>
         <div id="fin-section-summary">
@@ -1431,10 +1431,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: GEOGRAPHIC ── -->
       <div id="co-tab-geo" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" onclick="setCoGeoTab('presence',this)">Geographic Presence</div>
-          <div class="sub-tab" onclick="setCoGeoTab('revenue',this)">Revenue by Region</div>
-          <div class="sub-tab" onclick="setCoGeoTab('marketshare',this)">Market Share by Region</div>
-          <div class="sub-tab" onclick="setCoGeoTab('breakdown',this)">Regional Breakdown</div>
+          <div class="sub-tab active" data-action="setCoGeoTab('presence',this)">Geographic Presence</div>
+          <div class="sub-tab" data-action="setCoGeoTab('revenue',this)">Revenue by Region</div>
+          <div class="sub-tab" data-action="setCoGeoTab('marketshare',this)">Market Share by Region</div>
+          <div class="sub-tab" data-action="setCoGeoTab('breakdown',this)">Regional Breakdown</div>
         </div>
         <div id="co-geo-presence-panel">
           <div class="grid-2">
@@ -1488,11 +1488,11 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: CUSTOMERS ── -->
       <div id="co-tab-customers" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" onclick="setCoCustomerTab('radar',this)">Segment Radar</div>
-          <div class="sub-tab" onclick="setCoCustomerTab('enterprise',this)">Enterprise (5000+ EE)</div>
-          <div class="sub-tab" onclick="setCoCustomerTab('midmarket',this)">Mid-Market (500–5k EE)</div>
-          <div class="sub-tab" onclick="setCoCustomerTab('smb',this)">SMB (&lt;500 EE)</div>
-          <div class="sub-tab" onclick="setCoCustomerTab('govt',this)">Government & Public</div>
+          <div class="sub-tab active" data-action="setCoCustomerTab('radar',this)">Segment Radar</div>
+          <div class="sub-tab" data-action="setCoCustomerTab('enterprise',this)">Enterprise (5000+ EE)</div>
+          <div class="sub-tab" data-action="setCoCustomerTab('midmarket',this)">Mid-Market (500–5k EE)</div>
+          <div class="sub-tab" data-action="setCoCustomerTab('smb',this)">SMB (&lt;500 EE)</div>
+          <div class="sub-tab" data-action="setCoCustomerTab('govt',this)">Government & Public</div>
         </div>
         <div id="co-customer-radar-panel">
           <div class="grid-2">
@@ -1516,7 +1516,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
 <!-- ══ LOGGING CONSOLE ══ -->
 <div id="log-console"></div>
-<button id="log-toggle" onclick="toggleLog()">⚙ Log</button>
+<button id="log-toggle" data-action="toggleLog()">⚙ Log</button>
 
 <script>
 'use strict';
@@ -3625,6 +3625,134 @@ document.addEventListener('DOMContentLoaded',function(){
       toggleSubmenu(subId, el);
     });
   });
+
+  // ═══════════════════════════════════════════════════════════════
+  // UNIVERSAL ACTION DISPATCHER — CSP-safe, sandbox-safe
+  // Replaces ALL inline onclick= with data-action= + addEventListener
+  // This is the PERMANENT fix for click handlers in any iframe/CSP context
+  // ═══════════════════════════════════════════════════════════════
+  function _parseArgs(argsStr, el) {
+    var args = [];
+    if (!argsStr || !argsStr.trim()) return args;
+    var remaining = argsStr.trim();
+    while (remaining.length > 0) {
+      remaining = remaining.trim();
+      if (!remaining) break;
+      if (remaining[0] === "'" || remaining[0] === '"') {
+        var q = remaining[0];
+        var end = 1;
+        while (end < remaining.length && remaining[end] !== q) {
+          if (remaining[end] === '\\') end++;
+          end++;
+        }
+        args.push(remaining.slice(1, end));
+        remaining = remaining.slice(end + 1).replace(/^\s*,\s*/, '');
+      } else if (remaining.startsWith('this')) {
+        args.push(el);
+        remaining = remaining.slice(4).replace(/^\s*,\s*/, '');
+      } else {
+        var ci = remaining.indexOf(',');
+        args.push(ci > -1 ? remaining.slice(0, ci).trim() : remaining.trim());
+        remaining = ci > -1 ? remaining.slice(ci + 1) : '';
+      }
+    }
+    return args;
+  }
+
+  function _dispatchAction(actionStr, el, event) {
+    if (!actionStr) return;
+    var parts = actionStr.split(';').map(function(s) { return s.trim(); }).filter(Boolean);
+    parts.forEach(function(part) {
+      if (part === 'event.stopPropagation()') { if(event) event.stopPropagation(); return; }
+      if (part === 'event.preventDefault()') { if(event) event.preventDefault(); return; }
+      if (part.indexOf('event.target===this') > -1 || part.indexOf('event.target === this') > -1) {
+        if (event && event.target === el) { closeCustomizeModal(); }
+        return;
+      }
+      // Match fnName(...) - greedy match for nested parens
+      var pOpen = part.indexOf('(');
+      if (pOpen < 0) return;
+      var fn = part.slice(0, pOpen).trim();
+      var argsStr = part.slice(pOpen + 1, part.lastIndexOf(')')).trim();
+      var args = _parseArgs(argsStr, el);
+      var FMAP = {
+        navigate: navigate,
+        toggleSubmenu: toggleSubmenu,
+        selectAllCompanies: selectAllCompanies,
+        clearAllCompanies: clearAllCompanies,
+        applyYearFilter: applyYearFilter,
+        refreshData: refreshData,
+        exportPortal: exportPortal,
+        toggleLog: toggleLog,
+        openCustomizeModal: openCustomizeModal,
+        closeCustomizeModal: closeCustomizeModal,
+        saveCustomize: saveCustomize,
+        openIntelDD: openIntelDD,
+        closeIntelDD: closeIntelDD,
+        viewAllEvents: viewAllEvents,
+        filterNewsEvents: filterNewsEvents,
+        filterNews: filterNews,
+        setToggle: setToggle,
+        setActiveTrendMetric: setActiveTrendMetric,
+        renderTrendMainChart: renderTrendMainChart,
+        toggleAdditionalAnalysis: toggleAdditionalAnalysis,
+        downloadTrendChart: downloadTrendChart,
+        addCapabilityMetric: addCapabilityMetric,
+        removeCapabilityMetric: removeCapabilityMetric,
+        setGeoSubTab: setGeoSubTab,
+        filterDeals: filterDeals,
+        addCustomerMetric: addCustomerMetric,
+        removeCustomerMetric: removeCustomerMetric,
+        setInsightSubTab: setInsightSubTab,
+        filterInsightYear: filterInsightYear,
+        setCompanyTab: setCompanyTab,
+        setCoGeoTab: setCoGeoTab,
+        setCoCustomerTab: setCoCustomerTab,
+        setCoInsightSub: setCoInsightSub,
+        filterCoInsightYear: filterCoInsightYear,
+        setProductTab: setProductTab,
+        showProductDetail: showProductDetail,
+        closeProductDetail: closeProductDetail,
+        setFinancialSection: setFinancialSection,
+        switchFinSnap: switchFinSnap,
+        editCompanyAttrs: editCompanyAttrs,
+        editProfileAttrs: editProfileAttrs,
+        toggleCompanyChip: toggleCompanyChip
+      };
+      var f = FMAP[fn];
+      if (typeof f === 'function') {
+        try { f.apply(null, args); }
+        catch(e) { LOG.error('DISPATCH', fn + '(' + argsStr + '): ' + e.message); }
+      } else {
+        LOG.warn('DISPATCH', 'Unknown fn: ' + fn);
+      }
+    });
+  }
+
+  // Wire ALL static HTML data-action elements once at init
+  document.querySelectorAll('[data-action]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      _dispatchAction(el.getAttribute('data-action'), el, e);
+    });
+  });
+
+  // Event delegation: catches dynamically-created elements inside page-content
+  // This handles innerHTML-injected cards, buttons, tabs created by render functions
+  var _pc = document.getElementById('page-content');
+  if (_pc) {
+    _pc.addEventListener('click', function(e) {
+      var t = e.target;
+      while (t && t !== _pc) {
+        var da = t.getAttribute && t.getAttribute('data-action');
+        if (da) { _dispatchAction(da, t, e); return; }
+        // Also handle residual onclick= on dynamically-created elements
+        var oc = t.getAttribute && t.getAttribute('onclick');
+        if (oc) { _dispatchAction(oc, t, e); return; }
+        t = t.parentElement;
+      }
+    }, true); // capture phase - fires before individual handlers
+  }
+
   navigate('dashboard');
   LOG.ok('INIT','=== Portal ready ===');
 });
