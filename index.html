@@ -2633,32 +2633,7 @@ const BENCH_COLORS = {
   sap:         "#0070F2"
 };
 
-// ════════════════════════════════════════════════════════════
-// BENCH CUSTOMERS — Keyed by company identifier
-// ════════════════════════════════════════════════════════════
-const BENCH_CUST = {
-  totalCustomers: {servicenow:8200,   salesforce:150000, google:10000,  microsoft:345000, oracle:430000, sap:425000},
-  retention:      {servicenow:97,     salesforce:91,     google:88,     microsoft:93,     oracle:90,     sap:89},
-  nrr:            {servicenow:125,    salesforce:112,    google:115,    microsoft:130,    oracle:108,    sap:107},
-  nps:            {servicenow:42,     salesforce:38,     google:35,     microsoft:40,     oracle:28,     sap:30},
-  enterprise:     {servicenow:85,     salesforce:62,     google:55,     microsoft:70,     oracle:80,     sap:78},
-  midmarket:      {servicenow:15,     salesforce:38,     google:45,     microsoft:30,     oracle:20,     sap:22}
-};
 
-// ════════════════════════════════════════════════════════════
-// BENCH PROFILE ATTRIBUTES
-// ════════════════════════════════════════════════════════════
-const BENCH_PROFILE_ATTRS = [
-  "Revenue (FY25, $B)",
-  "Market Cap ($B)",
-  "Employees",
-  "Founded",
-  "CEO",
-  "HQ",
-  "Gross Margin (%)",
-  "Revenue Growth YoY (%)",
-  "EV/Revenue"
-];
 
 /* ── BENCH_CUST safe default (populated from COMPANIES_DATA if not in data layer) ── */
 if(typeof BENCH_CUST==='undefined'){
