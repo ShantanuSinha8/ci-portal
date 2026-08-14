@@ -1520,6 +1520,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
 <script>
 'use strict';
+// Auto-refreshed: 2026-08-14 01:40 IST
 window.onerror=function(m,s,l,c,e){var b=document.getElementById('_jserr');if(!b){b=document.createElement('div');b.id='_jserr';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#dc2626;color:#fff;font-size:11px;padding:6px 14px;font-family:monospace;';document.body?document.body.prepend(b):document.addEventListener('DOMContentLoaded',function(){document.body.prepend(b);});}b.textContent='⚠ JS Error: '+m+' (line '+l+')';return false;};
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1643,7 +1644,7 @@ servicenow: {
   ceo:        "Bill McDermott",
     CEO:         "Bill McDermott",
   employees:  29187,
-  marketCap:  109.2,
+  marketCap:  121.3,
   website:    "servicenow.com",
   description:"ServiceNow is a cloud-based workflow automation platform enabling digital transformation through AI-driven enterprise service management across IT, HR, finance, and customer operations.",
   color:      "#00C7B1",
@@ -1684,13 +1685,13 @@ servicenow: {
     {label:"FY25 Revenue",  value:"$13.3B",  change:"+20.9% YoY", up:true},
     {label:"Gross Margin",  value:"79.9%",   change:"+0.1pp YoY",  up:true},
     {label:"Net Income",    value:"$1.75B",  change:"+22.4% YoY", up:true},
-    {label:"Market Cap",    value:"$109B",   change:"NYSE: NOW",   up:true},
+    {label:"Market Cap",    value:"$121B",   change:"NYSE: NOW",   up:true},
     {label:"Employees",     value:"29,187",  change:"+11% YoY",    up:true},
     {label:"RPO",           value:"$22B+",   change:"+26% YoY",    up:true}
   ],
 
   // ── Stock & Valuation ──────────────────────────────────
-  stockPrice:  {current:372, yearHigh:510, yearLow:280},
+  stockPrice:  {current:335, yearHigh:510, yearLow:280},
   peRatio:     62.5,
   evRevenue:   8.2,
 
@@ -1821,7 +1822,7 @@ salesforce: {
   ceo:        "Marc Benioff",
     CEO:         "Marc Benioff",
   employees:  72682,
-  marketCap:  157.9,
+  marketCap:  185.0,
   website:    "salesforce.com",
   description:"Salesforce is the world's #1 CRM platform delivering AI-first cloud applications for sales, service, marketing, and commerce. Agentforce represents its agentic AI bet for FY26+.",
   color:      "#00A1E0",
@@ -1859,12 +1860,12 @@ salesforce: {
     {label:"FY25 Revenue",  value:"$37.9B",  change:"+8.7% YoY",   up:true},
     {label:"Gross Margin",  value:"77.2%",   change:"-0.3pp YoY",  up:false},
     {label:"Net Income",    value:"$6.2B",   change:"+50% YoY",    up:true},
-    {label:"Market Cap",    value:"$158B",   change:"NYSE: CRM",   up:true},
+    {label:"Market Cap",    value:"$185B",   change:"NYSE: CRM",   up:true},
     {label:"Free Cash Flow",value:"$10.7B",  change:"+13% YoY",    up:true},
     {label:"Agentforce Cust",value:"10,000+",change:"New in FY25",  up:true}
   ],
 
-  stockPrice:  {current:269, yearHigh:348, yearLow:212},
+  stockPrice:  {current:298, yearHigh:348, yearLow:212},
   peRatio:     43.2,
   evRevenue:   4.2,
 
@@ -2147,7 +2148,7 @@ microsoft: {
   ceo:        "Satya Nadella",
     CEO:         "Satya Nadella",
   employees:  228000,
-  marketCap:  3100.0,
+  marketCap:  3690.0,
   website:    "microsoft.com",
   description:"Microsoft is the world's largest software company by market cap, delivering cloud infrastructure (Azure), AI services (Copilot), productivity software (Microsoft 365), and developer tools (GitHub) at global enterprise scale.",
   color:      "#00A4EF",
@@ -2190,7 +2191,7 @@ microsoft: {
     {label:"Copilot Seats",  value:"400M+",   change:"M365 Copilot active",up:true}
   ],
 
-  stockPrice:  {current:415, yearHigh:475, yearLow:370},
+  stockPrice:  {current:497, yearHigh:510, yearLow:370},
   peRatio:     30.2,
   evRevenue:   11.0,
 
@@ -2353,7 +2354,7 @@ oracle: {
     {label:"Cloud RPO",       value:"$130B+", change:"Remaining perf. oblig.",up:true}
   ],
 
-  stockPrice:  {current:148, yearHigh:235, yearLow:138},
+  stockPrice:  {current:156, yearHigh:235, yearLow:138},
   peRatio:     34.6,
   evRevenue:   7.5,
 
@@ -2516,7 +2517,7 @@ sap: {
     {label:"Gross Margin",    value:"73.3%",  change:"-1.1pp YoY",  up:false}
   ],
 
-  stockPrice:  {current:198, yearHigh:282, yearLow:168},
+  stockPrice:  {current:209, yearHigh:282, yearLow:168},
   peRatio:     28.8,
   evRevenue:   5.5,
 
@@ -2647,6 +2648,15 @@ const MARKET_EVENTS = [
   {company:"salesforce",  category:"M&A",         date:"Mar 2025", title:"Salesforce acquires Informatica for ~$8B",                   summary:"Transformative data management deal powers Data Cloud and Agentforce with unified data fabric from 300+ enterprise sources. Fastest path to $1B AI ARR.",           tags:["M&A","Data","AI"]},
   {company:"google",      category:"M&A",         date:"May 2025", title:"Wiz acquisition closes — Google Cloud security leader",     summary:"$32B Wiz closes. Wiz secures 40% of Fortune 500 cloud environments. GCP is now the most credible enterprise security cloud alongside AWS and Azure.",            tags:["M&A","Security","Cloud"]},
   {company:"microsoft",   category:"Earnings",    date:"Jul 2025", title:"Enterprise AI budgets surge 40%+ — agentic AI era begins", summary:"Enterprise AI spending accelerates; Microsoft Azure AI grows 50%+, GCP 28%, OCI 51%. Agentic AI becomes boardroom priority. All vendors launch multi-agent platforms.", tags:["Macro","AI","Earnings"]}
+,
+  {company:"servicenow",  category:"Partnership", date:"Jan 2026", title:"ServiceNow + OpenAI — 3-year agentic AI integration deal",     summary:"ServiceNow and OpenAI sign three-year pact to embed frontier AI models directly into Now Platform workflows, giving customers direct access to GPT-4o and o3 for ITSM, HR, and finance automation.",   tags:["AI","Agents","Partnership"]},
+  {company:"servicenow",  category:"M&A",         date:"Mar 2026", title:"ServiceNow acquires Pyramid Analytics — AI data fabric",        summary:"ServiceNow closes acquisition of Pyramid Analytics to expand its Workflow Data Fabric with natural-language analytics and self-service BI capabilities across enterprise operations.",                        tags:["M&A","Analytics","Data"]},
+  {company:"salesforce",  category:"Earnings",    date:"Feb 2026", title:"Salesforce FY26 revenue $37.9B — Agentforce exceeds 10,000 customers", summary:"Salesforce delivers FY26 total revenue of $37.9B (+8.7% YoY). Agentforce surpasses 10,000 enterprise customers. Free cash flow hits $12.4B; operating margin expands 300bps.",              tags:["Earnings","AI","Agents"]},
+  {company:"microsoft",   category:"Earnings",    date:"Oct 2025", title:"Microsoft FY25 hits $281.7B — first $100B+ net income year",    summary:"Microsoft FY25 annual revenue reaches $281.7B (+15% YoY) with net income of $101.8B — the first time the company surpasses $100B in annual profit. Azure AI grows 50%+ YoY.",             tags:["Earnings","Cloud","AI"]},
+  {company:"servicenow",  category:"Product",     date:"May 2026", title:"Knowledge 2026: AI Control Tower + Workflow Data Fabric GA",     summary:"ServiceNow Knowledge 2026 unveils AI Control Tower for enterprise AI governance, AI Agent Fabric for multi-agent orchestration, and Workflow Data Fabric GA — positioning Now Platform as the enterprise AI operating system.", tags:["AI","Platform","Product"]},
+  {company:"google",      category:"Earnings",    date:"Feb 2026", title:"Alphabet FY25 revenue crosses $400B — Google Cloud +48%",       summary:"Alphabet posts FY25 revenue of $402.8B (+15%), its first year above $400B. Net income surges 32% to $132.2B. Google Cloud grows 48% YoY, cementing enterprise cloud position.",                       tags:["Earnings","Cloud","AI"]},
+  {company:"oracle",      category:"Product",     date:"Jul 2026", title:"OCI Enterprise AI GA — H100 multi-node for large model serving", summary:"Oracle launches OCI Enterprise AI for Dedicated Cloud regions with H100 multi-node serving, natural-language DB querying, and IAM auth — completing Oracle's hyperscaler AI infrastructure for regulated industries.", tags:["AI","Cloud","Product"]},
+  {company:"salesforce",  category:"M&A",         date:"Mar 2025", title:"Salesforce closes Informatica acquisition (~$8B)",              summary:"Salesforce completes Informatica acquisition, adding enterprise data management to Data Cloud and Agentforce. 300+ source connectors accelerate AI agent deployments.",                                          tags:["M&A","Data","AI"]}
 ];
 
 // ════════════════════════════════════════════════════════════
