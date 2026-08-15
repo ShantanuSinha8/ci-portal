@@ -118,7 +118,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 .nav-item.active{background:rgba(59,130,246,.2);color:#60a5fa;font-weight:600;}
 .nav-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
 .nav-badge{margin-left:auto;font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;background:#2563eb;color:#fff;}
-.nav-submenu{overflow:hidden;max-height:0;transition:max-height .3s;;pointer-events:none;}
+.nav-submenu{overflow:hidden;max-height:0;transition:max-height .3s;pointer-events:none;}
 .nav-submenu.open{max-height:350px;pointer-events:auto;}
 .nav-sub-item{
   display:flex;align-items:center;gap:8px;
@@ -607,25 +607,25 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
   <!-- Primary Navigation -->
   <div class="nav-section">
     <div class="nav-section-label">Main</div>
-    <div class="nav-item active" data-page="dashboard" data-nav="dashboard">
+    <div class="nav-item active" data-page="dashboard" onclick="navigate('dashboard')">
       <span class="nav-icon">⊞</span>Dashboard
     </div>
     <!-- Competitive Intelligence with submenu -->
-    <div class="nav-item" id="nav-ci" data-nav="bench-overview" data-submenu="ci-submenu">
+    <div class="nav-item" id="nav-ci" onclick="var s=document.getElementById('ci-submenu');document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active');});this.classList.add('active');if(s){s.classList.add('open');}navigate('bench-overview');">
       <span class="nav-icon">🔍</span>Competitive Intelligence
       <span class="nav-badge" id="ci-badge">8</span>
     </div>
     <div class="nav-submenu" id="ci-submenu">
-      <div class="nav-sub-item" data-nav="bench-overview">Executive Overview</div>
-      <div class="nav-sub-item" data-nav="bench-trend">Trend Analysis</div>
-      <div class="nav-sub-item" data-nav="bench-capability">Capability Matrix</div>
-      <div class="nav-sub-item" data-nav="bench-geo">Geographic Presence</div>
-      <div class="nav-sub-item" data-nav="bench-inorganic">Inorganic Strategy</div>
-      <div class="nav-sub-item" data-nav="bench-customers">Customers & Partners</div>
-      <div class="nav-sub-item" data-nav="bench-insights">Insights & Risks</div>
-      <div class="nav-sub-item" data-nav="bench-recommendations">Recommendations</div>
+      <div class="nav-sub-item" onclick="navigate('bench-overview')">Executive Overview</div>
+      <div class="nav-sub-item" onclick="navigate('bench-trend')">Trend Analysis</div>
+      <div class="nav-sub-item" onclick="navigate('bench-capability')">Capability Matrix</div>
+      <div class="nav-sub-item" onclick="navigate('bench-geo')">Geographic Presence</div>
+      <div class="nav-sub-item" onclick="navigate('bench-inorganic')">Inorganic Strategy</div>
+      <div class="nav-sub-item" onclick="navigate('bench-customers')">Customers & Partners</div>
+      <div class="nav-sub-item" onclick="navigate('bench-insights')">Insights & Risks</div>
+      <div class="nav-sub-item" onclick="navigate('bench-recommendations')">Recommendations</div>
     </div>
-    <div class="nav-item" id="nav-mi" data-submenu="mi-submenu">
+    <div class="nav-item" id="nav-mi" onclick="toggleSubmenu('mi-submenu',this)">
       <span class="nav-icon">📊</span>Market Intelligence
     </div>
     <div class="nav-submenu" id="mi-submenu">
@@ -633,7 +633,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="nav-sub-item">Trend Radar</div>
       <div class="nav-sub-item">TAM/SAM/SOM</div>
     </div>
-    <div class="nav-item" id="nav-si" data-submenu="si-submenu">
+    <div class="nav-item" id="nav-si" onclick="toggleSubmenu('si-submenu',this)">
       <span class="nav-icon">💼</span>Sales Intelligence
     </div>
     <div class="nav-submenu" id="si-submenu">
@@ -659,8 +659,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <!-- Populated by JS -->
       </div>
       <div class="chip-actions">
-        <button class="chip-btn" data-action="selectAllCompanies()">+ Add</button>
-        <button class="chip-btn" data-action="clearAllCompanies()">− Remove</button>
+        <button class="chip-btn" onclick="selectAllCompanies()">+ Add</button>
+        <button class="chip-btn" onclick="clearAllCompanies()">− Remove</button>
       </div>
     </div>
     <div class="filter-group">
@@ -699,10 +699,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
     </div>
     <div style="font-size:10px;color:#94a3b8;margin-right:8px;">v5.0</div>
     <div class="topbar-actions">
-      <button class="topbar-btn" data-action="refreshData()">↻ Refresh</button>
-      <button class="topbar-btn" data-action="exportPortal()">⬇ Export</button>
-      <button class="topbar-btn primary" data-action="navigate('bench-overview')">🔍 Open Analysis</button>
-      <button class="topbar-btn" data-action="toggleLog()" title="Toggle debug log">⚙ Log</button>
+      <button class="topbar-btn" onclick="refreshData()">↻ Refresh</button>
+      <button class="topbar-btn" onclick="exportPortal()">⬇ Export</button>
+      <button class="topbar-btn primary" onclick="navigate('bench-overview')">🔍 Open Analysis</button>
+      <button class="topbar-btn" onclick="toggleLog()" title="Toggle debug log">⚙ Log</button>
     </div>
   </div>
 
@@ -727,8 +727,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="dash-page-subtitle" id="dash-date-sub">Here&rsquo;s your competitive intelligence summary for today</div>
         </div>
         <div class="dash-page-actions">
-          <button class="topbar-btn" data-action="exportPortal()">&#x1F4E4; Export</button>
-          <button class="topbar-btn primary" data-action="navigate('bench-overview')">&#x2696;&#xFE0F; Open Analysis</button>
+          <button class="topbar-btn" onclick="exportPortal()">&#x1F4E4; Export</button>
+          <button class="topbar-btn primary" onclick="navigate('bench-overview')">&#x2696;&#xFE0F; Open Analysis</button>
         </div>
       </div>
 
@@ -768,10 +768,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div class="dash-section">
         <div class="dash-section-header">
           <div class="dash-section-title">&#x1F4CC; Your Intelligence Module</div>
-          <button class="btn-sm-dash btn-sm-dash-outline" data-action="openCustomizeModal()">&#x2699; Customize</button>
+          <button class="btn-sm-dash btn-sm-dash-outline" onclick="openCustomizeModal()">&#x2699; Customize</button>
         </div>
         <div class="dash-grid-3">
-          <div class="dash-module-card" style="border-top:3px solid #2563eb;" data-action="openIntelDD('competitive')">
+          <div class="dash-module-card" style="border-top:3px solid #2563eb;" onclick="openIntelDD('competitive')">
             <div style="font-size:26px;margin-bottom:10px;">&#x1F3AF;</div>
             <div class="dash-module-title">Competitive Intelligence</div>
             <div class="dash-module-desc">Track product launches, pricing moves, and strategic pivots across your competitor universe in real time.</div>
@@ -783,9 +783,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
               <div class="dash-stat-box"><div class="dash-stat-label">Coverage</div><div class="dash-stat-val" id="dash-co-count">3 cos</div></div>
               <div class="dash-stat-box"><div class="dash-stat-label">Insights</div><div class="dash-stat-val">147</div></div>
             </div>
-            <button class="dash-module-btn primary" data-action="event.stopPropagation();navigate('bench-overview')">Open Competitive Intelligence &#x2192;</button>
+            <button class="dash-module-btn primary" onclick="event.stopPropagation();navigate('bench-overview')">Open Competitive Intelligence &#x2192;</button>
           </div>
-          <div class="dash-module-card" style="border-top:3px solid #7c3aed;" data-action="openIntelDD('market')">
+          <div class="dash-module-card" style="border-top:3px solid #7c3aed;" onclick="openIntelDD('market')">
             <div style="font-size:26px;margin-bottom:10px;">&#x1F4C8;</div>
             <div class="dash-module-title">Market Intelligence</div>
             <div class="dash-module-desc">Monitor industry trends, analyst reports, regulatory developments, and macro signals shaping your market.</div>
@@ -797,9 +797,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
               <div class="dash-stat-box"><div class="dash-stat-label">TAM Est.</div><div class="dash-stat-val">$180B</div></div>
               <div class="dash-stat-box"><div class="dash-stat-label">CAGR</div><div class="dash-stat-val">7.8%</div></div>
             </div>
-            <button class="dash-module-btn ghost" data-action="event.stopPropagation();openIntelDD('market')">Open Market Intelligence &#x2192;</button>
+            <button class="dash-module-btn ghost" onclick="event.stopPropagation();openIntelDD('market')">Open Market Intelligence &#x2192;</button>
           </div>
-          <div class="dash-module-card" style="border-top:3px solid #059669;" data-action="openIntelDD('sales')">
+          <div class="dash-module-card" style="border-top:3px solid #059669;" onclick="openIntelDD('sales')">
             <div style="font-size:26px;margin-bottom:10px;">&#x1F4BC;</div>
             <div class="dash-module-title">Sales Intelligence</div>
             <div class="dash-module-desc">Identify buyer signals, track deal activity, and surface prospect intelligence to accelerate pipeline growth.</div>
@@ -811,7 +811,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
               <div class="dash-stat-box"><div class="dash-stat-label">Prospects</div><div class="dash-stat-val">24</div></div>
               <div class="dash-stat-box"><div class="dash-stat-label">Win signals</div><div class="dash-stat-val">7</div></div>
             </div>
-            <button class="dash-module-btn ghost" data-action="event.stopPropagation();openIntelDD('sales')">Open Sales Intelligence &#x2192;</button>
+            <button class="dash-module-btn ghost" onclick="event.stopPropagation();openIntelDD('sales')">Open Sales Intelligence &#x2192;</button>
           </div>
         </div>
       </div>
@@ -821,23 +821,23 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         <div class="dash-section">
           <div class="dash-section-header">
             <div class="dash-section-title">&#x1F4F0; Recent Market Events</div>
-            <button class="btn-sm-dash btn-sm-dash-outline" data-action="viewAllEvents()">View All &#x2192;</button>
+            <button class="btn-sm-dash btn-sm-dash-outline" onclick="viewAllEvents()">View All &#x2192;</button>
           </div>
           <div id="news-event-chips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
-            <div class="chip-filter active" data-action="filterNewsEvents('all',this)">All</div>
-            <div class="chip-filter" data-action="filterNewsEvents('M&A',this)">M&amp;A</div>
-            <div class="chip-filter" data-action="filterNewsEvents('Product',this)">Product</div>
-            <div class="chip-filter" data-action="filterNewsEvents('AI',this)">AI</div>
-            <div class="chip-filter" data-action="filterNewsEvents('Partnership',this)">Partnerships</div>
-            <div class="chip-filter" data-action="filterNewsEvents('Earnings',this)">Earnings</div>
-            <div class="chip-filter" data-action="filterNewsEvents('Expansion',this)">Expansion</div>
+            <div class="chip-filter active" onclick="filterNewsEvents('all',this)">All</div>
+            <div class="chip-filter" onclick="filterNewsEvents('M&A',this)">M&amp;A</div>
+            <div class="chip-filter" onclick="filterNewsEvents('Product',this)">Product</div>
+            <div class="chip-filter" onclick="filterNewsEvents('AI',this)">AI</div>
+            <div class="chip-filter" onclick="filterNewsEvents('Partnership',this)">Partnerships</div>
+            <div class="chip-filter" onclick="filterNewsEvents('Earnings',this)">Earnings</div>
+            <div class="chip-filter" onclick="filterNewsEvents('Expansion',this)">Expansion</div>
           </div>
           <div id="marketEventsContainer" style="display:flex;flex-direction:column;gap:10px;"></div>
         </div>
         <div class="dash-section">
           <div class="dash-section-header">
             <div class="dash-section-title">&#x1F3E2; Companies to Track</div>
-            <button class="btn-sm-dash btn-sm-dash-outline" data-action="navigate('bench-overview')">See all &#x2192;</button>
+            <button class="btn-sm-dash btn-sm-dash-outline" onclick="navigate('bench-overview')">See all &#x2192;</button>
           </div>
           <div id="companiesTrackContainer" style="display:flex;flex-direction:column;gap:8px;"></div>
         </div>
@@ -856,8 +856,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         </div>
         <div class="topbar-actions">
           <div class="toggle-group" id="overview-toggle">
-            <div class="toggle-opt active" data-action="setToggle('overview-toggle',this,'annual')">Annual</div>
-            <div class="toggle-opt" data-action="setToggle('overview-toggle',this,'quarterly')">Quarterly</div>
+            <div class="toggle-opt active" onclick="setToggle('overview-toggle',this,'annual')">Annual</div>
+            <div class="toggle-opt" onclick="setToggle('overview-toggle',this,'quarterly')">Quarterly</div>
           </div>
         </div>
       </div>
@@ -897,7 +897,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- Company Profile Summary Cards -->
       <div class="section-header">
         <div class="section-title" style="font-size:14px;">Company Profile Summary</div>
-        <button class="topbar-btn" style="font-size:10.5px;padding:3px 10px;" data-action="editProfileAttrs()">✎ Edit Attributes</button>
+        <button class="topbar-btn" style="font-size:10.5px;padding:3px 10px;" onclick="editProfileAttrs()">✎ Edit Attributes</button>
       </div>
       <div id="overview-profile-cards" class="grid-3">
         <!-- Populated by JS — each card has financial overview box below attributes -->
@@ -916,28 +916,28 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
         </div>
         <div class="topbar-actions">
           <div class="toggle-group" id="trend-period-toggle">
-            <div class="toggle-opt active" data-action="setToggle('trend-period-toggle',this,'annual');renderTrendMainChart('annual')">Annual</div>
-            <div class="toggle-opt" data-action="setToggle('trend-period-toggle',this,'quarterly');renderTrendMainChart('quarterly')">Quarterly</div>
+            <div class="toggle-opt active" onclick="setToggle('trend-period-toggle',this,'annual');renderTrendMainChart('annual')">Annual</div>
+            <div class="toggle-opt" onclick="setToggle('trend-period-toggle',this,'quarterly');renderTrendMainChart('quarterly')">Quarterly</div>
           </div>
         </div>
       </div>
 
       <!-- Financial Metric Tabs -->
       <div class="sub-tab-bar" id="trend-metric-tabs">
-        <div class="sub-tab active" data-action="setActiveTrendMetric('revenue',this)">Revenue</div>
-        <div class="sub-tab" data-action="setActiveTrendMetric('ebitda',this)">EBITDA</div>
-        <div class="sub-tab" data-action="setActiveTrendMetric('netIncome',this)">Net Income</div>
-        <div class="sub-tab" data-action="setActiveTrendMetric('ebitdaMargin',this)">EBITDA Margin</div>
-        <div class="sub-tab" data-action="setActiveTrendMetric('netMargin',this)">Net Margin</div>
-        <div class="sub-tab" data-action="setActiveTrendMetric('revGrowth',this)">Rev. Growth</div>
-        <div class="sub-tab" data-action="setActiveTrendMetric('eps',this)">EPS</div>
+        <div class="sub-tab active" onclick="setActiveTrendMetric('revenue',this)">Revenue</div>
+        <div class="sub-tab" onclick="setActiveTrendMetric('ebitda',this)">EBITDA</div>
+        <div class="sub-tab" onclick="setActiveTrendMetric('netIncome',this)">Net Income</div>
+        <div class="sub-tab" onclick="setActiveTrendMetric('ebitdaMargin',this)">EBITDA Margin</div>
+        <div class="sub-tab" onclick="setActiveTrendMetric('netMargin',this)">Net Margin</div>
+        <div class="sub-tab" onclick="setActiveTrendMetric('revGrowth',this)">Rev. Growth</div>
+        <div class="sub-tab" onclick="setActiveTrendMetric('eps',this)">EPS</div>
       </div>
 
       <div class="card" style="margin-bottom:16px;">
         <div class="card-header">
           <div><div class="card-title" id="trend-chart-title">Revenue Comparison</div><div class="card-subtitle" id="trend-chart-sub">All selected companies · Annual</div></div>
           <div class="card-actions">
-            <button class="topbar-btn" data-action="downloadTrendChart()" style="font-size:10.5px;padding:3px 8px;">⬇ Download</button>
+            <button class="topbar-btn" onclick="downloadTrendChart()" style="font-size:10.5px;padding:3px 8px;">⬇ Download</button>
           </div>
         </div>
         <div class="chart-wrap tall" id="chart-trend-main"></div>
@@ -947,7 +947,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div style="margin-top:16px;">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
           <div style="font-size:13px;font-weight:600;color:#334155;">Additional Contextual Analysis</div>
-          <button class="topbar-btn" data-action="toggleAdditionalAnalysis()" id="additional-analysis-btn" style="font-size:11px;padding:4px 12px;">▼ Show</button>
+          <button class="topbar-btn" onclick="toggleAdditionalAnalysis()" id="additional-analysis-btn" style="font-size:11px;padding:4px 12px;">▼ Show</button>
         </div>
         <div id="additional-analysis-section" style="display:none;">
           <div class="grid-2">
@@ -979,8 +979,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="section-desc">12-dimension benchmarking heatmap — click a company name to toggle highlight</div>
         </div>
         <div class="topbar-actions">
-          <button class="topbar-btn" data-action="addCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
-          <button class="topbar-btn" data-action="removeCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
+          <button class="topbar-btn" onclick="addCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
+          <button class="topbar-btn" onclick="removeCapabilityMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
         </div>
       </div>
       <div class="card" style="margin-bottom:16px;">
@@ -1013,10 +1013,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       </div>
       <!-- Geo Sub-Tabs -->
       <div class="sub-tab-bar">
-        <div class="sub-tab active" data-action="setGeoSubTab('geo-presence',this)">Geographic Presence</div>
-        <div class="sub-tab" data-action="setGeoSubTab('geo-revenue',this)">Revenue by Region</div>
-        <div class="sub-tab" data-action="setGeoSubTab('geo-marketshare',this)">Market Share by Region</div>
-        <div class="sub-tab" data-action="setGeoSubTab('geo-breakdown',this)">Regional Breakdown</div>
+        <div class="sub-tab active" onclick="setGeoSubTab('geo-presence',this)">Geographic Presence</div>
+        <div class="sub-tab" onclick="setGeoSubTab('geo-revenue',this)">Revenue by Region</div>
+        <div class="sub-tab" onclick="setGeoSubTab('geo-marketshare',this)">Market Share by Region</div>
+        <div class="sub-tab" onclick="setGeoSubTab('geo-breakdown',this)">Regional Breakdown</div>
       </div>
       <div id="geo-presence-panel">
         <div class="grid-2">
@@ -1093,10 +1093,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="card-title">Inorganic Developments</div>
           <div class="card-actions">
             <div class="chip-filter-row" style="margin-bottom:0;gap:4px;">
-              <div class="chip-filter active" data-action="filterDeals('all',this)">All</div>
-              <div class="chip-filter" data-action="filterDeals('acquisition',this)">Acquisitions</div>
-              <div class="chip-filter" data-action="filterDeals('investment',this)">Investments</div>
-              <div class="chip-filter" data-action="filterDeals('divestment',this)">Divestments</div>
+              <div class="chip-filter active" onclick="filterDeals('all',this)">All</div>
+              <div class="chip-filter" onclick="filterDeals('acquisition',this)">Acquisitions</div>
+              <div class="chip-filter" onclick="filterDeals('investment',this)">Investments</div>
+              <div class="chip-filter" onclick="filterDeals('divestment',this)">Divestments</div>
             </div>
           </div>
         </div>
@@ -1118,8 +1118,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="section-desc">Customer base benchmarking, partner ecosystem, and retention metrics</div>
         </div>
         <div class="topbar-actions">
-          <button class="topbar-btn" data-action="addCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
-          <button class="topbar-btn" data-action="removeCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
+          <button class="topbar-btn" onclick="addCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">+ Add Metric</button>
+          <button class="topbar-btn" onclick="removeCustomerMetric()" style="font-size:10.5px;padding:3px 10px;">− Remove</button>
         </div>
       </div>
       <!-- Peer click selector -->
@@ -1165,22 +1165,22 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       </div>
 
       <div class="sub-tab-bar" id="insights-subtabs">
-        <div class="sub-tab active" data-action="setInsightSubTab('product',this)">Product</div>
-        <div class="sub-tab" data-action="setInsightSubTab('sales',this)">Sales & Distribution</div>
-        <div class="sub-tab" data-action="setInsightSubTab('rnd',this)">R&D / Innovation</div>
-        <div class="sub-tab" data-action="setInsightSubTab('inorganic',this)">Inorganic</div>
-        <div class="sub-tab" data-action="setInsightSubTab('marketing',this)">Marketing</div>
-        <div class="sub-tab" data-action="setInsightSubTab('customerwins',this)">Customer Wins</div>
-        <div class="sub-tab" data-action="setInsightSubTab('hiring',this)">Hiring</div>
+        <div class="sub-tab active" onclick="setInsightSubTab('product',this)">Product</div>
+        <div class="sub-tab" onclick="setInsightSubTab('sales',this)">Sales & Distribution</div>
+        <div class="sub-tab" onclick="setInsightSubTab('rnd',this)">R&D / Innovation</div>
+        <div class="sub-tab" onclick="setInsightSubTab('inorganic',this)">Inorganic</div>
+        <div class="sub-tab" onclick="setInsightSubTab('marketing',this)">Marketing</div>
+        <div class="sub-tab" onclick="setInsightSubTab('customerwins',this)">Customer Wins</div>
+        <div class="sub-tab" onclick="setInsightSubTab('hiring',this)">Hiring</div>
       </div>
 
       <!-- Year filter chips -->
       <div class="chip-filter-row" id="insights-year-chips">
-        <div class="chip-filter active" data-action="filterInsightYear('all',this)">All Years</div>
-        <div class="chip-filter" data-action="filterInsightYear('2025',this)">2025</div>
-        <div class="chip-filter" data-action="filterInsightYear('2024',this)">2024</div>
-        <div class="chip-filter" data-action="filterInsightYear('2023',this)">2023</div>
-        <div class="chip-filter" data-action="filterInsightYear('2022',this)">2022</div>
+        <div class="chip-filter active" onclick="filterInsightYear('all',this)">All Years</div>
+        <div class="chip-filter" onclick="filterInsightYear('2025',this)">2025</div>
+        <div class="chip-filter" onclick="filterInsightYear('2024',this)">2024</div>
+        <div class="chip-filter" onclick="filterInsightYear('2023',this)">2023</div>
+        <div class="chip-filter" onclick="filterInsightYear('2022',this)">2022</div>
       </div>
 
       <div class="grid-2" style="margin-bottom:16px;">
@@ -1247,18 +1247,18 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div id="company-page-sub" style="font-size:12px;color:var(--text-muted);margin-top:2px;"></div>
         </div>
         <div id="company-page-kpis" style="display:flex;gap:16px;"></div>
-        <button class="topbar-btn primary" data-action="navigate('bench-overview')">← Back to Benchmark</button>
+        <button class="topbar-btn primary" onclick="navigate('bench-overview')">← Back to Benchmark</button>
       </div>
 
       <!-- Company main tab bar -->
       <div class="sub-tab-bar" id="company-main-tabs" style="margin-bottom:0;border-bottom:1px solid var(--border);">
-        <div class="sub-tab active" data-action="setCompanyTab('overview',this)">Overview</div>
-        <div class="sub-tab" data-action="setCompanyTab('insights',this)">Insights</div>
-        <div class="sub-tab" data-action="setCompanyTab('products',this)">Products</div>
-        <div class="sub-tab" data-action="setCompanyTab('financials',this)">Financials</div>
-        <div class="sub-tab" data-action="setCompanyTab('geo',this)">Geographic</div>
-        <div class="sub-tab" data-action="setCompanyTab('innovation',this)">Innovation</div>
-        <div class="sub-tab" data-action="setCompanyTab('customers',this)">Customers</div>
+        <div class="sub-tab active" onclick="setCompanyTab('overview',this)">Overview</div>
+        <div class="sub-tab" onclick="setCompanyTab('insights',this)">Insights</div>
+        <div class="sub-tab" onclick="setCompanyTab('products',this)">Products</div>
+        <div class="sub-tab" onclick="setCompanyTab('financials',this)">Financials</div>
+        <div class="sub-tab" onclick="setCompanyTab('geo',this)">Geographic</div>
+        <div class="sub-tab" onclick="setCompanyTab('innovation',this)">Innovation</div>
+        <div class="sub-tab" onclick="setCompanyTab('customers',this)">Customers</div>
       </div>
 
       <!-- ── COMPANY: OVERVIEW ── -->
@@ -1267,7 +1267,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div class="card">
             <div class="card-header">
               <div class="card-title">Company Profile</div>
-              <button class="topbar-btn" data-action="editCompanyAttrs()" style="font-size:10.5px;padding:3px 8px;">✎ Edit</button>
+              <button class="topbar-btn" onclick="editCompanyAttrs()" style="font-size:10.5px;padding:3px 8px;">✎ Edit</button>
             </div>
             <div id="co-profile-attrs" class="attr-table"></div>
           </div>
@@ -1294,9 +1294,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
                 <div class="card-subtitle" id="fin-snap-subtitle">Annual revenue trend</div>
               </div>
               <div style="display:flex;gap:5px;">
-                <button class="topbar-btn" id="fin-snap-btn-revenue" style="font-size:10px;padding:2px 8px;background:#2563eb;color:#fff;border-color:#2563eb;" data-action="switchFinSnap('revenue')">Rev</button>
-                <button class="topbar-btn" id="fin-snap-btn-ebitda"  style="font-size:10px;padding:2px 8px;" data-action="switchFinSnap('ebitda')">EBITDA</button>
-                <button class="topbar-btn" id="fin-snap-btn-netIncome" style="font-size:10px;padding:2px 8px;" data-action="switchFinSnap('netIncome')">Net Inc</button>
+                <button class="topbar-btn" id="fin-snap-btn-revenue" style="font-size:10px;padding:2px 8px;background:#2563eb;color:#fff;border-color:#2563eb;" onclick="switchFinSnap('revenue')">Rev</button>
+                <button class="topbar-btn" id="fin-snap-btn-ebitda"  style="font-size:10px;padding:2px 8px;" onclick="switchFinSnap('ebitda')">EBITDA</button>
+                <button class="topbar-btn" id="fin-snap-btn-netIncome" style="font-size:10px;padding:2px 8px;" onclick="switchFinSnap('netIncome')">Net Inc</button>
               </div>
             </div>
             <div class="chart-wrap" id="chart-co-fin-snap"></div>
@@ -1311,20 +1311,20 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: INSIGHTS ── -->
       <div id="co-tab-insights" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" data-action="setCoInsightSub('product',this)">Product</div>
-          <div class="sub-tab" data-action="setCoInsightSub('sales',this)">Sales & Distribution</div>
-          <div class="sub-tab" data-action="setCoInsightSub('rnd',this)">R&D / Innovation</div>
-          <div class="sub-tab" data-action="setCoInsightSub('inorganic',this)">Inorganic</div>
-          <div class="sub-tab" data-action="setCoInsightSub('marketing',this)">Marketing</div>
-          <div class="sub-tab" data-action="setCoInsightSub('customerwins',this)">Customer Wins</div>
-          <div class="sub-tab" data-action="setCoInsightSub('hiring',this)">Hiring</div>
+          <div class="sub-tab active" onclick="setCoInsightSub('product',this)">Product</div>
+          <div class="sub-tab" onclick="setCoInsightSub('sales',this)">Sales & Distribution</div>
+          <div class="sub-tab" onclick="setCoInsightSub('rnd',this)">R&D / Innovation</div>
+          <div class="sub-tab" onclick="setCoInsightSub('inorganic',this)">Inorganic</div>
+          <div class="sub-tab" onclick="setCoInsightSub('marketing',this)">Marketing</div>
+          <div class="sub-tab" onclick="setCoInsightSub('customerwins',this)">Customer Wins</div>
+          <div class="sub-tab" onclick="setCoInsightSub('hiring',this)">Hiring</div>
         </div>
         <div class="chip-filter-row" id="co-insights-year-chips">
           <div class="chip-filter active">All Years</div>
-          <div class="chip-filter" data-action="filterCoInsightYear('2025',this)">2025</div>
-          <div class="chip-filter" data-action="filterCoInsightYear('2024',this)">2024</div>
-          <div class="chip-filter" data-action="filterCoInsightYear('2023',this)">2023</div>
-          <div class="chip-filter" data-action="filterCoInsightYear('2022',this)">2022</div>
+          <div class="chip-filter" onclick="filterCoInsightYear('2025',this)">2025</div>
+          <div class="chip-filter" onclick="filterCoInsightYear('2024',this)">2024</div>
+          <div class="chip-filter" onclick="filterCoInsightYear('2023',this)">2023</div>
+          <div class="chip-filter" onclick="filterCoInsightYear('2022',this)">2022</div>
         </div>
         <div id="co-insights-feed"></div>
       </div>
@@ -1332,11 +1332,11 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: PRODUCTS ── -->
       <div id="co-tab-products" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" data-action="setProductTab('strategy',this)">Product Strategy</div>
-          <div class="sub-tab" data-action="setProductTab('timeline',this)">Launch Timeline</div>
-          <div class="sub-tab" data-action="setProductTab('portfolio',this)">Product Portfolio</div>
-          <div class="sub-tab" data-action="setProductTab('matrix',this)">Portfolio Matrix</div>
-          <div class="sub-tab" data-action="setProductTab('updates',this)">Updates & Launches</div>
+          <div class="sub-tab active" onclick="setProductTab('strategy',this)">Product Strategy</div>
+          <div class="sub-tab" onclick="setProductTab('timeline',this)">Launch Timeline</div>
+          <div class="sub-tab" onclick="setProductTab('portfolio',this)">Product Portfolio</div>
+          <div class="sub-tab" onclick="setProductTab('matrix',this)">Portfolio Matrix</div>
+          <div class="sub-tab" onclick="setProductTab('updates',this)">Updates & Launches</div>
         </div>
         <!-- Product Strategy -->
         <div id="product-tab-strategy">
@@ -1369,7 +1369,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
           <div id="product-detail-popup" style="display:none;" class="card" style="margin-top:12px;">
             <div class="card-header">
               <div class="card-title" id="pd-popup-title"></div>
-              <button data-action="closeProductDetail()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;">✕</button>
+              <button onclick="closeProductDetail()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;">✕</button>
             </div>
             <div id="pd-popup-body"></div>
           </div>
@@ -1403,14 +1403,14 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <div id="co-tab-financials" style="display:none;padding-top:16px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
           <div class="sub-tab-bar" style="margin-bottom:0;">
-            <div class="sub-tab active" data-action="setFinancialSection('summary',this)">Summary</div>
-            <div class="sub-tab" data-action="setFinancialSection('income',this)">Income Statement</div>
-            <div class="sub-tab" data-action="setFinancialSection('balance',this)">Balance Sheet</div>
-            <div class="sub-tab" data-action="setFinancialSection('cashflow',this)">Cash Flow</div>
+            <div class="sub-tab active" onclick="setFinancialSection('summary',this)">Summary</div>
+            <div class="sub-tab" onclick="setFinancialSection('income',this)">Income Statement</div>
+            <div class="sub-tab" onclick="setFinancialSection('balance',this)">Balance Sheet</div>
+            <div class="sub-tab" onclick="setFinancialSection('cashflow',this)">Cash Flow</div>
           </div>
           <div class="toggle-group" id="fin-period-toggle">
-            <div class="toggle-opt active" data-action="setToggle('fin-period-toggle',this,'annual')">Annual</div>
-            <div class="toggle-opt" data-action="setToggle('fin-period-toggle',this,'quarterly')">Quarterly</div>
+            <div class="toggle-opt active" onclick="setToggle('fin-period-toggle',this,'annual')">Annual</div>
+            <div class="toggle-opt" onclick="setToggle('fin-period-toggle',this,'quarterly')">Quarterly</div>
           </div>
         </div>
         <div id="fin-section-summary">
@@ -1431,10 +1431,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: GEOGRAPHIC ── -->
       <div id="co-tab-geo" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" data-action="setCoGeoTab('presence',this)">Geographic Presence</div>
-          <div class="sub-tab" data-action="setCoGeoTab('revenue',this)">Revenue by Region</div>
-          <div class="sub-tab" data-action="setCoGeoTab('marketshare',this)">Market Share by Region</div>
-          <div class="sub-tab" data-action="setCoGeoTab('breakdown',this)">Regional Breakdown</div>
+          <div class="sub-tab active" onclick="setCoGeoTab('presence',this)">Geographic Presence</div>
+          <div class="sub-tab" onclick="setCoGeoTab('revenue',this)">Revenue by Region</div>
+          <div class="sub-tab" onclick="setCoGeoTab('marketshare',this)">Market Share by Region</div>
+          <div class="sub-tab" onclick="setCoGeoTab('breakdown',this)">Regional Breakdown</div>
         </div>
         <div id="co-geo-presence-panel">
           <div class="grid-2">
@@ -1488,11 +1488,11 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
       <!-- ── COMPANY: CUSTOMERS ── -->
       <div id="co-tab-customers" style="display:none;padding-top:16px;">
         <div class="sub-tab-bar">
-          <div class="sub-tab active" data-action="setCoCustomerTab('radar',this)">Segment Radar</div>
-          <div class="sub-tab" data-action="setCoCustomerTab('enterprise',this)">Enterprise (5000+ EE)</div>
-          <div class="sub-tab" data-action="setCoCustomerTab('midmarket',this)">Mid-Market (500–5k EE)</div>
-          <div class="sub-tab" data-action="setCoCustomerTab('smb',this)">SMB (&lt;500 EE)</div>
-          <div class="sub-tab" data-action="setCoCustomerTab('govt',this)">Government & Public</div>
+          <div class="sub-tab active" onclick="setCoCustomerTab('radar',this)">Segment Radar</div>
+          <div class="sub-tab" onclick="setCoCustomerTab('enterprise',this)">Enterprise (5000+ EE)</div>
+          <div class="sub-tab" onclick="setCoCustomerTab('midmarket',this)">Mid-Market (500–5k EE)</div>
+          <div class="sub-tab" onclick="setCoCustomerTab('smb',this)">SMB (&lt;500 EE)</div>
+          <div class="sub-tab" onclick="setCoCustomerTab('govt',this)">Government & Public</div>
         </div>
         <div id="co-customer-radar-panel">
           <div class="grid-2">
@@ -1516,11 +1516,103 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 
 <!-- ══ LOGGING CONSOLE ══ -->
 <div id="log-console"></div>
-<button id="log-toggle" data-action="toggleLog()">⚙ Log</button>
+<button id="log-toggle" onclick="toggleLog()">⚙ Log</button>
 
 <script>
 'use strict';
-// Auto-refreshed: 2026-08-14 01:40 IST
+
+/* ═══════════════════════════════════════════════════════════════
+   LOGGING MODULE
+   ═══════════════════════════════════════════════════════════════ */
+const LOG = (() => {
+  const MAX = 600; const entries = [];
+  const el = () => document.getElementById('log-console');
+  const ts = () => new Date().toISOString().slice(11,23);
+  function write(level, tag, msg, data) {
+    const line = `[${ts()}] [${level}] [${tag}] ${msg}${data?' | '+JSON.stringify(data):''}`;
+    entries.push(line); if(entries.length>MAX) entries.shift();
+    const c=el(); if(c){ const d=document.createElement('div');
+      d.style.color=level==='ERROR'?'#f87171':level==='WARN'?'#fbbf24':level==='OK'?'#34d399':'#94a3b8';
+      d.textContent=line; c.appendChild(d); c.scrollTop=c.scrollHeight; }
+    if(level==='ERROR') console.error(line);
+    else if(level==='WARN') console.warn(line);
+    else console.log(line);
+  }
+  return {
+    info:(tag,msg,data)=>write('INFO',tag,msg,data),
+    warn:(tag,msg,data)=>write('WARN',tag,msg,data),
+    error:(tag,msg,data)=>write('ERROR',tag,msg,data),
+    ok:(tag,msg,data)=>write('OK',tag,msg,data),
+    getLogs:()=>[...entries], clear:()=>{entries.length=0;const c=el();if(c)c.innerHTML='';}
+  };
+})();
+function toggleLog(){document.getElementById('log-console').classList.toggle('visible');}
+
+/* ═══════════════════════════════════════════════════════════════
+   VALIDATION CHECKPOINTS
+   ═══════════════════════════════════════════════════════════════ */
+const VALIDATOR = (() => {
+  const results = [];
+  function check(id, label, fn) {
+    try {
+      const passed = fn();
+      results.push({id,label,passed,error:null});
+      if(passed) LOG.ok('VALIDATOR',`✓ ${label}`);
+      else LOG.warn('VALIDATOR',`✗ ${label}`);
+      return passed;
+    } catch(e) {
+      results.push({id,label,passed:false,error:e.message});
+      LOG.error('VALIDATOR',`✗ ${label} — ${e.message}`); return false;
+    }
+  }
+  function run() {
+    LOG.info('VALIDATOR','=== Running validation checkpoints ===');
+    results.length=0;
+    check('CP-01','COMPANIES_DATA defined',()=>typeof COMPANIES_DATA==='object'&&COMPANIES_DATA!==null);
+    check('CP-02','BENCH_PEERS array',()=>Array.isArray(BENCH_PEERS)&&BENCH_PEERS.length>0);
+    check('CP-03','BENCH_COLORS object',()=>typeof BENCH_COLORS==='object');
+    check('CP-04','BENCH_FEATURES array',()=>Array.isArray(BENCH_FEATURES)&&BENCH_FEATURES.length>0);
+    check('CP-05','BENCH_PROFILE_ATTRS array',()=>typeof BENCH_PROFILE_ATTRS!=='undefined'); /* optional — safe default provided */
+    check('CP-06','MARKET_EVENTS array',()=>Array.isArray(MARKET_EVENTS));
+    check('CP-07','BENCH_CUST object',()=>typeof BENCH_CUST==='object');
+    const ids=Object.keys(COMPANIES_DATA);
+    check('CP-08','At least one company',()=>ids.length>0);
+    check('CP-09','BENCH_PEERS match companies',()=>BENCH_PEERS.every(p=>ids.includes(p)));
+    ids.forEach(id=>{
+      const c=COMPANIES_DATA[id]; const len=(c.years||[]).length;
+      ['revenues','ebitda','netIncome','revGrowth','eps','netMargin'].forEach(arr=>{
+        check(`CP-10-${id}-${arr}`,`${id}.${arr} length==years`,()=>Array.isArray(c[arr])&&c[arr].length===len);
+      });
+    });
+    const requiredFields=['name','ticker','color','initials','sector','description','years','revenues'];
+    ids.forEach(id=>{ const c=COMPANIES_DATA[id];
+      requiredFields.forEach(f=>check(`CP-11-${id}-${f}`,`${id} has "${f}"`,()=>c[f]!==undefined&&c[f]!==''));
+    });
+    const domIds=['app','sidebar','main','topbar','tab-bar','page-content','page-dashboard',
+      'page-bench-overview','page-bench-trend','page-bench-capability','page-bench-geo',
+      'page-bench-inorganic','page-bench-customers','page-bench-insights','page-bench-recommendations','page-company'];
+    domIds.forEach(eid=>check(`CP-12-${eid}`,`DOM #${eid}`,()=>!!document.getElementById(eid)));
+    check('CP-13','Plotly loaded',()=>typeof Plotly!=='undefined');
+    const chartIds=['chart-radar-overview','chart-capability-heatmap','chart-gartner',
+      'chart-trend-main','chart-tech-bubble','chart-rev-per-cap','chart-geo-map','chart-geo-bar',
+      'chart-inorganic-tree','chart-cust-base','chart-cust-share-pie','chart-risk-radar','chart-portfolio-matrix'];
+    chartIds.forEach(cid=>check(`CP-14-${cid}`,`Chart #${cid}`,()=>!!document.getElementById(cid)));
+    const passed=results.filter(r=>r.passed).length;
+    const failed=results.filter(r=>!r.passed);
+    LOG.info('VALIDATOR',`=== ${passed}/${results.length} passed ===`);
+    if(failed.length) LOG.warn('VALIDATOR',`Failed: ${failed.map(f=>f.id).join(', ')}`);
+    return {passed,total:results.length,failed};
+  }
+  return {run,results:()=>results};
+})();
+
+/* ═══════════════════════════════════════════════════════════════
+   DATA LAYER  (replaced by data_layer.js in live portal)
+   ═══════════════════════════════════════════════════════════════ */
+
+
+'use strict';
+// Auto-refreshed: 2026-08-15 07:05 IST
 window.onerror=function(m,s,l,c,e){var b=document.getElementById('_jserr');if(!b){b=document.createElement('div');b.id='_jserr';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#dc2626;color:#fff;font-size:11px;padding:6px 14px;font-family:monospace;';document.body?document.body.prepend(b):document.addEventListener('DOMContentLoaded',function(){document.body.prepend(b);});}b.textContent='⚠ JS Error: '+m+' (line '+l+')';return false;};
 
 /* ═══════════════════════════════════════════════════════════════
@@ -1685,7 +1777,7 @@ servicenow: {
     {label:"FY25 Revenue",  value:"$13.3B",  change:"+20.9% YoY", up:true},
     {label:"Gross Margin",  value:"79.9%",   change:"+0.1pp YoY",  up:true},
     {label:"Net Income",    value:"$1.75B",  change:"+22.4% YoY", up:true},
-    {label:"Market Cap",    value:"$121B",   change:"NYSE: NOW",   up:true},
+    {label:"Market Cap",    value:"$109B",   change:"NYSE: NOW",   up:true},
     {label:"Employees",     value:"29,187",  change:"+11% YoY",    up:true},
     {label:"RPO",           value:"$22B+",   change:"+26% YoY",    up:true}
   ],
@@ -1860,7 +1952,7 @@ salesforce: {
     {label:"FY25 Revenue",  value:"$37.9B",  change:"+8.7% YoY",   up:true},
     {label:"Gross Margin",  value:"77.2%",   change:"-0.3pp YoY",  up:false},
     {label:"Net Income",    value:"$6.2B",   change:"+50% YoY",    up:true},
-    {label:"Market Cap",    value:"$185B",   change:"NYSE: CRM",   up:true},
+    {label:"Market Cap",    value:"$158B",   change:"NYSE: CRM",   up:true},
     {label:"Free Cash Flow",value:"$10.7B",  change:"+13% YoY",    up:true},
     {label:"Agentforce Cust",value:"10,000+",change:"New in FY25",  up:true}
   ],
@@ -2191,7 +2283,7 @@ microsoft: {
     {label:"Copilot Seats",  value:"400M+",   change:"M365 Copilot active",up:true}
   ],
 
-  stockPrice:  {current:497, yearHigh:510, yearLow:370},
+  stockPrice:  {current:497, yearHigh:475, yearLow:370},
   peRatio:     30.2,
   evRevenue:   11.0,
 
@@ -2649,14 +2741,14 @@ const MARKET_EVENTS = [
   {company:"google",      category:"M&A",         date:"May 2025", title:"Wiz acquisition closes — Google Cloud security leader",     summary:"$32B Wiz closes. Wiz secures 40% of Fortune 500 cloud environments. GCP is now the most credible enterprise security cloud alongside AWS and Azure.",            tags:["M&A","Security","Cloud"]},
   {company:"microsoft",   category:"Earnings",    date:"Jul 2025", title:"Enterprise AI budgets surge 40%+ — agentic AI era begins", summary:"Enterprise AI spending accelerates; Microsoft Azure AI grows 50%+, GCP 28%, OCI 51%. Agentic AI becomes boardroom priority. All vendors launch multi-agent platforms.", tags:["Macro","AI","Earnings"]}
 ,
-  {company:"servicenow",  category:"Partnership", date:"Jan 2026", title:"ServiceNow + OpenAI — 3-year agentic AI integration deal",     summary:"ServiceNow and OpenAI sign three-year pact to embed frontier AI models directly into Now Platform workflows, giving customers direct access to GPT-4o and o3 for ITSM, HR, and finance automation.",   tags:["AI","Agents","Partnership"]},
+  {company:"servicenow",  category:"Partnership", date:"Jan 2026", title:"ServiceNow + OpenAI — 3-year agentic AI integration deal",     summary:"ServiceNow and OpenAI sign three-year pact to embed frontier AI models directly into Now Platform workflows. Customers gain direct access to GPT-4o and o3 for ITSM, HR, and finance automation.",   tags:["AI","Agents","Partnership"]},
   {company:"servicenow",  category:"M&A",         date:"Mar 2026", title:"ServiceNow acquires Pyramid Analytics — AI data fabric",        summary:"ServiceNow closes acquisition of Pyramid Analytics to expand its Workflow Data Fabric with natural-language analytics and self-service BI capabilities across enterprise operations.",                        tags:["M&A","Analytics","Data"]},
-  {company:"salesforce",  category:"Earnings",    date:"Feb 2026", title:"Salesforce FY26 revenue $37.9B — Agentforce exceeds 10,000 customers", summary:"Salesforce delivers FY26 total revenue of $37.9B (+8.7% YoY). Agentforce surpasses 10,000 enterprise customers. Free cash flow hits $12.4B; operating margin expands 300bps.",              tags:["Earnings","AI","Agents"]},
-  {company:"microsoft",   category:"Earnings",    date:"Oct 2025", title:"Microsoft FY25 hits $281.7B — first $100B+ net income year",    summary:"Microsoft FY25 annual revenue reaches $281.7B (+15% YoY) with net income of $101.8B — the first time the company surpasses $100B in annual profit. Azure AI grows 50%+ YoY.",             tags:["Earnings","Cloud","AI"]},
+  {company:"salesforce",  category:"Earnings",    date:"Feb 2026", title:"Salesforce FY26 revenue $37.9B — Agentforce drives growth",     summary:"Salesforce delivers FY26 total revenue of $37.9B (+8.7% YoY) with Agentforce surpassing 10,000 enterprise customers. Free cash flow hits $12.4B, operating margin expands 300bps.",              tags:["Earnings","AI","Agents"]},
+  {company:"microsoft",   category:"Earnings",    date:"Oct 2025", title:"Microsoft FY25 hits $281.7B — first $100B+ net income year",    summary:"Microsoft's FY25 annual revenue reaches $281.7B (+15% YoY) with net income of $101.8B — the first time the company surpasses $100B in annual profit. Azure AI services grow 50%+ YoY.",             tags:["Earnings","Cloud","AI"]},
   {company:"servicenow",  category:"Product",     date:"May 2026", title:"Knowledge 2026: AI Control Tower + Workflow Data Fabric GA",     summary:"ServiceNow Knowledge 2026 unveils AI Control Tower for enterprise AI governance, AI Agent Fabric for multi-agent orchestration, and Workflow Data Fabric GA — positioning Now Platform as the enterprise AI operating system.", tags:["AI","Platform","Product"]},
-  {company:"google",      category:"Earnings",    date:"Feb 2026", title:"Alphabet FY25 revenue crosses $400B — Google Cloud +48%",       summary:"Alphabet posts FY25 revenue of $402.8B (+15%), its first year above $400B. Net income surges 32% to $132.2B. Google Cloud grows 48% YoY, cementing enterprise cloud position.",                       tags:["Earnings","Cloud","AI"]},
-  {company:"oracle",      category:"Product",     date:"Jul 2026", title:"OCI Enterprise AI GA — H100 multi-node for large model serving", summary:"Oracle launches OCI Enterprise AI for Dedicated Cloud regions with H100 multi-node serving, natural-language DB querying, and IAM auth — completing Oracle's hyperscaler AI infrastructure for regulated industries.", tags:["AI","Cloud","Product"]},
-  {company:"salesforce",  category:"M&A",         date:"Mar 2025", title:"Salesforce closes Informatica acquisition (~$8B)",              summary:"Salesforce completes Informatica acquisition, adding enterprise data management to Data Cloud and Agentforce. 300+ source connectors accelerate AI agent deployments.",                                          tags:["M&A","Data","AI"]}
+  {company:"salesforce",  category:"M&A",         date:"Mar 2025", title:"Salesforce closes Informatica acquisition (~$8B)",              summary:"Salesforce completes acquisition of Informatica, adding enterprise data management capabilities to Data Cloud and Agentforce. 300+ source connectors accelerate time-to-value for AI agent deployments.",            tags:["M&A","Data","AI"]},
+  {company:"google",      category:"Product",     date:"Feb 2026", title:"Alphabet FY25 revenue crosses $400B milestone — cloud +48%",    summary:"Alphabet posts FY25 revenue of $402.8B (+15%), its first year above $400B. Net income surges 32% to $132.2B. Google Cloud revenue grows 48% YoY, cementing third-place cloud position with AI-driven enterprise gains.", tags:["Earnings","Cloud","AI"]},
+  {company:"oracle",      category:"Product",     date:"Aug 15, 2026", title:"OCI Enterprise AI GA — H100 multi-node for large model serving", summary:"Oracle launches OCI Enterprise AI for Dedicated Cloud regions with H100 multi-node serving, natural-language DB querying, and IAM authentication — completing Oracle's hyperscaler AI infrastructure for regulated industries.", tags:["AI","Cloud","Product"]}
 ];
 
 // ════════════════════════════════════════════════════════════
@@ -3764,6 +3856,1557 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 
   navigate('dashboard');
+  LOG.ok('INIT','=== Portal ready ===');
+});
+
+/* ═══════════════════════════════════════════════════════
+   DASHBOARD v4 — JS additions
+   ═══════════════════════════════════════════════════════ */
+
+/* ---- getYearSlice: slice co arrays to active FY range ---- */
+function getYearSlice(co) {
+  if (!co || !Array.isArray(co.years)) return co;
+  function norm(v){ return (v||'').replace('FY20','FY').replace('FY19','FY'); }
+  var from = norm(APP.yearFrom || 'FY21');
+  var to   = norm(APP.yearTo   || 'FY25');
+  var allY = co.years;
+  var si = allY.indexOf(from); if(si === -1) si = 0;
+  var ei = allY.indexOf(to);   if(ei === -1) ei = allY.length - 1;
+  if(si > ei){ si = 0; ei = allY.length - 1; }
+  function sl(arr){ return Array.isArray(arr) ? arr.slice(si, ei+1) : arr; }
+  var out = Object.assign({}, co, {
+    years: sl(co.years), revenues: sl(co.revenues),
+    ebitda: sl(co.ebitda), netIncome: sl(co.netIncome),
+    revGrowth: sl(co.revGrowth), eps: sl(co.eps), netMargin: sl(co.netMargin)
+  });
+  if(co.balance){
+    if(Array.isArray(co.balance)){
+      // array-of-objects [{cash,totalAssets,totalDebt},...] → normalize to flat-arrays
+      var balSlice=co.balance.slice(si,ei+1);
+      out.balance={
+        cash:       balSlice.map(function(b){return b.cash||null;}),
+        totalAssets:balSlice.map(function(b){return b.totalAssets||null;}),
+        totalDebt:  balSlice.map(function(b){return b.totalDebt||null;})
+      };
+    } else {
+      out.balance={cash:sl(co.balance.cash),totalAssets:sl(co.balance.totalAssets),totalDebt:sl(co.balance.totalDebt)};
+    }
+  }
+  if(co.cashflow){
+    if(Array.isArray(co.cashflow)){
+      // array-of-objects [{operatingCF,capex,freeCF},...] → normalize to flat-arrays
+      var cfSlice=co.cashflow.slice(si,ei+1);
+      out.cashflow={
+        operatingCF:cfSlice.map(function(c){return c.operatingCF||null;}),
+        capex:      cfSlice.map(function(c){return c.capex||null;}),
+        freeCF:     cfSlice.map(function(c){return c.freeCF||null;})
+      };
+    } else {
+      out.cashflow={operatingCF:sl(co.cashflow.operatingCF),capex:sl(co.cashflow.capex),freeCF:sl(co.cashflow.freeCF)};
+    }
+  }
+  return out;
+}
+
+
+
+
+/* ---- renderDashboard v5.0 ---- */
+window._rdImpl = function(){
+  LOG.info('RENDER','Dashboard (Workday v4)');
+  // Date subtitle
+  var dsub = document.getElementById('dash-date-sub');
+  if(dsub){
+    var d = new Date();
+    dsub.textContent = "Here\u2019s your competitive intelligence summary for today \u2014 " +
+      d.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  }
+  // KPI tiles
+  var kpCo = document.getElementById('dash-kpi-companies');
+  if(kpCo) kpCo.textContent = BENCH_PEERS.length;
+  var kpEv = document.getElementById('dash-kpi-events');
+  if(kpEv) kpEv.textContent = MARKET_EVENTS.length;
+  var bdCo = document.getElementById('dash-badge-cos');
+  if(bdCo) bdCo.textContent = BENCH_PEERS.length + ' companies';
+  var coC = document.getElementById('dash-co-count');
+  if(coC) coC.textContent = BENCH_PEERS.length + ' cos';
+
+  // Market Events
+  var ec = document.getElementById('marketEventsContainer');
+  if(ec){
+    ec.innerHTML = MARKET_EVENTS.map(function(e){
+      var co = COMPANIES_DATA[e.company] || {};
+      var clr = co.color || '#64748b';
+      var tags = (e.tags || [e.category || 'Event']).map(function(t){
+        return '<span class="wd-event-tag">' + t + '</span>';
+      }).join('');
+      return '<div class="wd-event-card">' +
+        '<div class="wd-event-dot" style="background:' + clr + ';"></div>' +
+        '<div class="wd-event-content">' +
+          '<div class="wd-event-title">' + e.title + '</div>' +
+          '<div class="wd-event-meta">' + (co.name || e.company || '') + ' &middot; ' + e.date +
+            ' &middot; <span class="dash-badge gray" style="font-size:10px;">' + (e.category || e.type || 'Event') + '</span></div>' +
+          '<div class="wd-event-summary">' + e.summary + '</div>' +
+          '<div class="wd-event-tags">' + tags + '</div>' +
+        '</div></div>';
+    }).join('');
+  }
+
+  // Companies to Track
+  var cc = document.getElementById('companiesTrackContainer');
+  if(cc){
+    cc.innerHTML = BENCH_PEERS.map(function(id){
+      var co = COMPANIES_DATA[id]; if(!co) return '';
+      var last = co.revenues[co.revenues.length-1];
+      var prev = co.revenues[co.revenues.length-2] || last;
+      var chg = ((last-prev)/prev*100).toFixed(1);
+      var up  = chg > 0;
+      return '<div class="wd-co-card" onclick="navigate(\'company\',\'' + id + '\')">' +
+        '<div class="wd-co-card-header">' +
+          '<div class="wd-co-logo" style="background:' + co.color + ';">' + co.initials + '</div>' +
+          '<div><div class="wd-co-name">' + co.name + '</div>' +
+               '<div class="wd-co-sector">' + co.ticker + ' &middot; ' + co.exchange + '</div></div>' +
+        '</div>' +
+        '<div class="wd-co-stats">' +
+          '<div><div class="wd-co-stat-val">' + (co.latestRevenue || '$' + last + 'B') + '</div>' +
+               '<div class="wd-co-stat-label">Revenue</div></div>' +
+          '<div><div class="wd-co-stat-val" style="color:' + (up ? '#059669' : '#dc2626') + '">' +
+               (up ? '&#x25B2;' : '&#x25BC;') + ' ' + Math.abs(chg) + '%</div>' +
+               '<div class="wd-co-stat-label">YoY Growth</div></div>' +
+        '</div>' +
+        '<div class="wd-co-actions"><button class="wd-co-btn" onclick="event.stopPropagation();navigate(\'company\',\'' + id + '\')">View Company &#x2192;</button></div>' +
+      '</div>';
+    }).join('');
+  }
+};
+window.renderDashboard = window._rdImpl;
+
+
+/* ---- Intel Drilldown ---- */
+function openIntelDD(type) {
+  var titles = {competitive:'Competitive Intelligence',market:'Market Intelligence',sales:'Sales Intelligence'};
+  var evtHtml = MARKET_EVENTS.slice(0,4).map(function(e){
+    var co = COMPANIES_DATA[e.company]||{};
+    return '<div class="wd-event-card" style="margin-bottom:8px;">' +
+      '<div class="wd-event-dot" style="background:' + (co.color||'#64748b') + ';"></div>' +
+      '<div class="wd-event-content">' +
+        '<div class="wd-event-title">' + e.title + '</div>' +
+        '<div class="wd-event-meta">' + (co.name||'') + ' &middot; ' + e.date + '</div>' +
+        '<div class="wd-event-summary">' + e.summary + '</div>' +
+      '</div></div>';
+  }).join('');
+  var bodies = {
+    competitive: '<div style="background:#eff6ff;border-left:4px solid #2563eb;border-radius:8px;padding:14px 16px;margin-bottom:16px;">' +
+      '<div style="font-size:11px;font-weight:700;color:#2563eb;text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;">Competitive Intelligence</div>' +
+      '<div style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:6px;">Your Competitive Landscape</div>' +
+      '<div style="font-size:12.5px;color:#475569;">' + BENCH_PEERS.length + ' companies tracked. 14 new insights today.</div>' +
+      '</div>' + evtHtml,
+    market: '<div style="background:#ede9fe;border-left:4px solid #7c3aed;border-radius:8px;padding:14px 16px;">' +
+      '<div style="font-size:11px;font-weight:700;color:#7c3aed;text-transform:uppercase;margin-bottom:4px;">Market Intelligence</div>' +
+      '<div style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:6px;">AI-Powered Enterprise Software Market</div>' +
+      '<div style="font-size:12.5px;color:#475569;">TAM estimated at $180B with 7.8% CAGR through 2028. Cloud migration, embedded AI/ML, and enterprise automation are key growth drivers.</div>' +
+      '</div>',
+    sales: '<div style="background:#dcfce7;border-left:4px solid #059669;border-radius:8px;padding:14px 16px;">' +
+      '<div style="font-size:11px;font-weight:700;color:#059669;text-transform:uppercase;margin-bottom:4px;">Sales Intelligence</div>' +
+      '<div style="font-size:15px;font-weight:700;color:#0f172a;margin-bottom:6px;">Active Deal Signals</div>' +
+      '<div style="font-size:12.5px;color:#475569;">7 active prospect signals detected. 3 win-ready opportunities identified based on competitor weakness signals.</div>' +
+      '</div>'
+  };
+  var tEl = document.getElementById('wdDDTitle');
+  if(tEl) tEl.textContent = titles[type] || 'Intelligence';
+  var bEl = document.getElementById('wdDDBody');
+  if(bEl) bEl.innerHTML = bodies[type] || '';
+  document.getElementById('wdDDOverlay').classList.add('open');
+  document.getElementById('wdDDPanel').classList.add('open');
+}
+function closeIntelDD(){
+  document.getElementById('wdDDOverlay').classList.remove('open');
+  document.getElementById('wdDDPanel').classList.remove('open');
+}
+
+/* ---- Financial Snapshot metric switcher ---- */
+function switchFinSnap(metric){
+  var co = COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  var cs = getYearSlice(co);
+  var labels = {revenue:'Revenue ($B)',ebitda:'EBITDA ($B)',netIncome:'Net Income ($B)'};
+  var dataMap = {revenue:cs.revenues, ebitda:cs.ebitda, netIncome:cs.netIncome};
+  ['revenue','ebitda','netIncome'].forEach(function(m){
+    var b = document.getElementById('fin-snap-btn-'+m);
+    if(b){ b.style.background = m===metric?'#2563eb':''; b.style.color = m===metric?'#fff':''; b.style.borderColor = m===metric?'#2563eb':''; }
+  });
+  var sub = document.getElementById('fin-snap-subtitle');
+  if(sub) sub.textContent = 'Annual ' + (labels[metric]||metric) + ' trend \u00b7 ' + cs.years[0] + '\u2013' + cs.years[cs.years.length-1];
+  var tEl = document.querySelector('[data-fin-snap-title]');
+  if(tEl) tEl.textContent = 'Financial Snapshot \u2014 ' + (labels[metric]||metric);
+  safeRender('chart-co-fin-snap',
+    [{type:'bar', name: labels[metric]||metric, x:cs.years, y:dataMap[metric]||cs.revenues,
+      marker:{color:co.color, opacity:.85},
+      text:(dataMap[metric]||[]).map(function(v){return v!=null?v.toFixed(1):''}),
+      textposition:'outside', textfont:{size:9,color:'#64748b'}}],
+    Object.assign({}, PL(280), {
+      margin:{l:42,r:10,t:28,b:36},
+      xaxis:{tickfont:{size:9}},
+      yaxis:{title:{text:labels[metric]||'$B', font:{color:'#64748b',size:9}}, gridcolor:'#f1f5f9'},
+      showlegend:false
+    }));
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   INTERACTION FIX PATCH — all missing/broken functions wired here
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* ── Customize modal ── */
+function openCustomizeModal(){document.getElementById('customizeModal').classList.add('open');}
+function closeCustomizeModal(){document.getElementById('customizeModal').classList.remove('open');}
+function saveCustomize(){
+  LOG.info('ACTION','Customize saved');
+  closeCustomizeModal();
+  showToast('Dashboard layout saved ✓','success');
+}
+
+/* ── Toast notification (lightweight) ── */
+function showToast(msg, type='info'){
+  let t=document.getElementById('__toast');
+  if(!t){t=document.createElement('div');t.id='__toast';
+    Object.assign(t.style,{position:'fixed',bottom:'24px',right:'24px',zIndex:9999,padding:'10px 18px',
+      borderRadius:'8px',fontSize:'13px',fontWeight:'500',boxShadow:'0 4px 16px rgba(0,0,0,.15)',
+      transition:'opacity .3s',opacity:'0'});document.body.appendChild(t);}
+  t.textContent=msg;
+  t.style.background=type==='success'?'#059669':type==='error'?'#dc2626':'#2563eb';
+  t.style.color='#fff'; t.style.opacity='1';
+  clearTimeout(t._timer);
+  t._timer=setTimeout(()=>{t.style.opacity='0';},3000);
+}
+
+/* ── filterNewsEvents — dashboard market events chip filter ── */
+function filterNewsEvents(cat, el){
+  document.querySelectorAll('#news-event-chips .chip-filter').forEach(c=>c.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const ec=document.getElementById('marketEventsContainer');
+  if(!ec) return;
+  ec.innerHTML='';
+  const evts = cat==='all'
+    ? MARKET_EVENTS
+    : MARKET_EVENTS.filter(e=>e.category===cat||e.category.toLowerCase()===cat.toLowerCase());
+  if(!evts.length){ec.innerHTML='<div style="padding:20px;text-align:center;color:#94a3b8;font-size:12px;">No events for this category.</div>';return;}
+  evts.forEach(e=>{
+    const co=COMPANIES_DATA[e.company]||{};
+    const typeColors={'M&A':'#2563eb','Product':'#059669','AI':'#7c3aed','Partnership':'#0891b2','Earnings':'#d97706','Expansion':'#be185d','default':'#64748b'};
+    const tc=typeColors[e.category]||typeColors['default'];
+    const card=document.createElement('div'); card.className='news-card';
+    card.style.cssText='padding:12px 14px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;cursor:pointer;transition:box-shadow .15s;';
+    card.onmouseenter=()=>card.style.boxShadow='0 2px 8px rgba(0,0,0,.08)';
+    card.onmouseleave=()=>card.style.boxShadow='none';
+    card.innerHTML=
+      `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span style="width:8px;height:8px;border-radius:50%;background:${co.color||tc};flex-shrink:0;"></span>
+        <span style="font-size:11px;font-weight:700;color:${tc};background:${tc}18;padding:1px 7px;border-radius:10px;">${e.category.toUpperCase()}</span>
+        <span style="font-size:11px;color:#94a3b8;margin-left:auto;">${e.date}</span>
+      </div>
+      <div style="font-size:13px;font-weight:600;color:#1e293b;margin-bottom:4px;">${co.name?'['+co.name+'] ':''}${e.title}</div>
+      <div style="font-size:12px;color:#64748b;line-height:1.5;">${e.summary}</div>
+      ${e.tags?`<div style="margin-top:7px;display:flex;gap:5px;flex-wrap:wrap;">${e.tags.map(t=>`<span style="font-size:10px;padding:1px 7px;background:#f1f5f9;border-radius:10px;color:#475569;">${t}</span>`).join('')}</div>`:''}`;
+    ec.appendChild(card);
+  });
+}
+
+/* ── viewAllEvents — expand events panel ── */
+function viewAllEvents(){
+  LOG.info('ACTION','View All Events');
+  // Navigate to Insights & Risks page for full event list
+  navigate('bench-insights');
+  showToast('Showing all market events in Insights & Risks','info');
+}
+
+/* ── filterEvents alias (for backward compat) ── */
+window.filterEvents = filterNewsEvents;
+
+/* ── setActiveCompany — set which company is highlighted ── */
+function setActiveCompany(id){
+  APP.currentCompany=id;
+  navigate('company', id);
+}
+
+/* ── applyYearFilter — full wired version ── */
+window.applyYearFilter = function(){
+  const yf=document.getElementById('year-from');
+  const yt=document.getElementById('year-to');
+  if(!yf||!yt) return;
+  const from=yf.value, to=yt.value;
+  // Validate range
+  if(from>to){showToast('Year From must be ≤ Year To','error');yf.value=APP.yearFrom;return;}
+  APP.yearFrom=from; APP.yearTo=to;
+  LOG.info('FILTER',`FY range → ${from}–${to}`);
+  // Show badge
+  const badge=document.getElementById('fy-filter-badge');
+  if(badge){badge.textContent=from+'–'+to;badge.style.display='inline-block';}
+  // Update subtitle
+  const stEl=document.getElementById('topbar-subtitle');
+  if(stEl) stEl.textContent=(PAGE_META[APP.currentPage]?.subtitle||'')+' · '+from+'–'+to;
+  const kpiEvEl=document.getElementById('dash-kpi-events');if(kpiEvEl)kpiEvEl.textContent=MARKET_EVENTS.length;
+  // Clear chart cache and re-render
+  APP.chartsRendered.clear();
+  renderPageCharts(APP.currentPage);
+  showToast(`Fiscal year filter applied: ${from}–${to} ✓`,'success');
+};
+
+
+
+/* ── switchFinSnap — Financial Snapshot metric toggle ── */
+window.switchFinSnap = function(metric){
+  APP.finSnapMetric = metric;
+  const co = COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  const sliced = getYearSlice(co);
+  const metricMap = {revenue:{key:'revenues',label:'Revenue ($B)',color:'#2563eb'},
+    ebitda:{key:'ebitda',label:'EBITDA ($B)',color:'#059669'},
+    netIncome:{key:'netIncome',label:'Net Income ($B)',color:'#7c3aed'}};
+  const m = metricMap[metric]||metricMap.revenue;
+  const titleEl=document.getElementById('fin-snap-card-title');
+  if(titleEl) titleEl.textContent='Financial Snapshot — '+m.label;
+  const subtitleEl=document.getElementById('fin-snap-subtitle');
+  if(subtitleEl) subtitleEl.textContent='Annual '+m.label.split('(')[0].trim()+' trend · '+(sliced.years[0]||'FY21')+'–'+(sliced.years[sliced.years.length-1]||'FY25');
+  // Update button states
+  ['revenue','ebitda','netIncome'].forEach(k=>{
+    const btn=document.getElementById('fin-snap-btn-'+k);
+    if(btn){btn.style.background=k===metric?'#2563eb':'';btn.style.color=k===metric?'#fff':'';btn.style.borderColor=k===metric?'#2563eb':'';}
+  });
+  safeRender('chart-co-fin-snap',[{type:'bar',x:sliced.years,y:sliced[m.key]||[],
+    marker:{color:m.color,borderRadius:4},text:(sliced[m.key]||[]).map(v=>'$'+v+'B'),
+    textposition:'outside',textfont:{size:10}}],
+    {...PL(210),yaxis:{title:m.label,titlefont:{size:11}},margin:{l:50,r:20,t:20,b:40}});
+};
+
+/* ── Trend Analysis period toggle ── */
+window.renderTrendMainChart = function(period){
+  const metric = APP.activeTabMap&&APP.activeTabMap['trend-metric']||'revenue';
+  const metricMap={revenue:{key:'revenues',label:'Revenue ($B)'},ebitda:{key:'ebitda',label:'EBITDA ($B)'},
+    netIncome:{key:'netIncome',label:'Net Income ($B)'},ebitdaMargin:{key:'ebitdaMargin',label:'EBITDA Margin (%)'},
+    netMargin:{key:'netMargin',label:'Net Margin (%)'},revGrowth:{key:'revGrowth',label:'Revenue Growth (%)'},
+    eps:{key:'eps',label:'EPS ($)'}};
+  const m=metricMap[metric]||metricMap.revenue;
+  const traces=APP.selectedCompanies.map(id=>{
+    const co=getYearSlice(COMPANIES_DATA[id]); if(!co) return null;
+    const ema=co.ebitdaMargin||(co.ebitda||[]).map((e,i)=>co.revenues[i]?+(e/co.revenues[i]*100).toFixed(1):0);
+    const nm=co.netMargin||(co.netIncome||[]).map((e,i)=>co.revenues[i]?+(e/co.revenues[i]*100).toFixed(1):0);
+    const dataByKey={revenues:co.revenues,ebitda:co.ebitda,netIncome:co.netIncome,
+      ebitdaMargin:ema,netMargin:nm,revGrowth:co.revGrowth,eps:co.eps};
+    return{type:'scatter',mode:'lines+markers',name:co.name,x:co.years,y:dataByKey[m.key]||[],
+      line:{color:co.color,width:2.5},marker:{color:co.color,size:6}};
+  }).filter(Boolean);
+  safeRender('chart-trend-main',traces,{...PL(340),yaxis:{title:m.label,titlefont:{size:11},gridcolor:'#f1f5f9'},
+    xaxis:{gridcolor:'#f1f5f9'},legend:{orientation:'h',y:-0.15},margin:{l:60,r:20,t:20,b:60}});
+};
+
+/* ── setActiveTrendMetric ── */
+window.setActiveTrendMetric = function(metric,el){
+  document.querySelectorAll('.sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(!APP.activeTabMap) APP.activeTabMap={};
+  APP.activeTabMap['trend-metric']=metric;
+  renderTrendMainChart(APP.activeTabMap['trend-period']||'annual');
+};
+
+
+
+/* ── filterCoInsightYear — company insight year filter ── */
+window.filterCoInsightYear = function(year,el){
+  document.querySelectorAll('#co-insights-year-chips .chip-filter').forEach(c=>c.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(!APP.activeTabMap) APP.activeTabMap={};
+  APP.activeTabMap['co-insight-year']=year;
+  const section=APP.activeTabMap['co-insight-section']||'product';
+  renderCoInsightFeed(section, year);
+};
+
+/* ── setCoInsightSub — company insights sub-tab ── */
+window.setCoInsightSub = function(section,el){
+  document.querySelectorAll('#co-insight-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(!APP.activeTabMap) APP.activeTabMap={};
+  APP.activeTabMap['co-insight-section']=section;
+  const year=APP.activeTabMap['co-insight-year']||'all';
+  renderCoInsightFeed(section, year);
+};
+
+/* ── renderCoInsightFeed — company-level insight feed ── */
+function renderCoInsightFeed(section, year){
+  const container=document.getElementById('co-insights-feed'); if(!container) return;
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  const sectionLabels={product:'Product Strategy',sales:'Sales & Distribution',rnd:'R&D / Innovation',
+    inorganic:'Inorganic',marketing:'Marketing',customerwins:'Customer Wins',hiring:'Hiring & Talent'};
+  const text=co.insights&&co.insights[section]?co.insights[section]:'No insights available for this section.';
+  container.innerHTML=`
+    <div style="padding:16px;background:#f8fafc;border-radius:8px;border-left:3px solid ${co.color};">
+      <div style="font-size:11px;font-weight:700;color:${co.color};text-transform:uppercase;margin-bottom:6px;">
+        ${sectionLabels[section]||section} ${year!=='all'?'· '+year:''}
+      </div>
+      <div style="font-size:13px;color:#374151;line-height:1.65;">${text}</div>
+    </div>`;
+}
+
+/* ── openProductDetail — product portfolio popup ── */
+window.openProductDetail = function(prodName){
+  const popup=document.getElementById('product-detail-popup'); if(!popup) return;
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  const prod=(co.products||[]).find(p=>p.name===prodName)||{name:prodName,desc:'Product details not available.',category:'',revenue:'N/A'};
+  const nameEl=(document.getElementById('product-detail-name')||document.getElementById('pd-popup-title'));
+  const descEl=(document.getElementById('product-detail-desc')||document.getElementById('pd-popup-body'));
+  if(nameEl) nameEl.textContent=prod.name;
+  if(descEl) descEl.innerHTML=`
+    <div style="font-size:12px;color:#64748b;margin-bottom:8px;">${prod.category||'Product'}</div>
+    <div style="font-size:13px;color:#374151;line-height:1.6;">${prod.desc||'No description available.'}</div>
+    ${prod.revenue?`<div style="margin-top:10px;font-size:12px;"><b>Revenue:</b> ${prod.revenue}</div>`:''}
+    ${prod.customers?`<div style="font-size:12px;"><b>Customers:</b> ${prod.customers}</div>`:''}`;
+  popup.style.display='block';
+};
+
+/* ── renderBenchOverview alias ── */
+window.renderBenchOverview = window.renderOverviewCharts || function(){LOG.warn('RENDER','renderOverviewCharts not found');};
+
+/* ── toggleAdditionalAnalysis — show/hide extra analysis section ── */
+window.toggleAdditionalAnalysis = function(){
+  const section=document.getElementById('additional-analysis-section');
+  const btn=document.getElementById('additional-analysis-btn');
+  if(!section) return;
+  const isHidden=section.style.display==='none'||!section.style.display;
+  section.style.display=isHidden?'block':'none';
+  if(btn) btn.textContent=isHidden?'▲ Hide':'▼ Show';
+  if(isHidden){
+    // Render additional charts now visible
+    setTimeout(()=>{
+      ['chart-tech-bubble','chart-rev-capability'].forEach(id=>{
+        const el=document.getElementById(id);
+        if(el&&el.innerHTML.trim()==='') safeRender(id,[],{...PL(300)});
+      });
+      if(typeof renderTrendCharts==='function') renderTrendCharts(APP.activeTabMap&&APP.activeTabMap['trend-period']||'annual');
+    },80);
+  }
+};
+
+/* ── downloadTrendChart — download chart as PNG ── */
+window.downloadTrendChart = function(){
+  const el=document.getElementById('chart-trend-main');
+  if(el&&window.Plotly){
+    Plotly.downloadImage(el,{format:'png',filename:'trend-analysis',width:1200,height:500})
+      .then(()=>showToast('Chart downloaded ✓','success'))
+      .catch(()=>showToast('Download failed — try right-click on chart','error'));
+  } else {
+    showToast('Chart not available for download','error');
+  }
+};
+
+/* ── addCapabilityMetric / removeCapabilityMetric ── */
+window.addCapabilityMetric = function(){
+  const name=prompt('Enter new capability dimension name:');
+  if(!name||!name.trim()) return;
+  if(typeof BENCH_FEATURES!=='undefined') BENCH_FEATURES.push(name.trim());
+  APP.chartsRendered.delete('bench-capability');
+  renderPageCharts('bench-capability');
+  showToast('Dimension "'+name.trim()+'" added ✓','success');
+};
+window.removeCapabilityMetric = function(){
+  if(typeof BENCH_FEATURES==='undefined'||BENCH_FEATURES.length<=2){showToast('Minimum 2 dimensions required','error');return;}
+  const name=prompt('Enter dimension name to remove:\n'+BENCH_FEATURES.join(', '));
+  if(!name) return;
+  const idx=BENCH_FEATURES.indexOf(name.trim());
+  if(idx<0){showToast('"'+name+'" not found','error');return;}
+  BENCH_FEATURES.splice(idx,1);
+  APP.chartsRendered.delete('bench-capability');
+  renderPageCharts('bench-capability');
+  showToast('Dimension "'+name+'" removed','success');
+};
+
+/* ── addCustomerMetric / removeCustomerMetric ── */
+window.addCustomerMetric = function(){showToast('Opens customer metric dialog in live portal','info');};
+window.removeCustomerMetric = function(){showToast('Opens remove metric dialog in live portal','info');};
+
+/* ── editProfileAttrs / editCompanyAttrs ── */
+window.editProfileAttrs = function(){showToast('Opens attribute editor in live portal','info');};
+window.editCompanyAttrs = function(){showToast('Opens company attribute editor in live portal','info');};
+
+/* ── refreshData override — with toast ── */
+window.refreshData = function(){
+  showToast('Refreshing data...','info');
+  APP.chartsRendered.clear();
+  setTimeout(()=>{renderPageCharts(APP.currentPage);showToast('Data refreshed ✓','success');},400);
+};
+
+/* ── exportPortal override — with toast ── */
+window.exportPortal = function(){
+  LOG.info('ACTION','Export');
+  showToast('Preparing export... (full export available in live portal)','info');
+};
+
+/* ── renderInsightsPage — ensure page renders ── */
+if(typeof window.renderInsightsPage==='undefined'){
+  window.renderInsightsPage = function(){
+    if(typeof renderInsightsFeed==='function') renderInsightsFeed('product','all');
+    if(typeof renderPageCharts==='function'){} // chain
+    // Render risk radar
+    const dims=['competitive','regulatory','technology','market','execution'];
+    const traces=APP.selectedCompanies.map(id=>{
+      const co=COMPANIES_DATA[id]; if(!co) return null;
+      const rs=co.riskScores||{Competitive:6,Regulatory:5,Technology:7,Market:6,Execution:5};
+      return{type:'scatterpolar',fill:'toself',opacity:.35,r:dims.map(d=>rs[d]||5),theta:dims,
+        name:co.name,line:{color:co.color,width:2}};
+    }).filter(Boolean);
+    safeRender('chart-risk-radar',traces,{...PL(350),
+      polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{size:9,color:'#94a3b8'}},
+        angularaxis:{gridcolor:'#e2e8f0'},bgcolor:'rgba(0,0,0,0)'},
+      showlegend:true,legend:{orientation:'h',y:-0.18}});
+  };
+}
+
+
+
+/* ── Re-render dashboard on company chip toggle ── */
+(function patchToggleChip(){
+  const _orig=window.toggleCompanyChip;
+  window.toggleCompanyChip=function(id,el){
+    if(typeof _orig==='function') _orig(id,el);
+    // Update dashboard KPI
+    setTimeout(()=>{
+      const kpiCos=document.getElementById('dash-kpi-companies');
+      if(kpiCos) kpiCos.textContent=APP.selectedCompanies.length;
+      const coBadge=document.getElementById('dash-badge-cos');
+      if(coBadge) coBadge.textContent=APP.selectedCompanies.length+' companies';
+    },50);
+  };
+})();
+
+/* ── FY badge in topbar ── */
+(function addFYBadge(){
+  const fy=document.getElementById('year-to');
+  if(fy&&!document.getElementById('fy-filter-badge')){
+    const badge=document.createElement('span');
+    badge.id='fy-filter-badge';
+    badge.className='filter-applied-badge';
+    badge.textContent=APP.yearFrom+'–'+APP.yearTo;
+    badge.style.display='inline-block';
+    fy.insertAdjacentElement('afterend',badge);
+  }
+})();
+
+/* ── Geographic sub-tab deferred render ── */
+window.setGeoSubTab = function(tab, el){
+  document.querySelectorAll('.bench-geo-subtab-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('.sub-tab[onclick*="setGeoSubTab"]').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const panel=document.getElementById('geo-panel-'+tab);
+  if(panel) panel.style.display='block';
+  if(!APP.activeTabMap) APP.activeTabMap={};
+  APP.activeTabMap['geo-sub']=tab;
+  setTimeout(()=>{
+    if(tab==='geo-revenue') renderGeoRevChart();
+    else if(tab==='geo-marketshare') renderGeoMSChart();
+    else if(tab==='geo-breakdown') renderGeoBreakdownTable();
+    else if(tab==='geo-presence') renderGeoPresenceChart();
+  },80);
+};
+
+/* ── Company Geo sub-tab deferred render ── */
+window.setCoGeoTab = function(tab,el){
+  document.querySelectorAll('.co-geo-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('#co-geo-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const panel=document.getElementById('co-geo-panel-'+tab);
+  if(panel) panel.style.display='block';
+  if(!APP.activeTabMap) APP.activeTabMap={};
+  APP.activeTabMap['co-geo-sub']=tab;
+  setTimeout(()=>{
+    const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+    if(tab==='presence') renderCoGeoPresence(co);
+    else if(tab==='revenue') renderCoGeoRevenue(co);
+    else if(tab==='marketshare') renderCoGeoMS(co);
+    else if(tab==='breakdown') renderCoGeoBreakdownTable(co);
+  },80);
+};
+
+/* ── Company Customer sub-tab deferred render ── */
+window.setCoCustomerTab = function(tab,el){
+  document.querySelectorAll('.co-cust-panel').forEach(p=>p.style.display='none');
+  document.querySelectorAll('#co-cust-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const panel=document.getElementById('co-cust-panel-'+tab);
+  if(panel) panel.style.display='block';
+  setTimeout(()=>{
+    const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+    if(tab==='radar') {
+      const segs=['Enterprise','Mid-Market','SMB','Government','Partners'];
+      const vals=co.customerSegments?segs.map(s=>co.customerSegments[s]||5):[7,6,5,4,8];
+      safeRender('chart-co-cust-radar',[{type:'scatterpolar',fill:'toself',r:vals,theta:segs,
+        line:{color:co.color,width:2},fillcolor:co.color+'33',name:co.name}],
+        {...PL(320),polar:{radialaxis:{range:[0,10],gridcolor:'#e2e8f0',tickfont:{size:9}},
+          angularaxis:{gridcolor:'#e2e8f0'},bgcolor:'rgba(0,0,0,0)'}});
+    } else {
+      const segId={'enterprise':'chart-co-cust-enterprise','midmarket':'chart-co-cust-midmarket',
+        'smb':'chart-co-cust-smb','govt':'chart-co-cust-govt'}[tab];
+      if(segId){
+        const segData={enterprise:[65,58,72],midmarket:[55,48,61],smb:[35,30,42],govt:[28,25,35]};
+        const d=segData[tab]||[50,45,55];
+        safeRender(segId,[{type:'bar',x:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].name),y:d,
+          marker:{color:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].color)}}],
+          {...PL(280),yaxis:{title:'Coverage Score (0–100)',titlefont:{size:11}},margin:{l:50,r:20,t:20,b:60}});
+      }
+    }
+  },80);
+};
+
+/* ── setInsightSubTab — wired with panel show + feed + radar ── */
+window.setInsightSubTab = function(section,el){
+  document.querySelectorAll('#insights-subtabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  if(!APP.activeTabMap) APP.activeTabMap={};
+  APP.activeTabMap['insights-section']=section;
+  const year=APP.activeTabMap['insights-year']||'all';
+  renderInsightsFeed(section,year);
+  // Show detail panel
+  const panel=document.getElementById('insight-detail-panel');
+  if(panel){
+    panel.style.display='block';
+    const tEl=document.getElementById('insight-detail-title');
+    if(tEl) tEl.textContent=section.charAt(0).toUpperCase()+section.slice(1)+' Insights';
+    const bEl=document.getElementById('insight-detail-body');
+    if(bEl) bEl.innerHTML=APP.selectedCompanies.map(id=>{
+      const co=COMPANIES_DATA[id]; if(!co) return '';
+      return `<div style="padding:12px;margin-bottom:8px;background:#f8fafc;border-left:3px solid ${co.color};border-radius:4px;">
+        <div style="font-size:11px;font-weight:700;color:${co.color};margin-bottom:5px;">${co.name}</div>
+        <div style="font-size:12px;color:#374151;line-height:1.6;">${co.insights&&co.insights[section]||'No insights available.'}</div>
+      </div>`;
+    }).join('');
+  }
+};
+
+LOG.info('PATCH','All interaction fixes loaded ✓');
+
+
+/* ── BENCH_CUST safe default (populated from COMPANIES_DATA if not in data layer) ── */
+if(typeof BENCH_CUST==='undefined'){
+  var BENCH_CUST={totalCustomers:{},retention:{},nrr:{},nps:{},enterprise:{},midmarket:{}};
+  (BENCH_PEERS||[]).forEach(function(id){
+    var co=COMPANIES_DATA[id]||{};
+    var cs=(co.customerSegments||[]);
+    var ent=cs.find(function(s){return (s.name||'').toLowerCase().indexOf('enterprise')>-1;});
+    var mid=cs.find(function(s){return (s.name||'').toLowerCase().indexOf('mid')>-1;});
+    BENCH_CUST.totalCustomers[id]=co.totalCustomers||0;
+    BENCH_CUST.retention[id]=co.retention||92;
+    BENCH_CUST.nrr[id]=co.nrr||110;
+    BENCH_CUST.nps[id]=co.nps||60;
+    BENCH_CUST.enterprise[id]=ent?ent.pct:50;
+    BENCH_CUST.midmarket[id]=mid?mid.pct:30;
+  });
+}
+if(typeof BENCH_PROFILE_ATTRS==='undefined'){
+  var BENCH_PROFILE_ATTRS=['Revenue','Market Cap','Employees','Founded','CEO','HQ'];
+}
+
+
+
+
+/* ═══════════════════════════════════════════════════════════════
+   APPLICATION STATE
+   ═══════════════════════════════════════════════════════════════ */
+const APP = {
+  currentPage:'dashboard', currentCompany:null,
+  selectedCompanies:[...BENCH_PEERS],
+  yearFrom:'FY21', yearTo:'FY25',
+  newsFilter:'all', activeTabMap:{}, chartsRendered:new Set()
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   PLOTLY HELPERS — LIGHT THEME
+   ═══════════════════════════════════════════════════════════════ */
+function PL(h=280, extra={}) {
+  return {
+    paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+    font:{color:'#334155',size:11,family:'Inter'},
+    margin:{l:52,r:28,t:24,b:48},
+    height:h, autosize:true, showlegend:true,
+    legend:{bgcolor:'rgba(255,255,255,0)',font:{color:'#64748b',size:10},orientation:'h',y:-0.18},
+    xaxis:{gridcolor:'#f1f5f9',zerolinecolor:'#e2e8f0',tickfont:{color:'#64748b',size:10},linecolor:'#e2e8f0'},
+    yaxis:{gridcolor:'#f1f5f9',zerolinecolor:'#e2e8f0',tickfont:{color:'#64748b',size:10},linecolor:'#e2e8f0'},
+    ...extra
+  };
+}
+const CFG = {responsive:true,displayModeBar:false,displaylogo:false,scrollZoom:false};
+
+function safeRender(id, traces, layout, cfg={}) {
+  const el = document.getElementById(id);
+  if(!el){LOG.error('CHART',`#${id} not found`);return;}
+  try{
+    const fullLayout = {...PL(), ...layout};
+    const fullCfg = {...CFG,...cfg};
+    // Use newPlot for first render (more reliable for complex types like treemap, geo)
+    // Use react for updates (faster)
+    if(APP.chartsRendered.has(id)){
+      Plotly.react(id, traces, fullLayout, fullCfg);
+    } else {
+      el.innerHTML = ''; // clear any prior content
+      Plotly.newPlot(id, traces, fullLayout, fullCfg);
+    }
+    APP.chartsRendered.add(id);
+    LOG.ok('CHART',`✓ #${id}`);
+  } catch(e){
+    LOG.error('CHART',`#${id}: ${e.message}`);
+    el.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-size:12px;flex-direction:column;gap:8px;"><div>⚠ Chart unavailable</div><div style="font-size:10px;">${e.message}</div></div>`;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════════════════ */
+const PAGE_META = {
+  'dashboard':            {title:'Dashboard',subtitle:'Intelligence Overview',tabs:[]},
+  'bench-overview':       {title:'Competitive Intelligence',subtitle:'Executive Overview',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-trend':          {title:'Competitive Intelligence',subtitle:'Trend Analysis',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-capability':     {title:'Competitive Intelligence',subtitle:'Capability Matrix',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-geo':            {title:'Competitive Intelligence',subtitle:'Geographic Presence',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-inorganic':      {title:'Competitive Intelligence',subtitle:'Inorganic Strategy',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-customers':      {title:'Competitive Intelligence',subtitle:'Customers & Partners',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-insights':       {title:'Competitive Intelligence',subtitle:'Insights & Risks',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'bench-recommendations':{title:'Competitive Intelligence',subtitle:'Recommendations',tabs:['Executive Overview','Trend Analysis','Capability Matrix','Geographic Presence','Inorganic Strategy','Customers & Partners','Insights & Risks','Recommendations']},
+  'company':              {title:'Company Profile',subtitle:'Deep Dive',tabs:[]}
+};
+const BENCH_TAB_MAP = {'Executive Overview':'bench-overview','Trend Analysis':'bench-trend','Capability Matrix':'bench-capability','Geographic Presence':'bench-geo','Inorganic Strategy':'bench-inorganic','Customers & Partners':'bench-customers','Insights & Risks':'bench-insights','Recommendations':'bench-recommendations'};
+
+function navigate(pageId, companyId) {
+  LOG.info('NAV',`→ ${pageId}`+(companyId?` / ${companyId}`:''));
+  APP.currentPage = pageId;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const target = document.getElementById(`page-${pageId}`);
+  if(!target){LOG.error('NAV',`#page-${pageId} not found`);return;}
+  target.classList.add('active');
+  const meta = PAGE_META[pageId]||{title:pageId,subtitle:'',tabs:[]};
+  const ttEl = document.getElementById('topbar-title');
+  const stEl = document.getElementById('topbar-subtitle');
+  if(ttEl) ttEl.textContent = meta.title;
+  if(stEl) stEl.textContent = meta.subtitle + ' · ' + APP.yearFrom + '–' + APP.yearTo;
+  buildTabBar(meta.tabs, pageId);
+  // Sidebar active
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(pageId==='dashboard') document.querySelector('[data-page="dashboard"]')?.classList.add('active');
+  else if(pageId.startsWith('bench')) document.getElementById('nav-ci')?.classList.add('active');
+  if(pageId==='company'&&companyId){APP.currentCompany=companyId;renderCompanyPage(companyId);}
+  renderPageCharts(pageId);
+}
+
+function buildTabBar(tabs, activePage) {
+  const bar=document.getElementById('tab-bar'); bar.innerHTML='';
+  tabs.forEach(tab=>{
+    const tp=BENCH_TAB_MAP[tab]||'bench-overview';
+    const btn=document.createElement('div');
+    btn.className='tab-btn'+(tp===activePage?' active':'');
+    btn.textContent=tab; btn.onclick=()=>navigate(tp);
+    bar.appendChild(btn);
+  });
+}
+
+function toggleSubmenu(id, navEl) {
+  const sm=document.getElementById(id); const isOpen=sm.classList.contains('open');
+  document.querySelectorAll('.nav-submenu').forEach(s=>s.classList.remove('open'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  if(!isOpen){sm.classList.add('open');navEl.classList.add('active');}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBAR INIT
+   ═══════════════════════════════════════════════════════════════ */
+function initSidebar() {
+  const chips=document.getElementById('sidebar-company-chips');
+  const navList=document.getElementById('nav-company-list');
+  if(!chips||!navList) return;
+  chips.innerHTML=''; navList.innerHTML='';
+  BENCH_PEERS.forEach(id=>{
+    const co=COMPANIES_DATA[id]; if(!co) return;
+    const chip=document.createElement('div');
+    chip.className='company-chip selected'; chip.dataset.id=id;
+    chip.innerHTML=`<span class="chip-dot" style="background:${co.color};"></span>${co.name}<span class="chip-check">✓</span>`;
+    chip.onclick=()=>toggleCompanyChip(id,chip); chips.appendChild(chip);
+    const nav=document.createElement('div');
+    nav.className='nav-item';
+    nav.innerHTML=`<span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:5px;background:${co.color};color:#fff;font-size:9px;font-weight:700;">${co.initials}</span>${co.name}`;
+    nav.onclick=()=>navigate('company',id); navList.appendChild(nav);
+  });
+}
+
+function toggleCompanyChip(id, el) {
+  const idx=APP.selectedCompanies.indexOf(id);
+  if(idx>-1){if(APP.selectedCompanies.length<=1)return;APP.selectedCompanies.splice(idx,1);el.classList.remove('selected');el.querySelector('.chip-check').style.display='none';}
+  else{APP.selectedCompanies.push(id);el.classList.add('selected');el.querySelector('.chip-check').style.display='';}
+  APP.chartsRendered.clear(); renderPageCharts(APP.currentPage);
+}
+function selectAllCompanies(){APP.selectedCompanies=[...BENCH_PEERS];document.querySelectorAll('.company-chip').forEach(c=>{c.classList.add('selected');const ck=c.querySelector('.chip-check');if(ck)ck.style.display='';});APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
+function clearAllCompanies(){APP.selectedCompanies=[BENCH_PEERS[0]];document.querySelectorAll('.company-chip').forEach(c=>{if(c.dataset.id!==BENCH_PEERS[0]){c.classList.remove('selected');const ck=c.querySelector('.chip-check');if(ck)ck.style.display='none';}});APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
+function applyYearFilter(){APP.yearFrom=document.getElementById('year-from').value;APP.yearTo=document.getElementById('year-to').value;const stEl=document.getElementById('topbar-subtitle');if(stEl)stEl.textContent=(PAGE_META[APP.currentPage]?.subtitle||'')+' · '+APP.yearFrom+'–'+APP.yearTo;APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE CHART DISPATCHER
+   ═══════════════════════════════════════════════════════════════ */
+function renderPageCharts(pageId) {
+  LOG.info('RENDER',`renderPageCharts → ${pageId}`);
+  try {
+    const map = {
+      'dashboard':renderDashboard, 'bench-overview':renderOverviewCharts,
+      'bench-trend':()=>renderTrendCharts('annual'),
+      'bench-capability':renderCapabilityCharts, 'bench-geo':renderGeoCharts,
+      'bench-inorganic':renderInorganicCharts, 'bench-customers':renderCustomersCharts,
+      'bench-insights':renderInsightsPage, 'bench-recommendations':renderRecommendations,
+      'company':()=>renderCompanyPage(APP.currentCompany)
+    };
+    if(map[pageId]) map[pageId]();
+  } catch(e){LOG.error('RENDER',`${pageId}: ${e.message}`);}
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DASHBOARD
+   ═══════════════════════════════════════════════════════════════ */
+function renderDashboard() {
+  /* v5.0: delegate to window._rdImpl */
+  if (window._rdImpl) { window._rdImpl(); } else {
+    LOG.info('RENDER','Dashboard');
+    filterNewsEvents('all', document.querySelector('#news-event-chips .chip-filter'));
+  }
+}
+
+function renderNewsFilter(cat) {
+  APP.newsFilter=cat;
+  const feed=document.getElementById('marketEventsContainer')||document.getElementById('news-feed'); if(!feed) return;
+  feed.innerHTML='';
+  const evts=cat==='all'?MARKET_EVENTS:MARKET_EVENTS.filter(e=>e.category===cat);
+  evts.forEach(e=>{
+    const co=COMPANIES_DATA[e.company]||{};
+    const card=document.createElement('div'); card.className='news-card';
+    card.innerHTML=`
+      <div class="news-card-meta">
+        <span class="news-dot" style="background:${co.color||'#64748b'};"></span>
+        <span class="news-category">${e.category.toUpperCase()}</span>
+        <span class="news-date" style="margin-left:auto;">${e.date}</span>
+      </div>
+      <div class="news-card-title">${co.name?`[${co.name}] `:''}${e.title}</div>
+      <div class="news-card-summary">${e.summary}</div>`;
+    feed.appendChild(card);
+  });
+  if(!evts.length) feed.innerHTML='<div style="padding:20px;text-align:center;color:#94a3b8;font-size:12px;">No events for this category.</div>';
+}
+function filterNews(cat,el){document.querySelectorAll('#news-category-filters .chip-filter').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderNewsFilter(cat);}
+
+/* ═══════════════════════════════════════════════════════════════
+   EXECUTIVE OVERVIEW
+   ═══════════════════════════════════════════════════════════════ */
+function renderOverviewCharts() {
+  LOG.info('RENDER','Overview');
+  // KPI row
+  const row=document.getElementById('overview-kpi-row'); if(!row) return;
+  row.innerHTML='';
+  const base=COMPANIES_DATA[APP.selectedCompanies[0]];
+  if(base) base.kpis.forEach(k=>{
+    const t=document.createElement('div'); t.className='kpi-tile';
+    t.innerHTML=`<div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub ${k.up?'up':'down'}">${k.change}</div>`;
+    row.appendChild(t);
+  });
+
+  const dims5=['AI','Cloud','CRM','Analytics','Security'];
+  // Radar
+  safeRender('chart-radar-overview',
+    APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'scatterpolar',fill:'toself',opacity:.4,r:dims5.map(d=>co.capabilityScores[d]||5),theta:dims5,name:co.name,line:{color:co.color,width:2}};}),
+    {...PL(350),polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{color:'#94a3b8',size:9}},angularaxis:{gridcolor:'#e2e8f0'},bgcolor:'rgba(0,0,0,0)'},showlegend:true,legend:{orientation:'h',y:-0.18}});
+
+  // Heatmap
+  const dims=BENCH_FEATURES; const cos=APP.selectedCompanies;
+  safeRender('chart-capability-heatmap',
+    [{type:'heatmap',z:cos.map(id=>dims.map(d=>COMPANIES_DATA[id].capabilityScores[d]||5)),x:dims,y:cos.map(id=>COMPANIES_DATA[id].name),
+      colorscale:[[0,'#eff6ff'],[0.5,'#93c5fd'],[1,'#1d4ed8']],
+      text:cos.map(id=>dims.map(d=>(COMPANIES_DATA[id].capabilityScores[d]||5).toFixed(1))),
+      texttemplate:'%{text}',showscale:true,colorbar:{tickfont:{color:'#64748b',size:10},thickness:12}}],
+    {...PL(370),margin:{l:120,r:40,t:24,b:90},xaxis:{tickfont:{size:10},tickangle:-35},yaxis:{tickfont:{size:12}}});
+
+  // Gartner / Magic Quadrant
+  safeRender('chart-gartner',
+    APP.selectedCompanies.map(id=>{
+      const co=COMPANIES_DATA[id];
+      const x=(co.capabilityScores.AI+co.capabilityScores.Cloud+co.capabilityScores.CRM)/3;
+      const y=(co.capabilityScores.Partner+co.capabilityScores.Global+co.capabilityScores.Support)/3;
+      return{type:'scatter',mode:'markers+text',x:[x],y:[y],
+        marker:{size:28,color:co.color,opacity:.85,line:{color:'#fff',width:2}},
+        text:[co.initials],textfont:{color:'#fff',size:11,family:'Inter'},textposition:'middle center',
+        name:co.name};
+    }),
+    {...PL(350),xaxis:{title:{text:'Completeness of Vision',font:{color:'#64748b',size:11}},range:[6.5,10.5],gridcolor:'#f1f5f9'},
+      yaxis:{title:{text:'Ability to Execute',font:{color:'#64748b',size:11}},range:[6.5,10.5],gridcolor:'#f1f5f9'},
+      shapes:[
+        {type:'line',x0:8.5,x1:8.5,y0:6.5,y1:10.5,line:{dash:'dot',color:'#cbd5e1',width:1}},
+        {type:'line',x0:6.5,x1:10.5,y0:8.5,y1:8.5,line:{dash:'dot',color:'#cbd5e1',width:1}}
+      ],
+      annotations:[
+        {x:9.8,y:10.3,text:'Leaders',showarrow:false,font:{color:'#94a3b8',size:11}},
+        {x:7.0,y:10.3,text:'Challengers',showarrow:false,font:{color:'#94a3b8',size:11}},
+        {x:9.8,y:6.8,text:'Visionaries',showarrow:false,font:{color:'#94a3b8',size:11}},
+        {x:7.0,y:6.8,text:'Niche Players',showarrow:false,font:{color:'#94a3b8',size:11}}
+      ]});
+
+  renderProfileCards();
+}
+
+function renderProfileCards() {
+  const container=document.getElementById('overview-profile-cards'); if(!container) return;
+  container.innerHTML='';
+  APP.selectedCompanies.forEach(id=>{
+    const co=COMPANIES_DATA[id];
+    const card=document.createElement('div'); card.className='card';
+    const finSummary=co.kpis.slice(0,2).map(k=>
+      `<div style="flex:1;padding:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;text-align:center;">
+        <div style="font-size:10px;color:#64748b;font-weight:500;text-transform:uppercase;letter-spacing:.4px;">${k.label}</div>
+        <div style="font-size:18px;font-weight:700;color:#0f172a;">${k.value}</div>
+        <div style="font-size:11px;font-weight:600;color:${k.up?'#059669':'#dc2626'};">${k.change}</div>
+      </div>`).join('');
+    card.innerHTML=`
+      <div class="card-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="company-avatar" style="background:${co.color};">${co.initials}</div>
+          <div><div class="card-title">${co.name}</div><div class="card-subtitle">${co.ticker} · ${co.exchange}</div></div>
+        </div>
+        <button class="topbar-btn" onclick="navigate('company','${id}')" style="font-size:10px;padding:3px 8px;">View Profile →</button>
+      </div>
+      <div>${['founded','HQ','CEO','employees','sector'].map(f=>`<div class="attr-row"><div class="attr-key">${{founded:'Founded',HQ:'HQ',CEO:'CEO',employees:'Employees',sector:'Sector'}[f]}</div><div class="attr-val">${co[f]||'N/A'}</div></div>`).join('')}</div>
+      <div style="display:flex;gap:8px;margin-top:12px;">${finSummary}</div>`;
+    container.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TREND ANALYSIS
+   ═══════════════════════════════════════════════════════════════ */
+function renderTrendMainChart(period) {
+  const metric=APP.activeTabMap['trend-metric']||'revenue';
+  const metaMap={
+    revenue:{key:'revenues',label:'Revenue ($B)',title:'Revenue Comparison'},
+    ebitda:{key:'ebitda',label:'EBITDA ($B)',title:'EBITDA Comparison'},
+    netIncome:{key:'netIncome',label:'Net Income ($B)',title:'Net Income Comparison'},
+    ebitdaMargin:{key:'ebitda',label:'EBITDA Margin (%)',title:'EBITDA Margin',derived:true,base:'revenues'},
+    netMargin:{key:'netMargin',label:'Net Margin (%)',title:'Net Margin (%)'},
+    revGrowth:{key:'revGrowth',label:'Rev. Growth (%)',title:'Revenue Growth (%)'},
+    eps:{key:'eps',label:'EPS ($)',title:'EPS Comparison'}
+  };
+  const m=metaMap[metric]||metaMap.revenue;
+  const titleEl=document.getElementById('trend-chart-title'); if(titleEl) titleEl.textContent=m.title;
+  const subEl=document.getElementById('trend-chart-sub'); if(subEl) subEl.textContent='All selected companies · '+(period==='annual'?'Annual':'Quarterly');
+  const traces=APP.selectedCompanies.map(id=>{
+    const co=getYearSlice(COMPANIES_DATA[id]); let y=co[m.key]||[];
+    if(m.derived&&m.base){const base=co[m.base]||[];y=y.map((v,i)=>base[i]?(v/base[i]*100):0);}
+    return{type:'scatter',mode:'lines+markers',name:co.name,x:co.years,y,
+      line:{color:co.color,width:2.5},marker:{size:7,color:co.color,symbol:'circle'}};
+  });
+  safeRender('chart-trend-main',traces,{...PL(340),
+    xaxis:{title:{text:'Fiscal Year',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
+    yaxis:{title:{text:m.label,font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
+    legend:{orientation:'h',y:-0.18}});
+}
+
+function renderTrendSupportingCharts() {
+  // Tech Trends & Drivers bubble — shown ONCE on page load under the main chart area
+  const bubbles=APP.selectedCompanies.map(id=>{
+    const co=COMPANIES_DATA[id];
+    const xv=(co.inorganicEvents||[]).length;
+    const yv=(co.rndData?.areas||[]).length;
+    const sz=Math.max(22,(co.rndData?.spend?.[co.rndData.spend.length-1]||2)*7);
+    return{type:'scatter',mode:'markers+text',name:co.name,x:[xv],y:[yv],
+      marker:{size:sz,color:co.color,opacity:.72,line:{color:'#fff',width:2}},
+      text:[co.initials],textfont:{color:'#fff',size:11},textposition:'middle center'};
+  });
+  safeRender('chart-tech-bubble',bubbles,{...PL(340),
+    xaxis:{title:{text:'# Inorganic Deals',font:{color:'#64748b',size:11}},range:[-0.5,8],gridcolor:'#f1f5f9'},
+    yaxis:{title:{text:'# R&D Focus Areas',font:{color:'#64748b',size:11}},range:[0,8],gridcolor:'#f1f5f9'},
+    annotations:[{x:4,y:7.6,text:'Bubble size = R&D Spend ($B)',showarrow:false,font:{color:'#94a3b8',size:10}}],
+    legend:{orientation:'h',y:-0.18}});
+
+  // Revenue per Capability bar
+  const caps6=BENCH_FEATURES.slice(0,6);
+  const rcTraces=APP.selectedCompanies.map(id=>{
+    const co=COMPANIES_DATA[id]; const rev=co.revenues[co.revenues.length-1]||1;
+    return{type:'bar',name:co.name,x:caps6,y:caps6.map(c=>+((co.capabilityScores[c]||5)*rev/50).toFixed(2)),marker:{color:co.color,opacity:.85}};
+  });
+  safeRender('chart-rev-per-cap',rcTraces,{...PL(340),barmode:'group',
+    yaxis:{title:{text:'Rev/$B per Score',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},
+    legend:{orientation:'h',y:-0.18}});
+}
+
+function renderTrendCharts(period) {
+  LOG.info('RENDER','Trend period='+period);
+  APP.activeTabMap['trend-period']=period;
+  renderTrendMainChart(period);
+  // Supporting charts (Tech Bubble, Rev/Cap) are in collapsible section
+  // They render on user demand via toggleAdditionalAnalysis() — not on page load
+}
+function setActiveTrendMetric(metric,el){
+  document.querySelectorAll('#trend-metric-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  APP.activeTabMap['trend-metric']=metric;
+  // Only update the main trend chart — do NOT re-render tech bubble / rev cap
+  renderTrendMainChart(APP.activeTabMap['trend-period']||'annual');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CAPABILITY MATRIX
+   ═══════════════════════════════════════════════════════════════ */
+function renderCapabilityCharts() {
+  LOG.info('RENDER','Capability');
+  const dims=BENCH_FEATURES; const cos=APP.selectedCompanies;
+  safeRender('chart-capability-full', /* full heatmap */ 
+    [{type:'heatmap',z:cos.map(id=>dims.map(d=>COMPANIES_DATA[id].capabilityScores[d]||5)),
+      x:dims,y:cos.map(id=>COMPANIES_DATA[id].name),
+      colorscale:[[0,'#eff6ff'],[0.4,'#bfdbfe'],[0.7,'#3b82f6'],[1,'#1e3a8a']],
+      text:cos.map(id=>dims.map(d=>(COMPANIES_DATA[id].capabilityScores[d]||5).toFixed(1))),
+      texttemplate:'%{text}',showscale:true,
+      colorbar:{title:{text:'Score',font:{color:'#64748b',size:10}},tickfont:{color:'#64748b',size:10},thickness:14}}],
+    {...PL(320),margin:{l:120,r:40,t:20,b:90},
+      xaxis:{tickfont:{size:11},tickangle:-30},yaxis:{tickfont:{size:13}}});
+  // Peer chips
+  const chips=document.getElementById('capability-peer-chips'); if(!chips) return;
+  chips.innerHTML='';
+  cos.forEach(id=>{const co=COMPANIES_DATA[id];const c=document.createElement('div');c.className='chip-filter active';c.style.borderColor=co.color;c.style.color=co.color;c.textContent=co.name;chips.appendChild(c);});
+  // Score table
+  const th=document.getElementById('capability-th-row'); const tb=document.getElementById('capability-tb');
+  if(!th||!tb) return;
+  th.innerHTML=`<th>Capability</th>${cos.map(id=>`<th style="color:${COMPANIES_DATA[id].color};">${COMPANIES_DATA[id].name}</th>`).join('')}`;
+  tb.innerHTML=dims.map(d=>`<tr><td style="font-weight:500;color:#0f172a;">${d}</td>${cos.map(id=>{const v=COMPANIES_DATA[id].capabilityScores[d]||5;const col=v>=9?'#059669':v>=7?'#2563eb':v>=5?'#d97706':'#dc2626';return`<td><div class="score-bar-wrap"><div class="score-bar-track"><div class="score-bar-fill" style="width:${v*10}%;background:${col};"></div></div><div class="score-val">${v}</div></div></td>`;}).join('')}</tr>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GEOGRAPHIC PRESENCE
+   ═══════════════════════════════════════════════════════════════ */
+function renderGeoCharts() {
+  LOG.info('RENDER','Geo');
+  const regions=['Americas','Europe','APAC'];
+  // Revenue bar
+  const revT=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'bar',name:co.name,x:regions,y:regions.map(r=>{const g=co.geographicData.find(d=>d.region===r);return g?g.revNum:0;}),marker:{color:co.color,opacity:.85}};});
+  safeRender('chart-geo-bar',revT,{...PL(320),barmode:'group',yaxis:{title:{text:'Revenue ($B)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  // World map
+  const coordMap={Americas:{lon:-95,lat:40},Europe:{lon:15,lat:52},APAC:{lon:130,lat:35}};
+  const mapData=APP.selectedCompanies.flatMap(id=>{const co=COMPANIES_DATA[id];return co.geographicData.map(g=>({type:'scattergeo',mode:'markers',name:`${co.name}·${g.region}`,lon:[(coordMap[g.region]||{lon:0}).lon],lat:[(coordMap[g.region]||{lat:0}).lat],marker:{size:12+(parseInt(g.offices)||10)/4,color:co.color,opacity:.8},text:[`${co.name}: ${g.region}\n${g.rev} | ${g.offices} offices`],hoverinfo:'text'}));});
+  safeRender('chart-geo-map',mapData,{...PL(380),showlegend:false,geo:{bgcolor:'#f8fafc',showland:true,landcolor:'#e2e8f0',showocean:true,oceancolor:'#dbeafe',coastlinecolor:'#93c5fd',showframe:false,showcountries:true,countrycolor:'#bfdbfe',projection:{type:'natural earth'}}});
+  // Breakdown table
+  const tb=document.getElementById('geo-breakdown-tb'); if(!tb) return;
+  tb.innerHTML='';
+  APP.selectedCompanies.forEach(id=>{const co=COMPANIES_DATA[id];co.geographicData.forEach(g=>{const tr=document.createElement('tr');tr.innerHTML=`<td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${co.color};margin-right:6px;"></span><b>${co.name}</b> · ${g.flag} ${g.region}</td><td>${g.offices}</td><td><span class="badge ${g.up?'badge-green':'badge-red'}">${g.growth}</span></td><td>${g.share}</td><td style="max-width:220px;font-size:11px;color:#64748b;">${g.dev}</td>`;tb.appendChild(tr);});});
+  // Also render rev by region & market share charts
+  // Revenue by Region and Market Share charts rendered on-demand when sub-tab is clicked (hidden panel fix)
+}
+function setGeoSubTab(tab,el){
+  ['presence','revenue','marketshare','breakdown'].forEach(t=>{const p=document.getElementById(`geo-${t}-panel`);if(p)p.style.display=t===tab?'block':'none';});
+  document.querySelectorAll('#page-bench-geo .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  // Render charts after panel is visible (Plotly requires visible container)
+  setTimeout(()=>{
+    const regions=['Americas','Europe','APAC'];
+    if(tab==='revenue'){
+      const revRegT=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'bar',name:co.name,x:regions,y:regions.map(r=>{const g=co.geographicData.find(d=>d.region===r);return g?g.revNum:0;}),marker:{color:co.color,opacity:.85}};});
+      safeRender('chart-geo-rev-region',revRegT,{...PL(360),barmode:'group',yaxis:{title:{text:'Revenue ($B)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},xaxis:{gridcolor:'#f1f5f9'},legend:{orientation:'h',y:-0.18}});
+    }
+    if(tab==='marketshare'){
+      const msT=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'bar',name:co.name,x:regions,y:regions.map(r=>{const g=co.geographicData.find(d=>d.region===r);return g?g.sharePct:0;}),marker:{color:co.color,opacity:.85}};});
+      safeRender('chart-geo-mktshare',msT,{...PL(360),barmode:'group',yaxis:{title:{text:'Revenue Share (%)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},xaxis:{gridcolor:'#f1f5f9'}});
+    }
+    if(tab==='breakdown'){
+      // Table is already populated by renderGeoCharts; re-run to ensure
+      const tb=document.getElementById('geo-breakdown-tb');
+      if(tb&&tb.children.length===0){
+        APP.selectedCompanies.forEach(id=>{const co=COMPANIES_DATA[id];co.geographicData.forEach(g=>{const tr=document.createElement('tr');tr.innerHTML=`<td><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${co.color};margin-right:6px;"></span><b>${co.name}</b> · ${g.flag} ${g.region}</td><td>${g.offices}</td><td><span class="badge ${g.up?'badge-green':'badge-red'}">${g.growth}</span></td><td>${g.share}</td><td style="max-width:220px;font-size:11.5px;color:#64748b;">${g.dev}</td>`;tb.appendChild(tr);});});
+      }
+    }
+  },80);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INORGANIC STRATEGY
+   ═══════════════════════════════════════════════════════════════ */
+function renderInorganicCharts() {
+  LOG.info('RENDER','Inorganic');
+  // Use setTimeout to ensure DOM is fully painted before Plotly renders
+  // (especially important for treemap which requires computed dimensions)
+  const kpiRow=document.getElementById('inorganic-kpi-row'); if(!kpiRow) return;
+  kpiRow.innerHTML='';
+  const totDeals=APP.selectedCompanies.reduce((s,id)=>s+(COMPANIES_DATA[id].inorganicEvents||[]).length,0);
+  const acqs=APP.selectedCompanies.reduce((s,id)=>s+(COMPANIES_DATA[id].inorganicEvents||[]).filter(e=>e.type==='Acquisition').length,0);
+  const invs=APP.selectedCompanies.reduce((s,id)=>s+(COMPANIES_DATA[id].inorganicEvents||[]).filter(e=>e.type==='Investment').length,0);
+  const parts=APP.selectedCompanies.reduce((s,id)=>s+(COMPANIES_DATA[id].inorganicEvents||[]).filter(e=>e.type==='Partnership').length,0);
+  [[totDeals,'Total Deals','All transaction types'],[acqs,'Acquisitions','M&A activity'],[invs,'Investments','Minority stakes'],[parts,'Partnerships','Strategic alliances']].forEach(([v,l,s])=>{const t=document.createElement('div');t.className='kpi-tile';t.innerHTML=`<div class="kpi-label">${l}</div><div class="kpi-value">${v}</div><div class="kpi-sub neutral">${s}</div>`;kpiRow.appendChild(t);});
+
+  // M&A Treemap data — branchvalues:'remainder' means leaf values only
+  // Parent values are automatically computed as sum of children
+  const treeIds=[], treeLabels=[], treeParents=[], treeValues=[], treeColors=[], treeTexts=[];
+  // Root node
+  treeIds.push('__root'); treeLabels.push('All Deals'); treeParents.push('');
+  treeValues.push(0); treeColors.push('#eff6ff'); treeTexts.push('All M&A Activity');
+  APP.selectedCompanies.forEach(id=>{
+    const co=COMPANIES_DATA[id];
+    const evts=(co.inorganicEvents||[]);
+    // Company level
+    treeIds.push(id); treeLabels.push(co.name);
+    treeParents.push('__root'); treeValues.push(0);
+    treeColors.push(co.color);
+    treeTexts.push(`${co.name}: ${evts.length} deals`);
+    // Deal level
+    evts.forEach((e,idx)=>{
+      const eid=`${id}_${idx}`;
+      const shortTarget=e.target.length>20?e.target.substring(0,20)+'…':e.target;
+      treeIds.push(eid); treeLabels.push(shortTarget);
+      treeParents.push(id); treeValues.push(1);
+      const tCol=e.type==='Acquisition'?'#bfdbfe':e.type==='Investment'?'#a7f3d0':e.type==='Divestment'?'#fecaca':'#fde68a';
+      treeColors.push(tCol);
+      treeTexts.push(`<b>${e.type}</b><br>${e.target}<br>Year: ${e.year}<br>Value: ${e.value}<br>${e.rationale}`);
+    });
+  });
+  // Defer treemap render — requires container to have computed width
+  setTimeout(()=>{
+    const treeEl = document.getElementById('chart-inorganic-tree');
+    if(treeEl){
+      treeEl.innerHTML = '';
+      try {
+        Plotly.newPlot('chart-inorganic-tree',[{
+          type:'treemap',
+          ids:treeIds, labels:treeLabels, parents:treeParents, values:treeValues,
+          text:treeTexts, hoverinfo:'text',
+          marker:{colors:treeColors, line:{width:2,color:'#fff'}},
+          textfont:{size:11,color:'#0f172a'},
+          branchvalues:'remainder', maxdepth:3,
+          tiling:{packing:'squarify'}
+        }],{
+          paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+          font:{color:'#334155',size:11,family:'Inter'},
+          margin:{l:4,r:4,t:8,b:4}, height:400, autosize:true,
+          showlegend:false
+        },{responsive:true,displayModeBar:false});
+        APP.chartsRendered.add('chart-inorganic-tree');
+        LOG.ok('CHART','✓ #chart-inorganic-tree (treemap)');
+      } catch(e2) {
+        LOG.error('CHART','Treemap failed: '+e2.message+' — using bar fallback');
+        const tot=APP.selectedCompanies.map(id=>(COMPANIES_DATA[id].inorganicEvents||[]).length);
+        Plotly.newPlot('chart-inorganic-tree',[
+          {type:'bar',x:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].name),y:tot,
+           text:tot.map(v=>v+' deals'),textposition:'outside',
+           marker:{color:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].color),opacity:.85}}
+        ],{
+          paper_bgcolor:'rgba(0,0,0,0)', plot_bgcolor:'rgba(0,0,0,0)',
+          font:{color:'#334155',size:11,family:'Inter'},
+          margin:{l:40,r:40,t:20,b:40}, height:400, autosize:true, showlegend:false,
+          yaxis:{title:{text:'# Deals',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}
+        },{responsive:true,displayModeBar:false});
+        APP.chartsRendered.add('chart-inorganic-tree');
+      }
+    }
+  }, 350);
+
+  // Summary stacked bar
+  const typeCounts=APP.selectedCompanies.map(id=>({name:COMPANIES_DATA[id].name,color:COMPANIES_DATA[id].color,acq:(COMPANIES_DATA[id].inorganicEvents||[]).filter(e=>e.type==='Acquisition').length,inv:(COMPANIES_DATA[id].inorganicEvents||[]).filter(e=>e.type==='Investment').length,par:(COMPANIES_DATA[id].inorganicEvents||[]).filter(e=>e.type==='Partnership').length}));
+  safeRender('chart-inorganic-summary',[
+    {type:'bar',name:'Acquisitions',x:typeCounts.map(c=>c.name),y:typeCounts.map(c=>c.acq),marker:{color:'#3b82f6',opacity:.85}},
+    {type:'bar',name:'Investments',x:typeCounts.map(c=>c.name),y:typeCounts.map(c=>c.inv),marker:{color:'#059669',opacity:.85}},
+    {type:'bar',name:'Partnerships',x:typeCounts.map(c=>c.name),y:typeCounts.map(c=>c.par),marker:{color:'#d97706',opacity:.85}}
+  ],{...PL(320),barmode:'stack',yaxis:{title:{text:'# Deals',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+
+  // AI/Tech Score
+  const ais=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{name:co.name,score:((co.capabilityScores.AI+co.capabilityScores.Innovation)/2),color:co.color};});
+  safeRender('chart-ai-tech-score',[{type:'bar',orientation:'h',x:ais.map(s=>s.score),y:ais.map(s=>s.name),text:ais.map(s=>s.score.toFixed(1)),textposition:'outside',marker:{color:ais.map(s=>s.color),opacity:.85}}],{...PL(300),margin:{l:120,r:60,t:20,b:30},xaxis:{range:[0,11],gridcolor:'#f1f5f9'},yaxis:{tickfont:{size:12}}});
+
+  renderDealsTable('all');
+}
+function renderDealsTable(type){
+  const tb=document.getElementById('inorganic-deals-tb'); if(!tb) return;
+  tb.innerHTML='';
+  APP.selectedCompanies.forEach(id=>{const co=COMPANIES_DATA[id];(co.inorganicEvents||[]).filter(e=>type==='all'||e.type.toLowerCase()===type).forEach(e=>{const tr=document.createElement('tr');const tCol=e.type==='Acquisition'?'badge-blue':e.type==='Investment'?'badge-green':e.type==='Divestment'?'badge-red':'badge-amber';tr.innerHTML=`<td><span style="color:${co.color};font-weight:600;">${co.name}</span></td><td>${e.year}</td><td><span class="badge ${tCol}">${e.type}</span></td><td>${e.target}</td><td>${e.value}</td><td style="max-width:220px;font-size:11.5px;color:#64748b;">${e.rationale}</td>`;tb.appendChild(tr);});});
+}
+function filterDeals(type,el){document.querySelectorAll('.card-header .chip-filter').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderDealsTable(type);}
+
+/* ═══════════════════════════════════════════════════════════════
+   CUSTOMERS & PARTNERS
+   ═══════════════════════════════════════════════════════════════ */
+function renderCustomersCharts() {
+  if(typeof BENCH_CUST==='undefined'){LOG.warn('RENDER','BENCH_CUST undefined — customers page skipped');return;}
+  LOG.info('RENDER','Customers');
+  const names=APP.selectedCompanies.map(id=>COMPANIES_DATA[id].name);
+  const vals=APP.selectedCompanies.map(id=>(BENCH_CUST.totalCustomers[id]||0)/1000);
+  safeRender('chart-cust-base',[{type:'bar',x:names,y:vals,text:vals.map(v=>`${v.toFixed(0)}K`),textposition:'outside',marker:{color:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].color),opacity:.85}}],{...PL(320),yaxis:{title:{text:'Thousands of Customers',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  safeRender('chart-cust-share-pie',[{type:'pie',labels:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].name),values:APP.selectedCompanies.map(id=>BENCH_CUST.totalCustomers[id]||0),marker:{colors:APP.selectedCompanies.map(id=>COMPANIES_DATA[id].color)},hole:.42,textinfo:'label+percent',textfont:{size:11}}],{...PL(320),margin:{l:10,r:10,t:20,b:20},showlegend:true,legend:{orientation:'h',y:-0.12}});
+  const retT=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'bar',name:co.name,x:['Retention %','NRR %','NPS'],y:[BENCH_CUST.retention[id]||90,BENCH_CUST.nrr[id]||100,BENCH_CUST.nps[id]||70],marker:{color:co.color,opacity:.85}};});
+  safeRender('chart-cust-ecosystem',retT,{...PL(320),barmode:'group',yaxis:{title:{text:'Score',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  // Peer chips
+  const chips=document.getElementById('customers-peer-chips'); if(!chips) return;
+  chips.innerHTML='';
+  APP.selectedCompanies.forEach(id=>{const co=COMPANIES_DATA[id];const c=document.createElement('div');c.className='chip-filter active';c.style.borderColor=co.color;c.style.color=co.color;c.textContent=co.name;chips.appendChild(c);});
+  // Benchmark table
+  const th=document.getElementById('customers-th'); const tb=document.getElementById('customers-tb');
+  if(!th||!tb) return;
+  const metrics=[['Total Customers',id=>(BENCH_CUST.totalCustomers[id]||0).toLocaleString()],['Retention / NRR',id=>`${BENCH_CUST.retention[id]||'N/A'}% / ${BENCH_CUST.nrr[id]||'N/A'}%`],['NPS',id=>BENCH_CUST.nps[id]||'N/A'],['Enterprise %',id=>`${BENCH_CUST.enterprise[id]||'N/A'}%`],['Mid-Market %',id=>`${BENCH_CUST.midmarket[id]||'N/A'}%`]];
+  th.innerHTML=`<th>Metric</th>${APP.selectedCompanies.map(id=>`<th style="color:${COMPANIES_DATA[id].color};">${COMPANIES_DATA[id].name}</th>`).join('')}`;
+  tb.innerHTML=metrics.map(([m,fn])=>`<tr><td style="font-weight:500;color:#0f172a;">${m}</td>${APP.selectedCompanies.map(id=>`<td style="font-weight:600;color:#0f172a;">${fn(id)}</td>`).join('')}</tr>`).join('');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   INSIGHTS & RISKS
+   ═══════════════════════════════════════════════════════════════ */
+function renderInsightsPage() {
+  LOG.info('RENDER','Insights');
+  // Risk Radar — per-company risk profile
+  const dims5=['Product Risk','Market Risk','Tech Risk','Regulatory','Competition'];
+  const riskScores={}; APP.selectedCompanies.forEach(id=>{
+    const co=COMPANIES_DATA[id];
+    if(co&&co.riskScores) riskScores[id]=[co.riskScores.competitive||5,co.riskScores.market||5,co.riskScores.technology||5,co.riskScores.regulatory||5,co.riskScores.execution||5];
+    else riskScores[id]=[5,5,5,5,5];
+  });
+  const rT=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return{type:'scatterpolar',fill:'toself',opacity:.35,name:co.name,r:riskScores[id]||[6,6,6,6,6],theta:dims5,line:{color:co.color,width:2.5},marker:{size:6,color:co.color}};});
+  safeRender('chart-risk-radar',rT,{...PL(360),polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{color:'#94a3b8',size:9}},angularaxis:{gridcolor:'#e2e8f0',tickfont:{color:'#64748b',size:10}},bgcolor:'rgba(0,0,0,0)'},showlegend:true,legend:{orientation:'h',y:-0.18},margin:{l:40,r:40,t:20,b:60}});
+  // Default: show product insights
+  APP.activeTabMap['insights-section']='product';
+  APP.activeTabMap['insights-year']='all';
+  renderInsightsFeed('product','all');
+}
+
+function renderInsightsFeed(section,year) {
+  const feed=document.getElementById('insights-feed'); if(!feed) return;
+  const sectionLabels={product:'Product',sales:'Sales & Distribution',rnd:'R&D / Innovation',inorganic:'Inorganic',marketing:'Marketing',customerwins:'Customer Wins',hiring:'Hiring'};
+  const titleEl=document.getElementById('insights-feed-title');
+  if(titleEl) titleEl.textContent=`${sectionLabels[section]||section} Insights — ${year==='all'?'All Years':year}`;
+  feed.innerHTML='';
+  APP.selectedCompanies.forEach(id=>{
+    const co=COMPANIES_DATA[id];
+    const text=co.insights?.[section]||'No insight data available for this section.';
+    const card=document.createElement('div'); card.className='insight-panel'; card.style.marginBottom='12px';
+    // Show year-filtered callout if year selected
+    const yearNote=year!=='all'?`<div style="display:inline-block;margin-bottom:6px;padding:2px 8px;border-radius:4px;background:#dbeafe;color:#1d4ed8;font-size:10px;font-weight:600;">${year}</div>`:'';
+    card.innerHTML=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;">
+      <div style="width:28px;height:28px;border-radius:7px;background:${co.color};display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;">${co.initials}</div>
+      <div class="insight-panel-title" style="color:${co.color};margin-bottom:0;">${co.name}</div>
+      ${yearNote}
+    </div>
+    <div style="font-size:12.5px;color:#334155;line-height:1.6;">${text}</div>`;
+    feed.appendChild(card);
+  });
+  if(!APP.selectedCompanies.length) feed.innerHTML='<div style="padding:20px;text-align:center;color:#94a3b8;">No companies selected.</div>';
+}
+function setInsightSubTab(section,el){
+  document.querySelectorAll('#insights-subtabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  APP.activeTabMap['insights-section']=section;
+  const year=APP.activeTabMap['insights-year']||'all';
+  renderInsightsFeed(section,year);
+  // Show/refresh detail panel if a year is already selected
+  const panel=document.getElementById('insight-detail-panel');
+  if(panel&&year!=='all'){
+    panel.style.display='block';
+    const tEl=document.getElementById('insight-detail-title'); if(tEl) tEl.textContent=`${section.charAt(0).toUpperCase()+section.slice(1)} · ${year}`;
+    const bEl=document.getElementById('insight-detail-body');
+    if(bEl) bEl.innerHTML=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return`<div class="insight-panel" style="margin-bottom:8px;"><div class="insight-panel-title" style="color:${co.color};">${co.name}</div>${co.insights?.[section]||'No data available.'}</div>`;}).join('');
+  }
+}
+function filterInsightYear(year,el){document.querySelectorAll('#insights-year-chips .chip-filter').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');APP.activeTabMap['insights-year']=year;const section=APP.activeTabMap['insights-section']||'product';renderInsightsFeed(section,year);const panel=document.getElementById('insight-detail-panel');if(!panel)return;if(year!=='all'){panel.style.display='block';const tEl=document.getElementById('insight-detail-title');if(tEl)tEl.textContent=`${section} · ${year}`;const bEl=document.getElementById('insight-detail-body');if(bEl)bEl.innerHTML=APP.selectedCompanies.map(id=>{const co=COMPANIES_DATA[id];return`<div class="insight-panel" style="margin-bottom:8px;"><div class="insight-panel-title" style="color:${co.color};">${co.name}</div>${co.insights?.[section]||'N/A'}</div>`;}).join('');}else{panel.style.display='none';}}
+
+/* ═══════════════════════════════════════════════════════════════
+   RECOMMENDATIONS
+   ═══════════════════════════════════════════════════════════════ */
+function renderRecommendations() {
+  LOG.info('RENDER','Recommendations');
+  const base=COMPANIES_DATA[APP.selectedCompanies[0]];
+  const recs=[
+    {title:'Accelerate AI Platform Differentiation',body:`${base.name} should invest in proprietary AI models to reduce dependency on third-party LLMs and build durable moat through vertical-specific agents.`},
+    {title:'Expand APAC Geographic Presence',body:'With APAC growing fastest (+15–28% YoY across peers), increase direct sales headcount, local data centres, and GSI partnerships in ANZ, India, and SEA.'},
+    {title:'Deepen Partner Ecosystem',body:'Certify 2,000+ new ISV and GSI partners in FY26 with co-sell incentives and joint solution bundles to accelerate mid-market penetration.'},
+    {title:'Targeted M&A in Data Security',body:'Acquire a leading data governance or DSPM (Data Security Posture Management) company to fill the capability gap identified in the heatmap (Security: 7.5).'},
+    {title:'Improve Expansion Revenue (NRR)',body:'Build AI-powered customer health scoring with proactive intervention playbooks to drive NRR from ~110% toward 120%+ over 8 quarters.'},
+    {title:'Introduce Consumption-Based Pricing',body:'Adopt consumption and outcome-based pricing tiers to unlock developer-led and SMB-led growth pathways alongside existing enterprise ACV model.'}
+  ];
+  const container=document.getElementById('rec-cards-container'); if(!container) return;
+  container.innerHTML='';
+  recs.forEach((r,i)=>{const card=document.createElement('div');card.className='rec-card';card.innerHTML=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;"><div class="rec-num">${i+1}</div><div class="rec-title">${r.title}</div></div><div class="rec-body">${r.body}</div>`;container.appendChild(card);});
+  const outlook=document.getElementById('peer-outlook-cards'); if(!outlook) return;
+  outlook.innerHTML='';
+  APP.selectedCompanies.forEach(id=>{const co=COMPANIES_DATA[id];const card=document.createElement('div');card.className='card';card.style.marginBottom='10px';card.innerHTML=`<div class="card-header"><div style="display:flex;align-items:center;gap:8px;"><div class="company-avatar" style="background:${co.color};width:28px;height:28px;font-size:10px;border-radius:7px;">${co.initials}</div><div class="card-title">${co.name}</div></div></div><div class="insight-panel">${co.insights?.product||'AI-driven platform expansion is the primary strategic focus.'}</div>`;outlook.appendChild(card);});
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COMPANY DEEP DIVE
+   ═══════════════════════════════════════════════════════════════ */
+function renderCompanyPage(id) {
+  if(!id||!COMPANIES_DATA[id]){LOG.error('COMPANY',`${id} not found`);return;}
+  const co=COMPANIES_DATA[id]; LOG.info('COMPANY',`Rendering ${co.name}`);
+  const ava=document.getElementById('company-avatar'); if(ava){ava.style.background=co.color;ava.textContent=co.initials;}
+  const nm=document.getElementById('company-page-name'); if(nm) nm.textContent=co.name;
+  const sb=document.getElementById('company-page-sub'); if(sb) sb.textContent=`${co.ticker} · ${co.exchange} · ${co.sector} · ${co.HQ}`;
+  const kpiEl=document.getElementById('company-page-kpis'); if(kpiEl) kpiEl.innerHTML=co.kpis.slice(0,3).map(k=>`<div style="text-align:center;padding:0 12px;border-right:1px solid #e2e8f0;"><div style="font-size:10px;color:#64748b;">${k.label}</div><div style="font-size:15px;font-weight:700;color:#0f172a;">${k.value}</div><div style="font-size:10.5px;font-weight:600;color:${k.up?'#059669':'#dc2626'};">${k.change}</div></div>`).join('');
+  const firstTab=document.querySelector('#company-main-tabs .sub-tab');
+  setCompanyTab('overview',firstTab);
+}
+
+function setCompanyTab(tab,el) {
+  const tabs=['overview','insights','products','financials','geo','innovation','customers'];
+  tabs.forEach(t=>{const p=document.getElementById(`co-tab-${t}`);if(p)p.style.display='none';});
+  const target=document.getElementById(`co-tab-${tab}`); if(target) target.style.display='block';
+  document.querySelectorAll('#company-main-tabs .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const id=APP.currentCompany; if(!id) return;
+  const co=COMPANIES_DATA[id];
+  setTimeout(()=>{
+    if(tab==='overview') renderCoOverview(co,id);
+    if(tab==='financials') renderCoFinancials(co);
+    if(tab==='geo') renderCoGeo(co);
+    if(tab==='innovation') renderCoInnovation(co);
+    if(tab==='customers') renderCoCustomers(co);
+    if(tab==='insights') renderCoInsights(co);
+    if(tab==='products') renderCoProducts(co);
+  },60);
+}
+
+function renderCoOverview(co,id) {
+  // Profile attrs
+  const attrs=document.getElementById('co-profile-attrs'); if(!attrs) return;
+  attrs.innerHTML=['founded','HQ','CEO','employees','sector','description','latestRevenue','marketCap'].map(f=>{const lbl={founded:'Founded',HQ:'Headquarters',CEO:'CEO',employees:'Employees',sector:'Sector',description:'About',latestRevenue:'Revenue FY25',marketCap:'Market Cap'}[f];return`<div class="attr-row"><div class="attr-key">${lbl}</div><div class="attr-val">${co[f]||'N/A'}</div></div>`;}).join('');
+  // Top products
+  const tp=document.getElementById('co-top-products'); if(tp) tp.innerHTML=co.topProducts.map(p=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;"><div style="font-size:12.5px;flex:1;color:#0f172a;">${p.name}</div><div style="font-size:12px;font-weight:700;color:${co.color};">${p.share}%</div><div style="width:80px;height:5px;background:#e2e8f0;border-radius:3px;overflow:hidden;"><div style="width:${p.share}%;height:100%;background:${co.color};border-radius:3px;"></div></div></div>`).join('');
+  // Segments donut
+  safeRender('chart-co-segments',[{type:'pie',hole:.5,labels:co.customerSegments.map(s=>s.name),values:co.customerSegments.map(s=>s.pct),marker:{colors:['#2563eb','#7c3aed','#059669','#d97706']},textinfo:'label+percent',textfont:{size:11}}],{...PL(240),margin:{l:10,r:10,t:10,b:10},showlegend:false});
+  // Geo flags
+  const geoEl=document.getElementById('co-geo-flags'); if(geoEl) geoEl.innerHTML=co.geographicData.map(g=>`<div class="geo-region-row"><span class="geo-flag">${g.flag}</span><span class="geo-region-name">${g.region}</span><span class="geo-region-rev">${g.rev}</span><span class="geo-region-chg ${g.up?'up':'down'}">${g.growth}</span><div class="geo-bar-track"><div class="geo-bar-fill" style="width:${g.sharePct}%;background:${co.color};"></div></div></div>`).join('');
+  // Fin snapshot
+  var _cs=getYearSlice(co); safeRender('chart-co-fin-snap',[{type:'bar',name:'Revenue ($B)',x:_cs.years,y:_cs.revenues,marker:{color:co.color,opacity:.85},text:_cs.revenues.map(function(v){return v!=null?v.toFixed(1):''}),textposition:'outside',textfont:{size:9,color:'#64748b'}}],Object.assign({},PL(280),{margin:{l:42,r:10,t:28,b:36},xaxis:{tickfont:{size:9}},yaxis:{title:{text:'Revenue ($B)',font:{color:'#64748b',size:9}},gridcolor:'#f1f5f9'},showlegend:false}));
+  // Radar
+  safeRender('chart-co-radar',[{type:'scatterpolar',fill:'toself',opacity:.4,r:Object.values(co.capabilityScores),theta:Object.keys(co.capabilityScores),line:{color:co.color,width:2}}],{...PL(280),polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{color:'#94a3b8',size:8}},bgcolor:'rgba(0,0,0,0)'},showlegend:false,margin:{l:20,r:20,t:20,b:20}});
+}
+
+function renderCoInsights(co) {
+  const feed=document.getElementById('co-insights-feed'); if(!feed) return;
+  feed.innerHTML=Object.entries(co.insights||{}).map(([k,v])=>`<div class="insight-panel" style="margin-bottom:10px;"><div class="insight-panel-title">${k.charAt(0).toUpperCase()+k.slice(1)}</div>${v}</div>`).join('');
+}
+
+function renderCoProducts(co) {
+  // Product strategy timeline
+  const tl=document.getElementById('co-product-strategy-timeline'); if(tl) tl.innerHTML=co.productStrategy.map(s=>`<div class="timeline-item"><div class="timeline-dot" style="background:${co.color};"></div><div class="timeline-year">${s.year}</div><div class="timeline-title">${s.title}</div><div class="timeline-desc">${s.desc}</div></div>`).join('');
+  // Product catalog
+  const tb=document.getElementById('product-catalog-tb'); if(tb) tb.innerHTML=co.topProducts.map(p=>`<tr onclick="showProductDetail('${p.name}','${co.identifier}')"><td style="font-weight:600;color:#0f172a;cursor:pointer;color:${co.color};">${p.name}</td><td>Core Platform</td><td>Enterprise, Mid-Market</td><td>Subscription</td><td><div class="score-bar-wrap"><div class="score-bar-track"><div class="score-bar-fill" style="width:${p.share*3}%;background:${co.color};"></div></div>${p.share}%</div></td><td><button class="topbar-btn" onclick="showProductDetail('${p.name}','${co.identifier}')" style="font-size:10px;padding:2px 7px;">Details</button></td></tr>`).join('');
+  // Portfolio segment filter
+  const psf=document.getElementById('portfolio-segment-filter'); if(psf){psf.innerHTML='';['All','Enterprise','Mid-Market','SMB'].forEach((s,i)=>{const c=document.createElement('div');c.className='chip-filter'+(i===0?' active':'');c.textContent=s;psf.appendChild(c);});}
+  // Updates list
+  const ul=document.getElementById('updates-list'); if(ul) {
+    const kRow=document.getElementById('updates-kpi-row'); if(kRow){kRow.innerHTML=[[co.updates?.length||4,'Total Updates','All updates'],[(co.updates||[]).filter(u=>u.impact==='High').length,'High Impact','Critical changes'],[(co.topProducts||[]).length,'Active Products','In portfolio'],[(co.updates||[]).filter(u=>u.category.includes('AI')).length,'AI Updates','AI/ML related']].map(([v,l,s])=>`<div class="kpi-tile"><div class="kpi-label">${l}</div><div class="kpi-value">${v}</div><div class="kpi-sub neutral">${s}</div></div>`).join('');}
+    ul.innerHTML=(co.updates||[]).map(u=>`<div class="news-card"><div class="news-card-meta"><span class="news-category">${u.category}</span><span class="badge ${u.impact==='High'?'badge-red':u.impact==='Medium'?'badge-amber':'badge-green'}" style="margin-left:4px;">${u.impact}</span><span class="news-date" style="margin-left:auto;">${u.date}</span></div><div class="news-card-title">[${u.product}] ${u.title}</div><div class="news-card-summary">${u.desc}</div></div>`).join('');
+  }
+}
+
+
+/* ── balance/cashflow normalizer — works with both flat-arrays and array-of-objects ── */
+function normBal(b){
+  if(!b) return {cash:[],totalAssets:[],totalDebt:[]};
+  if(Array.isArray(b)) return {cash:b.map(function(x){return x.cash||null;}),totalAssets:b.map(function(x){return x.totalAssets||null;}),totalDebt:b.map(function(x){return x.totalDebt||null;})};
+  return b;
+}
+function normCF(c){
+  if(!c) return {operatingCF:[],capex:[],freeCF:[]};
+  if(Array.isArray(c)) return {operatingCF:c.map(function(x){return x.operatingCF||null;}),capex:c.map(function(x){return x.capex||null;}),freeCF:c.map(function(x){return x.freeCF||null;})};
+  return c;
+}
+function renderCoFinancials(co) {
+  const cs=getYearSlice(co);
+  const kEl=document.getElementById('co-fin-kpis'); if(kEl) kEl.innerHTML=co.kpis.map(k=>`<div class="kpi-tile"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub ${k.up?'up':'down'}">${k.change}</div></div>`).join('');
+  safeRender('chart-co-fin-main',[
+    {type:'bar',name:'Revenue ($B)',x:cs.years,y:cs.revenues,marker:{color:co.color,opacity:.8}},
+    {type:'scatter',mode:'lines+markers',name:'EBITDA ($B)',x:cs.years,y:cs.ebitda,yaxis:'y2',line:{color:'#d97706',width:2.5},marker:{size:6,color:'#d97706'}}
+  ],{...PL(320),barmode:'group',yaxis:{title:{text:'Revenue ($B)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},yaxis2:{title:{text:'EBITDA ($B)',font:{color:'#64748b',size:11}},overlaying:'y',side:'right',gridcolor:'transparent'}});
+  safeRender('chart-co-income',[
+    {type:'bar',name:'Revenue',x:cs.years,y:cs.revenues,marker:{color:co.color,opacity:.8}},
+    {type:'bar',name:'EBITDA',x:cs.years,y:cs.ebitda,marker:{color:'#d97706',opacity:.8}},
+    {type:'bar',name:'Net Income',x:cs.years,y:cs.netIncome,marker:{color:'#059669',opacity:.8}}
+  ],{...PL(320),barmode:'group',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  safeRender('chart-co-balance',[
+    {type:'scatter',mode:'lines+markers',name:'Total Assets',x:cs.years,y:normBal(cs.balance).totalAssets,line:{color:co.color,width:2.5},marker:{size:6}},
+    {type:'scatter',mode:'lines+markers',name:'Cash',x:cs.years,y:normBal(cs.balance).cash,line:{color:'#059669',width:2.5},marker:{size:6}},
+    {type:'scatter',mode:'lines+markers',name:'Total Debt',x:cs.years,y:normBal(cs.balance).totalDebt,line:{color:'#dc2626',width:2.5},marker:{size:6}}
+  ],{...PL(320),yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  safeRender('chart-co-cashflow',[
+    {type:'bar',name:'Operating CF',x:cs.years,y:normCF(cs.cashflow).operatingCF,marker:{color:'#059669',opacity:.85}},
+    {type:'bar',name:'CapEx',x:cs.years,y:(normCF(co.cashflow).capex).map(v=>-v),marker:{color:'#dc2626',opacity:.85}},
+    {type:'scatter',mode:'lines+markers',name:'Free CF',x:cs.years,y:normCF(cs.cashflow).freeCF,line:{color:co.color,width:2.5},marker:{size:6}}
+  ],{...PL(320),barmode:'relative',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+}
+
+function renderCoGeo(co) {
+  const coordMap={Americas:{lon:-95,lat:40},Europe:{lon:15,lat:52},APAC:{lon:130,lat:35}};
+  safeRender('chart-co-geo-map',co.geographicData.map(g=>({type:'scattergeo',mode:'markers+text',name:g.region,lon:[(coordMap[g.region]||{lon:0}).lon],lat:[(coordMap[g.region]||{lat:0}).lat],marker:{size:18+(g.sharePct||10)/5,color:co.color,opacity:.8,line:{color:'#fff',width:2}},text:[`${g.flag} ${g.region}`],textposition:'top center',textfont:{size:11},hoverinfo:'text'})),{...PL(360),showlegend:false,geo:{bgcolor:'#f8fafc',showland:true,landcolor:'#e2e8f0',showocean:true,oceancolor:'#dbeafe',coastlinecolor:'#93c5fd',showframe:false,showcountries:true,countrycolor:'#bfdbfe',projection:{type:'natural earth'}}});
+  const geoEl=document.getElementById('co-geo-region-list'); if(geoEl) geoEl.innerHTML=co.geographicData.map(g=>`<div class="geo-region-row"><span class="geo-flag">${g.flag}</span><span class="geo-region-name">${g.region}</span><span class="geo-region-rev">${g.rev}</span><span class="geo-region-chg ${g.up?'up':'down'}">${g.growth}</span><div class="geo-bar-track" style="flex:1;"><div class="geo-bar-fill" style="width:${g.sharePct}%;background:${co.color};"></div></div><span style="font-size:11px;color:#64748b;min-width:35px;text-align:right;">${g.share}</span></div>`).join('');
+  safeRender('chart-co-geo-rev',[{type:'bar',x:co.geographicData.map(g=>g.region),y:co.geographicData.map(g=>g.revNum),marker:{color:co.color,opacity:.85},text:co.geographicData.map(g=>g.rev),textposition:'outside'}],{...PL(340),yaxis:{title:{text:'Revenue ($B)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  safeRender('chart-co-geo-mktsh',[{type:'pie',labels:co.geographicData.map(g=>g.region),values:co.geographicData.map(g=>g.sharePct),marker:{colors:['#2563eb','#7c3aed','#059669']},hole:.4,textinfo:'label+percent'}],{...PL(340),margin:{l:20,r:20,t:20,b:20}});
+  const tb=document.getElementById('co-geo-breakdown-tb'); if(!tb) return;
+  tb.innerHTML=co.geographicData.map(g=>`<tr><td>${g.flag} ${g.region}</td><td>${g.offices}</td><td><span class="badge ${g.up?'badge-green':'badge-red'}">${g.growth}</span></td><td>${g.share}</td><td style="font-size:11.5px;color:#64748b;">${g.dev}</td></tr>`).join('');
+}
+
+function renderCoInnovation(co) {
+  safeRender('chart-co-rnd',[{type:'scatter',mode:'lines+markers',name:'R&D Spend ($B)',x:co.years,y:co.rndData?.spend||[],line:{color:co.color,width:2.5},marker:{size:7,color:co.color},fill:'tozeroy',fillcolor:co.color.replace(')',',0.08)').replace('rgb','rgba')||'rgba(37,99,235,0.08)'}],{...PL(320),yaxis:{title:{text:'R&D Spend ($B)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  safeRender('chart-co-innovation-pie',[{type:'pie',hole:.42,labels:(co.rndData?.areas||[]).map(a=>a.name),values:(co.rndData?.areas||[]).map(a=>a.pct),marker:{colors:['#2563eb','#7c3aed','#059669','#d97706','#dc2626']},textinfo:'label+percent',textfont:{size:11}}],{...PL(300),margin:{l:20,r:20,t:20,b:20}});
+  // Innovation initiatives (use updates as proxy)
+  const catFilter=document.getElementById('innovation-category-filter');
+  if(catFilter){catFilter.innerHTML='';const cats=[...new Set((co.updates||[]).map(u=>u.category))];['All',...cats].forEach((c,i)=>{const el=document.createElement('div');el.className='chip-filter'+(i===0?' active':'');el.textContent=c;catFilter.appendChild(el);});}
+  const list=document.getElementById('innovation-initiatives-list');
+  if(list) list.innerHTML=(co.updates||[]).map(u=>`<div class="news-card"><div class="news-card-meta"><span class="news-category">${u.category}</span><span class="badge ${u.impact==='High'?'badge-red':u.impact==='Medium'?'badge-amber':'badge-green'}" style="margin-left:4px;">${u.impact}</span><span class="news-date" style="margin-left:auto;">${u.date}</span></div><div class="news-card-title">${u.title}</div><div class="news-card-summary">${u.desc}</div></div>`).join('');
+}
+
+function renderCoCustomers(co) {
+  safeRender('chart-co-cust-radar',[{type:'scatterpolar',fill:'toself',opacity:.4,r:[co.capabilityScores.CRM||7,7.5,6,4.5],theta:['Enterprise','Mid-Market','SMB','Government'],line:{color:co.color,width:2}}],{...PL(320),polar:{radialaxis:{visible:true,range:[0,10],gridcolor:'#e2e8f0',tickfont:{color:'#94a3b8',size:9}},bgcolor:'rgba(0,0,0,0)'},showlegend:false,margin:{l:20,r:20,t:20,b:20}});
+  const summary=document.getElementById('co-customer-summary'); if(summary) summary.innerHTML=`
+    <div class="stat-row"><div class="stat-label">Total Customers</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.totalCustomers[co.identifier]||0).toLocaleString():'N/A'}</div></div>
+    <div class="stat-row"><div class="stat-label">Retention Rate</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.retention[co.identifier]||'N/A'):'N/A'}%</div></div>
+    <div class="stat-row"><div class="stat-label">NRR</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.nrr[co.identifier]||'N/A'):'N/A'}%</div></div>
+    <div class="stat-row"><div class="stat-label">NPS Score</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.nps[co.identifier]||'N/A'):'N/A'}</div></div>
+    <div class="stat-row"><div class="stat-label">Enterprise Share</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.enterprise[co.identifier]||'N/A'):'N/A'}%</div></div>
+    <div class="stat-row"><div class="stat-label">Mid-Market Share</div><div class="stat-val">${typeof BENCH_CUST!=='undefined'?(BENCH_CUST.midmarket[co.identifier]||'N/A'):'N/A'}%</div></div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRODUCT TAB SWITCHERS (Company)
+   ═══════════════════════════════════════════════════════════════ */
+function setProductTab(tab,el) {
+  ['strategy','timeline','portfolio','matrix','updates'].forEach(t=>{const p=document.getElementById(`product-tab-${t}`);if(p)p.style.display=t===tab?'block':'none';});
+  document.querySelectorAll('#co-tab-products .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  setTimeout(()=>{
+    if(tab==='timeline'){
+      safeRender('chart-launch-timeline',[{type:'scatter',mode:'markers',name:'Launches',x:co.productStrategy.map(s=>parseInt(s.year)),y:co.productStrategy.map(s=>s.title),marker:{size:14,color:co.color,symbol:'diamond'}}],{...PL(280),xaxis:{tickfont:{size:10}},yaxis:{tickfont:{size:11}},showlegend:false});
+    }
+    if(tab==='matrix'){
+      const bubbles=co.topProducts.map((p,i)=>({type:'scatter',mode:'markers+text',name:p.name,x:[30+i*12+(Math.random()*8)],y:[20+Math.random()*60],marker:{size:p.share*2.5+12,color:['#2563eb','#7c3aed','#059669','#d97706','#dc2626','#0891b2'][i%6],opacity:.75,line:{color:'#fff',width:2}},text:[p.name.split(' ')[0]],textposition:'middle center',textfont:{color:'#fff',size:10}}));
+      safeRender('chart-portfolio-matrix',bubbles,{...PL(320),xaxis:{title:{text:'Market Growth Rate →',font:{color:'#64748b',size:11}},range:[10,100],gridcolor:'#f1f5f9'},yaxis:{title:{text:'Relative Market Share →',font:{color:'#64748b',size:11}},range:[0,90],gridcolor:'#f1f5f9'},showlegend:true});
+    }
+  },80);
+}
+
+function setFinancialSection(sec,el) {
+  ['summary','income','balance','cashflow'].forEach(s=>{const p=document.getElementById(`fin-section-${s}`);if(p)p.style.display=s===sec?'block':'none';});
+  document.querySelectorAll('#co-tab-financials .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  setTimeout(()=>{
+    if(sec==='income') safeRender('chart-co-income',[{type:'bar',name:'Revenue',x:co.years,y:co.revenues,marker:{color:co.color,opacity:.8}},{type:'bar',name:'EBITDA',x:co.years,y:co.ebitda,marker:{color:'#d97706',opacity:.8}},{type:'bar',name:'Net Income',x:co.years,y:co.netIncome,marker:{color:'#059669',opacity:.8}}],{...PL(320),barmode:'group',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+    if(sec==='balance') safeRender('chart-co-balance',[{type:'scatter',mode:'lines+markers',name:'Total Assets',x:co.years,y:normBal(co.balance).totalAssets||[],line:{color:co.color,width:2.5},marker:{size:6}},{type:'scatter',mode:'lines+markers',name:'Cash',x:co.years,y:normBal(co.balance).cash||[],line:{color:'#059669',width:2.5},marker:{size:6}},{type:'scatter',mode:'lines+markers',name:'Debt',x:co.years,y:normBal(co.balance).totalDebt||[],line:{color:'#dc2626',width:2.5},marker:{size:6}}],{...PL(320),yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+    if(sec==='cashflow') safeRender('chart-co-cashflow',[{type:'bar',name:'Operating CF',x:co.years,y:normCF(co.cashflow).operatingCF,marker:{color:'#059669',opacity:.85}},{type:'bar',name:'CapEx (neg)',x:co.years,y:(normCF(co.cashflow).capex).map(v=>-v),marker:{color:'#dc2626',opacity:.85}},{type:'scatter',mode:'lines+markers',name:'Free CF',x:co.years,y:normCF(co.cashflow).freeCF,line:{color:co.color,width:2.5},marker:{size:6}}],{...PL(320),barmode:'relative',yaxis:{title:{text:'$B',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'}});
+  },80);
+}
+
+function setCoGeoTab(tab,el) {
+  ['presence','revenue','marketshare','breakdown'].forEach(t=>{const p=document.getElementById(`co-geo-${t}-panel`);if(p)p.style.display=t===tab?'block':'none';});
+  document.querySelectorAll('#co-tab-geo .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  setTimeout(()=>{
+    if(tab==='presence') {
+      safeRender('chart-co-geo-map',co.geographicData.map((g,i)=>{const coordMap={Americas:{lon:-95,lat:40},Europe:{lon:15,lat:52},APAC:{lon:130,lat:35}};return{type:'scattergeo',mode:'markers+text',name:g.region,lon:[(coordMap[g.region]||{lon:0}).lon],lat:[(coordMap[g.region]||{lat:0}).lat],marker:{size:18+(g.sharePct||10)/5,color:co.color,opacity:.8,line:{color:'#fff',width:2}},text:[`${g.flag} ${g.region}`],textposition:'top center',textfont:{size:11},hoverinfo:'text'};}),{...PL(280),showlegend:false,geo:{bgcolor:'#f8fafc',showland:true,landcolor:'#e2e8f0',showocean:true,oceancolor:'#dbeafe',coastlinecolor:'#93c5fd',showframe:false,showcountries:true,countrycolor:'#bfdbfe',projection:{type:'natural earth'}}});
+      const geoEl=document.getElementById('co-geo-region-list'); if(geoEl) geoEl.innerHTML=co.geographicData.map(g=>`<div class="geo-region-row"><span class="geo-flag">${g.flag}</span><span class="geo-region-name">${g.region}</span><span class="geo-region-rev">${g.rev}</span><span class="geo-region-chg ${g.up?'up':'down'}">${g.growth}</span><div class="geo-bar-track" style="flex:1;"><div class="geo-bar-fill" style="width:${g.sharePct}%;background:${co.color};"></div></div><span style="font-size:11px;color:#64748b;min-width:35px;text-align:right;">${g.share}</span></div>`).join('');
+    }
+    if(tab==='revenue') {
+      safeRender('chart-co-geo-rev',[{type:'bar',x:co.geographicData.map(g=>g.region),y:co.geographicData.map(g=>g.revNum),marker:{color:co.geographicData.map((_,i)=>['#2563eb','#7c3aed','#059669'][i%3]),opacity:.85},text:co.geographicData.map(g=>g.rev),textposition:'outside'}],{...PL(280),yaxis:{title:{text:'Revenue ($B)',font:{color:'#64748b',size:11}},gridcolor:'#f1f5f9'},showlegend:false});
+    }
+    if(tab==='marketshare') {
+      safeRender('chart-co-geo-mktsh',[{type:'pie',labels:co.geographicData.map(g=>g.region),values:co.geographicData.map(g=>g.sharePct),marker:{colors:['#2563eb','#7c3aed','#059669']},hole:.42,textinfo:'label+percent+value',textfont:{size:11}}],{...PL(280),margin:{l:20,r:20,t:20,b:20},showlegend:true,legend:{orientation:'h',y:-0.1}});
+    }
+    if(tab==='breakdown') {
+      const tb=document.getElementById('co-geo-breakdown-tb'); if(!tb) return;
+      tb.innerHTML=co.geographicData.map(g=>`<tr><td>${g.flag} ${g.region}</td><td>${g.offices}</td><td><span class="badge ${g.up?'badge-green':'badge-red'}">${g.growth}</span></td><td>${g.share}</td><td style="font-size:11.5px;color:#64748b;">${g.dev}</td></tr>`).join('');
+    }
+  },80);
+}
+
+function setCoInsightSub(section,el) {
+  document.querySelectorAll('#co-tab-insights .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  const feed=document.getElementById('co-insights-feed'); if(!feed) return;
+  feed.innerHTML=`<div class="insight-panel"><div class="insight-panel-title">${section.charAt(0).toUpperCase()+section.slice(1)}</div>${co.insights?.[section]||'No data for this section.'}</div>`;
+}
+
+function filterCoInsightYear(year,el) {
+  document.querySelectorAll('#co-insights-year-chips .chip-filter').forEach(c=>c.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+
+function setCoCustomerTab(tab,el) {
+  document.getElementById('co-customer-radar-panel').style.display=tab==='radar'?'block':'none';
+  document.getElementById('co-customer-segment-panel').style.display=tab!=='radar'?'block':'none';
+  document.querySelectorAll('#co-tab-customers .sub-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  const co=COMPANIES_DATA[APP.currentCompany]; if(!co) return;
+  if(tab==='radar'){
+    setTimeout(()=>{
+      const dims=['Enterprise','Mid-Market','SMB','Government','Partner'];
+      const base=co.customerSegments||[{name:'Enterprise',pct:55},{name:'Mid-Market',pct:25},{name:'SMB',pct:12},{name:'Government',pct:5},{name:'Partner',pct:3}];
+      safeRender('chart-co-cust-radar',[{type:'scatterpolar',fill:'toself',opacity:.5,
+        r:dims.map(d=>{const s=base.find(x=>x.name.includes(d.split('-')[0]));return s?s.pct:10;}),
+        theta:dims,line:{color:co.color,width:2},marker:{color:co.color}}],
+        {...PL(320),polar:{radialaxis:{visible:true,range:[0,70],gridcolor:'#e2e8f0',tickfont:{size:9}},bgcolor:'rgba(0,0,0,0)'},showlegend:false,margin:{l:24,r:24,t:24,b:24}});
+    },80);
+  }
+  if(tab!=='radar'){const labels={enterprise:'Enterprise (5000+ EE)',midmarket:'Mid-Market (500–5k EE)',smb:'SMB (<500 EE)',govt:'Government & Public'};document.getElementById('co-customer-segment-detail').innerHTML=`<div class="insight-panel"><div class="insight-panel-title">${labels[tab]||tab}</div><p>Segment details populated from data layer. This segment covers key customers, deals, and engagement levels for ${labels[tab]||tab} accounts.</p></div>`;}
+}
+
+function showProductDetail(name,coId) {
+  const popup=document.getElementById('product-detail-popup'); if(!popup) return;
+  popup.style.display='block';
+  const titleEl=document.getElementById('pd-popup-title'); if(titleEl) titleEl.textContent=name;
+  const body=document.getElementById('pd-popup-body'); if(!body) return;
+  body.innerHTML=`<div class="insight-panel"><div class="insight-panel-title">Product Overview</div>${name} is a key product in the portfolio. Click a product row to see detailed description, recent updates, and customer use cases.</div>`;
+}
+function closeProductDetail(){const p=document.getElementById('product-detail-popup');if(p)p.style.display='none';}
+
+/* ═══════════════════════════════════════════════════════════════
+   GENERIC HELPERS
+   ═══════════════════════════════════════════════════════════════ */
+function setToggle(gId,el,val){document.querySelectorAll(`#${gId} .toggle-opt`).forEach(o=>o.classList.remove('active'));el.classList.add('active');APP.activeTabMap[gId]=val;}
+function refreshData(){LOG.info('ACTION','Refresh');APP.chartsRendered.clear();renderPageCharts(APP.currentPage);}
+function exportPortal(){LOG.info('ACTION','Export');alert('Export requires server-side processing in the live portal.');}
+function editProfileAttrs(){alert('Opens attribute editor in the live portal.');}
+function editCompanyAttrs(){alert('Opens company attribute editor in the live portal.');}
+function addCapabilityMetric(){alert('Opens dialog to add a new capability dimension.');}
+function removeCapabilityMetric(){alert('Opens dialog to remove a capability dimension.');}
+function addCustomerMetric(){alert('Opens dialog to add a customer metric.');}
+function removeCustomerMetric(){alert('Opens dialog to remove a customer metric.');}
+function downloadTrendChart(){LOG.info('ACTION','Download trend chart');}
+
+/* ═══════════════════════════════════════════════════════════════
+   ADDITIONAL ANALYSIS TOGGLE
+   ═══════════════════════════════════════════════════════════════ */
+function toggleAdditionalAnalysis() {
+  const section = document.getElementById('additional-analysis-section');
+  const btn = document.getElementById('additional-analysis-btn');
+  if(!section || !btn) return;
+  const isHidden = section.style.display === 'none' || section.style.display === '';
+  section.style.display = isHidden ? 'block' : 'none';
+  btn.textContent = isHidden ? '▲ Hide' : '▼ Show';
+  // Render supporting charts when section first becomes visible
+  if(isHidden && (!APP.chartsRendered.has('chart-tech-bubble') || !APP.chartsRendered.has('chart-rev-per-cap'))) {
+    setTimeout(renderTrendSupportingCharts, 80);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOOT
+   ═══════════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',function(){
+  LOG.info('INIT','=== CompeteIQ Portal v5.0 Starting ===');
+  // Sync year selects to APP defaults
+  var yfEl=document.getElementById('year-from');
+  var ytEl=document.getElementById('year-to');
+  if(yfEl) yfEl.value=APP.yearFrom;
+  if(ytEl) ytEl.value=APP.yearTo;
+  // If value didn't match any option, reset to APP default text
+  if(yfEl && !yfEl.value) { for(var i=0;i<yfEl.options.length;i++){ if(yfEl.options[i].text===APP.yearFrom||yfEl.options[i].value===APP.yearFrom){yfEl.selectedIndex=i;break;} } }
+  if(ytEl && !ytEl.value) { for(var i=0;i<ytEl.options.length;i++){ if(ytEl.options[i].text===APP.yearTo||ytEl.options[i].value===APP.yearTo){ytEl.selectedIndex=i;break;} } }
+  const vRes=VALIDATOR.run();
+  LOG.info('INIT',`Validation: ${vRes.passed}/${vRes.total} passed`);
+  if(vRes.failed.length) LOG.warn('INIT',`Failed: ${vRes.failed.map(f=>f.id).join(', ')}`);
+  initSidebar();
+  var ciSub=document.getElementById('ci-submenu');
+  var ciNav=document.getElementById('nav-ci');
+  if(ciSub){ciSub.classList.add('open');}
+  if(ciNav){ciNav.classList.add('active');}
+  navigate('dashboard');
+  var addSec=document.getElementById('additional-analysis-section');
+  if(addSec){addSec.style.display='block';}
   LOG.ok('INIT','=== Portal ready ===');
 });
 
