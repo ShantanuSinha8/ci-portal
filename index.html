@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>CompeteIQ v3.0 — Competitive Intelligence Portal (2026-08-17 12:17)</title>
+<title>CompeteIQ v3.0 — Competitive Intelligence Portal (2026-08-11 08:16)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
@@ -586,6 +586,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 /* Insight year filter active */
 #insights-year-chips .chip-filter.active,
 #co-insight-year-chips .chip-filter.active{background:#7c3aed;border-color:#7c3aed;}
+
 </style>
 </head>
 <body>
@@ -1509,8 +1510,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;background:
 <!-- ══ LOGGING CONSOLE ══ -->
 <div id="log-console"></div>
 <button id="log-toggle" onclick="toggleLog()">⚙ Log</button>
-<script>
 
+<script>
 'use strict';
 window.onerror=function(msg,src,line,col,err){var b=document.getElementById('_jserr');if(!b){b=document.createElement('div');b.id='_jserr';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#dc2626;color:#fff;font-size:12px;padding:8px 16px;font-family:monospace;';document.body?document.body.prepend(b):document.addEventListener('DOMContentLoaded',function(){document.body.prepend(b);});}b.textContent='⚠ JS Error: '+msg+' (line '+line+')';return false;};
 
@@ -1602,15 +1603,6 @@ const VALIDATOR = (() => {
 /* ═══════════════════════════════════════════════════════════════
    DATA LAYER  (replaced by data_layer.js in live portal)
    ═══════════════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   CompeteIQ — DATA LAYER v4.0
-   Companies: Apple (base) | Google | Meta | SAP | Cisco | Oracle
-   Period:    FY2021 – FY2025
-   Sector:    Consumer Tech & Enterprise Software
-   Generated: 2026-08-17
-   ═══════════════════════════════════════════════════════════════════════════ */
-
 const COMPANIES_DATA = {
 
   /* ── APPLE ──────────────────────────────────────────────────────────────── */
@@ -3957,6 +3949,48 @@ window.setInsightSubTab = function(section,el){
 };
 
 LOG.info('PATCH','All interaction fixes loaded ✓');
+
 </script>
+
+<!-- Workday Intelligence Drilldown Panel -->
+<div class="wd-dd-overlay" id="wdDDOverlay" onclick="closeIntelDD()"></div>
+<div class="wd-dd-panel" id="wdDDPanel">
+  <div class="wd-dd-header">
+    <div class="wd-dd-title" id="wdDDTitle">Intelligence</div>
+    <button class="wd-dd-close" onclick="closeIntelDD()">&#x2715;</button>
+  </div>
+  <div class="wd-dd-body" id="wdDDBody"></div>
+</div>
+
+
+<!-- Customize Modal -->
+<div class="customize-modal" id="customizeModal" onclick="if(event.target===this)closeCustomizeModal()">
+  <div class="customize-box">
+    <h3>&#x2699; Customize Dashboard</h3>
+    <p>Choose which intelligence modules and data panels appear on your dashboard. Changes are saved to your profile.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" checked style="width:15px;height:15px;accent-color:#2563eb;"> Competitive Intelligence Module
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" checked style="width:15px;height:15px;accent-color:#7c3aed;"> Market Intelligence Module
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" checked style="width:15px;height:15px;accent-color:#059669;"> Sales Intelligence Module
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" checked style="width:15px;height:15px;accent-color:#f59e0b;"> Recent Market Events Feed
+      </label>
+      <label style="display:flex;align-items:center;gap:10px;font-size:13px;cursor:pointer;">
+        <input type="checkbox" checked style="width:15px;height:15px;accent-color:#2563eb;"> Companies to Track Panel
+      </label>
+    </div>
+    <div style="display:flex;gap:10px;justify-content:flex-end;">
+      <button class="customize-close" onclick="closeCustomizeModal()">Cancel</button>
+      <button class="topbar-btn primary" onclick="saveCustomize()">Save Layout</button>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
