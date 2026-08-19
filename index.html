@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CompeteIQ — Cisco vs Peers | AI-Powered Enterprise Software</title>
-  <script src="https://cdn.plot.ly/plotly-2.26.0.min.js"></script>
-  <style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>CompeteIQ v03 — Competitive Intelligence Portal (2026-08-19 01:44 UTC)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
 /* ============================================================
    DESIGN TOKEN SYSTEM — extracted from screenshot analysis
    ============================================================ */
@@ -681,55 +683,9 @@ svg { display: block; }
   #pages { padding: var(--space-3); }
   .page { padding: var(--space-3); }
 }
-/* ============================================================
-   YEAR RANGE SLIDER — ENHANCED
-   ============================================================ */
-.year-range { flex-direction: column; gap: 5px; }
-.year-range input[type=range] {
-  -webkit-appearance: none; appearance: none;
-  height: 4px; border-radius: 2px;
-  background: var(--border); outline: none;
-  cursor: pointer;
-}
-.year-range input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none; width: 14px; height: 14px;
-  border-radius: 50%; background: var(--accent-blue);
-  cursor: pointer; border: 2px solid #fff;
-  box-shadow: 0 0 0 2px var(--accent-blue);
-}
-.year-range input[type=range]:focus::-webkit-slider-thumb {
-  box-shadow: 0 0 0 3px rgba(37,99,235,0.25);
-}
-
-/* ============================================================
-   PRINT / PDF EXPORT
-   ============================================================ */
-@media print {
-  #sidebar, #topbar, #tabbar { display: none !important; }
-  #app    { display: block !important; height: auto !important; overflow: visible !important; }
-  #main   { overflow: visible !important; height: auto !important; }
-  #pages  { overflow: visible !important; height: auto !important; }
-  .page   { display: block !important; page-break-after: always; }
-  .page:last-child { page-break-after: auto; }
-  body    { background: #fff !important; overflow: auto !important; }
-  .modal-overlay { display: none !important; }
-}
-
-/* ============================================================
-   ACTIVE FILTER BADGE
-   ============================================================ */
-.filter-active-badge {
-  display: inline-flex; align-items: center;
-  background: #eff6ff; color: var(--accent-blue);
-  font-size: 10px; font-weight: 700;
-  padding: 2px 8px; border-radius: 20px;
-  border: 1px solid #bfdbfe;
-}
-
-  </style>
+</style>
 </head>
 <body>
-<div id="_jserr" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#b91c1c;color:#fff;padding:8px 16px;font-size:12px;font-family:monospace;z-index:99999;"></div>
 <div id="app">
 
 <!-- ============================================================
@@ -752,7 +708,7 @@ svg { display: block; }
       <span class="nav-label">Dashboard</span>
     </div>
 
-    <div class="nav-item" data-nav="ci-overview" id="nav-ci">
+    <div class="nav-item" data-nav="ci" id="nav-ci">
       <svg class="nav-icon" viewBox="0 0 20 20" fill="currentColor"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg>
       <span class="nav-label">Competitive Intelligence</span>
     </div>
@@ -805,26 +761,19 @@ svg { display: block; }
       <div class="company-chip" style="background:#fce7f3;color:#9d174d;border-color:#f9a8d4">Google <span class="chip-x">×</span></div>
       <div class="company-chip" style="background:#ede9fe;color:#5b21b6;border-color:#c4b5fd">Oracle <span class="chip-x">×</span></div>
     </div>
-    <button class="btn-add-company" data-action="generic" data-expr="showModal('add-company-modal')">+ Add Company</button>
+    <button class="btn-add-company">+ Add Company</button>
     <div style="margin-top:10px;">
       <div class="filter-label">Fiscal Year Range</div>
-      <div class="year-range" style="flex-direction:column;gap:6px;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:11px;color:var(--text-muted);width:28px">From</span>
-          <input id="yr-from" type="range" min="2021" max="2025" value="2021" style="flex:1;accent-color:var(--accent-blue)" data-action="generic" data-expr="updateYearFilter()">
-          <span id="yr-from-label" style="font-size:11px;font-weight:700;color:var(--accent-blue);width:28px">FY21</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span style="font-size:11px;color:var(--text-muted);width:28px">To</span>
-          <input id="yr-to" type="range" min="2021" max="2025" value="2025" style="flex:1;accent-color:var(--accent-blue)" data-action="generic" data-expr="updateYearFilter()">
-          <span id="yr-to-label" style="font-size:11px;font-weight:700;color:var(--accent-blue);width:28px">FY25</span>
-        </div>
-        <div id="yr-active-badge" style="display:flex;gap:4px;flex-wrap:wrap;margin-top:2px;"></div>
+      <div class="year-range">
+        <span>FY21</span>
+        <input type="range" min="2021" max="2025" value="2021" style="flex:1">
+        <input type="range" min="2021" max="2025" value="2025" style="flex:1">
+        <span>FY25</span>
       </div>
     </div>
     <div style="margin-top:10px;">
       <div class="filter-label">Sector</div>
-      <select id="sector-filter" class="filter-select" data-action="generic" data-expr="updateSectorFilter(this.value)">
+      <select class="filter-select">
         <option>AI-Powered Enterprise Software</option>
         <option>Cloud & SaaS</option>
         <option>Financial Services</option>
@@ -841,7 +790,7 @@ svg { display: block; }
 
   <!-- Top Header Bar -->
   <div id="topbar">
-    <button data-action="generic" data-expr="document.getElementById('sidebar').classList.toggle('collapsed')" class="topbar-btn ghost" style="padding:6px 10px;" title="Toggle sidebar">
+    <button onclick="document.getElementById('sidebar').classList.toggle('collapsed')" class="topbar-btn ghost" style="padding:6px 10px;" title="Toggle sidebar">
       <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
     </button>
     <span class="topbar-breadcrumb">
@@ -855,8 +804,8 @@ svg { display: block; }
         <svg width="14" height="14" viewBox="0 0 20 20" fill="#94a3b8"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
         <input type="text" placeholder="Search companies, topics...">
       </div>
-      <button class="topbar-btn ghost" data-action="generic" data-expr="exportToPDF()">📊 Export PDF</button>
-      <button class="topbar-btn primary" data-action="navigate" data-nav="ci-overview">Open Competitive Intelligence</button>
+      <button class="topbar-btn ghost">📊 Export</button>
+      <button class="topbar-btn primary" onclick="navigate('ci-overview')">Open Competitive Intelligence</button>
       <div class="topbar-avatar" title="User">U</div>
     </div>
   </div>
@@ -880,13 +829,13 @@ svg { display: block; }
         </div>
         <div class="flex gap-2">
           <button class="btn btn-secondary btn-sm">⚙ Configure</button>
-          <button class="btn btn-primary btn-sm" data-action="navigate" data-nav="ci-overview">Open Competitive Intelligence →</button>
+          <button class="btn btn-primary btn-sm" onclick="navigate('ci-overview')">Open Competitive Intelligence →</button>
         </div>
       </div>
 
       <!-- Intelligence Module Cards -->
       <div class="grid grid-3 mb-6">
-        <div class="intel-module-card" data-action="navigate" data-nav="ci-overview">
+        <div class="intel-module-card" onclick="navigate('ci-overview')">
           <div class="intel-module-icon" style="background:#eff6ff;">🎯</div>
           <div>
             <div class="intel-module-title">Competitive Intelligence</div>
@@ -898,7 +847,7 @@ svg { display: block; }
           </div>
           <div class="intel-module-action">Open Competitive Intelligence →</div>
         </div>
-        <div class="intel-module-card" data-action="navigate" data-nav="market-intel">
+        <div class="intel-module-card" onclick="navigate('market-intel')">
           <div class="intel-module-icon" style="background:#f0fdf4;">📈</div>
           <div>
             <div class="intel-module-title">Market Intelligence</div>
@@ -909,7 +858,7 @@ svg { display: block; }
           </div>
           <div class="intel-module-action">Explore Market Intelligence →</div>
         </div>
-        <div class="intel-module-card" data-action="navigate" data-nav="sales-intel">
+        <div class="intel-module-card" onclick="navigate('sales-intel')">
           <div class="intel-module-icon" style="background:#fdf4ff;">💼</div>
           <div>
             <div class="intel-module-title">Sales Intelligence</div>
@@ -933,7 +882,7 @@ svg { display: block; }
               <div class="card-subtitle">Latest news across tracked companies</div>
             </div>
             <div class="card-spacer"></div>
-            <button class="btn btn-secondary btn-sm" data-action="generic" data-expr="showModal('news-modal')">View All</button>
+            <button class="btn btn-secondary btn-sm">View All</button>
           </div>
           <div class="card-body" style="padding-top:var(--space-3);">
             <div class="news-filter-pills" id="news-pills">
@@ -1002,7 +951,7 @@ svg { display: block; }
                 <div class="news-snippet">Multi-year digital transformation contract covering 40 federal agencies on the Now Platform.</div>
               </div>
             </div>
-            <button class="btn btn-secondary" style="width:100%;margin-top:var(--space-3);justify-content:center" data-action="generic" data-expr="showModal('news-modal')">View All Events</button>
+            <button class="btn btn-secondary" style="width:100%;margin-top:var(--space-3);justify-content:center">View All Events</button>
           </div>
         </div>
 
@@ -1014,10 +963,10 @@ svg { display: block; }
               <div class="card-subtitle">Click to deep-dive into company profile</div>
             </div>
             <div class="card-spacer"></div>
-            <button class="btn btn-secondary btn-sm" data-action="generic" data-expr="showModal('companies-modal')">See All</button>
+            <button class="btn btn-secondary btn-sm">See All</button>
           </div>
-          <div class="card-body" id="companies-track-body" style="padding:var(--space-3);display:flex;flex-direction:column;gap:var(--space-3);">
-            <div class="company-overview-card" data-action="openCompany" data-company="servicenow">
+          <div class="card-body" style="padding:var(--space-3);display:flex;flex-direction:column;gap:var(--space-3);">
+            <div class="company-overview-card" onclick="openCompany('servicenow')">
               <div class="company-card-header">
                 <div class="company-initials" style="background:#1e3a5f;">SN</div>
                 <div><div class="company-name">ServiceNow</div><div class="company-ticker">NYSE: NOW · Base</div></div>
@@ -1031,7 +980,7 @@ svg { display: block; }
               </div>
               <div style="display:flex;justify-content:flex-end;"><button class="btn btn-primary btn-xs">View Profile →</button></div>
             </div>
-            <div class="company-overview-card" data-action="openCompany" data-company="salesforce">
+            <div class="company-overview-card" onclick="openCompany('salesforce')">
               <div class="company-card-header">
                 <div class="company-initials" style="background:#00a1e0;">SF</div>
                 <div><div class="company-name">Salesforce</div><div class="company-ticker">NYSE: CRM · Peer</div></div>
@@ -1045,7 +994,7 @@ svg { display: block; }
               </div>
               <div style="display:flex;justify-content:flex-end;"><button class="btn btn-secondary btn-xs">View Profile →</button></div>
             </div>
-            <div class="company-overview-card" data-action="openCompany" data-company="microsoft">
+            <div class="company-overview-card" onclick="openCompany('microsoft')">
               <div class="company-card-header">
                 <div class="company-initials" style="background:#0078d4;">MS</div>
                 <div><div class="company-name">Microsoft</div><div class="company-ticker">NASDAQ: MSFT · Peer</div></div>
@@ -1453,11 +1402,11 @@ svg { display: block; }
           <table class="data-table">
             <thead>
               <tr><th>Metric</th>
-                <th style="background:#eff6ff;cursor:pointer" data-action="generic" data-expr="showCompanyBenchmark('servicenow')">ServiceNow ↗</th>
-                <th style="cursor:pointer" data-action="generic" data-expr="showCompanyBenchmark('salesforce')">Salesforce ↗</th>
-                <th style="cursor:pointer" data-action="generic" data-expr="showCompanyBenchmark('microsoft')">Microsoft ↗</th>
-                <th style="cursor:pointer" data-action="generic" data-expr="showCompanyBenchmark('google')">Google ↗</th>
-                <th style="cursor:pointer" data-action="generic" data-expr="showCompanyBenchmark('oracle')">Oracle ↗</th>
+                <th style="background:#eff6ff;cursor:pointer" onclick="showCompanyBenchmark('servicenow')">ServiceNow ↗</th>
+                <th style="cursor:pointer" onclick="showCompanyBenchmark('salesforce')">Salesforce ↗</th>
+                <th style="cursor:pointer" onclick="showCompanyBenchmark('microsoft')">Microsoft ↗</th>
+                <th style="cursor:pointer" onclick="showCompanyBenchmark('google')">Google ↗</th>
+                <th style="cursor:pointer" onclick="showCompanyBenchmark('oracle')">Oracle ↗</th>
               </tr>
             </thead>
             <tbody>
@@ -1678,14 +1627,14 @@ svg { display: block; }
           <div style="font-size:var(--font-sm);color:var(--text-muted)" id="company-display-meta">NYSE: NOW · AI-Powered Enterprise Software · HQ: Santa Clara, CA</div>
         </div>
         <div class="card-spacer"></div>
-        <select class="filter-select" style="width:200px;margin:0" id="company-selector" data-action="generic" data-expr="switchCompany(this.value)">
+        <select class="filter-select" style="width:200px;margin:0" id="company-selector" onchange="switchCompany(this.value)">
           <option value="servicenow">ServiceNow (Base)</option>
           <option value="salesforce">Salesforce</option>
           <option value="microsoft">Microsoft</option>
           <option value="google">Google</option>
           <option value="oracle">Oracle</option>
         </select>
-        <button class="btn btn-primary" data-action="navigate" data-nav="ci-overview">← Back to Competitive Intel</button>
+        <button class="btn btn-primary" onclick="navigate('ci-overview')">← Back to Competitive Intel</button>
       </div>
 
       <!-- Company sub-tabs -->
@@ -1727,15 +1676,15 @@ svg { display: block; }
         </div>
         <div class="grid grid-3 mb-4">
           <div class="card">
-            <div class="card-header"><div class="card-title">Top Products</div><div class="card-spacer"></div><button class="btn btn-secondary btn-sm" data-action="generic" data-expr="switchCompanyTab('products')">View All →</button></div>
+            <div class="card-header"><div class="card-title">Top Products</div><div class="card-spacer"></div><button class="btn btn-secondary btn-sm" onclick="switchCompanyTab('products')">View All →</button></div>
             <div class="card-body"><div id="chart-top-products" style="height:200px;"></div></div>
           </div>
           <div class="card">
-            <div class="card-header"><div class="card-title">Geographic Presence</div><div class="card-spacer"></div><button class="btn btn-secondary btn-sm" data-action="generic" data-expr="switchCompanyTab('geography')">Explore →</button></div>
+            <div class="card-header"><div class="card-title">Geographic Presence</div><div class="card-spacer"></div><button class="btn btn-secondary btn-sm" onclick="switchCompanyTab('geography')">Explore →</button></div>
             <div class="card-body"><div id="chart-comp-geo" style="height:200px;"></div></div>
           </div>
           <div class="card">
-            <div class="card-header"><div class="card-title">Customer Segments</div><div class="card-spacer"></div><button class="btn btn-secondary btn-sm" data-action="generic" data-expr="switchCompanyTab('customers-seg')">Details →</button></div>
+            <div class="card-header"><div class="card-title">Customer Segments</div><div class="card-spacer"></div><button class="btn btn-secondary btn-sm" onclick="switchCompanyTab('customers-seg')">Details →</button></div>
             <div class="card-body"><div id="chart-cust-seg" style="height:200px;"></div></div>
           </div>
         </div>
@@ -1804,11 +1753,11 @@ svg { display: block; }
               <table class="data-table">
                 <thead><tr><th>Product</th><th>Category</th><th>Segment</th><th>Pricing</th><th>Rev Share</th><th>Status</th><th>Action</th></tr></thead>
                 <tbody>
-                  <tr><td><strong>Now Platform</strong></td><td><span class="badge badge-blue">Platform</span></td><td>Enterprise</td><td>Per-seat SaaS</td><td>35%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" data-action="generic" data-expr="openProductDetail('now-platform')">Details</button></td></tr>
-                  <tr><td><strong>IT Service Mgmt</strong></td><td><span class="badge badge-purple">ITSM</span></td><td>Enterprise</td><td>Subscription</td><td>28%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" data-action="generic" data-expr="openProductDetail('itsm')">Details</button></td></tr>
-                  <tr><td><strong>AI Agents</strong></td><td><span class="badge badge-orange">AI</span></td><td>Enterprise</td><td>Usage-based</td><td>12%</td><td><span class="badge badge-blue">Growing</span></td><td><button class="btn btn-secondary btn-xs" data-action="generic" data-expr="openProductDetail('ai-agents')">Details</button></td></tr>
-                  <tr><td><strong>Customer Workflows</strong></td><td><span class="badge badge-teal">CSM</span></td><td>Enterprise</td><td>Subscription</td><td>11%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" data-action="generic" data-expr="openProductDetail('csm')">Details</button></td></tr>
-                  <tr><td><strong>HR Service Delivery</strong></td><td><span class="badge badge-gray">HR</span></td><td>Enterprise</td><td>Subscription</td><td>8%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" data-action="generic" data-expr="openProductDetail('hrsd')">Details</button></td></tr>
+                  <tr><td><strong>Now Platform</strong></td><td><span class="badge badge-blue">Platform</span></td><td>Enterprise</td><td>Per-seat SaaS</td><td>35%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="openProductDetail('now-platform')">Details</button></td></tr>
+                  <tr><td><strong>IT Service Mgmt</strong></td><td><span class="badge badge-purple">ITSM</span></td><td>Enterprise</td><td>Subscription</td><td>28%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="openProductDetail('itsm')">Details</button></td></tr>
+                  <tr><td><strong>AI Agents</strong></td><td><span class="badge badge-orange">AI</span></td><td>Enterprise</td><td>Usage-based</td><td>12%</td><td><span class="badge badge-blue">Growing</span></td><td><button class="btn btn-secondary btn-xs" onclick="openProductDetail('ai-agents')">Details</button></td></tr>
+                  <tr><td><strong>Customer Workflows</strong></td><td><span class="badge badge-teal">CSM</span></td><td>Enterprise</td><td>Subscription</td><td>11%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="openProductDetail('csm')">Details</button></td></tr>
+                  <tr><td><strong>HR Service Delivery</strong></td><td><span class="badge badge-gray">HR</span></td><td>Enterprise</td><td>Subscription</td><td>8%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs" onclick="openProductDetail('hrsd')">Details</button></td></tr>
                   <tr><td><strong>App Engine</strong></td><td><span class="badge badge-blue">Dev</span></td><td>All</td><td>Per-dev</td><td>6%</td><td><span class="badge badge-green">Active</span></td><td><button class="btn btn-secondary btn-xs">Details</button></td></tr>
                 </tbody>
               </table>
@@ -2122,7 +2071,7 @@ svg { display: block; }
   <div class="modal-box">
     <div class="modal-header">
       <div class="modal-title" id="modal-product-title">Product Details</div>
-      <div class="modal-close" data-action="closeModal" data-modal="product-modal">✕</div>
+      <div class="modal-close" onclick="closeModal('product-modal')">✕</div>
     </div>
     <div class="modal-body" id="modal-product-body">
       <div style="margin-bottom:var(--space-4)"><strong id="modal-desc-title">Description</strong><p id="modal-product-desc" style="font-size:var(--font-sm);color:var(--text-secondary);margin-top:6px;line-height:1.6"></p></div>
@@ -2137,470 +2086,203 @@ svg { display: block; }
   <div class="modal-box">
     <div class="modal-header">
       <div class="modal-title" id="bench-modal-title">Benchmark Summary</div>
-      <div class="modal-close" data-action="closeModal" data-modal="bench-modal">✕</div>
+      <div class="modal-close" onclick="closeModal('bench-modal')">✕</div>
     </div>
     <div class="modal-body" id="bench-modal-body"></div>
   </div>
 </div>
-<!-- News All Events Modal -->
-<div class="modal-overlay" id="news-modal">
-  <div class="modal-box" style="width:700px;max-width:96vw;">
-    <div class="modal-header">
-      <div class="modal-title">All Market Events</div>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <select id="news-modal-filter" style="padding:5px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;" data-action="filterNewsModal">
-          <option value="all">All Categories</option>
-          <option value="AI">AI News</option>
-          <option value="Product">Product Launch</option>
-          <option value="M&A">M&As</option>
-          <option value="Partnership">Partnerships</option>
-          <option value="Expansion">Expansion</option>
-          <option value="Win">Customer Wins</option>
-          <option value="Corporate">Corporate Actions</option>
-        </select>
-        <div class="modal-close" data-action="closeModal" data-modal="news-modal">✕</div>
-      </div>
-    </div>
-    <div class="modal-body" id="news-modal-body" style="padding:var(--space-3);max-height:60vh;overflow-y:auto;"></div>
-  </div>
-</div>
-
-<!-- All Companies Modal -->
-<div class="modal-overlay" id="companies-modal">
-  <div class="modal-box" style="width:800px;max-width:96vw;">
-    <div class="modal-header">
-      <div class="modal-title">All Tracked Companies</div>
-      <div class="modal-close" data-action="closeModal" data-modal="companies-modal">✕</div>
-    </div>
-    <div class="modal-body" id="companies-modal-body" style="display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-3);max-height:60vh;overflow-y:auto;"></div>
-  </div>
-</div>
-
-<!-- Add Company Modal -->
-<div class="modal-overlay" id="add-company-modal">
-  <div class="modal-box" style="width:480px;">
-    <div class="modal-header">
-      <div class="modal-title">Add Company to Track</div>
-      <div class="modal-close" data-action="closeModal" data-modal="add-company-modal">✕</div>
-    </div>
-    <div class="modal-body">
-      <div style="margin-bottom:12px;font-size:13px;color:var(--text-secondary)">Select a company from the tracked universe to add to your dashboard view.</div>
-      <div id="add-company-list" style="display:flex;flex-direction:column;gap:8px;max-height:320px;overflow-y:auto;"></div>
-    </div>
-  </div>
-</div>
-
-
-
-
 <script>
-
 'use strict';
 
 // ============================================================
-// DATA LAYER — Cisco CI Portal v04
-// Universe: Cisco (base), Microsoft, Google, Salesforce, Infosys, TCS
-// Period: FY21–FY25 | Sector: AI-Powered Enterprise Software | Global
-// Generated: 2026-08-18
+// DATA LAYER — Sample data for demonstration
 // ============================================================
-
-const BENCH_PEERS = ["cisco","microsoft","google","salesforce","infosys","tcs"];
-
-const BENCH_FEATURES = ["AI","Cloud","Networking","Security","Analytics","Integration","Mobile","Partner","Innovation","Support","Pricing","Global"];
-
-const BENCH_COLORS = {
-  cisco:      '#049fd9',
-  microsoft:  '#0078d4',
-  google:     '#4285f4',
-  salesforce: '#00a1e0',
-  infosys:    '#007cc3',
-  tcs:        '#8b1a1a'
-};
-
-// ── Customer benchmarks ──────────────────────────────────────
-const BENCH_CUST = {
-  totalCustomers: {cisco:100000,microsoft:400000,google:10000000,salesforce:150000,infosys:1800,tcs:1200},
-  retention:      {cisco:92,microsoft:94,google:89,salesforce:91,infosys:95,tcs:96},
-  nrr:            {cisco:108,microsoft:130,google:115,salesforce:108,infosys:102,tcs:101},
-  nps:            {cisco:48,microsoft:54,google:52,salesforce:66,infosys:72,tcs:70},
-  enterprise:     {cisco:72,microsoft:68,google:42,salesforce:74,infosys:88,tcs:90},
-  midmarket:      {cisco:20,microsoft:22,google:38,salesforce:20,infosys:10,tcs:8}
-};
-
-const BENCH_PROFILE_ATTRS = ["Founded","Revenue (FY2025)","Core Strength","Geographic Footprint","Business Model","Key Risks","Market Share (%)","Employees","CEO","Technology Initiatives"];
-
-// ── Market events ────────────────────────────────────────────
-const MARKET_EVENTS = [
-  {company:'cisco',   category:'Acquisition', date:'2024-03-28', title:'Cisco completes Splunk acquisition for $28B', summary:'Largest acquisition in Cisco history, adding security analytics and observability capabilities.', tags:['M&A','Security','AI']},
-  {company:'cisco',   category:'Product',     date:'2025-02-10', title:'Cisco AI Infrastructure orders exceed $2B in FY25', summary:'Webscale AI infrastructure orders double original $1B target, validating AI-era positioning.', tags:['AI','Networking']},
-  {company:'cisco',   category:'Partnership', date:'2024-06-01', title:'Cisco-NVIDIA AI networking alliance', summary:'Joint go-to-market for AI data center networking; Cisco Ethernet fabric for NVIDIA AI factories.', tags:['AI','Partnership','Networking']},
-  {company:'microsoft',category:'Acquisition',date:'2023-10-13', title:'Microsoft closes Activision Blizzard deal ($69B)', summary:'Gaming/media scale-up; cloud gaming strategy validated.', tags:['M&A','Cloud','Gaming']},
-  {company:'microsoft',category:'Product',    date:'2023-03-16', title:'Microsoft 365 Copilot announced', summary:'AI assistant across Word, Excel, Outlook, Teams; monetized at $30/user/month.', tags:['AI','Productivity']},
-  {company:'google',  category:'Product',     date:'2023-12-06', title:'Google Gemini AI model family launched', summary:'Multi-modal AI to compete with GPT-4; integrated into Workspace and GCP products.', tags:['AI','Cloud']},
-  {company:'google',  category:'Acquisition', date:'2025-03-01', title:'Google acquires Wiz for $32B', summary:'Largest cybersecurity acquisition ever; strengthens Google Cloud security posture.', tags:['M&A','Security','Cloud']},
-  {company:'salesforce',category:'Product',   date:'2024-09-17', title:'Salesforce Agentforce AI platform launched', summary:'Autonomous AI agents for sales, service, marketing; 150K+ trials in first 90 days.', tags:['AI','CRM','Agents']},
-  {company:'infosys', category:'Strategy',    date:'2024-01-15', title:'Infosys AI First strategy — Topaz platform', summary:'$2B+ AI-led deal backlog; Topaz AI platform with 150+ use cases launched.', tags:['AI','Cloud','Strategy']},
-  {company:'tcs',     category:'Partnership', date:'2023-11-10', title:'TCS-Google Cloud strategic partnership', summary:'$1.5B joint commitment to co-develop AI/cloud solutions for enterprise clients.', tags:['AI','Cloud','Partnership']},
-  {company:'tcs',     category:'Acquisition', date:'2023-01-15', title:'TCS acquires Postbank Systems for $1.35B', summary:'Germany\'s largest core banking IT deal; strengthens TCS BFSI vertical in Europe.', tags:['M&A','BFSI','Europe']}
-];
-
-// ── Companies Data ────────────────────────────────────────────
 const COMPANIES_DATA = {
-
-  cisco: {
-    name:'Cisco Systems', ticker:'CSCO', exchange:'NASDAQ', color:'#049fd9', initials:'CS', identifier:'cisco',
-    HQ:'San Jose, CA, USA', CEO:'Chuck Robbins', founded:1984, employees:90000,
-    sector:'AI-Powered Enterprise Networking & Software', description:'Global leader in networking, security, and AI-powered enterprise infrastructure.',
-    latestRevenue:'$56.7B', marketCap:'$230B', rating:'Buy',
+  servicenow: {
+    name:'ServiceNow', ticker:'NOW', exchange:'NYSE', color:'#1e3a5f', initials:'SN', identifier:'servicenow',
+    HQ:'Santa Clara, CA', CEO:'Bill McDermott', founded:2004, employees:26000,
+    sector:'AI-Powered Enterprise Software', description:'AI workflow automation platform for enterprise',
+    latestRevenue:'$11.5B', marketCap:'$190B', rating:'Strong Buy',
     years:['FY21','FY22','FY23','FY24','FY25'],
-    revenues:[49820,51557,56998,53803,56654],
-    ebitda:[14500,15200,16800,15600,16200],
-    netIncome:[10591,11812,12613,10320,10180],
-    revGrowth:[1,4,11,-6,5],
-    eps:[2.50,2.82,3.07,2.54,2.61],
-    netMargin:[21.3,22.9,22.1,19.2,18.0],
-    ebitdaMargin:[29.1,29.5,29.5,29.0,28.6],
-    balance:{cash:[24000,19267,26334,18604,16673],totalAssets:[97000,94000,101000,112000,108000],totalDebt:[10200,10571,9452,32243,29643]},
-    cashflow:{operatingCF:[15680,13226,19886,10880,14193],capex:[530,477,849,670,905],freeCF:[15150,12749,19037,10210,13288]},
-    kpis:[{label:'NRR',value:'108%'},{label:'AI Orders FY25',value:'$2B+'},{label:'FCF Margin',value:'23%'},{label:'Security Rev',value:'$8.1B'}],
-    geographicData:[
-      {region:'Americas',share:56,offices:45,growth:5},
-      {region:'EMEA',    share:27,offices:38,growth:4},
-      {region:'APJC',   share:17,offices:28,growth:7}
-    ],
-    topProducts:['Networking (50%)','Services (27%)','Security (14%)','Collaboration (7%)','Observability (2%)'],
-    capabilityScores:{AI:78,Cloud:72,Networking:97,Security:91,Analytics:74,Integration:82,Mobile:68,Partner:84,Innovation:80,Support:87,Pricing:72,Global:86},
-    rndData:{spend:[6300,6500,7200,7600,7900],areas:[{name:'AI/ML',pct:28},{name:'Networking',pct:32},{name:'Security',pct:22},{name:'Collaboration',pct:10},{name:'Other',pct:8}]},
-    riskScores:{regulatory:3,competitive:4,execution:3,technology:3,market:3},
-    insights:{
-      product:'Cisco has strategically pivoted toward AI infrastructure and security with its landmark $28B Splunk acquisition completed in March 2024, adding world-class security analytics and observability to its portfolio. The Networking segment ($28.3B in FY25) remains the cornerstone, with AI-enabled silicon and Ethernet fabric solutions driving demand from hyperscale data centers. Security revenues surged to $8.1B in FY25, up from $3.9B in FY23, driven by the Splunk integration and Cisco XDR platform adoption. AI Infrastructure orders from webscale customers exceeded $2B in FY25, more than double the original target, validating Cisco\'s positioning in AI networking. The Collaboration suite (Webex) added AI meeting assistants and enterprise telephony AI capabilities. Observability through AppDynamics and ThousandEyes crossed $1B revenue.',
-      sales:'Americas revenue leads at ~56% of total, with strong enterprise and service provider penetration. EMEA grew 4% YoY and APJC grew 7% YoY in FY25. Key growth drivers include AI networking sales to hyperscalers (over $800M Q4 FY25 alone), enterprise security upgrades post-Splunk, and services expansion driven by software and subscription transitions. The go-to-market shift to recurring software revenue has increased annual recurring revenue (ARR) to approximately $29.9B. Channel partner ecosystem of 50,000+ globally drives 80%+ of product revenue.',
-      rnd:'Cisco invested approximately $7.9B in R&D in FY25, representing ~14% of revenue. AI/ML investments account for 28% of R&D spend and are focused on silicon AI, Cisco AI Assistant across all product lines, and predictive networking. The Splunk acquisition added 3,500+ engineers and a powerful AI analytics R&D organization. Cisco has filed 2,000+ AI-related patents through FY25. Research labs in San Jose, Research Triangle Park, and Bangalore focus on quantum networking and next-gen silicon.',
-      inorganic:'Cisco\'s most significant deal in history was the $28B Splunk acquisition (closed March 2024), transforming the company into a security analytics leader. Other notable FY21-25 deals include: Lightspin ($200M, cloud security posture, 2022), Opsani (AI performance optimization, 2021), Sedona Systems (optical networking, 2023), and Isovalent (eBPF-based cloud networking, 2023). Total M&A spend over FY21-25 exceeded $31B. Cisco divested its IoT Connected Safety division and non-core SMB networking assets.',
-      marketing:'Cisco brand repositioned around "AI-Powered Infrastructure" with campaigns targeting AI era networking. CEO Chuck Robbins has been highly visible at Davos and major tech events advocating for responsible AI. Cisco Live (annual conference) draws 30K+ attendees; FY25 theme "Be Brilliant with AI." Partnership marketing co-investments with NVIDIA ($500M AI go-to-market fund), Microsoft, and AWS. Cisco Foundation digital equity programs enhance brand in emerging markets.',
-      customerwins:'Key FY25 customer wins include: US Department of Defense AI networking contract ($1.2B, 5yr), JPMorgan Chase Splunk security analytics platform ($280M), Deutsche Bank enterprise network modernization, Toyota smart manufacturing AI networking, NTT APAC hyperscale data center networking, and Vodafone global enterprise security transformation. 45 new $50M+ TCV customers in FY25.',
-      hiring:'Cisco employs ~90,000 globally. Splunk acquisition added ~8,000 employees. Net hiring in FY25 focused on AI/ML engineers (+2,000), sales specialists for security (+1,500), and customer success for software transition (+800). Cisco has a strong campus hiring program in India with 25,000+ employees in Bangalore and Hyderabad.'
-    }
+    revenues:[5900,7245,8970,10960,11500],
+    ebitda:[1300,1750,2280,2900,3260],
+    netIncome:[230,326,1612,1870,2100],
+    revGrowth:[29,23,24,22,22],
+    eps:[1.1,1.5,7.9,9.1,10.2],
+    netMargin:[3.9,4.5,18,17,18.3],
+    ebitdaMargin:[22,24.2,25.4,26.5,28.4],
+    balance:{cash:[4200,4800,4100,5200,6100],totalAssets:[14500,17200,19800,23100,26400],totalDebt:[1500,1500,1500,1500,1500]},
+    cashflow:{operatingCF:[1800,2300,2800,3400,4100],capex:[280,350,420,500,580],freeCF:[1520,1950,2380,2900,3520]},
+    kpis:[{label:'NRR',value:'125%'},{label:'NPS',value:72},{label:'FCF Margin',value:'31%'},{label:'R40 Score',value:56}],
+    geographicData:[{region:'Americas',share:58,offices:32,growth:24},{region:'EMEA',share:27,offices:28,growth:19},{region:'APAC',share:12,offices:18,growth:31},{region:'MEA',share:3,offices:7,growth:42}],
+    topProducts:['Now Platform (35%)','ITSM (28%)','AI Agents (12%)','CSM (11%)','HR (8%)','Other (6%)'],
+    capabilityScores:{AI:92,Cloud:85,CRM:72,Analytics:78,Security:83,Integration:88,Mobile:87,Partner:74,Innovation:90,Support:86,Pricing:71,Global:80},
+    rndData:{spend:[680,820,1050,1320,1620],areas:[{name:'AI/ML',pct:42},{name:'Platform',pct:25},{name:'Security',pct:15},{name:'Mobile',pct:10},{name:'Other',pct:8}]},
+    riskScores:{regulatory:3,competitive:4,execution:3,technology:4,market:3},
+    insights:{product:'ServiceNow AI Agents platform launched in FY25 enabling autonomous workflow orchestration across ITSM, CSM, and HR domains. Major FY24 launches include GenAI-powered incident resolution and text-to-workflow capabilities. App Engine no-code development democratized workflow creation for 50K+ builders.',sales:'Americas enterprise sales grew 24% YoY driven by US Federal Government $450M contract win. APAC pipeline grew 65% with Japan/ANZ enterprise expansion. Net new ACV of $2.1B in FY25, up 28% YoY.',rnd:'R&D investment reached $1.6B in FY25 (14% of revenue). AI/ML accounts for 42% of R&D spend. Proprietary Now LLM fine-tuned on 1B+ enterprise workflow events. Filed 340+ AI patents in FY24.',inorganic:'12 acquisitions FY21-25 totaling $3.2B, focused on AI capabilities. FY25: $680M AI orchestration startup for Agents platform core technology. FY24: $325M Data Visibility.io for CMDB enhancement.',marketing:'Brand reposition to "AI Workflow Automation" platform resonating with C-suite. CEO visibility at Davos, industry events driving pipeline. Partner co-marketing with Microsoft ($200M joint fund) and Google.',customerwins:'US Federal Government ($450M, 5yr), JPMorgan Chase enterprise expansion, Deutsche Telekom EMEA platform deal, Toyota APAC manufacturing workflows. 43 new $1M+ ARR customers in Q4 FY25.',hiring:'Added 2,800 net employees in FY25 with focus on AI/ML engineers (+800), enterprise sales (APAC +400), and customer success (+600). 3,200 open roles as of Q1 FY26.'}
   },
-
-  microsoft: {
-    name:'Microsoft', ticker:'MSFT', exchange:'NASDAQ', color:'#0078d4', initials:'MS', identifier:'microsoft',
-    HQ:'Redmond, WA, USA', CEO:'Satya Nadella', founded:1975, employees:228000,
-    sector:'Cloud, AI & Productivity Software', description:'Global leader in cloud computing, productivity software, and enterprise AI.',
-    latestRevenue:'$245B', marketCap:'$3100B', rating:'Strong Buy',
-    years:['FY21','FY22','FY23','FY24','FY25'],
-    revenues:[168100,198270,211915,245122,245000],
-    ebitda:[76600,92100,100100,122800,130000],
-    netIncome:[61271,72738,72361,88136,95000],
-    revGrowth:[18,18,7,16,0],
-    eps:[8.05,9.65,9.72,11.45,12.80],
-    netMargin:[36.4,36.7,34.1,36.0,38.8],
-    ebitdaMargin:[45.6,46.4,47.2,50.1,53.1],
-    balance:{cash:[130300,104750,111300,76400,70000],totalAssets:[333779,364840,411976,512163,540000],totalDebt:[67120,61270,59965,49550,45000]},
-    cashflow:{operatingCF:[76740,89030,87907,119320,130000],capex:[20622,23886,28107,44482,52000],freeCF:[56118,65144,59800,74838,78000]},
-    kpis:[{label:'NRR',value:'130%'},{label:'Azure Growth',value:'29%'},{label:'FCF Margin',value:'32%'},{label:'Copilot ARR',value:'$3B+'}],
-    geographicData:[
-      {region:'Americas',share:52,offices:85,growth:16},
-      {region:'EMEA',    share:28,offices:72,growth:15},
-      {region:'APAC',   share:16,offices:45,growth:18},
-      {region:'MEA',    share:4, offices:18,growth:22}
-    ],
-    topProducts:['Azure Cloud (32%)','Office 365 (28%)','Xbox/Gaming (12%)','Dynamics 365 (10%)','LinkedIn (8%)','Other (10%)'],
-    capabilityScores:{AI:92,Cloud:96,Networking:58,Security:91,Analytics:88,Integration:91,Mobile:82,Partner:94,Innovation:89,Support:85,Pricing:79,Global:92},
-    rndData:{spend:[20716,24512,27195,29510,32000],areas:[{name:'Cloud/AI',pct:45},{name:'Productivity',pct:25},{name:'Gaming',pct:15},{name:'Security',pct:10},{name:'Other',pct:5}]},
-    riskScores:{regulatory:5,competitive:3,execution:2,technology:3,market:2},
-    insights:{
-      product:'Microsoft Copilot is the most significant AI product launch in the company\'s history, embedded across Microsoft 365, Azure, Dynamics 365, GitHub, and the Power Platform. Azure OpenAI Service enables enterprise-grade deployment of GPT-4, DALL-E, and Whisper models. Azure grew 29% in FY25, sustaining its position as the #2 cloud provider. GitHub Copilot has 1.8M+ paid subscribers. Microsoft Fabric unified data and analytics. The Dynamics 365 CRM and ERP suite benefits from Copilot AI agents to automate business processes.',
-      sales:'Commercial M365 grew 14% YoY. Azure enterprise deals over $100K exceeded 60,000. Copilot monetization ramping with $3B+ ARR run rate. Americas leads at 52% of revenue; APAC growing fastest at 18%. Partner ecosystem drives 40% of Azure revenue. US Government has been a transformational customer with a $28.7B AI contract.',
-      rnd:'$32B R&D in FY25, with $13B invested in Azure OpenAI infrastructure. Copilot AI annual spend exceeds $8B. 60,000+ researchers and engineers globally. Strategic partnership with OpenAI anchors AI roadmap.',
-      inorganic:'Activision Blizzard $69B (2023) — gaming/metaverse. Nuance $19.7B (2022) — healthcare AI. LinkedIn (owned since 2016). FY25: GitHub AI capability expansion, Inflection AI talent. $10B+ OpenAI investment for 49% stake.',
-      marketing:'Build developer conference, Ignite enterprise event, and Copilot wave marketing campaigns. EU regulatory battles over Teams bundling. Brand repositioned as the world\'s leading AI company.',
-      customerwins:'US Government AI contract $28.7B, Deutsche Bank digital transformation, Toyota Manufacturing Copilot, JPMorgan Azure expansion, Volkswagen M365 Copilot global rollout.',
-      hiring:'Net headcount stable after 10,000 layoffs in FY24. Re-hiring 5,000+ AI Cloud engineers in FY25. 25,000 open roles globally.'
-    }
-  },
-
-  google: {
-    name:'Google (Alphabet)', ticker:'GOOGL', exchange:'NASDAQ', color:'#4285f4', initials:'GG', identifier:'google',
-    HQ:'Mountain View, CA, USA', CEO:'Sundar Pichai', founded:1998, employees:181000,
-    sector:'Cloud, AI & Advertising Technology', description:'AI-first technology company with dominant search, cloud, and enterprise AI portfolio.',
-    latestRevenue:'$350B', marketCap:'$2200B', rating:'Buy',
-    years:['FY21','FY22','FY23','FY24','FY25'],
-    revenues:[257637,282836,307394,350018,350000],
-    ebitda:[78529,87800,95600,111000,115000],
-    netIncome:[76033,59972,73795,100118,105000],
-    revGrowth:[41,10,9,14,0],
-    eps:[5.61,4.56,5.80,7.74,8.12],
-    netMargin:[29.5,21.2,24.0,28.6,30.0],
-    ebitdaMargin:[30.5,31.1,31.1,31.7,32.9],
-    balance:{cash:[142000,139600,118274,108079,110000],totalAssets:[359268,365264,402392,430166,450000],totalDebt:[28000,14817,29282,29222,26000]},
-    cashflow:{operatingCF:[67936,91651,91495,110680,115000],capex:[24173,31485,32251,52548,58000],freeCF:[67020,60165,69495,72000,57000]},
-    kpis:[{label:'Cloud Growth',value:'29%'},{label:'AI Revenue',value:'$12B+'},{label:'FCF Margin',value:'16%'},{label:'Search Share',value:'90%+'}],
-    geographicData:[
-      {region:'Americas',share:48,offices:60,growth:13},
-      {region:'EMEA',    share:30,offices:55,growth:12},
-      {region:'APAC',   share:18,offices:40,growth:18},
-      {region:'MEA',    share:4, offices:15,growth:22}
-    ],
-    topProducts:['Search & Ads (57%)','Google Cloud (13%)','YouTube (11%)','Google Play/Hardware (10%)','Other Bets (9%)'],
-    capabilityScores:{AI:95,Cloud:88,Networking:65,Security:83,Analytics:93,Integration:86,Mobile:95,Partner:80,Innovation:96,Support:72,Pricing:74,Global:90},
-    rndData:{spend:[31562,39500,45427,49590,52000],areas:[{name:'AI/ML',pct:50},{name:'Cloud',pct:22},{name:'Search',pct:14},{name:'Hardware',pct:8},{name:'Other',pct:6}]},
-    riskScores:{regulatory:5,competitive:4,execution:3,technology:2,market:3},
-    insights:{
-      product:'Google Gemini AI family (Ultra, Pro, Nano) launched FY24 as a multi-modal challenger to GPT-4. Google Cloud AI Hypercomputer enables petaflop-scale ML training. Vertex AI platform consolidates ML ops. Google Workspace AI features — Duet AI — embedded in Gmail, Docs, Meet. NotebookLM gained enterprise adoption. TPU v5 silicon offers best-in-class performance per watt for AI training.',
-      sales:'Google Cloud revenue exceeded $45B annualized run rate in FY25, growing 29% YoY. Americas at 48%, EMEA 30%, APAC 18%. Cloud backlog exceeded $77B. Enterprise Workspace seats surpassed 10 million paid. Ad revenue remains the core at 70%+ of total.',
-      rnd:'$52B R&D in FY25 — the highest of any company in the study. AI/ML accounts for 50% of R&D. DeepMind ($2B/yr budget) drives foundational AI research. TPU custom silicon reduces inference costs by 80% vs. GPUs.',
-      inorganic:'Wiz acquisition ($32B, 2025) — cloud security. Mandiant ($5.4B, 2022) — cybersecurity. Multiple AI startup acquisitions. FY21-25 M&A totals ~$45B.',
-      marketing:'Google I/O developer conference, Cloud Next enterprise event. Gemini AI marketing campaign 2024-2025. Cloud brand competition with AWS/Azure.',
-      customerwins:'Ford (global AI platform), Walmart (Vertex AI supply chain), GM (cloud migration), Goldman Sachs (Workspace), Airbus (Google Cloud migration).',
-      hiring:'Reduced 12,000 employees in FY24. Re-hiring in AI research (+3,000) and Google Cloud sales (+2,500). 20,000 open roles.'
-    }
-  },
-
-  salesforce: {
+  salesforce:{
     name:'Salesforce', ticker:'CRM', exchange:'NYSE', color:'#00a1e0', initials:'SF', identifier:'salesforce',
-    HQ:'San Francisco, CA, USA', CEO:'Marc Benioff', founded:1999, employees:72000,
-    sector:'CRM & Customer Success Platform', description:'World\'s #1 CRM platform with enterprise AI and data capabilities.',
+    HQ:'San Francisco, CA', CEO:'Marc Benioff', founded:1999, employees:72000,
+    sector:'CRM & Customer Success Platform', description:'World\'s #1 CRM platform with AI capabilities',
     latestRevenue:'$37.9B', marketCap:'$255B', rating:'Buy',
     years:['FY21','FY22','FY23','FY24','FY25'],
     revenues:[21250,26490,31350,34860,37900],
     ebitda:[2300,2900,5100,8600,9800],
     netIncome:[4070,1440,208,4136,6200],
     revGrowth:[25,25,18,11,9],
-    eps:[4.38,1.48,0.21,4.20,6.30],
+    eps:[4.38,1.48,0.21,4.2,6.3],
     netMargin:[19.2,5.4,0.7,11.9,16.4],
     ebitdaMargin:[10.8,10.9,16.2,24.7,25.9],
     balance:{cash:[6200,7800,9800,10200,11400],totalAssets:[66000,98200,101400,98600,96800],totalDebt:[2670,9000,14900,12900,9200]},
     cashflow:{operatingCF:[4800,6000,7100,10200,12000],capex:[680,820,950,1100,1200],freeCF:[4120,5180,6150,9100,10800]},
-    kpis:[{label:'NRR',value:'108%'},{label:'NPS',value:66},{label:'FCF Margin',value:'28%'},{label:'Agentforce Trials',value:'150K+'}],
-    geographicData:[
-      {region:'Americas',share:63,offices:45,growth:9},
-      {region:'EMEA',    share:24,offices:38,growth:10},
-      {region:'APAC',   share:11,offices:22,growth:12},
-      {region:'MEA',    share:2, offices:8, growth:18}
-    ],
-    topProducts:['Sales Cloud (28%)','Service Cloud (24%)','Platform/Slack (18%)','Marketing Cloud (16%)','Data Cloud (8%)','Other (6%)'],
-    capabilityScores:{AI:80,Cloud:82,Networking:22,Security:76,Analytics:82,Integration:87,Mobile:79,Partner:90,Innovation:78,Support:84,Pricing:74,Global:86},
+    kpis:[{label:'NRR',value:'108%'},{label:'NPS',value:66},{label:'FCF Margin',value:'28%'},{label:'R40 Score',value:43}],
+    geographicData:[{region:'Americas',share:63,offices:45,growth:9},{region:'EMEA',share:24,offices:38,growth:10},{region:'APAC',share:11,offices:22,growth:12},{region:'MEA',share:2,offices:8,growth:18}],
+    topProducts:['Sales Cloud (28%)','Service Cloud (24%)','Platform (18%)','Marketing Cloud (16%)','Data Cloud (8%)','Other (6%)'],
+    capabilityScores:{AI:78,Cloud:82,CRM:96,Analytics:80,Security:76,Integration:85,Mobile:79,Partner:88,Innovation:76,Support:82,Pricing:74,Global:86},
     rndData:{spend:[3200,3800,4500,5200,5800],areas:[{name:'AI/ML',pct:35},{name:'CRM Core',pct:30},{name:'Analytics',pct:18},{name:'Platform',pct:12},{name:'Other',pct:5}]},
     riskScores:{regulatory:2,competitive:5,execution:4,technology:3,market:4},
-    insights:{
-      product:'Agentforce AI platform (launched Q3 FY25) enables autonomous AI agents for sales, service, marketing, and commerce. Data Cloud unifies customer data across all Salesforce products. Einstein AI embedded across all clouds with 1T+ weekly AI actions. Slack platform deeply integrated into enterprise workflows. MuleSoft integration platform connects 1,800+ enterprise systems.',
-      sales:'Americas revenue $23.9B, up 8% YoY. Europe 10%, APAC 12% growth. Average enterprise ACV $400K+. 150,000+ Agentforce trials in first 90 days. Net new ACV $3.3B in FY25.',
-      rnd:'$5.8B R&D in FY25. AI investments focused on Agentforce orchestration and Data Cloud intelligence. 500+ AI patents. $250M Salesforce Ventures AI fund.',
-      inorganic:'Slack $27.7B (2021), MuleSoft $6.5B (2018). FY24-25: Spiff (SPM), Own Company (data protection $1.9B). Activist investors limiting M&A appetite.',
-      marketing:'Dreamforce 40K+ attendees, Agentforce Super Bowl campaign drove 2M+ trial signups. AI-first brand reposition. $500M co-marketing with Microsoft and Google.',
-      customerwins:'Wells Fargo (Agentforce), BMW Service Cloud expansion, Unilever Data Cloud, Coca-Cola full-platform expansion. 48 $10M+ ARR customers in FY25.',
-      hiring:'Headcount reduced 10,000 in FY24 restructuring. Re-hiring 1,200 AI specialists and enterprise sales. 8,000 open roles as of Q1 FY26.'
-    }
+    insights:{product:'Agentforce AI platform launched Q3 FY25 enabling autonomous AI agents for sales, service, and marketing. Data Cloud becoming the unification layer connecting all Salesforce products. Einstein AI embedded across all clouds with 1T+ weekly AI actions.',sales:'Americas revenue $23.9B, up 8% YoY. Europe growing at 10%, APAC at 12%. Enterprise deal size growing: avg ACV of $400K+ for enterprise deals. Activation of 150K Agentforce trials in first 90 days.',rnd:'$5.8B R&D investment in FY25. AI investments focused on Agentforce orchestration and Data Cloud intelligence. 500+ AI patents filed. $250M Salesforce Ventures AI fund launched.',inorganic:'Major: Slack $27.7B (2021), MuleSoft $6.5B (2018). FY25: $1.9B data integration firm acquisition. FY24: Spiff (SPM), Airkit (CX AI). Activist pressure limiting M&A appetite.',marketing:'Dreamforce attendance 40K+. Agentforce SuperBowl campaign drove 2M+ trial signups. AI-first brand reposition underway. $500M co-marketing with Microsoft and Google.',customerwins:'Wells Fargo (Agentforce), BMW Service Cloud expansion, Unilever Data Cloud, Coca-Cola full-platform expansion. 48 $10M+ ARR customers in FY25.',hiring:'Headcount -10K in FY24 restructuring. Selective re-hiring in AI (+1,200) and enterprise sales. 8,000 open roles with focus on Agentforce specialists.'}
   },
-
-  infosys: {
-    name:'Infosys', ticker:'INFY', exchange:'NYSE', color:'#007cc3', initials:'IF', identifier:'infosys',
-    HQ:'Bengaluru, India', CEO:'Salil Parekh', founded:1981, employees:317000,
-    sector:'IT Services & AI Consulting', description:'Global technology services and consulting leader with AI-first transformation strategy.',
-    latestRevenue:'$19.3B', marketCap:'$80B', rating:'Hold',
+  microsoft:{
+    name:'Microsoft', ticker:'MSFT', exchange:'NASDAQ', color:'#0078d4', initials:'MS', identifier:'microsoft',
+    HQ:'Redmond, WA', CEO:'Satya Nadella', founded:1975, employees:228000,
+    sector:'Cloud & Productivity Software', description:'Global leader in cloud, productivity, and AI',
+    latestRevenue:'$245B', marketCap:'$3.1T', rating:'Buy',
     years:['FY21','FY22','FY23','FY24','FY25'],
-    revenues:[12077,16311,18212,18562,19277],
-    ebitda:[3060,4130,4600,4686,4864],
-    netIncome:[2490,2963,2981,3167,3158],
-    revGrowth:[2,35,12,2,4],
-    eps:[0.59,0.70,0.71,0.76,0.76],
-    netMargin:[20.6,18.2,16.4,17.1,16.4],
-    ebitdaMargin:[25.3,25.3,25.3,25.2,25.2],
-    balance:{cash:[3400,3185,2322,3321,4321],totalAssets:[12400,14800,16100,16900,17800],totalDebt:[620,722,1010,1002,962]},
-    cashflow:{operatingCF:[2900,3345,2853,3148,4351],capex:[280,290,319,266,263],freeCF:[2620,3055,2534,2882,4088]},
-    kpis:[{label:'NRR',value:'102%'},{label:'AI Rev Share',value:'5%+'},{label:'FCF Margin',value:'21%'},{label:'EBIT Margin',value:'21%'}],
-    geographicData:[
-      {region:'Americas',  share:59,offices:35,growth:4},
-      {region:'Europe',    share:27,offices:30,growth:5},
-      {region:'Rest of World',share:14,offices:25,growth:7}
-    ],
-    topProducts:['Digital Services (62%)','Cloud (18%)','Core IT (12%)','AI/Data (5%)','BPO (3%)'],
-    capabilityScores:{AI:72,Cloud:74,Networking:30,Security:65,Analytics:74,Integration:78,Mobile:70,Partner:72,Innovation:71,Support:82,Pricing:84,Global:80},
-    rndData:{spend:[500,580,670,750,820],areas:[{name:'AI/ML',pct:40},{name:'Cloud',pct:28},{name:'Digital',pct:18},{name:'Automation',pct:9},{name:'Other',pct:5}]},
-    riskScores:{regulatory:2,competitive:4,execution:3,technology:3,market:3},
-    insights:{
-      product:'Infosys Topaz is the flagship AI-first platform, offering over 150 AI use cases and 12,000 AI assets for enterprise clients. The Cobalt cloud platform accelerates enterprise cloud migrations. Infosys AI First Value Framework (launched 2024) provides a structured approach to AI ROI. Springboard skilling program has trained 200,000+ employees in AI/ML. Infosys Equinox commerce platform and Wingspan learning platform add digital product breadth.',
-      sales:'Americas at 59% of revenue (North America-driven). Europe at 27% with growing financial services and manufacturing clients. AI-led deal wins contribute to $2B+ deal backlog. Key verticals: Financial Services (29%), Retail (15%), Manufacturing (14%), Energy (11%), Communications (11%).',
-      rnd:'$820M R&D equivalent spend in FY25. 40% on AI/ML. Infosys Research (academic partnerships with MIT, Stanford, IITs). 4,000+ patents filed globally. Infosys Living Labs in Bengaluru and Mysuru.',
-      inorganic:'Acquisitions in FY21-25 include: BASE life science (Denmark, euro110M), oddity tech (Germany), Innovisor, Simco, and Kaleidoscope Innovation. Total M&A spend approximately $800M over the period. Strategy focuses on capability bolt-ons rather than scale M&A.',
-      marketing:'Infosys BrandVoice in Forbes, the Infosys Prize for science, and thought leadership on AI ethics. Brand built on premium consulting positioning. "Navigate your Next" brand campaign.',
-      customerwins:'ABN AMRO core banking transformation, Volvo Cars AI platform, BP energy transformation, Daimler manufacturing AI, Unilever supply chain AI. 42 large deals (>$50M TCV) in FY25.',
-      hiring:'317,000 employees globally, with ~220,000 in India. Net hiring moderated in FY24-25 with demand softness. Infosys Springboard has trained 9M+ learners globally in digital skills.'
-    }
+    revenues:[168100,198270,211915,245122,245000],
+    ebitda:[76600,92100,100100,122800,130000],
+    netIncome:[61271,72738,72361,88136,95000],
+    revGrowth:[18,18,7,16,16],
+    eps:[8.05,9.65,9.72,11.45,12.8],
+    netMargin:[36.4,36.7,34.1,36,38.8],
+    ebitdaMargin:[45.6,46.4,47.2,50.1,53.1],
+    balance:{cash:[130300,104750,111300,76400,70000],totalAssets:[333779,364840,411976,512163,540000],totalDebt:[67120,61270,59965,49550,45000]},
+    cashflow:{operatingCF:[76740,89030,87907,119320,130000],capex:[20622,23886,28107,44482,52000],freeCF:[56118,65144,59800,74838,78000]},
+    kpis:[{label:'NRR',value:'130%'},{label:'NPS',value:54},{label:'FCF Margin',value:'32%'},{label:'R40 Score',value:68}],
+    geographicData:[{region:'Americas',share:52,offices:85,growth:16},{region:'EMEA',share:28,offices:72,growth:15},{region:'APAC',share:16,offices:45,growth:18},{region:'MEA',share:4,offices:18,growth:22}],
+    topProducts:['Azure (32%)','Office 365 (28%)','Xbox/Gaming (12%)','Dynamics (10%)','LinkedIn (8%)','Other (10%)'],
+    capabilityScores:{AI:88,Cloud:96,CRM:78,Analytics:86,Security:91,Integration:91,Mobile:82,Partner:94,Innovation:87,Support:85,Pricing:79,Global:92},
+    rndData:{spend:[20716,24512,27195,29510,32000],areas:[{name:'Cloud/AI',pct:45},{name:'Productivity',pct:25},{name:'Gaming',pct:15},{name:'Security',pct:10},{name:'Other',pct:5}]},
+    riskScores:{regulatory:5,competitive:3,execution:2,technology:3,market:2},
+    insights:{product:'Copilot integrated across M365, Azure, Dynamics, and GitHub. Azure OpenAI Service enabling enterprise AI deployment. GitHub Copilot 1.8M paid subscribers. Fabric data platform unifying analytics.',sales:'Azure grew 29% in FY25. Commercial M365 grew 14%. Copilot monetization early-stage but $3B+ ARR run rate. Partner ecosystem driving 40% of Azure revenue.',rnd:'$32B R&D in FY25. $13B Azure OpenAI infrastructure investment. Copilot AI spend $8B+ annually. 60K+ Azure customer deals over $100K.',inorganic:'Activision $69B (2023), Nuance $19.7B (2022). FY25: GitHub AI expansion, Inflection AI talent acquisition. $10B+ OpenAI investment.',marketing:'Build developer conference, Ignite enterprise, and Copilot wave campaigns. EU regulatory battles over Teams bundling.',customerwins:'US Government AI contract $28.7B, Deutsche Bank digital transformation, Toyota Manufacturing Copilot deployment.',hiring:'Net headcount stable after 10K layoffs in FY24. Re-hiring in AI Cloud engineering (+5K). 25K open roles.'}
   },
-
-  tcs: {
-    name:'Tata Consultancy Services', ticker:'TCS.NS', exchange:'NSE/BSE', color:'#8b1a1a', initials:'TC', identifier:'tcs',
-    HQ:'Mumbai, India', CEO:'K. Krithivasan', founded:1968, employees:614000,
-    sector:'IT Services, Consulting & AI', description:'Second-largest IT services company globally, digital transformation partner for enterprises worldwide.',
-    latestRevenue:'$29.1B', marketCap:'$160B', rating:'Hold',
+  google:{
+    name:'Google (Alphabet)', ticker:'GOOGL', exchange:'NASDAQ', color:'#4285f4', initials:'GG', identifier:'google',
+    HQ:'Mountain View, CA', CEO:'Sundar Pichai', founded:1998, employees:181000,
+    sector:'Cloud, AI & Advertising', description:'AI-first technology company with dominant cloud and search',
+    latestRevenue:'$350B', marketCap:'$2.2T', rating:'Buy',
     years:['FY21','FY22','FY23','FY24','FY25'],
-    revenues:[22179,25703,27930,29078,29108],
-    ebitda:[5820,6650,7130,7370,7270],
-    netIncome:[4419,5032,5444,5622,5564],
-    revGrowth:[4,16,9,4,0],
-    eps:[1.20,1.36,1.47,1.52,1.51],
-    netMargin:[19.9,19.6,19.5,19.3,19.1],
-    ebitdaMargin:[26.2,25.9,25.5,25.3,25.0],
-    balance:{cash:[5200,6400,7100,7800,8500],totalAssets:[18200,21400,24100,26300,28100],totalDebt:[200,220,250,270,280]},
-    cashflow:{operatingCF:[4900,5700,6100,6400,6100],capex:[420,450,480,510,530],freeCF:[4480,5250,5620,5890,5570]},
-    kpis:[{label:'NRR',value:'101%'},{label:'AI Rev',value:'$1.5B'},{label:'FCF Margin',value:'19%'},{label:'EBIT Margin',value:'25%'}],
-    geographicData:[
-      {region:'Americas',  share:51,offices:48,growth:3},
-      {region:'Europe',    share:31,offices:42,growth:4},
-      {region:'India',     share:5, offices:20,growth:8},
-      {region:'Rest of World',share:13,offices:30,growth:5}
-    ],
-    topProducts:['IT Services (44%)','Consulting (18%)','BPO (14%)','Digital Transformation (15%)','AI/Cloud (9%)'],
-    capabilityScores:{AI:70,Cloud:72,Networking:28,Security:66,Analytics:73,Integration:76,Mobile:68,Partner:70,Innovation:68,Support:85,Pricing:87,Global:88},
-    rndData:{spend:[620,700,780,860,930],areas:[{name:'AI/ML',pct:38},{name:'Cloud',pct:27},{name:'Automation',pct:18},{name:'Analytics',pct:12},{name:'Other',pct:5}]},
-    riskScores:{regulatory:2,competitive:4,execution:2,technology:3,market:3},
-    insights:{
-      product:'TCS WisdomNext is the flagship generative AI platform, integrating over 200 AI use cases across industry verticals. TCS AI Business Suite offers pre-built AI solutions for banking, manufacturing, and retail. The TCS Cognitive Automation platform has processed 5B+ transactions. Machine First Delivery Model (MFDM) is a proprietary methodology for AI-led IT delivery. TCS has built industry cloud platforms including TCS BaNCS for banking and TCS iON for education.',
-      sales:'Americas contributes 51% of revenue; Europe 31%. Key industry verticals: BFSI (31%), Retail & CPG (16%), Communications (9%), Manufacturing (9%), Life Sciences (9%). Record deal wins in FY24 with $10.2B in total contract value. Google Cloud strategic partnership ($1.5B) drives cloud adoption co-selling.',
-      rnd:'$930M innovation/R&D equivalent in FY25. 40% on AI/ML, 27% on cloud. TCS Research and Innovation labs in Tokyo, Cincinnati, Chennai. 7,000+ active patents globally. TCS co-innovation with 50+ academic institutions.',
-      inorganic:'TCS follows an organic-first strategy with minimal M&A. Notable acquisitions: Postbank Systems (Germany, $1.35B, 2023) — largest deal to date for core banking. Bridgepoint (UK, 2021). Total FY21-25 M&A spend ~$2B.',
-      marketing:'TCS brand built on scale, trust, and delivery excellence. Title sponsor of TCS New York City Marathon and Tokyo Marathon (global brand visibility). Annual TCS Global Customer Study. "Building on Belief" brand positioning.',
-      customerwins:'Marks & Spencer cloud transformation, Rolls-Royce digital twin, Deutsche Bank IT outsourcing renewal, American Express BPO expansion, Walgreens digital pharmacy platform. 65 clients in $100M+ revenue band as of FY25.',
-      hiring:'614,000 employees — second largest IT employer globally. Net addition of 5,000 in FY25 (versus 40,000/yr in FY22 peak). Targeted AI/ML hiring of 8,000 specialists annually. TCS has the largest corporate learning platform with 150M+ learning hours.'
-    }
+    revenues:[257637,282836,307394,350018,350000],
+    ebitda:[76900,80200,90800,110500,122000],
+    netIncome:[76033,59972,73795,94300,105000],
+    revGrowth:[41,10,9,14,14],
+    eps:[5.61,4.56,5.8,7.5,8.4],
+    netMargin:[29.5,21.2,24,27,30],
+    ebitdaMargin:[29.8,28.3,29.5,31.6,34.9],
+    balance:{cash:[142300,139900,119500,101900,96000],totalAssets:[359268,365264,402392,430266,450000],totalDebt:[12700,13900,14700,13200,12000]},
+    cashflow:{operatingCF:[91652,91496,101746,125304,140000],capex:[24173,31485,32251,52200,65000],freeCF:[67479,60011,69495,73104,75000]},
+    kpis:[{label:'NRR',value:'115%'},{label:'NPS',value:58},{label:'FCF Margin',value:'21%'},{label:'R40 Score',value:62}],
+    geographicData:[{region:'Americas',share:47,offices:55,growth:13},{region:'EMEA',share:32,offices:48,growth:16},{region:'APAC',share:17,offices:38,growth:18},{region:'MEA',share:4,offices:15,growth:25}],
+    topProducts:['Search/Ads (57%)','YouTube (10%)','GCP (11%)','Google Workspace (8%)','Hardware (4%)','Other (10%)'],
+    capabilityScores:{AI:94,Cloud:88,CRM:62,Analytics:94,Security:86,Integration:80,Mobile:88,Partner:76,Innovation:93,Support:72,Pricing:70,Global:90},
+    rndData:{spend:[31562,39500,45427,49589,55000],areas:[{name:'AI/ML',pct:50},{name:'Cloud',pct:22},{name:'Search',pct:15},{name:'Hardware',pct:8},{name:'Other',pct:5}]},
+    riskScores:{regulatory:5,competitive:3,execution:3,technology:2,market:3},
+    insights:{product:'Gemini Ultra enterprise deployment across GCP, Workspace, and Search. Vertex AI becoming preferred enterprise AI development platform. NotebookLM and Google Workspace Duet AI gaining traction.',sales:'GCP $50B+ ARR growing at 28%. Cloud backlog $77B+. Workspace penetrating enterprise vs O365. AI Overviews driving search volume uplift.',rnd:'$55B R&D in FY25. DeepMind Gemini 2.0 deployment. TPU v5 AI chip. 1,800+ Gemini API enterprise customers.',inorganic:'Mandiant $5.4B (2022). FY25: Character.AI partnership, Wiz acquisition (pending $23B).',marketing:'Google I/O developer conference, Next cloud summit. Gemini positioning as multimodal AI leader.',customerwins:'Goldman Sachs Gemini deployment, Mayo Clinic Healthcare AI, Target retail AI agents.',hiring:'15K AI/ML net new hires in FY25. Total 12K open technical roles.'}
+  },
+  oracle:{
+    name:'Oracle', ticker:'ORCL', exchange:'NYSE', color:'#c74634', initials:'OR', identifier:'oracle',
+    HQ:'Austin, TX', CEO:'Safra Catz', founded:1977, employees:160000,
+    sector:'Database & Cloud Infrastructure', description:'Enterprise database, ERP, and cloud infrastructure provider',
+    latestRevenue:'$57B', marketCap:'$480B', rating:'Neutral',
+    years:['FY21','FY22','FY23','FY24','FY25'],
+    revenues:[40479,42440,49954,52961,57000],
+    ebitda:[14200,15600,19800,21400,23500],
+    netIncome:[5709,5565,8503,10467,12200],
+    revGrowth:[4,5,18,6,8],
+    eps:[2.13,2.05,3.14,3.88,4.6],
+    netMargin:[14.1,13.1,17,19.8,21.4],
+    ebitdaMargin:[35.1,36.8,39.6,40.4,41.2],
+    balance:{cash:[22300,21400,9200,10400,12000],totalAssets:[109297,109297,134384,145673,156000],totalDebt:[89000,86100,91665,87800,82000]},
+    cashflow:{operatingCF:[14300,16200,17500,18600,20500],capex:[3400,4200,6800,8900,10200],freeCF:[10900,12000,10700,9700,10300]},
+    kpis:[{label:'NRR',value:'109%'},{label:'NPS',value:48},{label:'FCF Margin',value:'18%'},{label:'R40 Score',value:38}],
+    geographicData:[{region:'Americas',share:52,offices:42,growth:8},{region:'EMEA',share:30,offices:35,growth:9},{region:'APAC',share:14,offices:28,growth:11},{region:'MEA',share:4,offices:12,growth:18}],
+    topProducts:['Cloud Infrastructure OCI (18%)','Fusion ERP (22%)','Database (28%)','Cerner Health (15%)','NetSuite (10%)','Other (7%)'],
+    capabilityScores:{AI:72,Cloud:78,CRM:68,Analytics:76,Security:82,Integration:74,Mobile:58,Partner:70,Innovation:68,Support:80,Pricing:72,Global:76},
+    rndData:{spend:[6830,7219,8624,8975,9500],areas:[{name:'Database/Cloud',pct:40},{name:'AI',pct:28},{name:'Healthcare IT',pct:18},{name:'ERP/Fusion',pct:10},{name:'Other',pct:4}]},
+    riskScores:{regulatory:2,competitive:4,execution:4,technology:3,market:4},
+    insights:{product:'OCI multi-cloud strategy competing with AWS/Azure. Autonomous Database 23ai with built-in LLM functions. Cerner EHR modernization on track. Fusion Apps AI enhancements across ERP/HCM.',sales:'Cloud revenue growing 41% YoY. Remaining performance obligations $80B+. AI infrastructure demand driving OCI hyperscaler contracts.',rnd:'$9.5B R&D in FY25. AI database integration. OCI GPU clusters for AI training.',inorganic:'Cerner $28.3B (2022). Selective bolt-ons for cloud migration tooling.',marketing:'CloudWorld conference, Oracle Health summit. AI database marketing to modernize on-prem base.',customerwins:'NVIDIA $1B+ OCI contract, DoD Joint Warfighting Cloud, UK NHS digital transformation.',hiring:'Healthcare IT integration team build-out. 8,000 open roles in cloud and AI.'}
   }
-
-}; // end COMPANIES_DATA
-
-// ── Gartner-style positioning: [vision_score, execution_score] ──
-const gartnerPos = {
-  cisco:      [72,80],
-  microsoft:  [95,95],
-  google:     [90,82],
-  salesforce: [84,86],
-  infosys:    [60,72],
-  tcs:        [55,78]
 };
 
-// ── Bubble chart sizes (market cap $B as scalar) ──────────────
-const sizes = {
-  cisco:      230,
-  microsoft:  3100,
-  google:     2200,
-  salesforce: 255,
-  infosys:    80,
-  tcs:        160
-};
-
-// ── Inorganic deals — total deal count FY21-25 ───────────────
-const deals = {
-  cisco:      18,
-  microsoft:  28,
-  google:     43,
-  salesforce: 25,
-  infosys:    13,
-  tcs:        7
-};
-
-// ── Technology investment index ($B total FY21-25) ───────────
-const techs = {
-  cisco:      7.4,
-  microsoft:  133.9,
-  google:     198.1,
-  salesforce: 21.5,
-  infosys:    3.3,
-  tcs:        3.9
-};
-
-// ── Cap revenue — latest total revenue ($M) ──────────────────
-const capRevs = {
-  cisco:      56654,
-  microsoft:  245000,
-  google:     350000,
-  salesforce: 37900,
-  infosys:    19277,
-  tcs:        29108
-};
-
-// ── Strategic benchmark: [avgRevGrowth%, NRR%, GrossMargin%, RnD_pct%, SalesEff] ──
-const benchData = {
-  cisco:      [3,108,65,14,0.95],
-  microsoft:  [12,130,68,13,1.40],
-  google:     [15,115,56,15,1.10],
-  salesforce: [18,108,72,15,0.88],
-  infosys:    [11,102,30,4,0.72],
-  tcs:        [7,101,30,3,0.68]
-};
-
-// ── Deal counts per year [FY21,FY22,FY23,FY24,FY25] ─────────
-const dealCounts = {
-  cisco:      [4,5,4,2,3],
-  microsoft:  [8,5,6,4,5],
-  google:     [10,12,8,6,7],
-  salesforce: [6,8,4,3,4],
-  infosys:    [2,4,3,2,2],
-  tcs:        [1,2,2,1,1]
-};
-
-// ── Deal values by year [$B] ─────────────────────────────────
-const dealVals = {
-  cisco:      [0.8,0.4,0.6,28.2,0.4],
-  microsoft:  [2.5,22.0,4.8,1.2,0.8],
-  google:     [3.2,8.0,5.5,1.5,32.5],
-  salesforce: [29.0,1.2,0.4,0.7,2.1],
-  infosys:    [0.2,0.35,0.28,0.18,0.15],
-  tcs:        [0.15,0.20,1.35,0.10,0.08]
-};
-
-// ── Customer base (thousands) — latest FY25 scalar ──────────
-const custBase = {
-  cisco:      100,
-  microsoft:  400,
-  google:     10000,
-  salesforce: 150,
-  infosys:    1.8,
-  tcs:        1.2
-};
-
-// ── Net Revenue Retention (%) — latest FY25 scalar ──────────
-const nrr = {
-  cisco:      108,
-  microsoft:  130,
-  google:     115,
-  salesforce: 108,
-  infosys:    102,
-  tcs:        101
-};
-
-
-
+const BENCH_FEATURES = ["AI","Cloud","CRM","Analytics","Security","Integration","Mobile","Partner","Innovation","Support","Pricing","Global"];
+const BENCH_PEERS = ["servicenow","salesforce","microsoft","google","oracle"];
+const BENCH_COLORS = {servicenow:"#1e3a5f",salesforce:"#00a1e0",microsoft:"#0078d4",google:"#4285f4",oracle:"#c74634"};
 
 // ============================================================
-// EVENT ROUTER — capture-phase, no inline handlers
-// ============================================================
-var __allowedActions = {
-  navigate:        function(el){ var p=el.getAttribute('data-nav');   if(p) navigate(p); },
-  openCompany:     function(el){ var c=el.getAttribute('data-company'); if(c) openCompany(c); },
-  closeModal:      function(el){ var id=el.getAttribute('data-modal'); if(id) closeModal(id); },
-  filterNewsModal: function(el){ if(typeof filterNewsModal==='function') filterNewsModal(el.value||'all'); },
-  generic:         function(el){ /* sanitized - no eval */ }
+const BENCH_CUST = {
+  servicenow: {totalCustomers:8100, retention:97, nrr:125, nps:72, enterprise:5400, midmarket:2100},
+  salesforce:  {totalCustomers:150000, retention:92, nrr:108, nps:66, enterprise:50000, midmarket:60000},
+  microsoft:   {totalCustomers:358000, retention:95, nrr:130, nps:54, enterprise:85000, midmarket:120000},
+  google:      {totalCustomers:9000, retention:90, nrr:115, nps:58, enterprise:3200, midmarket:3500},
+  oracle:      {totalCustomers:430000, retention:91, nrr:109, nps:48, enterprise:40000, midmarket:95000}
 };
-function __v04route(e) {
-  var el = e.target;
-  while(el && el !== document.body) {
-    var act = el.getAttribute('data-action');
-    if(act) {
-      var fn = __allowedActions[act];
-      if(fn) { fn(el); e.stopPropagation(); return; }
-    }
-    el = el.parentElement;
-  }
+const MARKET_EVENTS = [
+  {co:'ServiceNow', color:'#1e3a5f', category:'AI',       title:'ServiceNow AI Agents platform reaches 500 enterprise customers', date:'Jun 2025', summary:'The autonomous workflow platform surpasses 500 enterprise deployments, driving NRR expansion.', tags:['AI','Product']},
+  {co:'Salesforce', color:'#00a1e0', category:'Product',   title:'Agentforce 2.0 launch at Dreamforce 2025', date:'Sep 2025', summary:'Salesforce unveils Agentforce 2.0 with multi-agent orchestration and expanded CRM integrations.', tags:['AI','CRM']},
+  {co:'Microsoft',  color:'#0078d4', category:'M&A',       title:'Microsoft acquires Inflection AI talent and IP', date:'Mar 2025', summary:'Strategic acqui-hire accelerates Copilot roadmap with 70+ AI researchers joining the Azure AI team.', tags:['M&A','AI']},
+  {co:'Google',     color:'#4285f4', category:'Expansion', title:'Google Cloud opens 3 new data centers in APAC and MEA', date:'Apr 2025', summary:'New regions in Singapore, Saudi Arabia, and South Africa support surging enterprise cloud demand.', tags:['Cloud','Expansion']},
+  {co:'Oracle',     color:'#c74634', category:'Partnership','title':'Oracle and NVIDIA deepen AI infrastructure partnership', date:'Feb 2025', summary:'Joint go-to-market targets Fortune 500 AI transformation, with OCI GPU cluster deployments doubling.', tags:['AI','Partnership']},
+  {co:'ServiceNow', color:'#1e3a5f', category:'Win',       title:'ServiceNow wins $450M US Federal Government contract', date:'Jan 2025', summary:'Multi-year digital transformation covering 40 federal agencies on the Now Platform.', tags:['Customer Win','Government']}
+];
+
+// ============================================================
+// COMPANY PROFILE SUMMARY — dynamic from COMPANIES_DATA
+// ============================================================
+function buildProfileTable() {
+  var tableEl = document.getElementById('company-profile-summary-table');
+  if (!tableEl) return;
+  var peers = (typeof BENCH_PEERS!=='undefined') ? BENCH_PEERS : [];
+  if (!peers.length) return;
+  var attrFns = {
+    'Founded':               function(c){ return c.founded||'—'; },
+    'Revenue (FY2025)':      function(c){ return c.latestRevenue||'—'; },
+    'Avg Score':             function(c){ var s=c.capabilityScores?Object.values(c.capabilityScores):[]; return s.length?Math.round(s.reduce(function(a,b){return a+b;},0)/s.length)+'/100':'—'; },
+    'Core Strength':         function(c){ return c.kpis&&c.kpis[0]?c.kpis[0].label:(c.sector||'—'); },
+    'Geographic Footprint':  function(c){ return c.geographicData?c.geographicData.length+' regions':'—'; },
+    'Business Model':        function(c){ return 'SaaS'; },
+    'Key Risks':             function(c){ return c.riskScores?Object.entries(c.riskScores).sort(function(a,b){return b[1]-a[1];})[0][0]:'—'; },
+    'Market Share (%)':      function(c){ return c.marketCap||'—'; },
+    'Employees':             function(c){ return c.employees?(c.employees>=1000?Math.round(c.employees/1000)+'K':c.employees):'—'; },
+    'CEO':                   function(c){ return c.CEO||c.ceo||'—'; },
+    'Technology Initiatives':function(c){ return c.insights&&c.insights.rnd?c.insights.rnd.split('.')[0].slice(0,55)+'...':'—'; }
+  };
+  var attrs = (typeof BENCH_PROFILE_ATTRS!=='undefined'&&BENCH_PROFILE_ATTRS.length)?BENCH_PROFILE_ATTRS:Object.keys(attrFns);
+  var thead = tableEl.querySelector('thead');
+  var tbody = tableEl.querySelector('tbody');
+  if (!thead||!tbody) return;
+  var hRow = '<tr><th>Attribute</th>';
+  peers.forEach(function(id,i){
+    var co=COMPANIES_DATA[id]; if(!co) return;
+    var st=i===0?'background:#eff6ff;color:#1e3a5f;font-weight:700':'';
+    hRow+='<th style="'+st+'"><strong>'+(co.initials||co.name.substring(0,3))+'</strong><br><span style="font-weight:400;font-size:10px">'+co.name+'</span></th>';
+  });
+  hRow+='</tr>';
+  thead.innerHTML=hRow;
+  var bRows='';
+  attrs.forEach(function(attr){
+    var fn=attrFns[attr]||function(){return '—';};
+    bRows+='<tr><td><strong>'+attr+'</strong></td>';
+    peers.forEach(function(id,i){ var co=COMPANIES_DATA[id]; var val=co?fn(co):'—'; var st=i===0?'background:#f8faff;font-weight:600':''; bRows+='<td style="'+st+'">'+val+'</td>'; });
+    bRows+='</tr>';
+  });
+  tbody.innerHTML=bRows;
 }
-document.addEventListener('click',__v04route,true);
-document.addEventListener('change',  __v04route, true);
-document.addEventListener('input',   __v04route, true);
 
 // APP STATE
 // ============================================================
 let currentPage = 'dashboard';
-let currentCompany = 'cisco';
+let currentCompany = 'servicenow';
 let currentFinTab = 'revenue';
 
 // ============================================================
@@ -2651,7 +2333,7 @@ function navigate(pageId) {
     'ci-customers': {root:'Competitive Intelligence', child:'Customers & Partners'},
     'ci-insights': {root:'Competitive Intelligence', child:'Insights & Risks'},
     'ci-reco': {root:'Competitive Intelligence', child:'Recommendations'},
-    'company-view': {root:'Company Profile', child: (COMPANIES_DATA[currentCompany] && COMPANIES_DATA[currentCompany].name) || ''},
+    'company-view': {root:'Company Profile', child: COMPANIES_DATA[currentCompany]?.name || ''},
     'market-intel': {root:'Market Intelligence', child:''},
     'sales-intel': {root:'Sales Intelligence', child:''}
   };
@@ -2684,12 +2366,12 @@ function buildTabBar(pageId) {
       {id:'ci-insights',label:'Insights & Risks'},
       {id:'ci-reco',label:'Recommendations'}
     ];
-    tabbar.innerHTML = ciTabs.map(t => `<button class="tab-btn ${pageId===t.id?'active':''}" data-oc="navigate('${t.id}')">${t.label}</button>`).join('');
+    tabbar.innerHTML = ciTabs.map(t => `<button class="tab-btn ${pageId===t.id?'active':''}" onclick="navigate('${t.id}')">${t.label}</button>`).join('');
   } else if (pageId === 'company-view') {
     tabbar.innerHTML = `<span style="font-size:12px;font-weight:600;color:#475569;margin-right:8px">Company:</span>` +
-      getActivePeers().map(id => {
+      BENCH_PEERS.map(id => {
         const c = COMPANIES_DATA[id];
-        return `<button class="tab-btn ${currentCompany===id?'active':''}" data-oc="openCompany('${id}')" style="color:${c.color}">${c.name}</button>`;
+        return `<button class="tab-btn ${currentCompany===id?'active':''}" onclick="openCompany('${id}')" style="color:${c.color}">${c.name}</button>`;
       }).join('');
   }
 }
@@ -2727,7 +2409,7 @@ function switchCompanyTab(tabId) {
   }, 60);
 }
 
-function openModal(id) { showModal(id); }
+function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
 function showCompanyBenchmark(companyId) {
@@ -2767,7 +2449,7 @@ function openProductDetail(productId) {
 // ============================================================
 function buildHeatmaps() {
   const dims = BENCH_FEATURES;
-  const peers = getActivePeers();
+  const peers = ['servicenow','salesforce','microsoft','google','oracle'];
   const colorFn = v => {
     if (v>=90) return 'heatmap-cell-high';
     if (v>=80) return 'heatmap-cell-mhigh';
@@ -2777,11 +2459,6 @@ function buildHeatmaps() {
   };
   const body = document.getElementById('heatmap-body');
   if (!body) return;
-  var overviewTable = body.closest('table');
-  if (overviewTable) {
-    var overviewHead = overviewTable.querySelector('thead tr');
-    if (overviewHead) overviewHead.innerHTML = '<th>Dimension</th>' + peers.map(function(id){ return '<th>'+COMPANIES_DATA[id].name+'</th>'; }).join('');
-  }
   body.innerHTML = dims.map(dim => {
     const cells = peers.map(p => {
       const s = COMPANIES_DATA[p].capabilityScores[dim];
@@ -2793,11 +2470,6 @@ function buildHeatmaps() {
   // Cap matrix
   const capBody = document.getElementById('cap-matrix-body');
   if (!capBody) return;
-  var capTable = capBody.closest('table');
-  if (capTable) {
-    var capHead = capTable.querySelector('thead tr');
-    if (capHead) capHead.innerHTML = '<th>Company</th>' + dims.map(function(dim){ return '<th>'+dim+'</th>'; }).join('');
-  }
   capBody.innerHTML = peers.map(p => {
     const c = COMPANIES_DATA[p];
     const cells = dims.map(dim => {
@@ -2873,7 +2545,7 @@ function renderCIOverviewCharts() {
   buildHeatmaps();
   buildProfileTable();
   // Radar chart
-  const peers = getActivePeers();
+  const peers = BENCH_PEERS;
   const radarData = peers.map(p => {
     const c = COMPANIES_DATA[p];
     const vals = BENCH_FEATURES.map(f => c.capabilityScores[f]);
@@ -2883,7 +2555,7 @@ function renderCIOverviewCharts() {
   Plotly.newPlot('chart-radar-overview', radarData, {...chartLayout('', {margin:{t:10,b:10,l:30,r:30}}), polar:{radialaxis:{range:[0,100],tickfont:{size:8}},angularaxis:{tickfont:{size:9}}}, showlegend:true, legend:{orientation:'h',y:-0.1,x:0.5,xanchor:'center',font:{size:9}}}, PLOTLY_CFG);
 
   // Gartner scatter
-  // gartnerPos from data_layer
+  const gartnerPos = {servicenow:[82,88],salesforce:[76,84],microsoft:[90,92],google:[88,90],oracle:[72,76]};
   const scatterTraces = peers.map(p => {
     const c = COMPANIES_DATA[p];
     const pos = gartnerPos[p];
@@ -2911,14 +2583,14 @@ function renderTrendCharts() {
   renderFinancialChart('revenue');
 
   // Tech bubble
-  // sizes from data_layer
-  // deals from data_layer
-  // techs from data_layer
-  var bubbletrace = getActivePeers().map(function(p) {
+  const sizes = {servicenow:8,salesforce:12,microsoft:55,google:65,oracle:10};
+  const deals  = {servicenow:12,salesforce:18,microsoft:47,google:22,oracle:8};
+  const techs  = {servicenow:18,salesforce:12,microsoft:28,google:31,oracle:10};
+  const bubbletrace = BENCH_PEERS.map(p => {
     const c = COMPANIES_DATA[p];
     return {type:'scatter', x:[deals[p]], y:[techs[p]], mode:'markers+text', name:c.name,
       text:[c.name], textposition:'top center', textfont:{size:10},
-      marker:{size: Math.sqrt(sizes[p]||8)*12, color:c.color, opacity:0.8, sizemode:'area'}};
+      marker:{size: Math.sqrt(sizes[p])*12, color:c.color, opacity:0.8, sizemode:'area'}};
   });
   Plotly.newPlot('chart-tech-bubble', bubbletrace, {
     ...chartLayout('', {xaxis:{title:{text:'# Inorganic Deals',font:{size:11}},range:[0,60]}, yaxis:{title:{text:'# Tech Initiatives',font:{size:11}},range:[0,40]}}),
@@ -2927,34 +2599,29 @@ function renderTrendCharts() {
 }
 
 function renderFinancialChart(metric) {
-  var metricMap = {
-    revenue:     {key:'revenues',     divisor:1000, yTitle:'Revenue ($B)'},
-    ebitda:      {key:'ebitda',       divisor:1000, yTitle:'EBITDA ($B)'},
-    netincome:   {key:'netIncome',    divisor:1000, yTitle:'Net Income ($B)'},
-    ebitdamargin:{key:'ebitdaMargin', divisor:1,    yTitle:'EBITDA Margin (%)'},
-    netmargin:   {key:'netMargin',    divisor:1,    yTitle:'Net Margin (%)'},
-    revgrowth:   {key:'revGrowth',    divisor:1,    yTitle:'Revenue Growth (%)'},
-    eps:         {key:'eps',          divisor:1,    yTitle:'EPS ($)'}
+  const metricMap = {
+    revenue:    {key:'revenues',     fmt:v=>v/1000+'B', yTitle:'Revenue ($B)'},
+    ebitda:     {key:'ebitda',       fmt:v=>v/1000+'B', yTitle:'EBITDA ($B)'},
+    netincome:  {key:'netIncome',    fmt:v=>v/1000+'B', yTitle:'Net Income ($B)'},
+    ebitdamargin:{key:'ebitdaMargin',fmt:v=>v+'%',     yTitle:'EBITDA Margin (%)'},
+    netmargin:  {key:'netMargin',    fmt:v=>v+'%',      yTitle:'Net Margin (%)'},
+    revgrowth:  {key:'revGrowth',    fmt:v=>v+'%',      yTitle:'Revenue Growth (%)'},
+    eps:        {key:'eps',          fmt:v=>'$'+v,      yTitle:'EPS ($)'}
   };
-  var m = metricMap[metric] || metricMap.revenue;
-  var peers = getActivePeers();  // FILTER: only active peers
-  var traces = peers.map(function(p) {
-    var c = COMPANIES_DATA[p];
-    if (!c) return null;
-    var yrs  = getFilteredYears(c);                   // FILTER: year range
-    var vals = getFilteredVals(c, m.key);              // FILTER: aligned values
-    if (m.divisor !== 1) vals = vals.map(function(v){ return v !== null ? v/m.divisor : null; });
-    return {type:'scatter', x:yrs, y:vals, mode:'lines+markers', name:c.name,
-      line:{color:c.color,width:2.5}, marker:{size:6,color:c.color}};
-  }).filter(Boolean);
-  var el = document.getElementById('fin-chart-container');
+  const m = metricMap[metric] || metricMap.revenue;
+  const traces = BENCH_PEERS.map(p => {
+    const c = COMPANIES_DATA[p];
+    const vals = metric === 'revenue' ? c.revenues.map(v=>v/1000) : c[m.key];
+    return {type:'scatter', x:c.years, y:vals, mode:'lines+markers', name:c.name, line:{color:c.color,width:2.5}, marker:{size:6,color:c.color}};
+  });
+  const el = document.getElementById('fin-chart-container');
   if (el) Plotly.newPlot(el, traces, chartLayout('', {yaxis:{title:{text:m.yTitle,font:{size:11}}}}), PLOTLY_CFG);
 }
 
 function renderCapabilityCharts() {
   buildHeatmaps();
   // Radar
-  const radarData = getActivePeers().map(p => {
+  const radarData = BENCH_PEERS.map(p => {
     const c = COMPANIES_DATA[p];
     const vals = BENCH_FEATURES.map(f => c.capabilityScores[f]);
     vals.push(vals[0]);
@@ -2963,8 +2630,8 @@ function renderCapabilityCharts() {
   Plotly.newPlot('chart-cap-radar', radarData, {...chartLayout('', {margin:{t:10,b:10,l:30,r:30}}), polar:{radialaxis:{range:[0,100],tickfont:{size:8}},angularaxis:{tickfont:{size:9}}}, showlegend:true, legend:{orientation:'h',y:-0.15,x:0.5,xanchor:'center',font:{size:9}}}, PLOTLY_CFG);
 
   // Revenue per capability bar
-  // capRevs from data_layer
-  const barTraces = getActivePeers().map(p => {
+  const capRevs = {servicenow:11500,salesforce:37900,microsoft:245000,google:350000,oracle:57000};
+  const barTraces = BENCH_PEERS.map(p => {
     const c = COMPANIES_DATA[p];
     const revB = capRevs[p]/1000;
     const capScores = BENCH_FEATURES.map(f => Math.round(revB * c.capabilityScores[f] / 100));
@@ -2978,8 +2645,14 @@ function renderCapabilityCharts() {
 
 function renderStrategicBench() {
   const metrics = ['Revenue Growth','NRR','Gross Margin','R&D %','Sales Eff.'];
-  // benchData from data_layer
-  const traces = getActivePeers().map(p => {
+  const benchData = {
+    servicenow:[22,125,79,14,1.2],
+    salesforce:[9,108,74,15,0.9],
+    microsoft:[16,130,69,13,1.4],
+    google:[14,115,57,16,1.1],
+    oracle:[8,109,71,17,0.8]
+  };
+  const traces = BENCH_PEERS.map(p => {
     const c = COMPANIES_DATA[p];
     return {type:'bar', x:metrics, y:benchData[p], name:c.name, marker:{color:c.color,opacity:0.85}};
   });
@@ -2990,58 +2663,57 @@ function renderStrategicBench() {
 function renderGeoCharts() {
   // Bar chart for geo shares
   const regions = ['Americas','EMEA','APAC','MEA'];
-  const barTraces = getActivePeers().map(p => {
+  const barTraces = BENCH_PEERS.map(p => {
     const c = COMPANIES_DATA[p];
     return {type:'bar', x:regions, y:c.geographicData.map(g=>g.share), name:c.name, marker:{color:c.color,opacity:0.85}};
   });
   Plotly.newPlot('chart-geo-map', barTraces, {...chartLayout('', {barmode:'group', yaxis:{title:{text:'Revenue Share (%)',font:{size:11}}}}), showlegend:true}, PLOTLY_CFG);
 
   // Revenue by region pie for ServiceNow
-  const focusId = getActivePeers()[0] || BENCH_PEERS[0];
-  const focusCompany = COMPANIES_DATA[focusId];
+  const sn = COMPANIES_DATA['servicenow'];
   Plotly.newPlot('chart-geo-right', [{
-    type:'pie', labels:focusCompany.geographicData.map(g=>g.region), values:focusCompany.geographicData.map(g=>g.share),
+    type:'pie', labels:sn.geographicData.map(g=>g.region), values:sn.geographicData.map(g=>g.share),
     hole:0.4, textinfo:'label+percent', textfont:{size:11},
     marker:{colors:['#1e3a5f','#2563eb','#60a5fa','#93c5fd']}
-  }], {...chartLayout(focusCompany.name + ' Revenue by Region', {margin:{t:36,b:20,l:20,r:20}}), showlegend:false}, PLOTLY_CFG);
+  }], {...chartLayout('ServiceNow Revenue by Region', {margin:{t:36,b:20,l:20,r:20}}), showlegend:false}, PLOTLY_CFG);
 }
 
 function renderInorganicCharts() {
   // Bar chart for deal counts
-  // dealCounts from data_layer
-  // dealVals from data_layer
+  const dealCounts = {servicenow:12,salesforce:18,microsoft:47,google:22,oracle:8};
+  const dealVals   = {servicenow:3.2,salesforce:28,microsoft:85,google:8,oracle:30};
   Plotly.newPlot('chart-inorganic-tree', [
-    {type:'bar', x:getActivePeers().map(p=>COMPANIES_DATA[p].name), y:getActivePeers().map(p=>dealCounts[p]), name:'Deal Count', marker:{color:getActivePeers().map(p=>BENCH_COLORS[p]),opacity:0.85}},
+    {type:'bar', x:BENCH_PEERS.map(p=>COMPANIES_DATA[p].name), y:BENCH_PEERS.map(p=>dealCounts[p]), name:'Deal Count', marker:{color:BENCH_PEERS.map(p=>BENCH_COLORS[p]),opacity:0.85}},
   ], {...chartLayout('', {yaxis:{title:{text:'Number of Deals',font:{size:11}}}}), showlegend:false}, PLOTLY_CFG);
 
   // AI/Tech score scatter
-  const aiScores = getActivePeers().map(p => COMPANIES_DATA[p].capabilityScores['AI']);
+  const aiScores = BENCH_PEERS.map(p => COMPANIES_DATA[p].capabilityScores['AI']);
   Plotly.newPlot('chart-inorganic-ai', [{
-    type:'scatter', x:getActivePeers().map(p=>dealCounts[p]), y:aiScores, mode:'markers+text',
-    text:getActivePeers().map(p=>COMPANIES_DATA[p].name), textposition:'top center', textfont:{size:10},
-    marker:{size:getActivePeers().map(p=>Math.sqrt(dealVals[p])*4), color:getActivePeers().map(p=>BENCH_COLORS[p]), opacity:0.8}
+    type:'scatter', x:BENCH_PEERS.map(p=>dealCounts[p]), y:aiScores, mode:'markers+text',
+    text:BENCH_PEERS.map(p=>COMPANIES_DATA[p].name), textposition:'top center', textfont:{size:10},
+    marker:{size:BENCH_PEERS.map(p=>Math.sqrt(dealVals[p])*4), color:BENCH_PEERS.map(p=>BENCH_COLORS[p]), opacity:0.8}
   }], {...chartLayout('', {xaxis:{title:{text:'Deal Count',font:{size:11}}}, yaxis:{title:{text:'AI Capability Score',font:{size:11}}}}), showlegend:false}, PLOTLY_CFG);
 }
 
 function renderCustomerCharts() {
-  var activePeers = getActivePeers(); // custBase from data_layer
+  const custBase = {servicenow:8.1,salesforce:150,microsoft:358,google:9,oracle:430};
   Plotly.newPlot('chart-cust-base', [{
-    type:'bar', x:activePeers.map(p=>COMPANIES_DATA[p].name), y:activePeers.map(p=>custBase[p]),
-    marker:{color:activePeers.map(p=>BENCH_COLORS[p]),opacity:0.85}
+    type:'bar', x:BENCH_PEERS.map(p=>COMPANIES_DATA[p].name), y:BENCH_PEERS.map(p=>custBase[p]),
+    marker:{color:BENCH_PEERS.map(p=>BENCH_COLORS[p]),opacity:0.85}
   }], {...chartLayout('', {yaxis:{title:{text:'Customers (K)',font:{size:11}}}}), showlegend:false}, PLOTLY_CFG);
 
   const total = Object.values(custBase).reduce((a,b)=>a+b,0);
   Plotly.newPlot('chart-cust-share', [{
-    type:'pie', labels:activePeers.map(p=>COMPANIES_DATA[p].name), values:activePeers.map(p=>custBase[p]),
+    type:'pie', labels:BENCH_PEERS.map(p=>COMPANIES_DATA[p].name), values:BENCH_PEERS.map(p=>custBase[p]),
     hole:0.45, textinfo:'label+percent', textfont:{size:10},
-    marker:{colors:activePeers.map(p=>BENCH_COLORS[p])}
+    marker:{colors:BENCH_PEERS.map(p=>BENCH_COLORS[p])}
   }], {...chartLayout('', {margin:{t:16,b:20,l:10,r:10}}), showlegend:false}, PLOTLY_CFG);
 
-  // nrr from data_layer
+  const nrr = {servicenow:125,salesforce:108,microsoft:130,google:115,oracle:109};
   Plotly.newPlot('chart-nrr', [{
-    type:'bar', x:activePeers.map(p=>COMPANIES_DATA[p].name), y:activePeers.map(p=>nrr[p]),
-    marker:{color:activePeers.map(p=>BENCH_COLORS[p]),opacity:0.85},
-    text:activePeers.map(p=>nrr[p]+'%'), textposition:'outside'
+    type:'bar', x:BENCH_PEERS.map(p=>COMPANIES_DATA[p].name), y:BENCH_PEERS.map(p=>nrr[p]),
+    marker:{color:BENCH_PEERS.map(p=>BENCH_COLORS[p]),opacity:0.85},
+    text:BENCH_PEERS.map(p=>nrr[p]+'%'), textposition:'outside'
   }], {...chartLayout('', {yaxis:{title:{text:'NRR (%)',font:{size:11}},range:[100,135]}}), showlegend:false}, PLOTLY_CFG);
 }
 
@@ -3051,7 +2723,7 @@ function renderInsightCharts() {
   const nowVals    = [90,88,82,85,74];
   Plotly.newPlot('chart-gap-leader', [
     {type:'scatterpolar', r:[...leaderVals,leaderVals[0]], theta:[...dims,dims[0]], fill:'toself', name:'Leader', line:{color:'#94a3b8'}, fillcolor:'rgba(148,163,184,0.15)'},
-    {type:'scatterpolar', r:[...nowVals,nowVals[0]], theta:[...dims,dims[0]], fill:'toself', name:((COMPANIES_DATA[currentCompany]&&COMPANIES_DATA[currentCompany].name)||'Base'), line:{color:((COMPANIES_DATA[currentCompany]&&COMPANIES_DATA[currentCompany].color)||'#049fd9')}, fillcolor:'rgba(4,159,217,0.25)'}
+    {type:'scatterpolar', r:[...nowVals,nowVals[0]],      theta:[...dims,dims[0]], fill:'toself', name:'ServiceNow', line:{color:'#1e3a5f'}, fillcolor:'rgba(30,58,95,0.25)'}
   ], {...chartLayout('', {margin:{t:10,b:10,l:30,r:30}}), polar:{radialaxis:{range:[0,100],tickfont:{size:8}}}, showlegend:true, legend:{orientation:'h',y:-0.15,x:0.5,xanchor:'center',font:{size:9}}}, PLOTLY_CFG);
 
   // Risk matrix scatter
@@ -3107,7 +2779,7 @@ function renderCompanyCharts(companyId, tabId) {
   if (tabId === 'overview') {
     // Revenue trend
     const el = document.getElementById('chart-comp-rev');
-    if (el) { var _yrs=getFilteredYears(c); var _revs=getFilteredVals(c,'revenues').map(function(v){return v!==null?v/1000:null;}); Plotly.newPlot(el, [{type:'bar', x:_yrs, y:_revs, name:'Revenue ($B)', marker:{color:c.color, opacity:0.85}}], {...chartLayout('', {yaxis:{title:{text:'Revenue ($B)',font:{size:11}}}}), showlegend:false}, PLOTLY_CFG); }
+    if (el) Plotly.newPlot(el, [{type:'bar', x:c.years, y:c.revenues.map(v=>v/1000), name:'Revenue ($B)', marker:{color:c.color, opacity:0.85}}], {...chartLayout('', {yaxis:{title:{text:'Revenue ($B)',font:{size:11}}}}), showlegend:false}, PLOTLY_CFG);
 
     // Top products pie
     const prodEl = document.getElementById('chart-top-products');
@@ -3304,236 +2976,9 @@ function updateSWOT(product) {
 }
 
 
-
-// ============================================================
-// COMPANY PROFILE SUMMARY — dynamic from COMPANIES_DATA
-// ============================================================
-function buildProfileTable() {
-  var tableEl = document.getElementById('company-profile-summary-table');
-  if (!tableEl) return;
-  var peers = (typeof BENCH_PEERS!=='undefined') ? getActivePeers() : [];
-  if (!peers.length) return;
-  var attrFns = {
-    'Founded':               function(c){ return c.founded||'—'; },
-    'Revenue (FY2025)':      function(c){ return c.latestRevenue||'—'; },
-    'Avg Score':             function(c){ var s=c.capabilityScores?Object.values(c.capabilityScores):[]; return s.length?Math.round(s.reduce(function(a,b){return a+b;},0)/s.length)+'/100':'—'; },
-    'Core Strength':         function(c){ return c.kpis&&c.kpis[0]?c.kpis[0].label:(c.sector||'—'); },
-    'Geographic Footprint':  function(c){ return c.geographicData?c.geographicData.length+' regions':'—'; },
-    'Business Model':        function(c){ return 'SaaS'; },
-    'Key Risks':             function(c){ return c.riskScores?Object.entries(c.riskScores).sort(function(a,b){return b[1]-a[1];})[0][0]:'—'; },
-    'Market Share (%)':      function(c){ return c.marketCap||'—'; },
-    'Employees':             function(c){ return c.employees?(c.employees>=1000?Math.round(c.employees/1000)+'K':c.employees):'—'; },
-    'CEO':                   function(c){ return c.CEO||c.ceo||'—'; },
-    'Technology Initiatives':function(c){ return c.insights&&c.insights.rnd?c.insights.rnd.split('.')[0].slice(0,55)+'...':'—'; }
-  };
-  var attrs = (typeof BENCH_PROFILE_ATTRS!=='undefined'&&BENCH_PROFILE_ATTRS.length)?BENCH_PROFILE_ATTRS:Object.keys(attrFns);
-  var thead = tableEl.querySelector('thead');
-  var tbody = tableEl.querySelector('tbody');
-  if (!thead||!tbody) return;
-  var hRow = '<tr><th>Attribute</th>';
-  peers.forEach(function(id,i){
-    var co=COMPANIES_DATA[id]; if(!co) return;
-    var st=i===0?'background:#eff6ff;color:#1e3a5f;font-weight:700':'';
-    hRow+='<th style="'+st+'"><strong>'+(co.initials||co.name.substring(0,3))+'</strong><br><span style="font-weight:400;font-size:10px">'+co.name+'</span></th>';
-  });
-  hRow+='</tr>';
-  thead.innerHTML=hRow;
-  var bRows='';
-  attrs.forEach(function(attr){
-    var fn=attrFns[attr]||function(){return '—';};
-    bRows+='<tr><td><strong>'+attr+'</strong></td>';
-    peers.forEach(function(id,i){ var co=COMPANIES_DATA[id]; var val=co?fn(co):'—'; var st=i===0?'background:#f8faff;font-weight:600':''; bRows+='<td style="'+st+'">'+val+'</td>'; });
-    bRows+='</tr>';
-  });
-  tbody.innerHTML=bRows;
-}
-
 // ============================================================
 // EVENT WIRING
 // ============================================================
-
-
-// ============================================================
-// FILTER STATE & HELPERS — v04
-// ============================================================
-var activeFilters = {yearFrom:2021,yearTo:2025,sector:'All',activePeers:null};
-
-function getActivePeers(){
-  var selected = activeFilters.activePeers ? BENCH_PEERS.filter(function(id){return activeFilters.activePeers.has(id);}) : BENCH_PEERS.slice();
-  if(activeFilters.sector && activeFilters.sector !== 'All'){
-    selected = selected.filter(function(id){ return COMPANIES_DATA[id] && COMPANIES_DATA[id].sector === activeFilters.sector; });
-  }
-  // Never render a comparison chart with an accidental empty peer list.
-  return selected.length ? selected : BENCH_PEERS.slice();
-}
-function getFilteredYears(c){
-  if(!c||!c.years) return [];
-  return c.years.filter(function(y){
-    var n=parseInt((''+y).replace(/[^0-9]/g,''));
-    var full=n<100?2000+n:n;
-    return full>=activeFilters.yearFrom&&full<=activeFilters.yearTo;
-  });
-}
-function getFilteredVals(c,key){
-  if(!c||!c.years) return [];
-  var out=[];
-  c.years.forEach(function(y,i){
-    var n=parseInt((''+y).replace(/[^0-9]/g,''));
-    var full=n<100?2000+n:n;
-    if(full>=activeFilters.yearFrom&&full<=activeFilters.yearTo){
-      out.push(c[key]&&c[key][i]!==undefined?c[key][i]:null);
-    }
-  });
-  return out;
-}
-function updateYearFilter(){
-  var f=document.getElementById('yr-from'),t=document.getElementById('yr-to');
-  var fL=document.getElementById('yr-from-label'),tL=document.getElementById('yr-to-label');
-  var b=document.getElementById('yr-active-badge');
-  if(!f||!t) return;
-  var from=parseInt(f.value),to=parseInt(t.value);
-  if(from>to){t.value=from;to=from;}
-  activeFilters.yearFrom=from;activeFilters.yearTo=to;
-  var fl='FY'+String(from).slice(2),tl='FY'+String(to).slice(2);
-  if(fL)fL.textContent=fl;if(tL)tL.textContent=tl;
-  if(b) b.innerHTML=(from!==2021||to!==2025)?'<span class="filter-active-badge">'+fl+'–'+tl+' active</span>':'';
-  reRenderCurrentPage();
-}
-function updateSectorFilter(val){
-  activeFilters.sector=val||'All';
-  var sel=document.getElementById('sector-filter');
-  if(sel){var isD=(!val||val==='All'||val==='AI-Powered Enterprise Software');sel.style.borderColor=isD?'var(--border)':'var(--accent-blue)';sel.style.fontWeight=isD?'400':'600';}
-  updateChipVisuals();
-  reRenderCurrentPage();
-}
-function togglePeerChip(id){
-  if(!activeFilters.activePeers){activeFilters.activePeers=new Set(BENCH_PEERS);activeFilters.activePeers.delete(id);}
-  else if(activeFilters.activePeers.has(id)){activeFilters.activePeers.delete(id);if(activeFilters.activePeers.size===0)activeFilters.activePeers=null;}
-  else{activeFilters.activePeers.add(id);if(activeFilters.activePeers.size===BENCH_PEERS.length)activeFilters.activePeers=null;}
-  updateChipVisuals();reRenderCurrentPage();
-}
-function updateChipVisuals(){
-  document.querySelectorAll('.company-chip[data-peer-id]').forEach(function(chip){
-    var id=chip.dataset.peerId;
-    var selected=!activeFilters.activePeers||activeFilters.activePeers.has(id);
-    var sectorOK=!activeFilters.sector||activeFilters.sector==='All'||(COMPANIES_DATA[id]&&COMPANIES_DATA[id].sector===activeFilters.sector);
-    var active=selected&&sectorOK;
-    chip.style.opacity=active?'1':'0.35';chip.style.textDecoration=active?'none':'line-through';
-  });
-}
-function reRenderCurrentPage(){
-  if(currentPage) renderChartsForPage(currentPage);
-  if(currentPage==='dashboard'){buildNewsFeed();buildCompanyTracker();}
-}
-function buildSidebarChips(){
-  var el=document.getElementById('company-chips');
-  if(!el||typeof BENCH_PEERS==='undefined') return;
-  var cols=[{bg:'#e0f2fe',c:'#0369a1',b:'#7dd3fc'},{bg:'#dcfce7',c:'#166534',b:'#86efac'},{bg:'#fef3c7',c:'#92400e',b:'#fcd34d'},{bg:'#fce7f3',c:'#9d174d',b:'#f9a8d4'},{bg:'#ede9fe',c:'#5b21b6',b:'#c4b5fd'},{bg:'#fff7ed',c:'#9a3412',b:'#fed7aa'}];
-  el.innerHTML=BENCH_PEERS.map(function(id,i){
-    var co=COMPANIES_DATA[id];if(!co) return '';
-    var col=cols[i%cols.length];
-    return '<div class="company-chip" data-peer-id="'+id+'" style="background:'+col.bg+';color:'+col.c+';border-color:'+col.b+'" data-oc="togglePeerChip(\''+id+'\')" title="Toggle '+co.name+'">'+co.name+' <span class="chip-x">×</span></div>';
-  }).join('');
-}
-function buildSectorDropdown(){
-  var sel=document.getElementById('sector-filter');
-  if(!sel||typeof COMPANIES_DATA==='undefined') return;
-  var sectors=new Set(['All']);
-  Object.values(COMPANIES_DATA).forEach(function(co){if(co.sector)sectors.add(co.sector);});
-  var cur=sel.value;
-  sel.innerHTML=Array.from(sectors).map(function(s){return '<option value="'+s+'"'+(s===cur?' selected':'')+'>'+s+'</option>';}).join('');
-}
-function buildNewsFeed(){
-  var feedEl=document.getElementById('news-feed');
-  if(!feedEl||typeof MARKET_EVENTS==='undefined'||!MARKET_EVENTS.length) return;
-  var sorted=MARKET_EVENTS.slice().sort(function(a,b){return (b.date||'')>(a.date||'')?1:-1;});
-  var top6=sorted.slice(0,6);
-  var catMap={'AI':'badge-purple','Product':'badge-blue','M&A':'badge-orange','Partnership':'badge-purple','Expansion':'badge-green','Win':'badge-green','Corporate':'badge-gray'};
-  feedEl.innerHTML=top6.map(function(ev){
-    var coId=Object.keys(COMPANIES_DATA).find(function(id){return COMPANIES_DATA[id].name===ev.co;});
-    var coColor=coId?COMPANIES_DATA[coId].color:'#64748b';
-    var cls=catMap[ev.category]||'badge-gray';
-    return '<div class="news-item" data-category="'+(ev.category||'all')+'">' +
-      '<div class="news-meta"><span class="badge '+cls+'">'+(ev.category||'News')+'</span>' +
-      '<span class="badge" style="background:'+coColor+'22;color:'+coColor+'">'+ev.co+'</span>' +
-      '<span class="news-date">'+(ev.date||'')+'</span></div>' +
-      '<div class="news-title">'+ev.title+'</div>' +
-      '<div class="news-snippet">'+(ev.summary||'')+'</div></div>';
-  }).join('');
-}
-function buildCompanyTracker(){
-  var el=document.getElementById('companies-track-body');
-  if(!el||typeof BENCH_PEERS==='undefined') return;
-  var cards=BENCH_PEERS.map(function(id){
-    var co=COMPANIES_DATA[id];if(!co) return '';
-    var isBase=id===BENCH_PEERS[0];
-    var lastGrowth=co.revGrowth&&co.revGrowth.length?'+'+co.revGrowth[co.revGrowth.length-1]+'%':'—';
-    return '<div class="company-overview-card" data-oc="openCompany(\''+id+'\')">' +
-      '<div class="company-card-header"><div class="company-initials" style="background:'+co.color+'">'+co.initials+'</div>' +
-      '<div><div class="company-name">'+co.name+'</div><div class="company-ticker">'+(co.exchange||'')+': '+(co.ticker||'')+' · '+(isBase?'Base':'Peer')+'</div></div>' +
-      '<div class="card-spacer"></div><span class="badge '+(isBase?'badge-blue':'badge-gray')+'">'+(isBase?'Target':'Peer')+'</span></div>' +
-      '<div class="company-kpis"><div class="company-kpi-item"><div class="company-kpi-val">'+(co.latestRevenue||'—')+'</div><div class="company-kpi-lbl">Revenue</div></div>' +
-      '<div class="company-kpi-item"><div class="company-kpi-val">'+lastGrowth+'</div><div class="company-kpi-lbl">Growth</div></div>' +
-      '<div class="company-kpi-item"><div class="company-kpi-val">'+(co.marketCap||'—')+'</div><div class="company-kpi-lbl">Mkt Cap</div></div></div>' +
-      '<div style="display:flex;justify-content:flex-end;margin-top:8px;"><button class="btn '+(isBase?'btn-primary':'btn-secondary')+' btn-xs">View Profile →</button></div></div>';
-  });
-  el.innerHTML=cards.slice(0,3).join('')+'<button class="btn btn-secondary" style="width:100%;justify-content:center" data-action="showModal" data-modal="companies-modal" ">+ See All Competitors</button>';
-}
-function showModal(id){
-  var el=document.getElementById(id);if(!el) return;
-  if(id==='news-modal') populateNewsModal('all');
-  if(id==='companies-modal') populateCompaniesModal();
-  if(id==='add-company-modal') populateAddCompanyModal();
-  el.classList.add('open');
-}
-function filterNewsModal(cat){populateNewsModal(cat);}
-function populateNewsModal(cat){
-  var el=document.getElementById('news-modal-body');
-  if(!el||typeof MARKET_EVENTS==='undefined') return;
-  var evs=cat==='all'?MARKET_EVENTS:MARKET_EVENTS.filter(function(e){return e.category===cat;});
-  if(!evs.length){el.innerHTML='<p style="color:var(--text-muted);text-align:center;padding:24px">No events in this category.</p>';return;}
-  var catMap={'AI':'badge-purple','Product':'badge-blue','M&A':'badge-orange','Partnership':'badge-purple','Expansion':'badge-green','Win':'badge-green','Corporate':'badge-gray'};
-  el.innerHTML=evs.map(function(ev){
-    var cls=catMap[ev.category]||'badge-gray';
-    return '<div class="news-item" style="padding:var(--space-3) 0;">' +
-      '<div class="news-meta"><span class="badge '+cls+'">'+(ev.category||'News')+'</span>' +
-      '<span class="badge badge-gray">'+ev.co+'</span><span class="news-date">'+(ev.date||'')+'</span></div>' +
-      '<div class="news-title" style="font-size:13px;">'+ev.title+'</div>' +
-      '<div class="news-snippet">'+(ev.summary||'')+'</div>' +
-      (ev.tags?'<div style="display:flex;gap:4px;margin-top:6px;">'+ev.tags.map(function(t){return '<span class="badge badge-gray" style="font-size:10px">'+t+'</span>';}).join('')+'</div>':'') +
-      '</div>';
-  }).join('');
-}
-function populateCompaniesModal(){
-  var el=document.getElementById('companies-modal-body');
-  if(!el||typeof BENCH_PEERS==='undefined') return;
-  el.innerHTML=BENCH_PEERS.map(function(id){
-    var co=COMPANIES_DATA[id];if(!co) return '';
-    return '<div class="company-overview-card" data-oc="closeModal(\'companies-modal\');openCompany(\''+id+'\')">' +
-      '<div class="company-card-header"><div class="company-initials" style="background:'+co.color+';width:32px;height:32px;font-size:12px">'+co.initials+'</div>' +
-      '<div><div class="company-name" style="font-size:13px">'+co.name+'</div><div class="company-ticker">'+(co.exchange||'')+': '+(co.ticker||'')+'</div></div>' +
-      '<div class="card-spacer"></div><span class="badge badge-blue" style="font-size:10px">'+(co.latestRevenue||'')+'</span></div></div>';
-  }).join('');
-}
-function populateAddCompanyModal(){
-  var el=document.getElementById('add-company-list');
-  if(!el||typeof BENCH_PEERS==='undefined') return;
-  el.innerHTML=BENCH_PEERS.map(function(id){
-    var co=COMPANIES_DATA[id];if(!co) return '';
-    return '<div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer" data-oc="closeModal(\'add-company-modal\');openCompany(\''+id+'\')">' +
-      '<div class="company-initials" style="background:'+co.color+';width:32px;height:32px;font-size:12px;flex-shrink:0">'+co.initials+'</div>' +
-      '<div style="flex:1"><div style="font-weight:700;font-size:13px">'+co.name+'</div><div style="font-size:11px;color:var(--text-muted)">'+(co.sector||'')+'</div></div>' +
-      '<div style="font-size:12px;font-weight:600;color:var(--text-secondary)">'+(co.latestRevenue||'')+'</div></div>';
-  }).join('');
-}
-function exportToPDF(){
-  var s=document.createElement('style');s.id='po';
-  s.textContent='@media print{#sidebar,#topbar,#tabbar{display:none!important}#app{display:block!important}#main,#pages{overflow:visible!important;height:auto!important}.page{display:block!important;page-break-after:always}.page:last-child{page-break-after:auto}body{background:#fff!important}.modal-overlay{display:none!important}}';
-  document.head.appendChild(s);window.print();
-  setTimeout(function(){var x=document.getElementById('po');if(x)x.remove();},2500);
-}
-
-
 document.addEventListener('DOMContentLoaded', function() {
   // Main navigation
   document.querySelectorAll('.nav-item[data-nav]').forEach(el => {
@@ -3658,46 +3103,9 @@ document.addEventListener('DOMContentLoaded', function() {
       buildInsights(currentCompany,this.dataset.year,'all');
     });
   });
-  // Build dynamic dashboard sections from COMPANIES_DATA + MARKET_EVENTS
-  buildSidebarChips();
-  buildSectorDropdown();
-  buildNewsFeed();
-  buildCompanyTracker();
-
   // Initialize dashboard page
   navigate('dashboard');
 });
-
-
-window.onerror = function(msg,src,line,col,err) {
-  var b = document.getElementById('_jserr');
-  if(b) { b.style.display='block'; b.textContent = 'JS Error: '+msg+' ('+src+':'+line+')'; }
-  return false;
-};
-
-
-// Action router regex: /^([A-Za-z_$][\w$]*)\((.*)\)$/
-var __v04actionRe = /^([A-Za-z_$][\w$]*)\((.*)\)$/;
-// data-oc delegated handler  
-document.addEventListener('click', function(e) {
-  var el = e.target;
-  while(el && el !== document.body) {
-    var oc = el.getAttribute('data-oc');
-    if(oc) {
-      var m = __v04actionRe.exec(oc);
-      if(m) {
-        var fn = m[1]; var arg = m[2].replace(/^['"]|['"]$/g,'');
-        if(fn==='navigate') { navigate(arg); }
-        else if(fn==='openCompany') { openCompany(arg); }
-        else if(fn==='togglePeerChip') { if(typeof togglePeerChip==='function') togglePeerChip(arg); }
-        else if(fn==='closeModal') { closeModal(arg); }
-        else if(fn==='filterNewsModal') { if(typeof filterNewsModal==='function') filterNewsModal(arg); }
-      }
-      e.stopPropagation(); return;
-    }
-    el = el.parentElement;
-  }
-}, true);
 </script>
 </body>
 </html>
